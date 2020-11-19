@@ -1,0 +1,7 @@
+{
+    "ext": "ts",
+    "ignore": [
+        "dist"
+    ],
+    "exec": "tsc && node"
+}
