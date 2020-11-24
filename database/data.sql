@@ -1,0 +1,1 @@
+INSERT INTO test_table (test_var) VALUES ('FOO'), ('BAR');
