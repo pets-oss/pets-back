@@ -2,9 +2,15 @@
 
 ### To run locally
 
-1. Install and run docker
-2. Run `docker-compose up -d`
-3. Hack away - hot-reloading enabled.
+1. Add database.env with the following format (you can change values)
+```
+POSTGRES_USER=backend
+POSTGRES_PASSWORD=example
+POSTGRES_DB=gis
+```
+2. Install and run docker
+3. Run `docker-compose up -d`
+4. Hack away - hot-reloading enabled.
 ### To refresh database when schema.sql or data.sql changes (will delete all data)
 
 1. Stop docker containers `docker-compose down`
