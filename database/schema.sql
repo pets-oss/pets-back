@@ -7,7 +7,7 @@ CREATE TABLE organization (
     house VARCHAR(32),
     flat VARCHAR(32),
     phone VARCHAR(64),
-    mod_time timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE EXTENSION moddatetime;
@@ -27,7 +27,7 @@ CREATE TABLE app_user (
     email VARCHAR(128),
     organization INTEGER REFERENCES organization(id),
     role_type role_type DEFAULT 'Guest',
-    mod_time timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TRIGGER app_user_mod_time
@@ -53,7 +53,7 @@ CREATE TABLE animal (
     chip_install_date DATE,
     food VARCHAR(256),
     comments TEXT,
-    mod_time timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TRIGGER animal_mod_time
