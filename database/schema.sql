@@ -6,7 +6,7 @@ CREATE TABLE organization (
     modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Stranger');
+CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Guest');
 
 CREATE TABLE app_user (
     id VARCHAR(256) PRIMARY KEY,
@@ -14,7 +14,7 @@ CREATE TABLE app_user (
     full_name VARCHAR(256),
     email VARCHAR(128),
     organization SMALLINT REFERENCES organization(id),
-    role_type role_type DEFAULT 'Stranger',
+    role_type role_type DEFAULT 'Guest',
     modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
