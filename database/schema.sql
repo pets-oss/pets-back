@@ -1,7 +1,11 @@
 CREATE TABLE organization (
     id SERIAL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
-    address VARCHAR(512),
+    country VARCHAR(512),
+    city VARCHAR(128),
+    street VARCHAR(128),
+    house VARCHAR(32),
+    flat VARCHAR(32),
     phone VARCHAR(64),
     mod_time timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

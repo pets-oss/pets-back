@@ -1,9 +1,9 @@
-INSERT INTO organization (name, address, phone)
+INSERT INTO organization (name, country, city, street, house, flat, phone)
 VALUES 
-('Haskelis', 'Vytauto 1', '123'),
-('Jupyteris', 'Mindaugo 12', '+371'),
-('Javainis', 'Ulrich Strasse 99', '+80871'),
-('Pitoncas', 'Kalnų 38', '0044371');
+('Haskelis', 'Lietuva', 'Kaunas', 'Vytauto', '1a', NULL, '123'),
+('Jupyteris', 'Lietuva', 'Paryžius', 'Mindaugo', '12', '1', '+371'),
+('Javainis', 'Lietuva', 'Šveicarija', 'Ulrich Strasse', '99', NULL, '+80871'),
+('Pitoncas', 'Vokietija', 'Konstanca', 'Kalnų', '38', '5' '0044371');
 
 UPDATE organization SET phone = '1141184' WHERE id = 1;
 
