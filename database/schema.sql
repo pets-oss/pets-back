@@ -52,22 +52,24 @@ CREATE TABLE animal_event_check_out (
     organization SMALLINT REFERENCES organization(id)
 );
 
+CREATE type event_general AS ENUM ('birthday', 'addoption', 'getting petted', 'going for a walk');
 CREATE TABLE animal_event_general (
     id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id),
     dateTime TIMESTAMP,
     comments TEXT,
     organization SMALLINT REFERENCES organization(id),
-    type VARCHAR(64),
+    type event_general,
     expenses NUMERIC
 );
 
+CREATE type event_medical AS ENUM ('deworm', 'vaccinate', 'surgery', 'antibiotics');
 CREATE TABLE animal_event_medical_record (
     id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id),
     dateTime TIMESTAMP,
     comments TEXT,
     organization SMALLINT REFERENCES organization(id),
-    type VARCHAR(64),
+    type event_medical,
     expenses NUMERIC
 );

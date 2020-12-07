@@ -38,10 +38,10 @@ INSERT INTO animal_event_check_out (animal, dateTime, comments, organization)
 VALUES
 (5, '2020-10-01', 'Adopted cat', 1);
 
-INSERT INTO animal_event_general (animal, dateTime, comments, organization, "type", expenses)
+INSERT INTO animal_event_general (animal, dateTime, comments, organization, type, expenses)
 VALUES
 (2, '2020-07-01', 'Birthday party!', 1, 'birthday', 109.03);
 
-INSERT INTO animal_event_medical_record (animal, dateTime, comments, organization, "type", expenses)
+INSERT INTO animal_event_medical_record (animal, dateTime, comments, organization, type, expenses)
 VALUES
 (4, '2020-05-21', 'Dewormed', 1, 'deworm', 26.74);
