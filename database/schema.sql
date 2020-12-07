@@ -3,15 +3,15 @@ CREATE TABLE organization (
     name VARCHAR(256) NOT NULL,
     address VARCHAR(512),
     phone VARCHAR(64),
-    modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE EXTENSION moddatetime;
 
-CREATE TRIGGER organization_moddatetime
+CREATE TRIGGER organization_mod_time
     BEFORE UPDATE ON organization
     FOR EACH ROW
-    EXECUTE PROCEDURE moddatetime (modtime);
+    EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Guest');
 
@@ -23,13 +23,13 @@ CREATE TABLE app_user (
     email VARCHAR(128),
     organization INTEGER REFERENCES organization(id),
     role_type role_type DEFAULT 'Guest',
-    modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TRIGGER app_user_moddatetime
+CREATE TRIGGER app_user_mod_time
     BEFORE UPDATE ON app_user
     FOR EACH ROW
-    EXECUTE PROCEDURE moddatetime (modtime);
+    EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TYPE status AS ENUM ('healthy', 'vaccinated', 'sick', 'adopted');
 CREATE TYPE gender AS ENUM ('male', 'female');
@@ -49,13 +49,13 @@ CREATE TABLE animal (
     chip_install_date DATE,
     food VARCHAR(256),
     comments TEXT,
-    modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TRIGGER animal_moddatetime
+CREATE TRIGGER animal_mod_time
     BEFORE UPDATE ON animal
     FOR EACH ROW
-    EXECUTE PROCEDURE moddatetime (modtime);
+    EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TABLE animal_event_check_in (
     id SERIAL PRIMARY KEY,
