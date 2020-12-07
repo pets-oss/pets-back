@@ -38,19 +38,25 @@ CREATE TRIGGER app_user_mod_time
 CREATE TYPE status AS ENUM ('healthy', 'vaccinated', 'sick', 'adopted');
 CREATE TYPE gender AS ENUM ('male', 'female');
 CREATE TYPE species AS ENUM ('cat', 'dog', 'hamster', 'parrot', 'snake');
+CREATE TYPE color AS ENUM ('blue', 'red', 'brown', 'grey', 'black', 'white', 'green', 'violet', 'pink', 'sand', 'orange');
 
 CREATE TABLE animal (
     id SERIAL PRIMARY KEY,
     organization INTEGER REFERENCES organization(id),
     registration_no VARCHAR(256) NOT NULL,
+    registration_date DATE DEFAULT CURRENT_DATE NOT NULL,
     status status,
     image_url VARCHAR(512),
     birth_date DATE,
     name VARCHAR(128),
     species species,
+    breed VARCHAR(100)
     gender gender,
+    color color,
+    weight NUMERIC,
     microchip_id VARCHAR(256),
     chip_install_date DATE,
+    allergy VARCHAR(128),
     food VARCHAR(256),
     comments TEXT,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
