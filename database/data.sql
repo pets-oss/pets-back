@@ -7,13 +7,13 @@ VALUES
 
 UPDATE organization SET phone = '1141184' WHERE id = 1;
 
-INSERT INTO app_user (id, username, full_name, email, organization, role_type)
+INSERT INTO app_user (id, username, name, surname, email, organization, role_type)
 VALUES 
-('dhjbwau74a6', 'Svx', 'Sveikas', 'svx@svx.lt', 1, 'Owner'),
-('aiubfaw4io09', 'Hi', 'Hello', 'hi@hi.lt', 1, 'Member'),
-('afhu9w4f78', 'Carl', 'Red', 'hi@hi.lt', 2, 'Owner'),
-('278y2378ryb', 'Bob', 'Blue', 'hi@hi.lt', 2, 'Member'),
-('0932hfdsa', 'Mamba', 'Green', 'hi@hello.lt', 2, NULL);
+('dhjbwau74a6', 'Svx', 'Sveikas', 'Ūsas', 'svx@svx.lt', 1, 'Owner'),
+('aiubfaw4io09', 'Hi', 'Hello', 'Letena', 'hi@hi.lt', 1, 'Member'),
+('afhu9w4f78', 'Carl', 'Red', 'Gauras', 'hi@hi.lt', 2, 'Owner'),
+('278y2378ryb', 'Bob', 'Blue', 'Eyes', 'hi@hi.lt', 2, 'Member'),
+('0932hfdsa', 'Mamba', 'Green', 'Jungleen', 'hi@hello.lt', 2, NULL);
 
 UPDATE app_user SET email = 'green@mamba.lt' WHERE id = 'dhjbwau74a6';
 

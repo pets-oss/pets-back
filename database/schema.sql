@@ -18,7 +18,8 @@ CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Guest');
 CREATE TABLE app_user (
     id VARCHAR(256) PRIMARY KEY,
     username VARCHAR(128) NOT NULL,
-    full_name VARCHAR(256),
+    name VARCHAR(256),
+    surname VARCHAR(256),
     email VARCHAR(128),
     organization SMALLINT REFERENCES organization(id),
     role_type role_type DEFAULT 'Guest',
