@@ -25,8 +25,8 @@ CREATE TABLE animal (
     organization SMALLINT REFERENCES organization(id),
     registration_no VARCHAR(256) NOT NULL,
     status status,
-    imageUrl VARCHAR(512),
-    birthDate DATE,
+    image_url VARCHAR(512),
+    birth_date DATE,
     name VARCHAR(128),
     species species,
     gender gender,
@@ -39,7 +39,7 @@ CREATE TABLE animal (
 CREATE TABLE animal_event_check_in (
     id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id),
-    dateTime TIMESTAMP,
+    date_time TIMESTAMP,
     comments TEXT,
     organization SMALLINT REFERENCES organization(id)
 );
@@ -47,7 +47,7 @@ CREATE TABLE animal_event_check_in (
 CREATE TABLE animal_event_check_out (
     id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id),
-    dateTime TIMESTAMP,
+    date_time TIMESTAMP,
     comments TEXT,
     organization SMALLINT REFERENCES organization(id)
 );
@@ -56,7 +56,7 @@ CREATE type event_general AS ENUM ('birthday', 'addoption', 'getting petted', 'g
 CREATE TABLE animal_event_general (
     id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id),
-    dateTime TIMESTAMP,
+    date_time TIMESTAMP,
     comments TEXT,
     organization SMALLINT REFERENCES organization(id),
     type event_general,
@@ -67,7 +67,7 @@ CREATE type event_medical AS ENUM ('deworm', 'vaccinate', 'surgery', 'antibiotic
 CREATE TABLE animal_event_medical_record (
     id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id),
-    dateTime TIMESTAMP,
+    date_time TIMESTAMP,
     comments TEXT,
     organization SMALLINT REFERENCES organization(id),
     type event_medical,

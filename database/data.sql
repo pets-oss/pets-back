@@ -13,7 +13,7 @@ VALUES
 ('278y2378ryb', 'Bob', 'Blue', 'hi@hi.lt', 2, 'Member'),
 ('0932hfdsa', 'Mamba', 'Black', 'hi@hello.lt', 2, NULL);
 
-INSERT INTO animal (organization, registration_no, status, imageUrl, birthDate, name, species, gender, microchip_id, chip_install_date)
+INSERT INTO animal (organization, registration_no, status, image_url, birth_date, name, species, gender, microchip_id, chip_install_date)
 VALUES 
 (1, '123Svx', 'vaccinated', 'www.url.lt', '2020-08-01', 'Haskelis', 'dog', 'female', '123', '2020-08-11'),
 (2, '321Hi', 'sick', 'www.url.lt', '2020-01-01', 'Jupyteris', 'parrot', 'female', '666666', '2020-09-01'),
@@ -21,7 +21,7 @@ VALUES
 (3, '555Bob', 'adopted', 'www.url.lt', '2020-01-01', 'Javainis', 'hamster', 'male', '29387', '2020-04-14'),
 (1, '999Mamba', 'healthy', 'www.url.lt', '2019-09-16', 'Murkė', 'cat', 'male', '001010101', '2020-09-01');
 
-INSERT INTO animal_event_check_in (animal, dateTime, comments, organization)
+INSERT INTO animal_event_check_in (animal, date_time, comments, organization)
 VALUES
 (1, '2020-03-01', 'Beautiful dog', 1),
 (2, '2020-03-01', 'Beautiful parrot', 1),
@@ -34,14 +34,14 @@ VALUES
 (4, '2020-03-02', 'Re-registering', 1),
 (5, '2020-04-02', 'Re-registering', 1);
 
-INSERT INTO animal_event_check_out (animal, dateTime, comments, organization)
+INSERT INTO animal_event_check_out (animal, date_time, comments, organization)
 VALUES
 (5, '2020-10-01', 'Adopted cat', 1);
 
-INSERT INTO animal_event_general (animal, dateTime, comments, organization, type, expenses)
+INSERT INTO animal_event_general (animal, date_time, comments, organization, type, expenses)
 VALUES
 (2, '2020-07-01', 'Birthday party!', 1, 'birthday', 109.03);
 
-INSERT INTO animal_event_medical_record (animal, dateTime, comments, organization, type, expenses)
+INSERT INTO animal_event_medical_record (animal, date_time, comments, organization, type, expenses)
 VALUES
 (4, '2020-05-21', 'Dewormed', 1, 'deworm', 26.74);
