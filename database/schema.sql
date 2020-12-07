@@ -7,7 +7,7 @@ CREATE TABLE organization (
 
 CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Stranger');
 
-CREATE TABLE users (
+CREATE TABLE app_user (
     id VARCHAR(256) PRIMARY KEY,
     username VARCHAR(128) NOT NULL,
     full_name VARCHAR(256),

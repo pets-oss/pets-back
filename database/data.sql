@@ -5,7 +5,7 @@ VALUES
 ('Javainis', 'Ulrich Strasse 99', '+80871'),
 ('Pitoncas', 'Kalnų 38', '0044371');
 
-INSERT INTO users (id, username, full_name, email, organization, role_type)
+INSERT INTO app_user (id, username, full_name, email, organization, role_type)
 VALUES 
 ('dhjbwau74a6', 'Svx', 'Sveikas', 'svx@svx.lt', 1, 'Owner'),
 ('aiubfaw4io09', 'Hi', 'Hello', 'hi@hi.lt', 1, 'Member'),
