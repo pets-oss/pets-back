@@ -20,14 +20,14 @@ VALUES
 ('aiubfaw4io09', 'Hi', 'Hello', 'hi@hi.lt', 1, 'Member'),
 ('afhu9w4f78', 'Carl', 'Red', 'hi@hi.lt', 2, 'Owner'),
 ('278y2378ryb', 'Bob', 'Blue', 'hi@hi.lt', 2, 'Member'),
-('0932hfdsa', 'Mamba', 'Black', 'hi@hello.lt', 2, NULL);
+('0932hfdsa', 'Mamba', 'Green', 'hi@hello.lt', 2, NULL);
 
 CREATE TRIGGER app_user_moddatetime
     BEFORE UPDATE ON app_user
     FOR EACH ROW
     EXECUTE PROCEDURE moddatetime (modtime);
 
-UPDATE app_user SET email = 'black@mamba.lt' WHERE id = 'dhjbwau74a6';
+UPDATE app_user SET email = 'green@mamba.lt' WHERE id = 'dhjbwau74a6';
 
 INSERT INTO animal (organization, registration_no, status, image_url, birth_date, name, species, gender, microchip_id, chip_install_date)
 VALUES 
@@ -42,7 +42,7 @@ CREATE TRIGGER animal_moddatetime
     FOR EACH ROW
     EXECUTE PROCEDURE moddatetime (modtime);
 
-UPDATE animal SET image_url = 'www.black.mamba' WHERE id = 1;
+UPDATE animal SET image_url = 'www.green.mamba' WHERE id = 1;
 
 INSERT INTO animal_event_check_in (animal, date_time, comments, organization)
 VALUES
