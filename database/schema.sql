@@ -6,6 +6,14 @@ CREATE TABLE organization (
     modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
+CREATE EXTENSION moddatetime;
+
+CREATE TRIGGER organization_moddatetime
+    BEFORE UPDATE ON organization
+    FOR EACH ROW
+    EXECUTE PROCEDURE moddatetime (modtime);
+
+
 CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Guest');
 
 CREATE TABLE app_user (
@@ -17,6 +25,11 @@ CREATE TABLE app_user (
     role_type role_type DEFAULT 'Guest',
     modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+CREATE TRIGGER app_user_moddatetime
+    BEFORE UPDATE ON app_user
+    FOR EACH ROW
+    EXECUTE PROCEDURE moddatetime (modtime);
 
 CREATE TYPE status AS ENUM ('healthy', 'vaccinated', 'sick', 'adopted');
 CREATE TYPE gender AS ENUM ('male', 'female');
@@ -38,6 +51,11 @@ CREATE TABLE animal (
     comments TEXT,
     modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+
+CREATE TRIGGER animal_moddatetime
+    BEFORE UPDATE ON animal
+    FOR EACH ROW
+    EXECUTE PROCEDURE moddatetime (modtime);
 
 CREATE TABLE animal_event_check_in (
     id SERIAL PRIMARY KEY,

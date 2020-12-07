@@ -5,13 +5,6 @@ VALUES
 ('Javainis', 'Ulrich Strasse 99', '+80871'),
 ('Pitoncas', 'Kalnų 38', '0044371');
 
-CREATE EXTENSION moddatetime;
-
-CREATE TRIGGER organization_moddatetime
-    BEFORE UPDATE ON organization
-    FOR EACH ROW
-    EXECUTE PROCEDURE moddatetime (modtime);
-
 UPDATE organization SET phone = '1141184' WHERE id = 1;
 
 INSERT INTO app_user (id, username, full_name, email, organization, role_type)
@@ -22,11 +15,6 @@ VALUES
 ('278y2378ryb', 'Bob', 'Blue', 'hi@hi.lt', 2, 'Member'),
 ('0932hfdsa', 'Mamba', 'Green', 'hi@hello.lt', 2, NULL);
 
-CREATE TRIGGER app_user_moddatetime
-    BEFORE UPDATE ON app_user
-    FOR EACH ROW
-    EXECUTE PROCEDURE moddatetime (modtime);
-
 UPDATE app_user SET email = 'green@mamba.lt' WHERE id = 'dhjbwau74a6';
 
 INSERT INTO animal (organization, registration_no, status, image_url, birth_date, name, species, gender, microchip_id, chip_install_date)
@@ -36,11 +24,6 @@ VALUES
 (3, '456Carl', 'healthy', 'www.url.lt', '2020-01-01', 'Pitoncas', 'snake', 'male', '2893402', '2020-03-01'),
 (3, '555Bob', 'adopted', 'www.url.lt', '2020-01-01', 'Javainis', 'hamster', 'male', '29387', '2020-04-14'),
 (1, '999Mamba', 'healthy', 'www.url.lt', '2019-09-16', 'Murkė', 'cat', 'male', '001010101', '2020-09-01');
-
-CREATE TRIGGER animal_moddatetime
-    BEFORE UPDATE ON animal
-    FOR EACH ROW
-    EXECUTE PROCEDURE moddatetime (modtime);
 
 UPDATE animal SET image_url = 'www.green.mamba' WHERE id = 1;
 
