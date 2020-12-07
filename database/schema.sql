@@ -55,7 +55,7 @@ CREATE TABLE animal_event_check_out (
     organization SMALLINT REFERENCES organization(id)
 );
 
-CREATE type event_general AS ENUM ('birthday', 'addoption', 'getting petted', 'going for a walk');
+CREATE type event_general AS ENUM ('birthday', 'adoption', 'getting petted', 'going for a walk');
 CREATE TABLE animal_event_general (
     id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id),
