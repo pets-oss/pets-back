@@ -17,13 +17,13 @@ VALUES
 
 UPDATE app_user SET email = 'green@mamba.lt' WHERE id = 'dhjbwau74a6';
 
-INSERT INTO animal (organization, registration_no, status, image_url, birth_date, name, species, gender, microchip_id, chip_install_date)
-VALUES 
-(1, '123Svx', 'vaccinated', 'www.url.lt', '2020-08-01', 'Haskelis', 'dog', 'female', '123', '2020-08-11'),
-(2, '321Hi', 'sick', 'www.url.lt', '2020-01-01', 'Jupyteris', 'parrot', 'female', '666666', '2020-09-01'),
-(3, '456Carl', 'healthy', 'www.url.lt', '2020-01-01', 'Pitoncas', 'snake', 'male', '2893402', '2020-03-01'),
-(3, '555Bob', 'adopted', 'www.url.lt', '2020-01-01', 'Javainis', 'hamster', 'male', '29387', '2020-04-14'),
-(1, '999Mamba', 'healthy', 'www.url.lt', '2019-09-16', 'Murkė', 'cat', 'male', '001010101', '2020-09-01');
+INSERT INTO animal (organization, registration_no, status, image_url, birth_date, name, species, breed, gender, color, weight, microchip_id, chip_install_date)
+VALUES
+(1, '123Svx', 'vaccinated', 'www.url.lt', '2020-08-01', 'Haskelis', 'dog', 'husky', 'female', 'white', 20, '123', '2020-08-11'),
+(2, '321Hi', 'sick', 'www.url.lt', '2020-01-01', 'Jupyteris', 'parrot', NULL, 'female', 'green', 1, '666666', '2020-09-01'),
+(3, '456Carl', 'healthy', 'www.url.lt', '2020-01-01', 'Pitoncas', 'snake', NULL, 'male', 'green', 0.3, '2893402', '2020-03-01'),
+(3, '555Bob', 'adopted', 'www.url.lt', '2020-01-01', 'Javainis', 'hamster', NULL, 'male', 'orange', 0.4, '29387', '2020-04-14'),
+(1, '999Mamba', 'healthy', 'www.url.lt', '2019-09-16', 'Murkė', 'cat', 'ragdoll', 'male', 'grey', 7, '001010101', '2020-09-01');
 
 UPDATE animal SET image_url = 'www.green.mamba' WHERE id = 1;
 
