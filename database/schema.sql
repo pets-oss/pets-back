@@ -1,5 +1,5 @@
 CREATE TABLE organization (
-    id SMALLSERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     address VARCHAR(512),
     phone VARCHAR(64),
@@ -21,7 +21,7 @@ CREATE TABLE app_user (
     name VARCHAR(256),
     surname VARCHAR(256),
     email VARCHAR(128),
-    organization SMALLINT REFERENCES organization(id),
+    organization INTEGER REFERENCES organization(id),
     role_type role_type DEFAULT 'Guest',
     modtime timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -37,7 +37,7 @@ CREATE TYPE species AS ENUM ('cat', 'dog', 'hamster', 'parrot', 'snake');
 
 CREATE TABLE animal (
     id SERIAL PRIMARY KEY,
-    organization SMALLINT REFERENCES organization(id),
+    organization INTEGER REFERENCES organization(id),
     registration_no VARCHAR(256) NOT NULL,
     status status,
     image_url VARCHAR(512),
@@ -62,7 +62,7 @@ CREATE TABLE animal_event_check_in (
     animal INTEGER REFERENCES animal(id),
     date_time TIMESTAMP,
     comments TEXT,
-    organization SMALLINT REFERENCES organization(id)
+    organization INTEGER REFERENCES organization(id)
 );
 
 CREATE TABLE animal_event_check_out (
@@ -70,7 +70,7 @@ CREATE TABLE animal_event_check_out (
     animal INTEGER REFERENCES animal(id),
     date_time TIMESTAMP,
     comments TEXT,
-    organization SMALLINT REFERENCES organization(id)
+    organization INTEGER REFERENCES organization(id)
 );
 
 CREATE type event_general AS ENUM ('birthday', 'adoption', 'getting petted', 'going for a walk');
@@ -79,7 +79,7 @@ CREATE TABLE animal_event_general (
     animal INTEGER REFERENCES animal(id),
     date_time TIMESTAMP,
     comments TEXT,
-    organization SMALLINT REFERENCES organization(id),
+    organization INTEGER REFERENCES organization(id),
     type event_general,
     expenses NUMERIC
 );
@@ -90,7 +90,7 @@ CREATE TABLE animal_event_medical_record (
     animal INTEGER REFERENCES animal(id),
     date_time TIMESTAMP,
     comments TEXT,
-    organization SMALLINT REFERENCES organization(id),
+    organization INTEGER REFERENCES organization(id),
     type event_medical,
     expenses NUMERIC
 );
