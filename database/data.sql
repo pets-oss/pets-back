@@ -3,7 +3,7 @@ VALUES
 ('Haskelis', 'Lietuva', 'Kaunas', 'Vytauto', '1a', NULL, '123'),
 ('Jupyteris', 'Lietuva', 'Paryžius', 'Mindaugo', '12', '1', '+371'),
 ('Javainis', 'Lietuva', 'Šveicarija', 'Ulrich Strasse', '99', NULL, '+80871'),
-('Pitoncas', 'Vokietija', 'Konstanca', 'Kalnų', '38', '5' '0044371');
+('Pitoncas', 'Vokietija', 'Konstanca', 'Kalnų', '38', '5', '0044371');
 
 UPDATE organization SET phone = '1141184' WHERE id = 1;
 
