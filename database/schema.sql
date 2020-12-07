@@ -50,7 +50,7 @@ CREATE TABLE animal (
     birth_date DATE,
     name VARCHAR(128),
     species species,
-    breed VARCHAR(100)
+    breed VARCHAR(100),
     gender gender,
     color color,
     weight NUMERIC,
