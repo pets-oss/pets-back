@@ -13,7 +13,6 @@ CREATE TRIGGER organization_moddatetime
     FOR EACH ROW
     EXECUTE PROCEDURE moddatetime (modtime);
 
-
 CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Guest');
 
 CREATE TABLE app_user (
