@@ -5,13 +5,12 @@ services:
       context: .
     ports:
       - 8081:8081
-      - 9229:9229
     environment:
       - SERVER_PORT=8080
     volumes:
       - ./src:/usr/src/app
       - /usr/src/app/node_modules
-    command: npm run debug
+    command: npm start
   db:
     image: postgres
     restart: always

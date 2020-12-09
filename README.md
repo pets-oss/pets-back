@@ -22,3 +22,7 @@ POSTGRES_DB=gis
     ```
 3. Delete the volume `docker volume rm pets-back_database-data`
 4. Run `docker-compose up` to start the stack
+
+
+### To debug
+Run `docker-compose -f docker-compose.yml -f docker-compose-debug.yml up -d`

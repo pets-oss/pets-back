@@ -6,7 +6,8 @@
             "module": "commonjs",
             "target": "es2019",
             "moduleResolution": "node",
-            "sourceMap": true,
+            "inlineSourceMap": true,
+            "inlineSources": true,
             "outDir": "dist"
         }
     }
