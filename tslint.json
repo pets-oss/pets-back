@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "no-console": false,
+    "no-empty-interface": false,
+    "import-name": false
+  }
+}

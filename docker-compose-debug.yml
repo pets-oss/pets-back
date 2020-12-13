@@ -10,5 +10,5 @@ services:
       - SERVER_PORT=8080
     volumes:
       - ./src:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./node_modules:/usr/src/app/node_modules
     command: npm run debug

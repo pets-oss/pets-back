@@ -1,47 +1,47 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-const { makeExecutableSchema } = require('graphql-tools');
+import express from 'express';
+import bodyParser from 'body-parser';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 
-// Some fake data
-const books = [
-  {
-    title: "Harry Potter and the Sorcerer's stone",
-    author: 'J.K. Rowling',
-  },
-  {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
-  },
-];
+import { schema } from './schemas';
+import initClients from './utils/init-clients';
 
-// The GraphQL schema in string form
-const typeDefs = `
-  type Query { books: [Book] }
-  type Book { title: String, author: String }
-`;
+initClients().then(({ pgClient }) => {
+  // Initialize the app
+  const app = express();
 
-// The resolvers
-const resolvers = {
-  Query: { books: () => books },
-};
+  // The GraphQL endpoint
+  app.use(
+    '/graphql',
+    bodyParser.json(),
+    graphqlExpress(() => ({
+      schema,
+      context: { pgClient },
+    }))
+  );
 
-// Put together a schema
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
+  // GraphiQL, a visual editor for queries
+  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-// Initialize the app
-const app = express();
+  // Start the server
+  app.listen(8081, () => {
+    console.log('Go to http://localhost:8081/graphiql to run queries!');
+  });
 
-// The GraphQL endpoint
-app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+  const handleShutdown = async () => {
+    console.log('Exiting gracefully.');
 
-// GraphiQL, a visual editor for queries
-app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+    let exitCode = 0;
 
-// Start the server
-app.listen(8081, () => {
-  console.log('Go to http://localhost:8081/graphiql to run queries!');
+    try {
+      await pgClient.disconnect();
+    } catch (e) {
+      console.log('Failed to exit gracefully.', e);
+      exitCode = 1;
+    }
+
+    process.exit(exitCode);
+  };
+
+  process.on('SIGTERM', handleShutdown);
+  process.on('SIGINT', handleShutdown);
 });
