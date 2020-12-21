@@ -1,5 +1,5 @@
 CREATE TABLE organization (
-    id SERIAL PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     country VARCHAR(512),
     city VARCHAR(128),
@@ -45,7 +45,7 @@ CREATE TYPE breed AS ENUM (
 );
 
 CREATE TABLE animal (
-    id SERIAL PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY,
     organization INTEGER REFERENCES organization(id) NOT NULL,
     registration_no VARCHAR(256) NOT NULL,
     registration_date DATE DEFAULT CURRENT_DATE NOT NULL,
@@ -72,7 +72,7 @@ CREATE TRIGGER animal_mod_time
     EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TABLE animal_event_check_in (
-    id SERIAL PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id) NOT NULL,
     date_time TIMESTAMP,
     comments TEXT,
@@ -80,7 +80,7 @@ CREATE TABLE animal_event_check_in (
 );
 
 CREATE TABLE animal_event_check_out (
-    id SERIAL PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id) NOT NULL,
     date_time TIMESTAMP,
     comments TEXT,
@@ -89,7 +89,7 @@ CREATE TABLE animal_event_check_out (
 
 CREATE type event_general AS ENUM ('birthday', 'adoption', 'getting petted', 'going for a walk');
 CREATE TABLE animal_event_general (
-    id SERIAL PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id) NOT NULL,
     date_time TIMESTAMP,
     comments TEXT,
@@ -100,7 +100,7 @@ CREATE TABLE animal_event_general (
 
 CREATE type event_medical AS ENUM ('deworm', 'vaccinate', 'surgery', 'antibiotics');
 CREATE TABLE animal_event_medical_record (
-    id SERIAL PRIMARY KEY NOT NULL,
+    id SERIAL PRIMARY KEY,
     animal INTEGER REFERENCES animal(id) NOT NULL,
     date_time TIMESTAMP,
     comments TEXT,
