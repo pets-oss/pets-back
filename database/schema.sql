@@ -20,7 +20,7 @@ CREATE TRIGGER organization_mod_time
 CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Guest');
 
 CREATE TABLE app_user (
-    id VARCHAR(256) PRIMARY KEY NOT NULL,
+    id VARCHAR(256) PRIMARY KEY,
     username VARCHAR(128) NOT NULL,
     name VARCHAR(256),
     surname VARCHAR(256),
