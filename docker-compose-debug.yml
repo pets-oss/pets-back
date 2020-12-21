@@ -10,5 +10,8 @@ services:
       - SERVER_PORT=8080
     volumes:
       - ./src:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./package.json:/usr/src/package.json
+      - ./package-lock.json:/usr/src/package-lock.json
+      - ./tsconfig.json:/usr/src/tsconfig.json
+      - ./node_modules:/usr/src/node_modules
     command: npm run debug

@@ -7,9 +7,14 @@ services:
       - 8081:8081
     environment:
       - SERVER_PORT=8080
+    env_file:
+      database.env
     volumes:
       - ./src:/usr/src/app
-      - /usr/src/app/node_modules
+      - ./package.json:/usr/src/package.json
+      - ./package-lock.json:/usr/src/package-lock.json
+      - ./tsconfig.json:/usr/src/tsconfig.json
+      - ./node_modules:/usr/src/node_modules
     command: npm start
   db:
     image: postgres
