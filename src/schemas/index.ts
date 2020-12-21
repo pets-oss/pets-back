@@ -11,10 +11,10 @@ const query = `
       _empty: String
     }
   `;
-const resolvers = {};
+
 const schema = makeExecutableSchema({
   typeDefs: [query, animalTypeDef],
-  resolvers: merge(resolvers, animalResolvers),
+  resolvers: merge(animalResolvers),
 });
 
-export { schema };
+export default schema;

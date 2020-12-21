@@ -1,5 +1,5 @@
-import { getAnimalQuery, getAnimalsQuery } from '../utils/postgres';
 import { IResolvers } from 'graphql-tools';
+import { getAnimalQuery, getAnimalsQuery } from '../utils/postgres';
 
 const typeDef = `
 extend type Query {
@@ -81,7 +81,7 @@ const query = `
 
 const resolvers: IResolvers = {
   Query: {
-    animals: async (_, { id }, { pgClient }) => {
+    animals: async (_, __, { pgClient }) => {
       const dbResponse = await pgClient.query(getAnimalsQuery());
       return dbResponse.rows;
     },

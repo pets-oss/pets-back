@@ -2,14 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 
-import { schema } from './schemas';
+import schema from './schemas';
 import initClients from './utils/init-clients';
 
 initClients().then(({ pgClient }) => {
-  // Initialize the app
   const app = express();
 
-  // The GraphQL endpoint
   app.use(
     '/graphql',
     bodyParser.json(),
@@ -19,10 +17,8 @@ initClients().then(({ pgClient }) => {
     }))
   );
 
-  // GraphiQL, a visual editor for queries
   app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-  // Start the server
   app.listen(8081, () => {
     console.log('Go to http://localhost:8081/graphiql to run queries!');
   });

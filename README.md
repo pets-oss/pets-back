@@ -8,7 +8,8 @@
 POSTGRES_USER=backend
 POSTGRES_PASSWORD=example
 POSTGRES_DB=gis
-POSTGRES_HOST=pets-back_db_1 # database docker container name
+# database docker container name
+POSTGRES_HOST=pets-back_db_1
 POSTGRES_PORT=5432
 ```
 2. Install and run docker

@@ -7,12 +7,12 @@
     "start": "tsc && nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/index.js",
-    "check-lint": "tslint 'src/**/*.ts' --project tsconfig.json",
-    "type-check": "tsc --noEmit --skipLibCheck"
+    "check-lint": "eslint 'src/**/*.ts'",
+    "check-type": "tsc --noEmit --skipLibCheck"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run check-lint & npm run type-check"
+      "pre-commit": "npm run check-lint & npm run check-type"
     }
   },
   "author": "Kayak Kaunas",
@@ -30,11 +30,15 @@
     "@types/graphql": "^14.5.0",
     "@types/lodash": "^4.14.165",
     "@types/pg": "^7.14.7",
+    "@typescript-eslint/eslint-plugin": "^4.10.0",
+    "@typescript-eslint/parser": "^4.10.0",
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.6",
     "nodemon": "^2.0.6",
-    "tslint": "^6.1.3",
-    "tslint-config-airbnb": "^5.11.2",
-    "tslint-config-prettier": "^1.18.0",
+    "prettier": "^2.2.1",
     "typescript": "^4.0.5"
   }
 }
