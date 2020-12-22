@@ -45,7 +45,6 @@ export default async () => {
         password: process.env.POSTGRES_PASSWORD,
         port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
       };
-  console.log(config);
   const pool = new Pool(config);
 
   return pgClient(pool);
