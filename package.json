@@ -4,11 +4,13 @@
   "description": "Backend for pet information system",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && nodemon dist/index.js",
+    "start": "nodemon dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/index.js",
     "check-lint": "eslint 'src/**/*.ts'",
-    "check-type": "tsc --noEmit --skipLibCheck"
+    "check-type": "tsc --noEmit --skipLibCheck",
+    "build": "tsc",
+    "start-prod": "tsc && nodemon dist/index.js"
   },
   "husky": {
     "hooks": {
