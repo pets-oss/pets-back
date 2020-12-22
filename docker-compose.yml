@@ -23,8 +23,7 @@ services:
     env_file:
       database.env
     volumes:
-      - ./database/schema.sql:/docker-entrypoint-initdb.d/1-schema.sql
-      - ./database/data.sql:/docker-entrypoint-initdb.d/2-data.sql
+      - ./database:/docker-entrypoint-initdb.d
       - database-data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
