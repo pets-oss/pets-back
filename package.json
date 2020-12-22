@@ -9,7 +9,8 @@
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/index.js",
     "check-lint": "eslint 'src/**/*.ts'",
     "check-type": "tsc --noEmit --skipLibCheck",
-    "build": "tsc"
+    "build": "tsc",
+    "start-prod": "npm run build && npm run start"
   },
   "husky": {
     "hooks": {

@@ -3,5 +3,5 @@
     "ignore": [
         "dist"
     ],
-    "exec": "tsc && node"
+    "exec": "node"
 }
