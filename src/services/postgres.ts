@@ -1,4 +1,3 @@
-import console from 'console';
 import { Pool, QueryConfig, QueryResult } from 'pg';
 
 interface PostgresClient {
