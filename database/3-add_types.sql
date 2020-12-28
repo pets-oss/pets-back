@@ -435,6 +435,8 @@ CREATE TABLE breed_translations(
     translation VARCHAR(50)
 );
 
+COMMENT ON COLUMN breed_translations.language is 'Language code based on BCP 47';
+
 INSERT INTO breed_translations (breed, language, translation) VALUES
 (360, 'lt', 'Abisinijos katės'),
 (389, 'lt', 'Amerikos ilgaplaukiai bobteilai'),
@@ -843,3 +845,26 @@ INSERT INTO breed_translations (breed, language, translation) VALUES
 (127, 'lt', 'Vokiečių vidutinieji špicai'),
 (128, 'lt', 'Volfšpicai keshondai'),
 (326, 'lt', 'Volpinai');
+
+ALTER TYPE gender ADD VALUE '1';
+ALTER TYPE gender ADD VALUE '2';
+UPDATE animal SET gender = '1' WHERE gender = 'female';
+UPDATE animal SET gender = '2' WHERE gender = 'male';
+ALTER TYPE gender RENAME TO gender_old;
+
+CREATE TYPE gender AS ENUM ('1', '2', '3', '4');
+ALTER TABLE animal ALTER COLUMN gender TYPE gender USING gender::text::gender;
+DROP TYPE gender_old;
+
+CREATE TABLE gender_translations (
+    gender gender,
+    language VARCHAR(4),
+    translation VARCHAR(20)
+);
+
+INSERT INTO gender_translations (gender, language, translation) VALUES
+('1', 'lt', 'Patelė'),
+('2', 'lt', 'Patinas'),
+('3', 'lt', 'Kastruota patelė'),
+('4', 'lt', 'Kastruotas patinas');
+
