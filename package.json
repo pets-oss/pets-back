@@ -4,9 +4,11 @@
   "description": "Backend for pet information system",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && nodemon dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsc && nodemon dist/index.js",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "check-lint": "eslint 'src/**/*.ts'",
     "check-type": "tsc --noEmit --skipLibCheck"
   },
@@ -23,6 +25,7 @@
     "graphql": "^15.4.0",
     "graphql-tools": "^7.0.2",
     "lodash": "^4.17.20",
+    "nodemon": "^2.0.6",
     "pg": "^8.5.1"
   },
   "devDependencies": {
@@ -37,7 +40,6 @@
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.6",
-    "nodemon": "^2.0.6",
     "prettier": "^2.2.1",
     "typescript": "^4.0.5"
   }

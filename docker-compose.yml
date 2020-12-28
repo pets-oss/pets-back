@@ -15,7 +15,8 @@ services:
       - ./package-lock.json:/usr/src/package-lock.json
       - ./tsconfig.json:/usr/src/tsconfig.json
       - ./node_modules:/usr/src/node_modules
-    command: npm start
+      - ./nodemon.json:/usr/src/nodemon.json
+    command: npm run dev
   db:
     image: postgres
     restart: always

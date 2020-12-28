@@ -19,8 +19,10 @@ initClients().then(({ pgClient }) => {
 
   app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
-  app.listen(8081, () => {
-    console.log('Go to http://localhost:8081/graphiql to run queries!');
+  // process.env.PORT needed for heroku to bind to the correct port
+  const PORT = process.env.PORT || 8081;
+  app.listen(PORT, () => {
+    console.log(`Go to http://localhost:${PORT}/graphiql to run queries!`);
   });
 
   const handleShutdown = async () => {
