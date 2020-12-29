@@ -846,6 +846,14 @@ INSERT INTO breed_translations (breed, language, translation) VALUES
 (128, 'lt', 'Volfšpicai keshondai'),
 (326, 'lt', 'Volpinai');
 
+ALTER TABLE animal ADD COLUMN breed INTEGER REFERENCES breed(id);
+
+UPDATE animal SET breed = 205 WHERE name = 'Haskelis';
+UPDATE animal SET breed = 268 WHERE name = 'Jupyteris';
+UPDATE animal SET breed = 389 WHERE name = 'Murkė';
+UPDATE animal SET breed = 350 WHERE name = 'Javainis';
+UPDATE animal SET breed = 422 WHERE name = 'Pitoncas';
+
 ALTER TYPE gender ADD VALUE '1';
 ALTER TYPE gender ADD VALUE '2';
 UPDATE animal SET gender = '1' WHERE gender = 'female';
@@ -867,4 +875,3 @@ INSERT INTO gender_translations (gender, language, translation) VALUES
 ('2', 'lt', 'Patinas'),
 ('3', 'lt', 'Kastruota patelė'),
 ('4', 'lt', 'Kastruotas patinas');
-
