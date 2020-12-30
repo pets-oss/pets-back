@@ -1,3 +1,4 @@
+-- Adding species types
 ALTER TYPE species ADD VALUE '1';
 ALTER TYPE species ADD VALUE '2';
 ALTER TYPE species ADD VALUE '3';
@@ -26,6 +27,7 @@ INSERT INTO species_translation (species, language, translation) VALUES
 ('2', 'lt', 'Katė'),
 ('3', 'lt', 'Šeškas');
 
+-- Changing breed to table to hold id and code values
 ALTER TABLE animal DROP COLUMN breed;
 DROP type breed;
 
@@ -872,6 +874,7 @@ UPDATE animal SET breed = 389 WHERE name = 'Murkė';
 UPDATE animal SET breed = 350 WHERE name = 'Javainis';
 UPDATE animal SET breed = 422 WHERE name = 'Pitoncas';
 
+-- Adding gender types
 ALTER TYPE gender ADD VALUE '1';
 ALTER TYPE gender ADD VALUE '2';
 UPDATE animal SET gender = '1' WHERE gender = 'female';
@@ -896,6 +899,7 @@ INSERT INTO gender_translation (gender, language, translation) VALUES
 ('3', 'lt', 'Kastruota patelė'),
 ('4', 'lt', 'Kastruotas patinas');
 
+-- Adding color types
 ALTER TABLE animal DROP COLUMN color;
 DROP type color;
 
@@ -1070,6 +1074,7 @@ UPDATE animal SET color = 4 WHERE name = 'Murkė';
 UPDATE animal SET color = 68 WHERE name = 'Javainis';
 UPDATE animal SET color = 32 WHERE name = 'Pitoncas';
 
+-- Adding events
 ALTER TYPE event_general ADD VALUE '1';
 UPDATE animal_event_general SET type = '1', comments = 'Registration!' WHERE animal = 2;
 
@@ -1099,3 +1104,7 @@ INSERT INTO event_translation (event, language, translation) VALUES
 ('7', 'lt', 'Išvežimas į užsienį'),
 ('8', 'lt', 'Vakcinavimas'),
 ('9', 'lt', 'Agresyvumas');
+
+-- Droping check in and check out event tables because event_general covers them
+DROP TABLE animal_event_check_in;
+DROP TABLE animal_event_check_out;
