@@ -1069,3 +1069,33 @@ UPDATE animal SET color = 2 WHERE name = 'Jupyteris';
 UPDATE animal SET color = 4 WHERE name = 'Murkė';
 UPDATE animal SET color = 68 WHERE name = 'Javainis';
 UPDATE animal SET color = 32 WHERE name = 'Pitoncas';
+
+ALTER TYPE event_general ADD VALUE '1';
+UPDATE animal_event_general SET type = '1', comments = 'Registration!' WHERE animal = 2;
+
+CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9');
+ALTER TABLE animal_event_general ALTER COLUMN type TYPE event USING type::text::event;
+DROP TYPE event_general;
+
+ALTER TYPE event_medical ADD VALUE '8';
+UPDATE animal_event_medical_record SET type = '8', comments = 'Yearly vaccine' WHERE animal = 4;
+
+ALTER TABLE animal_event_medical_record ALTER COLUMN type TYPE event USING type::text::event;
+DROP TYPE event_medical;
+
+CREATE TABLE event_translation (
+    event event PRIMARY KEY,
+    language VARCHAR(4),
+    translation VARCHAR(50)
+);
+
+INSERT INTO event_translation (event, language, translation) VALUES
+('1', 'lt', 'Pirminė registracija'),
+('2', 'lt', 'Naujas laikytojas'),
+('3', 'lt', 'Nauja laikymo vieta'),
+('4', 'lt', 'Naujas savininkas'),
+('5', 'lt', 'Pavogimas'),
+('6', 'lt', 'Gaišimas'),
+('7', 'lt', 'Išvežimas į užsienį'),
+('8', 'lt', 'Vakcinavimas'),
+('9', 'lt', 'Agresyvumas');
