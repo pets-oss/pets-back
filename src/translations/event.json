@@ -1,0 +1,40 @@
+{
+    "lt": [
+        {
+            "id": 1,
+            "translation": "Pirminė registracija"
+        },
+        {
+            "id": 2,
+            "translation": "Naujas laikytojas"
+        },
+        {
+            "id": 3,
+            "translation": "Nauja laikymo vieta"
+        },
+        {
+            "id": 4,
+            "translation": "Naujas savininkas"
+        },
+        {
+            "id": 5,
+            "translation": "Pavogimas"
+        },
+        {
+            "id": 6,
+            "translation": "Gaišimas"
+        },
+        {
+            "id": 7,
+            "translation": "Išvežimas į užsienį"
+        },
+        {
+            "id": 8,
+            "translation": "Vakcinavimas"
+        },
+        {
+            "id": 9,
+            "translation": "Agresyvumas"
+        }
+    ]
+}
