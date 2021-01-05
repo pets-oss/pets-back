@@ -35,7 +35,7 @@ CREATE TABLE breed (
     id INTEGER PRIMARY KEY,
     code VARCHAR(7),
     species species,
-    UNIQUE (id, code)
+    UNIQUE code
 );
 
 INSERT INTO breed (id, species, code)
