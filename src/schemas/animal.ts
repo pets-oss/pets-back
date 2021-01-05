@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import { getAnimalQuery, getAnimalsQuery } from '../utils/postgres';
+import { getAnimalQuery, getAnimalsQuery } from '../sql-queries/animal';
 
 const typeDef = `
 extend type Query {
