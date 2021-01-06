@@ -15,9 +15,10 @@ ALTER TABLE animal ALTER COLUMN species TYPE species USING species::text::specie
 DROP TYPE species_old;
 
 CREATE TABLE species_translation (
-    species species PRIMARY KEY,
+    species species,
     language VARCHAR(4),
-    translation VARCHAR(50)
+    translation VARCHAR(50),
+    PRIMARY KEY (species, language)
 );
 
 COMMENT ON COLUMN species_translation.language is 'Language code based on BCP 47';
@@ -34,8 +35,7 @@ DROP type breed;
 CREATE TABLE breed (
     id INTEGER PRIMARY KEY,
     code VARCHAR(7),
-    species species,
-    UNIQUE code
+    species species
 );
 
 INSERT INTO breed (id, species, code)
@@ -449,10 +449,10 @@ VALUES
 (326, '1', 'VO');
 
 CREATE TABLE breed_translation (
-    id SERIAL PRIMARY KEY,
     breed INTEGER REFERENCES breed(id) NOT NULL,
     language VARCHAR(4),
-    translation VARCHAR(50)
+    translation VARCHAR(50),
+    PRIMARY KEY (breed, language)
 );
 
 COMMENT ON COLUMN breed_translation.language is 'Language code based on BCP 47';
@@ -886,9 +886,10 @@ ALTER TABLE animal ALTER COLUMN gender TYPE gender USING gender::text::gender;
 DROP TYPE gender_old;
 
 CREATE TABLE gender_translation (
-    gender gender PRIMARY KEY,
+    gender gender,
     language VARCHAR(4),
-    translation VARCHAR(20)
+    translation VARCHAR(20),
+    PRIMARY KEY (gender, language)
 );
 
 COMMENT ON COLUMN gender_translation.language is 'Language code based on BCP 47';
@@ -986,7 +987,8 @@ INSERT INTO color (code, species) VALUES
 CREATE TABLE color_translation (
     color INTEGER REFERENCES color(code) NOT NULL,
     language VARCHAR(4),
-    translation VARCHAR(50)
+    translation VARCHAR(50),
+    PRIMARY KEY (color, language)
 );
 
 COMMENT ON COLUMN color_translation.language is 'Language code based on BCP 47';
@@ -1089,9 +1091,10 @@ ALTER TABLE animal_event_medical_record ALTER COLUMN type TYPE event USING type:
 DROP TYPE event_medical;
 
 CREATE TABLE event_translation (
-    event event PRIMARY KEY,
+    event event,
     language VARCHAR(4),
-    translation VARCHAR(50)
+    translation VARCHAR(50),
+    PRIMARY KEY (event, language)
 );
 
 INSERT INTO event_translation (event, language, translation) VALUES
