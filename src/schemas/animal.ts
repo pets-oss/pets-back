@@ -30,36 +30,10 @@ type Animal {
   id: Int!
   "Organization id"
   organization: String!
-  "Registration number"
-  registration_no: String!
-  "Registration date"
-  registration_date: String!
   "Status"
   status: String
   "Image URL"
   image_url: String
-  "Birth date"
-  birth_date: String
-  "Name"
-  name: String
-  "Species"
-  species: String
-  "Breed"
-  breed: String
-  "Gender"
-  gender: String
-  "Color"
-  color: String
-  "Weight"
-  weight: Float
-  "Microchip id"
-  microchip_id: String
-  "Chip install date"
-  chip_install_date: String
-  "Allergy"
-  allergy: String
-  "Food"
-  food: String
   "Comments"
   comments: String
   "Modification time"
