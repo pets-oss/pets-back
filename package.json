@@ -8,7 +8,7 @@
     "start": "node dist/index.js",
     "dev": "tsc && nodemon dist/index.js",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/*.test.js",
     "check-lint": "eslint 'src/**/*.ts'",
     "check-type": "tsc --noEmit --skipLibCheck"
   },
@@ -35,12 +35,15 @@
     "@types/pg": "^7.14.7",
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
+    "chai": "^4.2.0",
     "eslint": "^7.16.0",
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.6",
+    "mocha": "^8.2.1",
     "prettier": "^2.2.1",
+    "supertest": "^6.0.1",
     "typescript": "^4.0.5"
   }
 }
