@@ -8,9 +8,8 @@ const request = supertest(url);
 
 const animalFields = `
   {
-    id organization registration_no registration_date status
-    image_url birth_date name species gender weight microchip_id
-    chip_install_date allergy food comments mod_time breed color
+    id organization status
+    image_url comments mod_time
   }
 `
 

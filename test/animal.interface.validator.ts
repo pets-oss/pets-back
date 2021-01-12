@@ -13,49 +13,7 @@ export const AnimalSchema = {
   "defaultProperties": [
   ],
   "properties": {
-    "allergy": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "birth_date": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "breed": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "chip_install_date": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "color": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
     "comments": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "food": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "gender": {
       "type": [
         "null",
         "string"
@@ -70,19 +28,7 @@ export const AnimalSchema = {
         "string"
       ]
     },
-    "microchip_id": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
     "mod_time": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
-    "name": {
       "type": [
         "null",
         "string"
@@ -91,48 +37,20 @@ export const AnimalSchema = {
     "organization": {
       "type": "string"
     },
-    "registration_date": {
-      "type": "string"
-    },
-    "registration_no": {
-      "type": "string"
-    },
-    "species": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
     "status": {
       "type": [
         "null",
         "string"
       ]
-    },
-    "weight": {
-      "type": "number"
     }
   },
   "required": [
-    "allergy",
-    "birth_date",
-    "breed",
-    "chip_install_date",
-    "color",
     "comments",
-    "food",
-    "gender",
     "id",
     "image_url",
-    "microchip_id",
     "mod_time",
-    "name",
     "organization",
-    "registration_date",
-    "registration_no",
-    "species",
-    "status",
-    "weight"
+    "status"
   ],
   "type": "object"
 };
