@@ -79,11 +79,11 @@ CREATE TABLE animal_details (
 );
 
 INSERT INTO animal_details (animal_id, breed_id, name, gender, color, birth_date, weight, allergy, food) VALUES
-    (1, 205, 'Haskelis', 1, 61, '2020-08-01', 20, NULL, NULL),
-    (2, 268, 'Jupyteris', 1, 2, '2020-01-01', 1, NULL, NULL),
-    (5, 389, 'Murkė', 2, 4, '2019-09-16', 7, NULL, NULL),
-    (4, 350, 'Javainis', 1, 68, '2020-01-01', 0.4, NULL, NULL),
-    (3, 422, 'Pitoncas', 1, 32, '2020-01-01', 0.3, NULL, NULL);
+    (1, 205, 'Haskelis', '1', 61, '2020-08-01', 20, NULL, NULL),
+    (2, 268, 'Jupyteris', '1', 2, '2020-01-01', 1, NULL, NULL),
+    (5, 389, 'Murkė', '2', 4, '2019-09-16', 7, NULL, NULL),
+    (4, 350, 'Javainis', '1', 68, '2020-01-01', 0.4, NULL, NULL),
+    (3, 422, 'Pitoncas', '1', 32, '2020-01-01', 0.3, NULL, NULL);
 
 ALTER TABLE animal
 DROP COLUMN registration_no,
