@@ -1,0 +1,22 @@
+name: Nuke & Redeploy Database (not prod safe)
+on:
+  push:
+    paths:
+      - 'database/**'
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  redeploy-database:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: "Checkout"
+      - uses: akanieski/setup-postgres-cli@v0.1.2
+        name: "Nuke DB"
+        with:
+          commands: psql ${{secrets.DB_CONNECTION_STRING}} -f .github/workflows/nuke_database.sql
+      - uses: akanieski/setup-postgres-cli@v0.1.2
+        name: "Redeploy DB"
+        with:
+          commands: for file in database/*;do psql ${{secrets.DB_CONNECTION_STRING}} -f ${file};done
