@@ -5,8 +5,7 @@ const getGendersQuery = (language: string): QueryConfig => {
                     gender as id, 
                     translation as value
                 FROM gender_translation
-                WHERE language = $1
-                ORDER BY id;`;
+                WHERE language = $1;`;
 
     const query = {
         text,
