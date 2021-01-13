@@ -8,7 +8,7 @@ extend type Query {
   
     Examples:
   
-    genders(language: 'lt')
+    genders(language: "lt")
   """
   genders(
     "language code"

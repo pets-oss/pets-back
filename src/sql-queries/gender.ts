@@ -5,8 +5,8 @@ const getGendersQuery = (language: string): QueryConfig => {
                     gender as id, 
                     translation as value
                 FROM gender_translation
-                WHERE gender = ANY(enum_range(null::gender))
-                AND language = $1;`;
+                WHERE language = $1
+                ORDER BY id;`;
 
     const query = {
         text,
