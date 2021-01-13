@@ -46,8 +46,18 @@ Run `docker-compose -f docker-compose.yml -f docker-compose-debug.yml up -d`
 
 ## C. Test
 
-To be able to test GraphQL queries, have your node server running locally as described in [[A. Run Locally]](#a.-run-locally). Then simply hit `npm test`
+Tests run integration tests of the GraphQL service
+
+To be able to test GraphQL queries, have your node server and database running locally as described in [[A. Run Locally]](#a.-run-locally). Then simply hit `npm test`
 
 ### C.i. Validate data with interfaces
 
 When changing or writing new interfaces for validation, generate the validator, e.g. `npx typescript-json-validator test/animal.interface.ts Animal` https://github.com/ForbesLindesay/typescript-json-validator
+
+### C.ii. Change GraphQL API URL
+
+By default tests will hit the default local backend `http://localhost:8081`. If you wish to change the URL of the backend, add an `.env` in `test` directory with such contents
+
+```yaml
+TEST_URL=<URL>
+```
