@@ -54,9 +54,9 @@ To be able to test GraphQL queries, have your node server and database running l
 
 When changing or writing new interfaces for validation, generate the validator, e.g. `npx typescript-json-validator test/animal.interface.ts Animal` https://github.com/ForbesLindesay/typescript-json-validator
 
-### C.ii. Change GraphQL API URL
+### C.ii. Change URL of test backend
 
-By default tests will hit the default local backend `http://localhost:8081`. If you wish to change the URL of the backend, add an `.env` in `test` directory with such contents
+By default tests will hit the default local backend `http://localhost:8081`. If you wish to change the URL of the backend, add a `.env` file in `test` directory with such contents
 
 ```yaml
 TEST_URL=<URL>
