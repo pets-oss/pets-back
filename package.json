@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "tsc && nodemon dist/index.js",
-    "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/index.js",
+    "start": "node dist/src/index.js",
+    "dev": "tsc && nodemon dist/src/index.js",
+    "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/src/index.js",
     "test": "mocha -r ts-node/register test/*.test.ts",
     "check-lint": "eslint 'src/**/*.ts' && eslint 'test/*test.ts'",
     "check-type": "tsc --noEmit --skipLibCheck"
