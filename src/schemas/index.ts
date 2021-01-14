@@ -9,17 +9,17 @@ import {
 import {
   typeDef as animalDetailsTypeDef,
   resolvers as animalDetailsResolvers
-} from './animal_details';
+} from './animalDetails';
 
 import {
   typeDef as animalRegistrationTypeDef,
   resolvers as animalRegistrationResolvers
-} from './animal_registration';
+} from './animalRegistration';
 
 import {
   typeDef as animalMicrochipTypeDef,
   resolvers as animalMicrochipResolvers
-} from './animal_microchip';
+} from './animalMicrochip';
 
 import {
   typeDef as genderTypeDef,

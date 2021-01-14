@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import { getAnimalRegistrationsQuery, getAnimalsRegistrationsQuery } from '../sql-queries/animal_registration';
+import { getAnimalRegistrationsQuery, getAnimalsRegistrationsQuery } from '../sql-queries/animalRegistration';
 
 const typeDef = `
 extend type Query {

@@ -1,8 +1,8 @@
 import { IResolvers } from 'graphql-tools';
 import { getAnimalQuery, getAnimalsQuery } from '../sql-queries/animal';
-import { getAnimalDetailsQuery } from '../sql-queries/animal_details';
-import { getActiveAnimalRegistrationQuery } from '../sql-queries/animal_registration';
-import { getImplantedAnimalMicrochipQuery } from '../sql-queries/animal_microchip';
+import { getAnimalDetailsQuery } from '../sql-queries/animalDetails';
+import { getActiveAnimalRegistrationQuery } from '../sql-queries/animalRegistration';
+import { getImplantedAnimalMicrochipQuery } from '../sql-queries/animalMicrochip';
 
 const typeDef = `
 extend type Query {

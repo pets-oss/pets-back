@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import { getAnimalMicrochipsQuery, getAnimalsMicrochipsQuery } from '../sql-queries/animal_microchip';
+import { getAnimalMicrochipsQuery, getAnimalsMicrochipsQuery } from '../sql-queries/animalMicrochip';
 
 const typeDef = `
 extend type Query {
