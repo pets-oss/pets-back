@@ -1,11 +1,15 @@
 name: Deploy Heroku
 on:
   push:
+    paths-ignore:
+      - 'database/**'
+      - 'docs/**'
+      - 'docker**'
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy-heroku:
     runs-on: ubuntu-latest
 
     steps:
