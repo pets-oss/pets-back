@@ -1,5 +1,8 @@
 import { IResolvers } from 'graphql-tools';
 import { getAnimalQuery, getAnimalsQuery } from '../sql-queries/animal';
+import { getAnimalDetailsQuery } from '../sql-queries/animalDetails';
+import { getActiveAnimalRegistrationQuery } from '../sql-queries/animalRegistration';
+import { getImplantedAnimalMicrochipQuery } from '../sql-queries/animalMicrochip';
 
 const typeDef = `
 extend type Query {
@@ -30,6 +33,12 @@ type Animal {
   id: Int!
   "Organization id"
   organization: String!
+  "Animal details"
+  details: AnimalDetails
+  "Animal active registration info"
+  registration: AnimalRegistration
+  "Animal implanted microchip info"
+  microchip: AnimalMicrochip
   "Status"
   status: String
   "Image URL"
@@ -64,6 +73,20 @@ const resolvers: IResolvers = {
       return dbResponse.rows[0];
     },
   },
+  Animal: {
+    details: async ({ id }, __, { pgClient }) => {
+      const dbResponse = await pgClient.query(getAnimalDetailsQuery(id));
+      return dbResponse.rows[0];
+    },
+    registration: async ({ id }, __, { pgClient }) => {
+      const dbResponse = await pgClient.query(getActiveAnimalRegistrationQuery(id));
+      return dbResponse.rows[0];
+    },
+    microchip: async ({ id }, __, { pgClient }) => {
+      const dbResponse = await pgClient.query(getImplantedAnimalMicrochipQuery(id));
+      return dbResponse.rows[0];
+    }
+  }
 };
 
 export { typeDef, resolvers, query };

@@ -27,7 +27,7 @@ export const getAnimalsQuery = (): QueryConfig => {
                     image_url,
                     comments,
                     mod_time
-                FROM public.animal`;
+                FROM public.animal;`;
 
   const query = {
     text,
