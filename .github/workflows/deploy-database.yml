@@ -2,7 +2,7 @@ name: Nuke & Redeploy Database (not prod safe)
 on:
   push:
     paths:
-      - 'database/**'
+      - '**.sql'
     branches: [ main ]
   workflow_dispatch:
 

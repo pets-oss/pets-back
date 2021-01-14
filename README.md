@@ -17,7 +17,7 @@ POSTGRES_PORT=5432
 ```
 
 3. Install and run docker
-4. Run `docker-compose up -d`
+4. Run `docker-compose up -d` or `docker-compose up -d --build` if it is not the first time, and the Dockerfile was changed.
 5. Hack away - hot-reloading enabled
 
 <!-- --- -->
