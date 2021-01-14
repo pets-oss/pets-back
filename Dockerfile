@@ -1,4 +1,4 @@
 FROM node:12
-WORKDIR /usr/src
+WORKDIR /usr/app
 COPY ./package*.json ./
 RUN npm install

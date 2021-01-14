@@ -10,12 +10,13 @@ services:
     env_file:
       database.env
     volumes:
-      - ./src:/usr/src/app
-      - ./package.json:/usr/src/package.json
-      - ./package-lock.json:/usr/src/package-lock.json
-      - ./tsconfig.json:/usr/src/tsconfig.json
-      - ./node_modules:/usr/src/node_modules
-      - ./nodemon.json:/usr/src/nodemon.json
+      - ./src:/usr/app/src
+      - ./test:/usr/app/test
+      - ./package.json:/usr/app/package.json
+      - ./package-lock.json:/usr/app/package-lock.json
+      - ./tsconfig.json:/usr/app/tsconfig.json
+      - /usr/app/node_modules
+      - ./nodemon.json:/usr/app/nodemon.json
     command: npm run dev
   db:
     image: postgres
