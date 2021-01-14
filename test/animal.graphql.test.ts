@@ -4,7 +4,7 @@ import validate from './animal.interface.validator';
 require('dotenv').config({ path: './test/.env' });
 
 const { expect } = chai;
-const url = process.env.TEST_PORT || 'http://localhost:8081';
+const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
 const animalFields = `
