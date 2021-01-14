@@ -4,7 +4,6 @@ export const getAnimalDetailsQuery = (id: number): QueryConfig => {
     const text = `SELECT
                     animal_id,
                     breed_id,
-                    name,
                     gender,
                     color,
                     birth_date,
@@ -26,7 +25,6 @@ export const getAnimalsDetailsQuery = (): QueryConfig => {
     const text = `SELECT
                     animal_id,
                     breed_id,
-                    name,
                     gender,
                     color,
                     birth_date,

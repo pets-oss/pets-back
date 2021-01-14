@@ -33,6 +33,8 @@ type Animal {
   id: Int!
   "Organization id"
   organization: String!
+  "Animal name"
+  name: String
   "Animal details"
   details: AnimalDetails
   "Animal active registration info"
