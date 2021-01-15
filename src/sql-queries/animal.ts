@@ -3,6 +3,7 @@ import { QueryConfig } from 'pg';
 export const getAnimalQuery = (id: number): QueryConfig => {
   const text = `SELECT
                     id,
+                    name,
                     organization,
                     status,
                     image_url,
@@ -22,6 +23,7 @@ export const getAnimalQuery = (id: number): QueryConfig => {
 export const getAnimalsQuery = (): QueryConfig => {
   const text = `SELECT
                     id,
+                    name,
                     organization,
                     status,
                     image_url,

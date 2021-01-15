@@ -30,8 +30,6 @@ type AnimalDetails {
   animal_id: Int!
   "Breed id"
   breed_id: Int
-  "Animal name"
-  name: String
   "Animal gender"
   gender: String,
   "Animal color id"
