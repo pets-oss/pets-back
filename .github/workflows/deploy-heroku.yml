@@ -2,11 +2,10 @@ name: Deploy Heroku
 on:
   push:
     paths:
-      - '!**.sql'
-      - '!docs/**'
-      - '!docker**'
-      - '!**.md'
-      - '!.github/workflows/**'
+      - '**.ts'
+      - '**.json'
+      - 'test/**'
+      - 'src/**'
     branches: [ main ]
   workflow_dispatch:
 
