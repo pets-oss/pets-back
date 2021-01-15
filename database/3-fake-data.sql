@@ -29,11 +29,11 @@ INSERT INTO app_user_roles
 
 INSERT INTO animal
 (name, organization, status, image_url) VALUES
-('Haskelis', 1, 'vaccinated', 'www.green.mamba'),
-('Jupyteris', 2, 'sick', 'www.url.lt'),
-('Pitoncas', 3, 'healthy', 'www.url.lt'),
-('Javainis', 3, 'adopted', 'www.url.lt'),
-('Murkė', 1, 'healthy', 'www.url.lt');
+('Haskelis', 1, 'vaccinated', 'https://picsum.photos/id/237/300/300'),
+('Jupyteris', 2, 'sick', 'https://picsum.photos/id/237/300/300'),
+('Pitoncas', 3, 'healthy', 'https://picsum.photos/id/237/300/300'),
+('Javainis', 3, 'adopted', 'https://picsum.photos/id/237/300/300'),
+('Murkė', 1, 'healthy', 'https://picsum.photos/id/237/300/300');
 
 INSERT INTO animal_details
 (animal_id, breed_id, gender, color, birth_date, weight, allergy, food) VALUES
