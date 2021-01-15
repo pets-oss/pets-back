@@ -1,0 +1,25 @@
+name: Pull request checks
+on: pull_request
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy test env file
+        uses: canastro/copy-file-action@master
+        with:
+          source: ".github/workflows/test-database.env"
+          target: "database.env"
+      - name: Run containers
+        run: docker-compose up -d
+      - name: List all containers
+        run: docker ps
+      - uses: nev7n/wait_for_response@v1
+        name: Wait for backend to be running
+        with:
+          url: 'http://localhost:8081/status'
+          responseCode: 200
+          timeout: 20000
+          interval: 1000
+      - name: Run tests
+        run:  docker exec pets-back_gis-backend_1 npm test

@@ -168,7 +168,7 @@ CREATE TRIGGER organization_mod_time BEFORE UPDATE ON organization
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER app_user_mod_time BEFORE UPDATE ON app_user
-FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time)
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
