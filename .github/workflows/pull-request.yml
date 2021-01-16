@@ -1,0 +1,46 @@
+name: Pull request checks
+on: pull_request
+jobs:
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copying test env file...
+        uses: canastro/copy-file-action@master
+        with:
+          source: ".github/workflows/test-database.env"
+          target: "database.env"
+      - run: docker-compose pull
+        name: Pulling pull-only docker images...
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        name: Caching docker image...
+        continue-on-error: true
+      - run: docker-compose up --build -d
+        name: Building containers...
+      - name: Waiting for backend...
+        uses: nev7n/wait_for_response@v1
+        with:
+          url: 'http://localhost:8081/status'
+          responseCode: 200
+          timeout: 20000
+          interval: 200
+      - name: Running tests...
+        run:  docker exec pets-back_gis-backend_1 npm test
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setting up node_module cache
+        id: node-modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ hashFiles('**/package.json') }}-node-modules
+      - name: Installing node modules...
+        if: steps.node-modules.outputs.cache-hit != 'true'
+        run: npm install
+      - name: Running lint...
+        run: npm run check-lint
+
