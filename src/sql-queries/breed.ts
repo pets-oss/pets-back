@@ -3,9 +3,13 @@ import { QueryConfig } from 'pg';
 export const getBreedsQuery = (language: string): QueryConfig => {
     const text = `
         SELECT 
-            breed as id,
-            translation as value
-        FROM breed_translation
+            id,
+            code,
+            language,
+            translation as value,
+            species
+        FROM breed b
+        LEFT JOIN breed_translation bt ON bt.breed = b.id
         WHERE language = $1;
     `;
 

@@ -1,19 +1,19 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import validate from './validators/translation.interface.validator';
-import { translationFields } from './testFields';
+import validate from './validators/breed.interface.validator';
+import { breedFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-describe ('GraphQL breed_translation integration tests', () => {
+describe ('GraphQL breed integration tests', () => {
     it ('Returns all breeds translation in "lt" with all fields', (done) => {
         request.post('/graphql')
             .send({
                 query: `{ breeds(language: "lt") 
-                    ${translationFields} 
+                    ${breedFields} 
                 }`
             })
             .expect(200)

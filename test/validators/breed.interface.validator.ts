@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 import Ajv from 'ajv';
-import Translation from '../interfaces/translation.interface';
+import Breed from '../interfaces/breed.interface';
 
 export const ajv = new Ajv({
     allErrors: true,
@@ -17,25 +17,31 @@ export const BreedSchema = {
     defaultProperties: [],
     properties: {
         id: {
-            type: [ 'number', 'string' ]
+            type: 'number'
+        },
+        code: {
+            type: 'string'
         },
         value: {
             type: 'string'
+        },
+        species: {
+            type: 'string'
         }
     },
-    required: [ 'id', 'value' ],
+    required: [ 'id', 'code', 'value', 'species' ],
     type: 'object'
 };
 
 export type ValidateFunction<T> = ((data: unknown) => data is T) & Pick<Ajv.ValidateFunction, 'errors'>
-export const isTranslation = ajv.compile(BreedSchema) as ValidateFunction<Translation>;
+export const isBreed = ajv.compile(BreedSchema) as ValidateFunction<Breed>;
 
-export default function validate(value: unknown): Translation {
-    if (isTranslation(value)) {
+export default function validate(value: unknown): Breed {
+    if (isBreed(value)) {
         return value;
     }
 
-    const errors = isTranslation.errors!.filter((e: any) => e.keyword !== 'if');
+    const errors = isBreed.errors!.filter((e: any) => e.keyword !== 'if');
 
-    throw new Error(`${ajv.errorsText(errors, { dataVar: 'Translation' })} \n ${inspect(value)}`);
+    throw new Error(`${ajv.errorsText(errors, { dataVar: 'Breed' })} \n ${inspect(value)}`);
 }

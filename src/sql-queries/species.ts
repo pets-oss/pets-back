@@ -15,7 +15,7 @@ export const getSpeciesQuery = (language: string): QueryConfig => {
     };
 };
 
-export const getSpeciesByBreedIdQuery = (breed_id: string, language: string): QueryConfig => {
+export const getSpeciesByBreedIdQuery = (breed_id: number, language: string): QueryConfig => {
     const text = `
         SELECT translation AS species
         FROM species_translation 

@@ -18,8 +18,7 @@ extend type Query {
   """
   animalDetails(
     "Animal id in database"
-    animal_id: Int!
-    language: String = "lt") : AnimalDetails
+    animal_id: Int!) : AnimalDetails
 
   """
     Get all animals details.
@@ -39,22 +38,22 @@ type AnimalDetails {
   Animal breed by language.
   Examples: breed(language: "en") or just breed - will return default language ("${defaultLanguage}") translation
   """
-  breed (language: String = "${defaultLanguage}"): String
+  breed ("Language code" language: String = "${defaultLanguage}"): String
   """
   Animal species by language
-  Examples: species(language: "ec") or just species - will return default language ("${defaultLanguage}") translation
+  Examples: species(language: "en") or just species - will return default language ("${defaultLanguage}") translation
   """
-  species (language: String = "${defaultLanguage}"): String
+  species ("Language code" language: String = "${defaultLanguage}"): String
   """
   Animal gender by language. 
   Examples: gender(language: "en") or just gender - will return default language ("${defaultLanguage}") translation
   """
-  gender (language: String = "${defaultLanguage}"): String,
+  gender ("Language code" language: String = "${defaultLanguage}"): String,
   """
   Animal color by language
   Examples: color(language: "en") or just color - will return default language ("${defaultLanguage}") translation
   """
-  color (language: String = "${defaultLanguage}"): String
+  color ("Language code" language: String = "${defaultLanguage}"): String
   "Animal date of birth"
   birth_date: String
   "Animal weight (kg)"

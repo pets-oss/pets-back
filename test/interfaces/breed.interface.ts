@@ -1,4 +1,6 @@
 export default interface Breed {
     id: number,
-    value: string
+    code: string,
+    value: string,
+    species: string
 }

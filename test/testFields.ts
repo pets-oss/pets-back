@@ -5,6 +5,15 @@ export const translationFields = `
     }
 `;
 
+export const breedFields = `
+    {
+        id
+        code
+        value
+        species
+    }
+`;
+
 export const animalDetailsFields = `
     {
         animal_id
