@@ -35,7 +35,7 @@ export const AnimalSchema = {
       ]
     },
     "organization": {
-      "type": "string"
+      "type": "number"
     },
     "status": {
       "type": [

@@ -1,5 +1,10 @@
 import { IResolvers } from 'graphql-tools';
-import { getAnimalQuery, getAnimalsQuery } from '../sql-queries/animal';
+import {
+  getAnimalQuery,
+  getAnimalsQuery,
+  createAnimalQuery,
+  updateAnimalQuery,
+} from '../sql-queries/animal';
 import { getAnimalDetailsQuery } from '../sql-queries/animalDetails';
 import { getActiveAnimalRegistrationQuery } from '../sql-queries/animalRegistration';
 import { getImplantedAnimalMicrochipQuery } from '../sql-queries/animalMicrochip';
@@ -25,22 +30,16 @@ extend type Query {
     animals
   """
   animals : [Animal]
-  }
+}
 
 "Represents an animal."
 type Animal {
   "Animal id, for example 2"
   id: Int!
-  "Organization id"
-  organization: String!
   "Animal name"
   name: String
-  "Animal details"
-  details: AnimalDetails
-  "Animal active registration info"
-  registration: AnimalRegistration
-  "Animal implanted microchip info"
-  microchip: AnimalMicrochip
+  "Organization id"
+  organization: Int!
   "Status"
   status: String
   "Image URL"
@@ -49,19 +48,49 @@ type Animal {
   comments: String
   "Modification time"
   mod_time: String
-}`;
 
-const query = `
-"""
-  Lookup an animal.
-  
-  Examples:
-  
-  animal(id: 1)
-"""
-  animal(
-    "Animal id in database"
-    id: Int!) : Animal
+  "Animal active registration info"
+  registration: AnimalRegistration
+  "Animal implanted microchip info"
+  microchip: AnimalMicrochip
+  "Animal details"
+  details: AnimalDetails
+}
+
+extend type Mutation {
+  "Created animal"
+  createAnimal(input: CreateAnimalInput!): Animal
+  "Updated animal"
+  updateAnimal(input: UpdateAnimalInput!): Animal
+}
+
+input CreateAnimalInput {
+  "Animal name"
+  name: String
+  "Organization id"
+  organization: Int!
+  "Status"
+  status: String
+  "Image URL"
+  image_url: String
+  "Comments"
+  comments: String
+}
+
+input UpdateAnimalInput {
+  "Animal id, for example 2"
+  id: Int!
+  "Animal name"
+  name: String!
+  "Organization id"
+  organization: Int!
+  "Status"
+  status: String!
+  "Image URL"
+  image_url: String!
+  "Comments"
+  comments: String!
+}
 `;
 
 const resolvers: IResolvers = {
@@ -75,20 +104,36 @@ const resolvers: IResolvers = {
       return dbResponse.rows[0];
     },
   },
+  Mutation: {
+    createAnimal: async (_, { input }, { pgClient }) => {
+      const dbResponse = await pgClient.query(createAnimalQuery(input));
+
+      return dbResponse.rows[0];
+    },
+    updateAnimal: async (_, { input }, { pgClient }) => {
+      const dbResponse = await pgClient.query(updateAnimalQuery(input));
+
+      return dbResponse.rows[0];
+    },
+  },
   Animal: {
     details: async ({ id }, __, { pgClient }) => {
       const dbResponse = await pgClient.query(getAnimalDetailsQuery(id));
       return dbResponse.rows[0];
     },
     registration: async ({ id }, __, { pgClient }) => {
-      const dbResponse = await pgClient.query(getActiveAnimalRegistrationQuery(id));
+      const dbResponse = await pgClient.query(
+        getActiveAnimalRegistrationQuery(id)
+      );
       return dbResponse.rows[0];
     },
     microchip: async ({ id }, __, { pgClient }) => {
-      const dbResponse = await pgClient.query(getImplantedAnimalMicrochipQuery(id));
+      const dbResponse = await pgClient.query(
+        getImplantedAnimalMicrochipQuery(id)
+      );
       return dbResponse.rows[0];
-    }
-  }
+    },
+  },
 };
 
-export { typeDef, resolvers, query };
+export { typeDef, resolvers };

@@ -8,28 +8,28 @@ import {
 
 import {
   typeDef as animalDetailsTypeDef,
-  resolvers as animalDetailsResolvers
+  resolvers as animalDetailsResolvers,
 } from './animalDetails';
 
 import {
   typeDef as animalRegistrationTypeDef,
-  resolvers as animalRegistrationResolvers
+  resolvers as animalRegistrationResolvers,
 } from './animalRegistration';
 
 import {
   typeDef as animalMicrochipTypeDef,
-  resolvers as animalMicrochipResolvers
+  resolvers as animalMicrochipResolvers,
 } from './animalMicrochip';
 
 import {
   typeDef as genderTypeDef,
   resolvers as genderResolvers,
-} from "./gender";
+} from './gender';
 
 import {
   typeDef as statusTypeDef,
   resolvers as statusResolvers,
-} from "./status";
+} from './status';
 
 const query = `
     type Query {
@@ -37,9 +37,31 @@ const query = `
     }
   `;
 
+const mutation = `
+    type Mutation {
+      _empty: String
+    }
+  `;
+
 const schema = makeExecutableSchema({
-  typeDefs: [query, animalTypeDef, animalDetailsTypeDef, animalRegistrationTypeDef, animalMicrochipTypeDef, genderTypeDef, statusTypeDef],
-  resolvers: merge(animalResolvers, animalDetailsResolvers, animalRegistrationResolvers, animalMicrochipResolvers, genderResolvers, statusResolvers),
+  typeDefs: [
+    query,
+    mutation,
+    animalTypeDef,
+    animalDetailsTypeDef,
+    animalRegistrationTypeDef,
+    animalMicrochipTypeDef,
+    genderTypeDef,
+    statusTypeDef,
+  ],
+  resolvers: merge(
+    animalResolvers,
+    animalDetailsResolvers,
+    animalRegistrationResolvers,
+    animalMicrochipResolvers,
+    genderResolvers,
+    statusResolvers
+  ),
 });
 
 export default schema;
