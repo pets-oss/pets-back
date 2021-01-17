@@ -31,6 +31,21 @@ import {
   resolvers as statusResolvers,
 } from './status';
 
+import {
+  typeDef as breedTypeDef,
+  resolvers as breedResolvers,
+} from './breed';
+
+import {
+  typeDef as speciesTypeDef,
+  resolvers as speciesResolvers,
+} from './species';
+
+import {
+  typeDef as colorTypeDef,
+  resolvers as colorResolvers,
+} from './color';
+
 const query = `
     type Query {
       _empty: String
@@ -53,6 +68,9 @@ const schema = makeExecutableSchema({
     animalMicrochipTypeDef,
     genderTypeDef,
     statusTypeDef,
+    breedTypeDef,
+    speciesTypeDef,
+    colorTypeDef
   ],
   resolvers: merge(
     animalResolvers,
@@ -60,7 +78,10 @@ const schema = makeExecutableSchema({
     animalRegistrationResolvers,
     animalMicrochipResolvers,
     genderResolvers,
-    statusResolvers
+    statusResolvers,
+    breedResolvers,
+    speciesResolvers,
+    colorResolvers
   ),
 });
 

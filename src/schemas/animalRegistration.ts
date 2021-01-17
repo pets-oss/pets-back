@@ -8,9 +8,9 @@ extend type Query {
   
     Examples:
   
-    animal_registrations(animal_id: 1)
+    animalRegistrations(animal_id: 1)
   """
-  animal_registrations(
+  animalRegistrations(
     "Animal id in database"
     animal_id: Int!) : [AnimalRegistration]
 
@@ -19,9 +19,9 @@ extend type Query {
   
     Examples:
   
-    animals_registrations
+    animalsRegistrations
   """
-  animals_registrations : [AnimalRegistration]
+  animalsRegistrations : [AnimalRegistration]
   }
   
 "Represents an animal registration."
@@ -38,11 +38,11 @@ type AnimalRegistration {
 
 const resolvers: IResolvers = {
     Query: {
-        animals_registrations: async (_, __, { pgClient }) => {
+        animalsRegistrations: async (_, __, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalsRegistrationsQuery());
             return dbResponse.rows;
         },
-        animal_registrations: async (_, { animal_id }, { pgClient }) => {
+        animalRegistrations: async (_, { animal_id }, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalRegistrationsQuery(animal_id));
             return dbResponse.rows;
         },

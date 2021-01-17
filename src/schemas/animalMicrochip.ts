@@ -8,9 +8,9 @@ extend type Query {
   
     Examples:
   
-    animal_microchips(animal_id: 1)
+    animalMicrochips(animal_id: 1)
   """
-  animal_microchips(
+  animalMicrochips(
     "Animal id in database"
     animal_id: Int!) : [AnimalMicrochip]
 
@@ -19,9 +19,9 @@ extend type Query {
   
     Examples:
   
-    animals_microchips
+    animalsMicrochips
   """
-  animals_microchips : [AnimalMicrochip]
+  animalsMicrochips : [AnimalMicrochip]
   }
   
 "Represents an animal microchip."
@@ -38,11 +38,11 @@ type AnimalMicrochip {
 
 const resolvers: IResolvers = {
     Query: {
-        animals_microchips: async (_, __, { pgClient }) => {
+        animalsMicrochips: async (_, __, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalsMicrochipsQuery());
             return dbResponse.rows;
         },
-        animal_microchips: async (_, { animal_id }, { pgClient }) => {
+        animalMicrochips: async (_, { animal_id }, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalMicrochipsQuery(animal_id));
             return dbResponse.rows;
         },
