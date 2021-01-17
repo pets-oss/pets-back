@@ -31,7 +31,7 @@ type AnimalMicrochip {
   "Microchip id"
   microchip_id: String!
   "Microchip install date"
-  chip_install_date: String
+  install_date: String
   "Microchip status ('Implanted' or 'Removed')"
   status: String
 }`;

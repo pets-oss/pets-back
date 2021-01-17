@@ -1,58 +1,3 @@
--- SPECIES
-
-CREATE TYPE species AS ENUM ('1', '2', '3');
-
-CREATE TABLE species_translation (
-    species species NOT NULL,
-    language VARCHAR(4) NOT NULL,
-    translation VARCHAR(50) NOT NULL,
-    PRIMARY KEY (species, language)
-);
-COMMENT ON COLUMN species_translation.language is 'Language code based on BCP 47';
-
--- BREED
-
-CREATE TABLE breed (
-    id INTEGER PRIMARY KEY,
-    code VARCHAR(7) NOT NULL,
-    species species
-);
-
-CREATE TABLE breed_translation (
-    breed INTEGER REFERENCES breed(id) NOT NULL,
-    language VARCHAR(4) NOT NULL,
-    translation VARCHAR(50) NOT NULL,
-    PRIMARY KEY (breed, language)
-);
-COMMENT ON COLUMN breed_translation.language is 'Language code based on BCP 47';
-
--- GENDER
-
-CREATE TYPE gender AS ENUM ('1', '2', '3', '4');
-
-CREATE TABLE gender_translation (
-    gender gender NOT NULL,
-    language VARCHAR(4) NOT NULL,
-    translation VARCHAR(20) NOT NULL,
-    PRIMARY KEY (gender, language)
-);
-COMMENT ON COLUMN gender_translation.language is 'Language code based on BCP 47';
-
--- COLOR
-
-CREATE TABLE color (
-    code INTEGER PRIMARY KEY,
-    species species
-);
-
-CREATE TABLE color_translation (
-    color INTEGER REFERENCES color(code) NOT NULL,
-    language VARCHAR(4) NOT NULL,
-    translation VARCHAR(50) NOT NULL,
-    PRIMARY KEY (color, language)
-);
-COMMENT ON COLUMN color_translation.language is 'Language code based on BCP 47';
-
 -- ORGANIZATION
 
 CREATE TABLE organization (
@@ -84,6 +29,109 @@ CREATE TABLE app_user_roles (
     role_type role_type DEFAULT 'Guest',
     PRIMARY KEY (user_id, organization_id)
 );
+
+-- SPECIES
+
+CREATE TYPE species AS ENUM ('1', '2', '3', '4', '8', '10', '11', '13', '14');
+
+CREATE TABLE species_translation (
+    species species NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(50) NOT NULL,
+    PRIMARY KEY (species, language)
+);
+COMMENT ON COLUMN species_translation.language is 'Language code based on BCP 47';
+
+-- BREED CATEGORY
+
+CREATE TABLE breed_category (
+    id INTEGER PRIMARY KEY,
+    species species NOT NULL
+);
+
+CREATE TABLE breed_category_translation (
+    breed_category INTEGER REFERENCES breed_category(id) NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(50) NOT NULL,
+    PRIMARY KEY (breed_category, language)
+);
+COMMENT ON COLUMN breed_category_translation.language is 'Language code based on BCP 47';
+
+-- BREED
+
+CREATE TABLE breed (
+    id INTEGER PRIMARY KEY,
+    abbreviation VARCHAR(7) NOT NULL,
+    species species NOT NULL
+);
+
+CREATE TABLE breed_translation (
+    breed INTEGER REFERENCES breed(id) NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(50) NOT NULL,
+    PRIMARY KEY (breed, language)
+);
+COMMENT ON COLUMN breed_translation.language is 'Language code based on BCP 47';
+
+-- GENDER
+
+CREATE TYPE gender AS ENUM ('1', '2', '3', '4');
+
+CREATE TABLE gender_translation (
+    gender gender NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(20) NOT NULL,
+    PRIMARY KEY (gender, language)
+);
+COMMENT ON COLUMN gender_translation.language is 'Language code based on BCP 47';
+
+-- DISEASE
+
+CREATE TABLE disease (
+    code INTEGER PRIMARY KEY,
+    species species NOT NULL
+);
+
+CREATE TABLE disease_translation (
+    disease INTEGER REFERENCES disease(code) NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(64) NOT NULL,
+    PRIMARY KEY (disease, language)
+);
+COMMENT ON COLUMN disease_translation.language is 'Language code based on BCP 47';
+
+-- COLOR
+
+CREATE TABLE color (
+    code INTEGER PRIMARY KEY,
+    species species NOT NULL
+);
+
+CREATE TABLE color_translation (
+    color INTEGER REFERENCES color(code) NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(64) NOT NULL,
+    PRIMARY KEY (color, language)
+);
+COMMENT ON COLUMN color_translation.language is 'Language code based on BCP 47';
+
+-- COLOR PATTERN
+
+CREATE TABLE color_pattern (
+    code INTEGER NOT NULL,
+    species species NOT NULL,
+    PRIMARY KEY (code, species)
+);
+
+CREATE TABLE color_pattern_translation (
+    color_pattern INTEGER NOT NULL,
+    species species NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(256) NOT NULL,
+    PRIMARY KEY (color_pattern, species, language),
+    FOREIGN KEY (color_pattern, species) REFERENCES color_pattern (code, species)
+);
+COMMENT ON COLUMN color_pattern_translation.language is 'Language code based on BCP 47';
 
 -- ANIMAL
 
@@ -120,19 +168,41 @@ CREATE TABLE animal_registration (
     PRIMARY KEY (animal_id, registration_no)
 );
 
+CREATE TYPE chip_company_code AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12');
+
+CREATE TABLE chip_company_translation (
+    chip_company_code chip_company_code NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(64) NOT NULL,
+    PRIMARY KEY (chip_company_code, language)
+);
+COMMENT ON COLUMN chip_company_translation.language is 'Language code based on BCP 47';
+
+CREATE TYPE install_place AS ENUM ('1', '2', '3', '4');
+
+CREATE TABLE install_place_translation (
+    install_place install_place NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(64) NOT NULL,
+    PRIMARY KEY (install_place, language)
+);
+COMMENT ON COLUMN install_place_translation.language is 'Language code based on BCP 47';
+
 CREATE TYPE chip_status AS ENUM ('Implanted', 'Removed');
 
 CREATE TABLE animal_microchip (
     animal_id INTEGER REFERENCES animal(id) NOT NULL,
     microchip_id VARCHAR(256) NOT NULL,
-    chip_install_date DATE,
+    chip_company_code chip_company_code NOT NULL,
+    install_date DATE,
+    install_place install_place NOT NULL,
     status chip_status DEFAULT 'Implanted',
     PRIMARY KEY (animal_id, microchip_id)
 );
 
 -- EVENTS
 
-CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9');
+CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');
 
 CREATE TABLE event_translation (
     event event NOT NULL,
