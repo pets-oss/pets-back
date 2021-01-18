@@ -130,6 +130,16 @@ CREATE TABLE animal_microchip (
     PRIMARY KEY (animal_id, microchip_id)
 );
 
+CREATE TABLE status_translation (
+    status status NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(20) NOT NULL,
+    PRIMARY KEY (status, language)
+);
+
+COMMENT ON COLUMN status_translation.language is 'Language code based on BCP 47';
+
+
 -- EVENTS
 
 CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9');

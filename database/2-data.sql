@@ -990,3 +990,10 @@ INSERT INTO color_translation
 (70, 'lt', 'Pilka'),
 (71, 'lt', 'Ruda'),
 (72, 'lt', 'Rudai raudona');
+
+INSERT INTO status_translation (status, language, translation)
+VALUES
+('healthy', 'lt', 'Sveikas'),
+('vaccinated', 'lt', 'Paskiepytas'),
+('sick', 'lt', 'Ligotas'),
+('adopted', 'lt', 'Priglaustas');
