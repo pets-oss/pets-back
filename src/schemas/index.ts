@@ -26,6 +26,11 @@ import {
   resolvers as genderResolvers,
 } from "./gender";
 
+import {
+  typeDef as statusTypeDef,
+  resolvers as statusResolvers,
+} from "./status";
+
 const query = `
     type Query {
       _empty: String
@@ -33,8 +38,8 @@ const query = `
   `;
 
 const schema = makeExecutableSchema({
-  typeDefs: [query, animalTypeDef, animalDetailsTypeDef, animalRegistrationTypeDef, animalMicrochipTypeDef, genderTypeDef],
-  resolvers: merge(animalResolvers, animalDetailsResolvers, animalRegistrationResolvers, animalMicrochipResolvers, genderResolvers),
+  typeDefs: [query, animalTypeDef, animalDetailsTypeDef, animalRegistrationTypeDef, animalMicrochipTypeDef, genderTypeDef, statusTypeDef],
+  resolvers: merge(animalResolvers, animalDetailsResolvers, animalRegistrationResolvers, animalMicrochipResolvers, genderResolvers, statusResolvers),
 });
 
 export default schema;
