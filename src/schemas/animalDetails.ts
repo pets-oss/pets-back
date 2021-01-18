@@ -44,19 +44,6 @@ type AnimalDetails {
   food: String
 }`;
 
-const query = `
-"""
-  Lookup an animal details.
-  
-  Examples:
-  
-  animal_details(id: 1)
-"""
-  animal_details(
-    "Animal id in database"
-    animal_id: Int!) : AnimalDetails
-`;
-
 const resolvers: IResolvers = {
     Query: {
         animals_details: async (_, __, { pgClient }) => {
@@ -70,4 +57,4 @@ const resolvers: IResolvers = {
     },
 };
 
-export { typeDef, resolvers, query };
+export { typeDef, resolvers };

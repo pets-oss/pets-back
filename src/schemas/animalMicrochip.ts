@@ -36,19 +36,6 @@ type AnimalMicrochip {
   status: String
 }`;
 
-const query = `
-"""
-  Lookup an animal microchips.
-  
-  Examples:
-  
-  animal_microchips(id: 1)
-"""
-  animal_microchips(
-    "Animal id in database"
-    animal_id: Int!) : [AnimalMicrochip]
-`;
-
 const resolvers: IResolvers = {
     Query: {
         animals_microchips: async (_, __, { pgClient }) => {
@@ -62,5 +49,5 @@ const resolvers: IResolvers = {
     },
 };
 
-export { typeDef, resolvers, query };
+export { typeDef, resolvers };
 
