@@ -20,9 +20,10 @@ describe('Getting breeds', () => {
                 const {body: {data: {breeds}}} = res;
                 expect(breeds).to.be.an('array');
                 validate(breeds[0]);
-                expect(breeds[0].id).to.be.eq('360');
-                expect(breeds[0].code).to.be.eq('ABY');
-                expect(breeds[0].value).to.be.eq('Abisinijos katės');
+                /* eslint-disable @typescript-eslint/no-unused-expressions */
+                expect(breeds.some((breed: { id: string; }) => breed.id === '360')).to.be.true;
+                expect(breeds.some((breed: { code: string; }) => breed.code === 'ABY')).to.be.true;
+                expect(breeds.some((breed: { value: string; }) => breed.value === 'Abisinijos katės')).to.be.true;
                 expect(breeds).to.have.lengthOf(75);
                 return done();
             });
