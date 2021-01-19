@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
 
 import schema from './schemas';
 import initClients from './utils/init-clients';
@@ -10,12 +10,19 @@ initClients().then(({ pgClient }) => {
   const app = express();
 
   app.use(
+    '/status',
+    (req, res) => {
+      res.sendStatus(200);
+    }
+  );
+
+  app.use(
     '/graphql',
     cors(),
     bodyParser.json(),
     graphqlExpress(() => ({
       schema,
-      context: { pgClient },
+      context: { pgClient }
     }))
   );
 

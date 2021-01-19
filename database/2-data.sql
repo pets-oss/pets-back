@@ -1452,3 +1452,12 @@ INSERT INTO event_translation
 ('9', 'lt', 'Išvežimas'),
 ('10', 'lt', 'Vakcinavimas'),
 ('11', 'lt', 'Augintinio agresyvumas');
+
+--- STATUS
+
+INSERT INTO status_translation (status, language, translation)
+VALUES
+('healthy', 'lt', 'Sveikas'),
+('vaccinated', 'lt', 'Paskiepytas'),
+('sick', 'lt', 'Ligotas'),
+('adopted', 'lt', 'Priglaustas');

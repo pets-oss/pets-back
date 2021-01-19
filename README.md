@@ -2,6 +2,8 @@
 
 # Pet Information System Back-End
 
+Production https://petbook-back.herokuapp.com/graphiql
+
 ## A. Run locally
 
 1. Install npm libraries with `npm install` command (if not installed previously)
@@ -61,3 +63,11 @@ By default tests will hit the default local backend `http://localhost:8081`. If 
 ```yaml
 TEST_URL=<URL>
 ```
+
+---
+
+Front-End repository https://github.com/pets-oss/pets-front
+
+---
+
+Started by Kayak WeCanCode Academy 2021 @ Kaunas

@@ -36,19 +36,6 @@ type AnimalRegistration {
   status: String
 }`;
 
-const query = `
-"""
-  Lookup an animal registrations.
-  
-  Examples:
-  
-  animal_registrations(id: 1)
-"""
-  animal_registrations(
-    "Animal id in database"
-    animal_id: Int!) : [AnimalRegistration]
-`;
-
 const resolvers: IResolvers = {
     Query: {
         animals_registrations: async (_, __, { pgClient }) => {
@@ -62,5 +49,5 @@ const resolvers: IResolvers = {
     },
 };
 
-export { typeDef, resolvers, query };
+export { typeDef, resolvers };
 

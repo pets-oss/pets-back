@@ -1,6 +1,6 @@
 export default interface Animal {
   id: number,
-  organization: string,
+  organization: number,
   status: string | null,
   image_url: string | null,
   comments: string | null,
