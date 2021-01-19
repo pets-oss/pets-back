@@ -10,7 +10,6 @@ export const breedFields = `
         id
         code
         value
-        species
     }
 `;
 

@@ -12,7 +12,7 @@ describe ('GraphQL breed integration tests', () => {
     it ('Returns all breeds translation in "lt" with all fields', (done) => {
         request.post('/graphql')
             .send({
-                query: `{ breeds(language: "lt") 
+                query: `{ breeds(species: "2", language: "lt") 
                     ${breedFields} 
                 }`
             })

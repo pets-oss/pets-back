@@ -1,35 +1,12 @@
 import { IResolvers } from 'graphql-tools';
-import { getAnimalDetailsQuery, getAnimalsDetailsQuery } from '../sql-queries/animalDetails';
 import { getGenderQuery } from '../sql-queries/gender';
 import { getBreedQuery } from '../sql-queries/breed';
 import { getSpeciesByBreedIdQuery } from '../sql-queries/species';
 import { getColorQuery } from '../sql-queries/color';
 
-const defaultLanguage = 'lt';
+const defaultLanguage: string = 'lt';
 
 const typeDef = `
-extend type Query {
-  """
-    Lookup an animal details.
-  
-    Examples:
-  
-    animalDetails(animal_id: 1)
-  """
-  animalDetails(
-    "Animal id in database"
-    animal_id: Int!) : AnimalDetails
-
-  """
-    Get all animals details.
-  
-    Examples:
-  
-    animals_details
-  """
-  animalsDetails : [AnimalDetails]
-  }
-  
 "Represents an animal details."
 type AnimalDetails {
   "Animal id, for example 2"
@@ -65,50 +42,24 @@ type AnimalDetails {
 }`;
 
 const resolvers: IResolvers = {
-    Query: {
-        animalsDetails: async (_, __, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAnimalsDetailsQuery());
-            return dbResponse.rows;
-        },
-        animalDetails: async (_, { animal_id }, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAnimalDetailsQuery(animal_id));
-            return dbResponse.rows[0];
-        },
-    },
     AnimalDetails: {
         gender: async ({ gender } , { language }, { pgClient }) => {
-            let dbResponse = await pgClient.query(getGenderQuery(gender, language));
-
-            if (!dbResponse.rows[0]) {
-                dbResponse = await pgClient.query(getGenderQuery(gender, defaultLanguage));
-            }
+            const dbResponse = await pgClient.query(getGenderQuery(gender, language, defaultLanguage));
 
             return dbResponse.rows[0].gender;
         },
         breed: async ({ breed_id }, { language }, { pgClient }) => {
-            let dbResponse = await pgClient.query(getBreedQuery(breed_id, language));
-
-            if (!dbResponse.rows[0]) {
-                dbResponse = await pgClient.query(getBreedQuery(breed_id, defaultLanguage));
-            }
+            const dbResponse = await pgClient.query(getBreedQuery(breed_id, language, defaultLanguage));
 
             return dbResponse.rows[0].breed;
         },
         species: async ({ breed_id }, { language }, { pgClient }) => {
-            let dbResponse = await pgClient.query(getSpeciesByBreedIdQuery(breed_id, language));
-
-            if (!dbResponse.rows[0]) {
-                dbResponse = await pgClient.query(getSpeciesByBreedIdQuery(breed_id, defaultLanguage));
-            }
+            const dbResponse = await pgClient.query(getSpeciesByBreedIdQuery(breed_id, language, defaultLanguage));
 
             return dbResponse.rows[0].species;
         },
         color: async ({ color }, { language }, { pgClient }) => {
-            let dbResponse = await pgClient.query(getColorQuery(color, language));
-
-            if (!dbResponse.rows[0]) {
-                dbResponse = await pgClient.query(getColorQuery(color, defaultLanguage));
-            }
+            const dbResponse = await pgClient.query(getColorQuery(color, language, defaultLanguage));
 
             return dbResponse.rows[0].color;
         }

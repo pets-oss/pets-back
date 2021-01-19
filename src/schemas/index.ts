@@ -11,15 +11,9 @@ import {
   resolvers as animalDetailsResolvers,
 } from './animalDetails';
 
-import {
-  typeDef as animalRegistrationTypeDef,
-  resolvers as animalRegistrationResolvers,
-} from './animalRegistration';
+import animalRegistrationTypeDef from './animalRegistration';
 
-import {
-  typeDef as animalMicrochipTypeDef,
-  resolvers as animalMicrochipResolvers,
-} from './animalMicrochip';
+import animalMicrochipTypeDef from './animalMicrochip';
 
 import {
   typeDef as genderTypeDef,
@@ -75,8 +69,6 @@ const schema = makeExecutableSchema({
   resolvers: merge(
     animalResolvers,
     animalDetailsResolvers,
-    animalRegistrationResolvers,
-    animalMicrochipResolvers,
     genderResolvers,
     statusResolvers,
     breedResolvers,

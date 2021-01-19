@@ -1,6 +1,5 @@
 import { IResolvers } from 'graphql-tools';
 import { getBreedsQuery } from '../sql-queries/breed';
-import { getSpeciesByBreedIdQuery } from '../sql-queries/species';
 
 const typeDef = `
 extend type Query {
@@ -9,11 +8,13 @@ extend type Query {
   
     Examples:
   
-    breeds(language: "lt")
+    breeds(species: "2", language: "lt")
   """
   breeds(
+    "breed species"
+    species: String!
     "language code"
-     language: String!) : [Breed]
+    language: String!) : [Breed]
 }
 
 "Represents a breed."
@@ -22,26 +23,16 @@ type Breed {
   id: Int!
   "Breed code"
   code: String!
-  "Translation language"
-  language: String!
   "Breed name"
   value: String!
-  "Species"
-  species: String
 }`;
 
 const resolvers: IResolvers = {
     Query: {
-        breeds: async (_, { language }, { pgClient }) => {
-            const dbResponse = await pgClient.query(getBreedsQuery(language));
+        breeds: async (_, { species, language }, { pgClient }) => {
+            const dbResponse = await pgClient.query(getBreedsQuery(species, language));
             return dbResponse.rows;
         },
-    },
-    Breed: {
-        species: async ({ id, language }, __, { pgClient }) => {
-            const dbResponse = await pgClient.query(getSpeciesByBreedIdQuery(id, language));
-            return dbResponse.rows[0].species;
-        }
     }
 };
 
