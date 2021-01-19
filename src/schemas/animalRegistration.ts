@@ -1,6 +1,6 @@
 const animalRegistrationTypeDef = `
 "Animal registration status valid values"
-enum RegistrationStatus { Implanted, Removed }
+enum RegistrationStatus { Active, Implanted }
 
 "Represents an animal registration."
 type AnimalRegistration {
