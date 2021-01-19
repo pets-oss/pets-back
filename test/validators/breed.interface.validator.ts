@@ -13,7 +13,7 @@ export const BreedSchema = {
   "defaultProperties": [
   ],
   "properties": {
-    "code": {
+    "abbreviation": {
       "type": "string"
     },
     "id": {
@@ -24,7 +24,7 @@ export const BreedSchema = {
     }
   },
   "required": [
-    "code",
+    "abbreviation",
     "id",
     "value"
   ],

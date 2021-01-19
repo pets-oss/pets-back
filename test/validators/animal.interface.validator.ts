@@ -120,7 +120,7 @@ export const AnimalSchema = {
         "animal_id": {
           "type": "number"
         },
-        "chip_install_date": {
+        "install_date": {
           "type": [
             "null",
             "string"
@@ -138,7 +138,7 @@ export const AnimalSchema = {
       },
       "required": [
         "animal_id",
-        "chip_install_date",
+        "install_date",
         "microchip_id",
         "status"
       ],

@@ -21,8 +21,8 @@ extend type Query {
 type Breed {
   "Breed id"
   id: Int!
-  "Breed code"
-  code: String!
+  "Breed abbreviation"
+  abbreviation: String!
   "Breed name"
   value: String!
 }`;

@@ -8,7 +8,7 @@ export const translationFields = `
 export const breedFields = `
     {
         id
-        code
+        abbreviation
         value
     }
 `;
@@ -40,7 +40,7 @@ export const animalMicrochipFields = `
     {
         animal_id
         microchip_id
-        chip_install_date
+        install_date
         status
     }
 `;

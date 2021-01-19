@@ -4,7 +4,7 @@ export const getBreedsQuery = (species: string, language: string): QueryConfig =
     const text = `
         SELECT 
             id,
-            code,
+            abbreviation,
             language,
             translation as value
         FROM breed b
