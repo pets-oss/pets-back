@@ -52,26 +52,12 @@ INSERT INTO animal_registration
 (3, '456Carl', '2021-01-07', DEFAULT);
 
 INSERT INTO animal_microchip
-(animal_id, microchip_id, chip_install_date, status) VALUES
-(1, '123', '2020-08-11', DEFAULT),
-(2, '666666', '2020-09-01', DEFAULT),
-(5, '001010101', '2020-09-01', DEFAULT),
-(4, '29387', '2020-04-14', DEFAULT),
-(3, '2893402', '2020-03-01', DEFAULT);
-
--- EVENTS
-
-INSERT INTO event_translation
-(event, language, translation) VALUES
-('1', 'lt', 'Pirminė registracija'),
-('2', 'lt', 'Naujas laikytojas'),
-('3', 'lt', 'Nauja laikymo vieta'),
-('4', 'lt', 'Naujas savininkas'),
-('5', 'lt', 'Pavogimas'),
-('6', 'lt', 'Gaišimas'),
-('7', 'lt', 'Išvežimas į užsienį'),
-('8', 'lt', 'Vakcinavimas'),
-('9', 'lt', 'Agresyvumas');
+(animal_id, microchip_id, chip_company_code, install_date, install_place, status) VALUES
+(1, '123', '1', '2020-08-11', '1', DEFAULT),
+(2, '666666', '3', '2020-09-01', '2', DEFAULT),
+(5, '001010101', '4', '2020-09-01', '4', DEFAULT),
+(4, '29387', '5', '2020-04-14', '3', DEFAULT),
+(3, '2893402', '6', '2020-03-01', '4', DEFAULT);
 
 INSERT INTO animal_event_general
 (animal, type, expenses, date_time, comments) VALUES

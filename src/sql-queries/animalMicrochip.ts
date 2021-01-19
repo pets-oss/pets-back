@@ -4,7 +4,7 @@ export const getAnimalMicrochipsQuery = (id: number): QueryConfig => {
     const text = `SELECT
                     animal_id,
                     microchip_id,
-                    chip_install_date,
+                    install_date,
                     status
                 FROM public.animal_microchip
                 WHERE animal_id = $1;`;
@@ -21,7 +21,7 @@ export const getAnimalsMicrochipsQuery = (): QueryConfig => {
     const text = `SELECT
                     animal_id,
                     microchip_id,
-                    chip_install_date,
+                    install_date,
                     status
                 FROM public.animal_microchip;`;
 
@@ -36,7 +36,7 @@ export const getImplantedAnimalMicrochipQuery = (id: number): QueryConfig => {
     const text = `SELECT
                     animal_id,
                     microchip_id,
-                    chip_install_date,
+                    install_date,
                     status
                 FROM public.animal_microchip
                 WHERE animal_id = $1
