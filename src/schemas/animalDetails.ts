@@ -1,39 +1,36 @@
 import { IResolvers } from 'graphql-tools';
-import { getAnimalDetailsQuery, getAnimalsDetailsQuery } from '../sql-queries/animalDetails';
+import { getGenderQuery } from '../sql-queries/gender';
+import { getBreedQuery } from '../sql-queries/breed';
+import { getSpeciesByBreedIdQuery } from '../sql-queries/species';
+import { getColorQuery } from '../sql-queries/color';
+
+const defaultLanguage: string = 'lt';
 
 const typeDef = `
-extend type Query {
-  """
-    Lookup an animal details.
-  
-    Examples:
-  
-    animal_details(animal_id: 1)
-  """
-  animal_details(
-    "Animal id in database"
-    animal_id: Int!) : AnimalDetails
-
-  """
-    Get all animals details.
-  
-    Examples:
-  
-    animals_details
-  """
-  animals_details : [AnimalDetails]
-  }
-  
 "Represents an animal details."
 type AnimalDetails {
   "Animal id, for example 2"
   animal_id: Int!
-  "Breed id"
-  breed_id: Int
-  "Animal gender"
-  gender: String,
-  "Animal color id"
-  color: Int
+  """
+  Animal breed by language.
+  Examples: breed(language: "en") or just breed - will return default language ("${defaultLanguage}") translation
+  """
+  breed ("Language code" language: String = "${defaultLanguage}"): String
+  """
+  Animal species by language
+  Examples: species(language: "en") or just species - will return default language ("${defaultLanguage}") translation
+  """
+  species ("Language code" language: String = "${defaultLanguage}"): String
+  """
+  Animal gender by language. 
+  Examples: gender(language: "en") or just gender - will return default language ("${defaultLanguage}") translation
+  """
+  gender ("Language code" language: String = "${defaultLanguage}"): String,
+  """
+  Animal color by language
+  Examples: color(language: "en") or just color - will return default language ("${defaultLanguage}") translation
+  """
+  color ("Language code" language: String = "${defaultLanguage}"): String
   "Animal date of birth"
   birth_date: String
   "Animal weight (kg)"
@@ -45,16 +42,28 @@ type AnimalDetails {
 }`;
 
 const resolvers: IResolvers = {
-    Query: {
-        animals_details: async (_, __, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAnimalsDetailsQuery());
-            return dbResponse.rows;
+    AnimalDetails: {
+        gender: async ({ gender } , { language }, { pgClient }) => {
+            const dbResponse = await pgClient.query(getGenderQuery(gender, language, defaultLanguage));
+
+            return dbResponse.rows[0].gender;
         },
-        animal_details: async (_, { animal_id }, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAnimalDetailsQuery(animal_id));
-            return dbResponse.rows[0];
+        breed: async ({ breed_id }, { language }, { pgClient }) => {
+            const dbResponse = await pgClient.query(getBreedQuery(breed_id, language, defaultLanguage));
+
+            return dbResponse.rows[0].breed;
         },
-    },
+        species: async ({ breed_id }, { language }, { pgClient }) => {
+            const dbResponse = await pgClient.query(getSpeciesByBreedIdQuery(breed_id, language, defaultLanguage));
+
+            return dbResponse.rows[0].species;
+        },
+        color: async ({ color }, { language }, { pgClient }) => {
+            const dbResponse = await pgClient.query(getColorQuery(color, language, defaultLanguage));
+
+            return dbResponse.rows[0].color;
+        }
+    }
 };
 
 export { typeDef, resolvers };

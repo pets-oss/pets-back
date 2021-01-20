@@ -1,6 +1,6 @@
 import { QueryConfig } from 'pg';
 
-export const getAnimalDetailsQuery = (id: number): QueryConfig => {
+const getAnimalDetailsQuery = (id: number): QueryConfig => {
     const text = `SELECT
                     animal_id,
                     breed_id,
@@ -21,21 +21,4 @@ export const getAnimalDetailsQuery = (id: number): QueryConfig => {
     return query;
 };
 
-export const getAnimalsDetailsQuery = (): QueryConfig => {
-    const text = `SELECT
-                    animal_id,
-                    breed_id,
-                    gender,
-                    color,
-                    birth_date,
-                    weight,
-                    allergy,
-                    food
-                FROM public.animal_details;`;
-
-    const query = {
-        text,
-    };
-
-    return query;
-};
+export default getAnimalDetailsQuery;

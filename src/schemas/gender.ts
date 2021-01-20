@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import getGendersQuery from '../sql-queries/gender';
+import { getGendersQuery } from '../sql-queries/gender';
 
 const typeDef = `
 extend type Query {
@@ -18,7 +18,7 @@ extend type Query {
 "Represents a gender."
 type Gender {
   "Gender id"
-  id: Int!
+  id: String!
   "Gender name"
   value: String!
 }`;
