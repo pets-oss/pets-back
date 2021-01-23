@@ -43,11 +43,11 @@ type Animal {
   "Status"
   status: String
   "Image URL"
-  image_url: String
+  imageUrl: String
   "Comments"
   comments: String
   "Modification time"
-  mod_time: String
+  modTime: String
 
   "Animal active registration info"
   registration: AnimalRegistration

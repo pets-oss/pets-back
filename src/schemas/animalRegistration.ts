@@ -5,11 +5,11 @@ enum RegistrationStatus { Active, Implanted }
 "Represents an animal registration."
 type AnimalRegistration {
   "Animal id, for example 2"
-  animal_id: Int!
+  animalId: Int!
   "Registration number"
-  registration_no: String!
+  registrationNo: String!
   "Registration date"
-  registration_date: String
+  registrationDate: String
   "Registration status ('Active' or 'Inactive')"
   status: RegistrationStatus
 }`;
