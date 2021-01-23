@@ -1,7 +1,7 @@
 export default interface AnimalMicrochip {
-    animal_id: number,
-    microchip_id: string,
-    install_date: string | null,
+    animalId: number,
+    microchipId: string,
+    installDate: string | null,
     status: MicrochipStatus
 }
 

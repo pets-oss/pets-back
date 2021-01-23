@@ -15,12 +15,12 @@ export const breedFields = `
 
 export const animalDetailsFields = `
     {
-        animal_id
+        animalId
         breed
         species
         gender
         color
-        birth_date
+        birthDate
         weight
         allergy
         food
@@ -29,18 +29,18 @@ export const animalDetailsFields = `
 
 export const animalRegistrationFields = `
     {
-        animal_id
-        registration_no
-        registration_date
+        animalId
+        registrationNo
+        registrationDate
         status
     }
 `;
 
 export const animalMicrochipFields = `
     {
-        animal_id
-        microchip_id
-        install_date
+        animalId
+        microchipId
+        installDate
         status
     }
 `;
@@ -54,8 +54,8 @@ export const animalFields = `
         registration ${animalRegistrationFields}
         microchip ${animalMicrochipFields}
         status
-        image_url
+        imageUrl
         comments
-        mod_time
+        modTime
     }
 `;

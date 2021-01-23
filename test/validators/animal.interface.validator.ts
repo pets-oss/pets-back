@@ -23,10 +23,10 @@ export const AnimalSchema = {
             "string"
           ]
         },
-        "animal_id": {
+        "animalId": {
           "type": "number"
         },
-        "birth_date": {
+        "birthDate": {
           "type": [
             "null",
             "string"
@@ -71,8 +71,8 @@ export const AnimalSchema = {
       },
       "required": [
         "allergy",
-        "animal_id",
-        "birth_date",
+        "animalId",
+        "birthDate",
         "breed",
         "color",
         "food",
@@ -86,16 +86,16 @@ export const AnimalSchema = {
       "defaultProperties": [
       ],
       "properties": {
-        "animal_id": {
+        "animalId": {
           "type": "number"
         },
-        "registration_date": {
+        "registrationDate": {
           "type": [
             "null",
             "string"
           ]
         },
-        "registration_no": {
+        "registrationNo": {
           "type": "string"
         },
         "status": {
@@ -106,9 +106,9 @@ export const AnimalSchema = {
         }
       },
       "required": [
-        "animal_id",
-        "registration_date",
-        "registration_no",
+        "animalId",
+        "registrationDate",
+        "registrationNo",
         "status"
       ],
       "type": "object"
@@ -117,16 +117,16 @@ export const AnimalSchema = {
       "defaultProperties": [
       ],
       "properties": {
-        "animal_id": {
+        "animalId": {
           "type": "number"
         },
-        "install_date": {
+        "installDate": {
           "type": [
             "null",
             "string"
           ]
         },
-        "microchip_id": {
+        "microchipId": {
           "type": "string"
         },
         "status": {
@@ -137,9 +137,9 @@ export const AnimalSchema = {
         }
       },
       "required": [
-        "animal_id",
-        "install_date",
-        "microchip_id",
+        "animalId",
+        "installDate",
+        "microchipId",
         "status"
       ],
       "type": "object"
@@ -158,7 +158,7 @@ export const AnimalSchema = {
     "id": {
       "type": "number"
     },
-    "image_url": {
+    "imageUrl": {
       "type": [
         "null",
         "string"
@@ -167,7 +167,7 @@ export const AnimalSchema = {
     "microchip": {
       "$ref": "#/definitions/default_2"
     },
-    "mod_time": {
+    "modTime": {
       "type": [
         "null",
         "string"
@@ -196,9 +196,9 @@ export const AnimalSchema = {
     "comments",
     "details",
     "id",
-    "image_url",
+    "imageUrl",
     "microchip",
-    "mod_time",
+    "modTime",
     "name",
     "organization",
     "registration",

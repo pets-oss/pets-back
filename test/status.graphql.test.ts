@@ -1,6 +1,6 @@
 import chai from 'chai';
 import supertest from 'supertest';
-import validate from "./status.interface.validator";
+import validate from "./validators/status.interface.validator";
 
 require('dotenv').config({path: './test/.env'});
 
