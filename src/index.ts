@@ -3,8 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
 import { snakeCase } from 'lodash';
-var jwt = require('express-jwt');
-var jwks = require('jwks-rsa');
+import jwt from 'express-jwt';
+import jwks from 'jwks-rsa';
 
 import schema from './schema';
 import initClients from './utils/init-clients';
@@ -22,12 +22,12 @@ initClients().then(({ pgClient }) => {
   const snakeCaseFieldResolver = (source: any, args: any, contextValue: any, info: any) =>
     source[snakeCase(info.fieldName)];  
 
-  var jwtCheck = jwt({
+  const jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: process.env.AUTH0_DOMAIN + '.well-known/jwks.json'
+      jwksUri: `${process.env.AUTH0_DOMAIN}.well-known/jwks.json`
     }),
     audience: process.env.AUTH0_AUDIENCE,
     issuer: process.env.AUTH0_DOMAIN,
