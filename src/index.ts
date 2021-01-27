@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
+import { snakeCase } from 'lodash';
 
 import schema from './schemas';
 import initClients from './utils/init-clients';
@@ -16,11 +17,15 @@ initClients().then(({ pgClient }) => {
     }
   );
 
+  const snakeCaseFieldResolver = (source: any, args: any, contextValue: any, info: any) =>
+      source[snakeCase(info.fieldName)];
+
   app.use(
     '/graphql',
     cors(),
     bodyParser.json(),
     graphqlExpress(() => ({
+      fieldResolver: snakeCaseFieldResolver,
       schema,
       context: { pgClient }
     }))

@@ -5,7 +5,6 @@ export const getBreedsQuery = (species: string, language: string): QueryConfig =
         SELECT 
             id,
             abbreviation,
-            language,
             translation as value
         FROM breed b
         LEFT JOIN (SELECT * FROM breed_translation WHERE language = $2) bt 

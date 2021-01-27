@@ -10,7 +10,7 @@ export default interface Animal {
   registration: AnimalRegistration,
   microchip: AnimalMicrochip,
   status: string | null,
-  image_url: string | null,
+  imageUrl: string | null,
   comments: string | null,
-  mod_time: string | null,
+  modTime: string | null,
 }

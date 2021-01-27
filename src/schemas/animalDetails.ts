@@ -10,7 +10,7 @@ const typeDef = `
 "Represents an animal details."
 type AnimalDetails {
   "Animal id, for example 2"
-  animal_id: Int!
+  animalId: Int!
   """
   Animal breed by language.
   Examples: breed(language: "en") or just breed - will return default language ("${defaultLanguage}") translation
@@ -32,7 +32,7 @@ type AnimalDetails {
   """
   color ("Language code" language: String = "${defaultLanguage}"): String
   "Animal date of birth"
-  birth_date: String
+  birthDate: String
   "Animal weight (kg)"
   weight: Float,
   "Animal allergy"

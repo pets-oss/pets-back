@@ -5,11 +5,11 @@ enum MicrochipStatus { Implanted, Removed }
 "Represents an animal microchip."
 type AnimalMicrochip {
   "Animal id, for example 2"
-  animal_id: Int!
+  animalId: Int!
   "Microchip id"
-  microchip_id: String!
+  microchipId: String!
   "Microchip install date"
-  install_date: String
+  installDate: String
   "Microchip status ('Implanted' or 'Removed')"
   status: MicrochipStatus
 }`;
