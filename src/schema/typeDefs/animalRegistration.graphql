@@ -1,6 +1,8 @@
-const animalRegistrationTypeDef = `
 "Animal registration status valid values"
-enum RegistrationStatus { Active, Implanted }
+enum RegistrationStatus {
+  Active
+  Implanted
+}
 
 "Represents an animal registration."
 type AnimalRegistration {
@@ -12,7 +14,4 @@ type AnimalRegistration {
   registrationDate: String
   "Registration status ('Active' or 'Inactive')"
   status: RegistrationStatus
-}`;
-
-export default animalRegistrationTypeDef;
-
+}

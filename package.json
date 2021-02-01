@@ -24,6 +24,8 @@
   },
   "author": "Kayak Kaunas",
   "dependencies": {
+    "@graphql-tools/graphql-file-loader": "^6.2.7",
+    "@graphql-tools/load": "^6.2.5",
     "apollo-server-express": "^1.4.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
