@@ -1,23 +1,21 @@
 extend type Query {
   """
-    Lookup an animal.
-  
-    Examples:
-  
-    animal(id: 1)
+  Lookup an animal.
+
+  Examples:
+
+  animal(id: 1)
   """
-  animal(
-    "Animal id in database"
-    id: Int!) : Animal
+  animal("Animal id in database" id: Int!): Animal
 
   """
-    Get all animals.
-  
-    Examples:
-  
-    animals
+  Get all animals.
+
+  Examples:
+
+  animals
   """
-  animals : [Animal]
+  animals: [Animal]
 }
 
 "Represents an animal."
