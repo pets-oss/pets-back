@@ -38,7 +38,7 @@ INSERT INTO breed_category
 (10, '1'),
 (9, '1');
 
-INSERT INTO breed_category_translation 
+INSERT INTO breed_category_translation
 (breed_category, language, translation) VALUES
 (1, 'lt', 'FIFe I kategorijos veislė'),
 (2, 'lt', 'FIFe II kategorijos veislė'),
@@ -1460,4 +1460,8 @@ VALUES
 ('healthy', 'lt', 'Sveikas'),
 ('vaccinated', 'lt', 'Paskiepytas'),
 ('sick', 'lt', 'Ligotas'),
-('adopted', 'lt', 'Priglaustas');
+('adopted', 'lt', 'Priglaustas'),
+('Active', 'lt', 'Aktyvus'),
+('Inactive', 'lt', 'Neaktyvus'),
+('Implanted', 'lt', 'Implantuotas'),
+('Removed', 'lt', 'Išimtas')

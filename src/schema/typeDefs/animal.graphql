@@ -26,8 +26,11 @@ type Animal {
   name: String
   "Organization id"
   organization: Int!
-  "Status"
-  status: String
+  """
+  Animal status by language.
+  Examples: status(language: "en") or just status - will return default language ("lt") translation
+  """
+  status("Language code" language: String = "lt"): String
   "Image URL"
   imageUrl: String
   "Comments"

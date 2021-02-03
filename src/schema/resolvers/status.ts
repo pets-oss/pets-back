@@ -1,5 +1,5 @@
 import { IResolvers } from 'graphql-tools';
-import getStatusesQuery from "../../sql-queries/status";
+import { getStatusesQuery } from '../../sql-queries/status';
 
 const resolvers: IResolvers = {
     Query: {
