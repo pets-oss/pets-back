@@ -1,23 +1,21 @@
 extend type Query {
   """
-    Lookup an organization.
-  
-    Examples:
-  
-    organization(id: 1)
+  Lookup an organization.
+
+  Examples:
+
+  organization(id: 1)
   """
-  organization(
-    "Organization id in database"
-    id: Int!) : Organization
+  organization("Organization id in database" id: Int!): Organization
 
   """
-    Get all organizations.
-  
-    Examples:
-  
-    organizations
+  Get all organizations.
+
+  Examples:
+
+  organizations
   """
-  organizations : [Organization]
+  organizations: [Organization]
 }
 
 "Represents an organization."
@@ -64,7 +62,7 @@ input CreateOrganisationInput {
   phone: String
 }
 
-input UpdateOrganizationInput{
+input UpdateOrganizationInput {
   "Organization id, for example 2"
   id: Int!
   "Organization name"
