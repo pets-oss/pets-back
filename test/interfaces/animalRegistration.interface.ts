@@ -2,7 +2,5 @@ export default interface AnimalRegistration {
     animalId: number,
     registrationNo: string,
     registrationDate: string | null,
-    status: RegistrationStatus
+    status: string
 }
-
-enum RegistrationStatus { 'Active', 'Inactive' }
