@@ -4,7 +4,7 @@ import cors from 'cors';
 import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
 import { snakeCase } from 'lodash';
 
-import schema from './schemas';
+import schema from './schema';
 import initClients from './utils/init-clients';
 
 initClients().then(({ pgClient }) => {
@@ -36,10 +36,12 @@ initClients().then(({ pgClient }) => {
   // process.env.PORT needed for heroku to bind to the correct port
   const PORT = process.env.PORT || 8081;
   app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
     console.log(`Go to http://localhost:${PORT}/graphiql to run queries!`);
   });
 
   const handleShutdown = async () => {
+    // eslint-disable-next-line no-console
     console.log('Exiting gracefully.');
 
     let exitCode = 0;
@@ -47,6 +49,7 @@ initClients().then(({ pgClient }) => {
     try {
       await pgClient.disconnect();
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.log('Failed to exit gracefully.', e);
       exitCode = 1;
     }

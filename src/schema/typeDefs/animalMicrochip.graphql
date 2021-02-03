@@ -1,4 +1,3 @@
-const animalMicrochipTypeDef = `
 "Animal microchip status valid values"
 enum MicrochipStatus { Implanted, Removed }
 
@@ -12,7 +11,5 @@ type AnimalMicrochip {
   installDate: String
   "Microchip status ('Implanted' or 'Removed')"
   status: MicrochipStatus
-}`;
-
-export default animalMicrochipTypeDef;
+}
 

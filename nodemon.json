@@ -1,5 +1,5 @@
 {
-    "ext": "ts",
+    "ext": "ts,graphql",
     "ignore": [
         "dist"
     ],
