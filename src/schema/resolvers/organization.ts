@@ -30,6 +30,12 @@ const resolvers: IResolvers = {
           'You have to provide at least one data field when updating an entity'
         );
       }
+      const getDeleteTimeResponse = await pgClient.query(
+        getDeleteTimeQuery(input.id)
+      );
+      if (getDeleteTimeResponse.rows[0].delete_time) {
+        throw new Error('You are trying to update deleted organization');
+      }
       const dbResponse = await pgClient.query(updateOrganizationQuery(input));
 
       return dbResponse.rows[0];

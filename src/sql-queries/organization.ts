@@ -20,13 +20,13 @@ interface UpdateOrganizationInput {
 }
 
 export const getOrganizationQuery = (id: number): QueryConfig =>
-  select().from('organization').where({ id }).toParams();
+  select().from('organization').where({ id, delete_time: null }).toParams();
 
 export const getDeleteTimeQuery = (id: number): QueryConfig =>
   select('delete_time').from('organization').where({ id }).toParams();
 
 export const getOrganizationsQuery = (): QueryConfig =>
-  select().from('organization').toParams();
+  select().from('organization').where({ delete_time: null }).toParams();
 
 export const createOrganizationQuery = (
   input: CreateOrganisationInput
