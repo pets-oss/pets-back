@@ -1,21 +1,46 @@
 import { QueryConfig } from 'pg';
+import {insert, select, update} from "sql-bricks-postgres";
+import snakeCaseKeys from 'snakecase-keys';
+import {MicrochipStatus} from "../../test/interfaces/animalMicrochip.interface";
 
-const getImplantedAnimalMicrochipQuery = (id: number): QueryConfig => {
-    const text = `SELECT
-                    animal_id,
-                    microchip_id,
-                    install_date,
-                    status
-                FROM public.animal_microchip
-                WHERE animal_id = $1
-                AND status = 'Implanted';`;
+interface ImplantedAnimalMicrochipInput {
+    animal_id: number;
+    microchip_id: String;
+    chip_company_code: number;
+    install_date: String;
+    install_place: number;
+    status: MicrochipStatus;
+}
 
-    const query = {
-        text,
-        values: [id],
-    };
+export const getImplantedAnimalMicrochipQuery = (animal_id: number): QueryConfig =>
+    select().from('animal_microchip').where({ animal_id, status: 'Implanted', delete_time: null }).toParams();
 
-    return query;
-};
+export const getDeleteTimeQuery = (animal_id: number, microchip_id: String): QueryConfig =>
+    select('delete_time').from('animal_microchip').where({ animal_id, microchip_id }).toParams();
 
-export default getImplantedAnimalMicrochipQuery;
+export const createImplantedAnimalMicrochipQuery = (
+    input: ImplantedAnimalMicrochipInput
+): QueryConfig =>
+    insert('animal_microchip', snakeCaseKeys(input))
+        .returning(
+            'animal_id, microchip_id, chip_company_code, install_date, install_place, status, delete_time'
+        )
+        .toParams();
+
+export const updateImplantedAnimalMicrochipQuery = (
+    input: ImplantedAnimalMicrochipInput
+): QueryConfig =>
+    update('animal_microchip', snakeCaseKeys(input))
+        .where({ animal_id: input.animal_id, microchip_id: input.microchip_id })
+        .returning(
+            'animal_id, microchip_id, chip_company_code, install_date, install_place, status, delete_time'
+        )
+        .toParams();
+
+export const deleteImplantedAnimalMicrochipQuery = (animal_id: number, microchip_id: String): QueryConfig =>
+    update('animal_microchip', { delete_time: 'NOW()' })
+        .where({ animal_id, microchip_id })
+        .returning(
+            'animal_id, microchip_id, chip_company_code, install_date, install_place, status, delete_time'
+        )
+        .toParams();

@@ -5,6 +5,7 @@ import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 import { constraintDirective, constraintDirectiveTypeDefs } from 'graphql-constraint-directive';
 import animalResolvers from './resolvers/animal';
 import animalDetailsResolvers from './resolvers/animalDetails';
+import animalMicrochipResolvers from "./resolvers/animalMicrochip";
 import genderResolvers from './resolvers/gender';
 import statusResolvers from './resolvers/status';
 import breedResolvers from './resolvers/breed';
@@ -28,6 +29,7 @@ const schema = mergeSchemas({
   resolvers: merge(
     animalResolvers,
     animalDetailsResolvers,
+    animalMicrochipResolvers,
     genderResolvers,
     statusResolvers,
     breedResolvers,
