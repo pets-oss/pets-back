@@ -1,0 +1,78 @@
+extend type Query {
+  """
+  Lookup an organization.
+
+  Examples:
+
+  organization(id: 1)
+  """
+  organization("Organization id in database" id: Int!): Organization
+
+  """
+  Get all organizations.
+
+  Examples:
+
+  organizations
+  """
+  organizations: [Organization]
+}
+
+"Represents an organization."
+type Organization {
+  "Organization id, for example 2"
+  id: Int!
+  "Organization name"
+  name: String
+  "Organization id"
+  organization: Int!
+  "Country"
+  country: String
+  "City"
+  city: String
+  "Comments"
+  streetAddress: String
+  "Phone"
+  phone: String
+  "Modification time"
+  modTime: String
+  "Delete time"
+  deleteTime: String
+}
+
+extend type Mutation {
+  "Created organization"
+  createOrganization(input: CreateOrganisationInput!): Organization
+  "Updated organization"
+  updateOrganization(input: UpdateOrganizationInput!): Organization
+  "Deleted organization"
+  deleteOrganization(id: Int!): Organization
+}
+
+input CreateOrganisationInput {
+  "Organization name"
+  name: String!
+  "Country"
+  country: String
+  "City"
+  city: String
+  "Street address"
+  streetAddress: String
+  "Phone"
+  phone: String
+}
+
+input UpdateOrganizationInput {
+  "Organization id, for example 2"
+  id: Int!
+  "Organization name"
+  name: String
+  "Country"
+  country: String
+  "City"
+  city: String
+  "Street address"
+  streetAddress: String
+  "Phone"
+  phone: String
+}
