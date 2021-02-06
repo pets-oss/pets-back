@@ -46,7 +46,6 @@ export const createAnimalRegistrationQuery = (input: AnimalRegistrationInput): Q
     .returning(returnFields)
     .toParams();
 
-
 export const isAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => {
     const snakeInput = snakeCaseKeys(input);
     const text = `SELECT
