@@ -41,11 +41,11 @@ export const getActiveAnimalRegistrationQuery = (id: number): QueryConfig => {
     return query;
 };
 
-export const createAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => {
-    return insert(table, snakeCaseKeys(input))
+export const createAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
+    insert(table, snakeCaseKeys(input))
     .returning(returnFields)
     .toParams();
-};
+
 
 export const isAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => {
     const snakeInput = snakeCaseKeys(input);
@@ -76,19 +76,17 @@ export const undeleteAnimalRegistrationQuery = (input: AnimalRegistrationInput):
     .returning(returnFields)
     .toParams();
 
-export const updateAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => {
-    return update(table, snakeCaseKeys(input))
+export const updateAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
+    update(table, snakeCaseKeys(input))
     .where({ animal_id: input.animalId })
     .returning(returnFields)
     .toParams();
-};
 
-export const deleteAnimalRegistrationQuery = (input: AnimalRegistrationDeleteInput): QueryConfig => {
-  return update(table, { delete_time: 'NOW()' })
+export const deleteAnimalRegistrationQuery = (input: AnimalRegistrationDeleteInput): QueryConfig =>
+    update(table, { delete_time: 'NOW()' })
     .where({ 
         animal_id: input.animalId, 
         registration_no: input.registrationNo,
     }, isNull('delete_time'))
     .returning('animal_id, registration_no')
     .toParams();
-}
