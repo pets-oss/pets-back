@@ -11,6 +11,7 @@ import breedResolvers from './resolvers/breed';
 import speciesResolvers from './resolvers/species';
 import colorResolvers from './resolvers/color';
 import organizationResolvers from './resolvers/organization';
+import animalRegistrationResolvers from './resolvers/animalRegistration'
 
 const schemaLocal = loadSchemaSync('src/schema/typeDefs/*.graphql', {
   loaders: [new GraphQLFileLoader()],
@@ -31,7 +32,8 @@ const schema = mergeSchemas({
     breedResolvers,
     speciesResolvers,
     colorResolvers,
-    organizationResolvers
+    organizationResolvers,
+    animalRegistrationResolvers,
   ),
 });
 
