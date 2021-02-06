@@ -15,3 +15,21 @@ type AnimalRegistration {
   "Registration status ('Active' or 'Inactive')"
   status: RegistrationStatus
 }
+
+input AnimalRegistrationInput {
+  "Animal id, for example 2"
+  animalId: Int!
+  "Registration number"
+  registrationNo: String!
+  "Registration date"
+  registrationDate: String
+  "Registration status ('Active' or 'Inactive')"
+  status: RegistrationStatus
+}
+
+extend type Mutation {
+  "Created animal registration"
+  createAnimalRegistration(input: AnimalRegistrationInput!): AnimalRegistration
+  "Updated animal registration"
+  updateAnimalRegistration(input: AnimalRegistrationInput!): AnimalRegistration
+}
