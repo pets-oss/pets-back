@@ -18,9 +18,6 @@ initClients().then(({ pgClient }) => {
   );
 
   const snakeCaseFieldResolver = (source: any, args: any, contextValue: any, info: any) => {
-      console.log('source:', source)
-  
-      console.log('info:', info)
       return source[snakeCase(info.fieldName)];
   }
 
