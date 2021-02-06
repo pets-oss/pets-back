@@ -70,7 +70,7 @@ export const isAnimalRegistrationQuery = (input: AnimalRegistrationInput): Query
 
 export const undeleteAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => 
     update(table, 
-        Object.assign({ delete_time: null }, snakeCaseKeys(input))
+        {...{ delete_time: null }, ...snakeCaseKeys(input)}
     )
     .where({ animal_id: input.animalId, registration_no: input.registrationNo })
     .returning(returnFields)
