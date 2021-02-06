@@ -1,7 +1,8 @@
 {
     "ext": "ts,graphql",
     "ignore": [
-        "dist"
+        "dist",
+        "test"
     ],
     "exec": "tsc && node"
 }
