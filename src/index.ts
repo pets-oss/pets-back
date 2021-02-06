@@ -17,9 +17,8 @@ initClients().then(({ pgClient }) => {
     }
   );
 
-  const snakeCaseFieldResolver = (source: any, args: any, contextValue: any, info: any) => {
-      return source[snakeCase(info.fieldName)];
-  }
+  const snakeCaseFieldResolver = (source: any, args: any, contextValue: any, info: any) =>
+    source[snakeCase(info.fieldName)];  
 
   app.use(
     '/graphql',
