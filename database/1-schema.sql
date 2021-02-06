@@ -167,6 +167,7 @@ CREATE TABLE animal_registration (
     registration_date DATE DEFAULT CURRENT_DATE,
     status registration_status DEFAULT 'Active',
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    delete_time TIMESTAMP,
     PRIMARY KEY (animal_id, registration_no)
 );
 
