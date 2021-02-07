@@ -173,6 +173,12 @@ export const AnimalSchema = {
         "string"
       ]
     },
+    "delTime": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "name": {
       "type": [
         "null",

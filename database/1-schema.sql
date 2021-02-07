@@ -145,7 +145,8 @@ CREATE TABLE animal (
     status status,
     image_url VARCHAR(512),
     comments TEXT,
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    del_time TIMESTAMP
 );
 
 CREATE TABLE animal_details (

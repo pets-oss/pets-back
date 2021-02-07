@@ -17,6 +17,10 @@ interface UpdateAnimalInput {
   comments: String;
 }
 
+interface DeleteAnimalInput {
+  id: number;
+}
+
 export const getAnimalQuery = (id: number): QueryConfig => {
   const text = `SELECT
                     id,
@@ -25,9 +29,12 @@ export const getAnimalQuery = (id: number): QueryConfig => {
                     status,
                     image_url,
                     comments,
-                    mod_time
+                    mod_time,
+                    del_time
                 FROM public.animal
-                WHERE id = $1;`;
+                WHERE
+                    del_time IS NULL
+                    AND id = $1;`;
 
   const query = {
     text,
@@ -45,8 +52,10 @@ export const getAnimalsQuery = (): QueryConfig => {
                     status,
                     image_url,
                     comments,
-                    mod_time
-                FROM public.animal;`;
+                    mod_time,
+                    del_time
+                FROM public.animal
+                WHERE del_time IS NULL;`;
 
   const query = {
     text,
@@ -75,7 +84,8 @@ export const createAnimalQuery = (input: CreateAnimalInput): QueryConfig => {
                   status,
                   image_url,
                   comments,
-                  mod_time;`;
+                  mod_time,
+                  del_time;`;
 
   const query = {
     text,
@@ -98,7 +108,9 @@ export const updateAnimalQuery = (input: UpdateAnimalInput): QueryConfig => {
                   status = $3,
                   image_url = $4,
                   comments = $5
-                WHERE id = $6
+                WHERE
+                  del_time IS NULL
+                  AND id = $6
                 RETURNING
                   id,
                   name,
@@ -106,7 +118,8 @@ export const updateAnimalQuery = (input: UpdateAnimalInput): QueryConfig => {
                   status,
                   image_url,
                   comments,
-                  mod_time;`;
+                  mod_time,
+                  del_time;`;
 
   const query = {
     text,
@@ -118,6 +131,28 @@ export const updateAnimalQuery = (input: UpdateAnimalInput): QueryConfig => {
       input.comments,
       input.id,
     ],
+  };
+
+  return query;
+};
+
+export const markAnimalDeletedQuery = (input: DeleteAnimalInput): QueryConfig => {
+  const text = `UPDATE animal SET
+                  del_time = CURRENT_TIMESTAMP
+                WHERE id = $1
+                RETURNING
+                  id,
+                  name,
+                  organization,
+                  status,
+                  image_url,
+                  comments,
+                  mod_time,
+                  del_time;`;
+
+  const query = {
+    text,
+    values: [input.id],
   };
 
   return query;

@@ -57,5 +57,6 @@ export const animalFields = `
         imageUrl
         comments
         modTime
+        delTime
     }
 `;

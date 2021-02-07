@@ -34,6 +34,8 @@ type Animal {
   comments: String
   "Modification time"
   modTime: String
+  "Deleted time"
+  delTime: String
 
   "Animal active registration info"
   registration: AnimalRegistration
@@ -48,6 +50,8 @@ extend type Mutation {
   createAnimal(input: CreateAnimalInput!): Animal
   "Updated animal"
   updateAnimal(input: UpdateAnimalInput!): Animal
+  "Deleted animal"
+  deleteAnimal(input: DeleteAnimalInput!): Animal
 }
 
 input CreateAnimalInput {
@@ -76,4 +80,9 @@ input UpdateAnimalInput {
   image_url: String!
   "Comments"
   comments: String!
+}
+
+input DeleteAnimalInput {
+  "Animal id, for example 2"
+  id: Int!
 }

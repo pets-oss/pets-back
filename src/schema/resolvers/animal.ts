@@ -4,6 +4,7 @@ import {
   getAnimalsQuery,
   createAnimalQuery,
   updateAnimalQuery,
+  markAnimalDeletedQuery,
 } from '../../sql-queries/animal';
 import getAnimalDetailsQuery from '../../sql-queries/animalDetails';
 import getActiveAnimalRegistrationQuery from '../../sql-queries/animalRegistration';
@@ -28,6 +29,11 @@ const resolvers: IResolvers = {
     },
     updateAnimal: async (_, { input }, { pgClient }) => {
       const dbResponse = await pgClient.query(updateAnimalQuery(input));
+
+      return dbResponse.rows[0];
+    },
+    deleteAnimal: async (_, { input }, { pgClient }) => {
+      const dbResponse = await pgClient.query(markAnimalDeletedQuery(input));
 
       return dbResponse.rows[0];
     },

@@ -41,4 +41,23 @@ describe ('GraphQL animal integration tests', () => {
                 return done();
             });
     });
+
+    it ('Deletes animal with id=5', (done) => {
+        request.post('/graphql')
+            .send({query: `mutation {
+                deleteAnimal(input: {id: 5}) {
+                  id
+                  delTime
+                }
+              }`})
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body: { data: { deleteAnimal } } } = res;
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                expect(deleteAnimal.delTime).to.not.be.null;
+                expect(deleteAnimal.id).to.be.equal(5);
+                return done();
+            });
+    });
 });

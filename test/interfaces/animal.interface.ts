@@ -13,4 +13,5 @@ export default interface Animal {
   imageUrl: string | null,
   comments: string | null,
   modTime: string | null,
+  delTime: string | null,
 }
