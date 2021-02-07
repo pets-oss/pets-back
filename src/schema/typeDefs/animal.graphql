@@ -51,6 +51,8 @@ extend type Mutation {
     createAnimal(input: CreateAnimalInput!): Animal
     "Updated animal"
     updateAnimal(input: UpdateAnimalInput!): Animal
+    "Deleted animal"
+    deleteAnimal(input: DeleteAnimalInput!): Animal
 }
 
 enum AnimalStatus {
@@ -98,4 +100,9 @@ input UpdateAnimalInput {
     details: AnimalDetailsInput
     "AnimalMicrochip"
     microchip: UpdateAnimalMicrochipInput
+}
+
+input DeleteAnimalInput {
+    "Animal id, for example 2"
+    id: Int!
 }

@@ -32,6 +32,10 @@ interface UpdateAnimalInput {
     microchip: AnimalMicrochipInput;
 }
 
+interface DeleteAnimalInput {
+    id: number;
+}
+
 export const getAnimalQuery = (id: number): QueryConfig => {
     const text = `SELECT
                     id,
@@ -41,7 +45,7 @@ export const getAnimalQuery = (id: number): QueryConfig => {
                     image_url,
                     comments,
                     mod_time
-                FROM public.animal
+                FROM ${table}
                 WHERE id = $1;`;
 
     const query = {
@@ -61,7 +65,7 @@ export const getAnimalsQuery = (): QueryConfig => {
                     image_url,
                     comments,
                     mod_time
-                FROM public.animal;`;
+                FROM ${table};`;
 
     const query = {
         text,
@@ -83,4 +87,18 @@ export const updateAnimalQuery = (input: UpdateAnimalInput): QueryConfig => {
         .where({ id: input.id })
         .returning(returnFields)
         .toParams();
+};
+
+export const deleteAnimalQuery = (input: DeleteAnimalInput): QueryConfig => {
+    const text = `DELETE FROM ${table}
+                  WHERE id = $1
+                  RETURNING
+                  ${returnFields};`;
+
+    const query = {
+        text,
+        values: [input.id],
+    };
+
+    return query;
 };
