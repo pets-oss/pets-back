@@ -1,6 +1,3 @@
-"Animal microchip status valid values"
-enum MicrochipStatus { Implanted, Removed }
-
 "Represents an animal microchip."
 type AnimalMicrochip {
   "Animal id, for example 2"
@@ -9,7 +6,10 @@ type AnimalMicrochip {
   microchipId: String!
   "Microchip install date"
   installDate: String
-  "Microchip status ('Implanted' or 'Removed')"
-  status: MicrochipStatus
+  """
+  Microchip status ('Implanted' or 'Removed') translation
+  Examples: status(language: "en") or just status - will return default language ("lt") translation
+  """
+  status("Language code" language: String = "lt"): String
 }
 

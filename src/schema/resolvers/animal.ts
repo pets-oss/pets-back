@@ -8,6 +8,9 @@ import {
 import getAnimalDetailsQuery from '../../sql-queries/animalDetails';
 import getActiveAnimalRegistrationQuery from '../../sql-queries/animalRegistration';
 import getImplantedAnimalMicrochipQuery from '../../sql-queries/animalMicrochip';
+import { getStatusTranslationQuery } from '../../sql-queries/status';
+
+const defaultLanguage: string = 'lt';
 
 const resolvers: IResolvers = {
   Query: {
@@ -49,6 +52,11 @@ const resolvers: IResolvers = {
       );
       return dbResponse.rows[0];
     },
+    status: async ({ status }, { language }, { pgClient }) => {
+        const dbResponse = await pgClient.query(getStatusTranslationQuery(status, language, defaultLanguage));
+
+        return dbResponse.rows[0].status;
+    }
   },
 };
 
