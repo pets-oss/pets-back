@@ -10,9 +10,17 @@ enum AnimalRegistrationStatus {
     Inactive
 }
 
-interface AnimalRegistrationInput {
+interface CreateAnimalRegistrationInput {
     animalId: number;
     registrationNo: String;
+    registrationDate: String;
+    status: AnimalRegistrationStatus;
+}
+
+interface UpdateAnimalRegistrationInput {
+    animalId: number;
+    registrationNo: String;
+    newRegistrationNo?: String;
     registrationDate: String;
     status: AnimalRegistrationStatus;
 }
@@ -22,7 +30,27 @@ interface AnimalRegistrationDeleteInput {
     registrationNo: String;
 }
 
-export const getActiveAnimalRegistrationQuery = (id: number): QueryConfig => {
+export const getActiveLastAnimalRegistrationQuery = (id: number): QueryConfig => {
+    const text = `SELECT
+                    animal_id,
+                    registration_no,
+                    registration_date,
+                    status
+                FROM ${table}
+                WHERE animal_id = $1
+                    AND delete_time IS NULL
+                    AND status = 'Active'
+                ORDER BY registration_date DESC;`;
+
+    const query = {
+        text,
+        values: [id],
+    };
+
+    return query;
+};
+
+export const getActiveAnimalRegistrationsQuery = (id: number): QueryConfig => {
     const text = `SELECT
                     animal_id,
                     registration_no,
@@ -41,45 +69,30 @@ export const getActiveAnimalRegistrationQuery = (id: number): QueryConfig => {
     return query;
 };
 
-export const createAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
+export const createAnimalRegistrationQuery = (input: CreateAnimalRegistrationInput): QueryConfig =>
     insert(table, snakeCaseKeys(input))
     .returning(returnFields)
     .toParams();
 
-export const isAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => {
-    const snakeInput = snakeCaseKeys(input);
-    const text = `SELECT
-                    animal_id,
-                    registration_no,
-                    delete_time
-                FROM ${table}
-                WHERE animal_id = $1
-                    AND registration_no = $2;`;
-
-    const query = {
-        text,
-        values: [
-            snakeInput.animal_id,
-            snakeInput.registration_no,
-        ],
-    };
-
-    return query;
-};
-
-export const undeleteAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => 
+export const undeleteAnimalRegistrationQuery = (input: AnimalRegistrationDeleteInput): QueryConfig => 
     update(table, 
         {...{ delete_time: null }, ...snakeCaseKeys(input)}
     )
     .where({ animal_id: input.animalId, registration_no: input.registrationNo })
-    .returning(returnFields)
+    .returning('animal_id, registration_no')
     .toParams();
 
-export const updateAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
-    update(table, snakeCaseKeys(input))
-    .where({ animal_id: input.animalId })
+export const updateAnimalRegistrationQuery = (input: UpdateAnimalRegistrationInput): QueryConfig => {
+    let inputUpdatedRegistrationNo = { ...input };
+    inputUpdatedRegistrationNo.registrationNo = inputUpdatedRegistrationNo.newRegistrationNo ? 
+        inputUpdatedRegistrationNo.newRegistrationNo : inputUpdatedRegistrationNo.registrationNo;
+    delete inputUpdatedRegistrationNo.newRegistrationNo;
+
+    return update(table, snakeCaseKeys(inputUpdatedRegistrationNo))
+    .where({ animal_id: inputUpdatedRegistrationNo.animalId, registration_no: input.registrationNo })
     .returning(returnFields)
     .toParams();
+}
 
 export const deleteAnimalRegistrationQuery = (input: AnimalRegistrationDeleteInput): QueryConfig =>
     update(table, { delete_time: 'NOW()' })

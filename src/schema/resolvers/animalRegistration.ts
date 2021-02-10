@@ -1,30 +1,26 @@
 import { IResolvers } from 'graphql-tools';
 import {
-  getActiveAnimalRegistrationQuery,
+  getActiveLastAnimalRegistrationQuery,
+  getActiveAnimalRegistrationsQuery,
   createAnimalRegistrationQuery,
   updateAnimalRegistrationQuery,
   deleteAnimalRegistrationQuery,
-  isAnimalRegistrationQuery,
   undeleteAnimalRegistrationQuery,
 } from '../../sql-queries/animalRegistration';
 
 const resolvers: IResolvers = {
   Query: {
     registration: async (_, { id }, { pgClient }) => {
-      const dbResponse = await pgClient.query(getActiveAnimalRegistrationQuery(id));
+      const dbResponse = await pgClient.query(getActiveLastAnimalRegistrationQuery(id));
       return dbResponse.rows[0];
+    },
+    registrations: async (_, { id }, { pgClient }) => {
+      const dbResponse = await pgClient.query(getActiveAnimalRegistrationsQuery(id));
+      return dbResponse.rows;
     },
   },
   Mutation: {
     createAnimalRegistration: async (_, { input }, { pgClient }) => {
-      const isAnimalRegistration = await pgClient.query(isAnimalRegistrationQuery(input));
-      if (isAnimalRegistration.rows[0] && isAnimalRegistration.rows[0].delete_time) {
-        const dbResponse = await pgClient.query(undeleteAnimalRegistrationQuery(input));
-        return dbResponse.rows[0];
-      }
-      if (isAnimalRegistration.rows[0] && isAnimalRegistration.rows[0].registration_no) {
-        throw new Error('This registration for this animal already exists');
-      }
       const dbResponse = await pgClient.query(createAnimalRegistrationQuery(input));
       return dbResponse.rows[0];
     },
@@ -34,6 +30,10 @@ const resolvers: IResolvers = {
     },
     deleteAnimalRegistration: async (_, { input }, { pgClient }) => {
       const dbResponse = await pgClient.query(deleteAnimalRegistrationQuery(input));
+      return dbResponse.rows[0];
+    },
+    undeleteAnimalRegistration: async (_, { input }, { pgClient }) => {
+      const dbResponse = await pgClient.query(undeleteAnimalRegistrationQuery(input));
       return dbResponse.rows[0];
     },
   },
