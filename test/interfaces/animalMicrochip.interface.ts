@@ -2,7 +2,5 @@ export default interface AnimalMicrochip {
     animalId: number,
     microchipId: string,
     installDate: string | null,
-    status: MicrochipStatus
+    status: string
 }
-
-enum MicrochipStatus { 'Implanted', 'Removed' }

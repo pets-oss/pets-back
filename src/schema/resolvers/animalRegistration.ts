@@ -5,6 +5,9 @@ import {
   updateAnimalRegistrationQuery,
   deleteAnimalRegistrationQuery,
 } from '../../sql-queries/animalRegistration';
+import { getStatusTranslationQuery } from '../../sql-queries/status';
+
+const defaultLanguage: string = 'lt';
 
 const resolvers: IResolvers = {
   Query: {
@@ -26,6 +29,12 @@ const resolvers: IResolvers = {
       const dbResponse = await pgClient.query(deleteAnimalRegistrationQuery(id));
       return dbResponse.rows[0];
     },
+  },
+  AnimalRegistration: {
+    status: async ({ status }, { language }, { pgClient }) => {
+      const dbResponse = await pgClient.query(getStatusTranslationQuery(status, language, defaultLanguage));
+      return dbResponse.rows[0].status;
+    }
   },
 };
 

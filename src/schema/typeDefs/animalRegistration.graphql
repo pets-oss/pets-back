@@ -12,8 +12,11 @@ type AnimalRegistration {
   registrationNo: String!
   "Registration date"
   registrationDate: String
-  "Registration status ('Active' or 'Inactive')"
-  status: RegistrationStatus
+  """
+    Registration status ('Active' or 'Inactive') translation
+    Examples: status(language: "en") or just status - will return default language ("lt") translation
+    """
+    status("Language code" language: String = "lt"): String
 }
 
 input CreateAnimalRegistrationInput {

@@ -22,7 +22,7 @@ describe('Getting statuses', () => {
                 validate(statuses[0]);
                 expect(statuses[0].id).to.be.eq('healthy');
                 expect(statuses[0].value).to.be.eq('Sveikas');
-                expect(statuses).to.have.lengthOf(4);
+                expect(statuses).to.have.lengthOf(8);
                 return done();
             });
     });

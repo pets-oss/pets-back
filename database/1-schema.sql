@@ -202,7 +202,7 @@ CREATE TABLE animal_microchip (
 );
 
 CREATE TABLE status_translation (
-    status status NOT NULL,
+    status VARCHAR(20) NOT NULL,
     language VARCHAR(4) NOT NULL,
     translation VARCHAR(20) NOT NULL,
     PRIMARY KEY (status, language)
