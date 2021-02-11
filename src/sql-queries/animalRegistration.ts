@@ -40,12 +40,11 @@ export const createAnimalRegistrationQuery = (input: AnimalRegistrationInput): Q
     .returning(returnFields)
     .toParams();
 
-export const updateAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig => {
-    return update(table, snakeCaseKeys(input))
+export const updateAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
+    update(table, snakeCaseKeys(input))
     .where({ animal_id: input.animalId })
     .returning(returnFields)
     .toParams();
-}
 
 export const deleteAnimalRegistrationQuery = (id: number): QueryConfig => {
     const text = `DELETE
