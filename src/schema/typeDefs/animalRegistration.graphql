@@ -1,4 +1,9 @@
-"Represents an animal registration."
+enum RegistrationStatus {
+  Active,
+  Inactive
+}
+
+"Represents animal registration"
 type AnimalRegistration {
   "Animal id, for example 2"
   animalId: Int!
@@ -7,8 +12,57 @@ type AnimalRegistration {
   "Registration date"
   registrationDate: String
   """
-    Registration status ('Active' or 'Inactive') translation
-    Examples: status(language: "en") or just status - will return default language ("lt") translation
-    """
-    status("Language code" language: String = "lt"): String
+  Registration status ('Active' or 'Inactive') translation
+  Examples: status(language: "en") or just status - will return default language ("lt") translation
+  """
+  status("Language code" language: String = "lt"): String
+}
+
+input CreateAnimalRegistrationInput {
+  "Animal id, for example 2"
+  animalId: Int!
+  "Registration number"
+  registrationNo: String!
+  "Registration date"
+  registrationDate: String
+  "Registration status ('Active' or 'Inactive')"
+  status: RegistrationStatus
+}
+
+input UpdateAnimalRegistrationInput {
+  "Animal id, for example 2"
+  animalId: Int!
+  "Registration number"
+  registrationNo: String
+  "Registration date"
+  registrationDate: String
+  "Registration status ('Active' or 'Inactive')"
+  status: RegistrationStatus
+}
+
+extend type Mutation {
+  "Create animal registration"
+  createAnimalRegistration(input: CreateAnimalRegistrationInput!): AnimalRegistration
+  
+  """
+  Update animal registration
+  Example ***
+  mutation {
+    updateAnimalRegistration(input: {
+      animalId: 3, 
+      registrationNo: "2021PandemicC19X00001",
+      registrationDate: "2021-01-01"
+      status: Active
+    }) {
+      animalId
+      registrationNo
+      registrationDate
+      status
+    }
+  } ***
+  """
+  updateAnimalRegistration(input: UpdateAnimalRegistrationInput!): AnimalRegistration
+
+  "Delete animal registration"
+  deleteAnimalRegistration(id: Int!): AnimalRegistration
 }

@@ -6,7 +6,7 @@ import {
   updateAnimalQuery,
 } from '../../sql-queries/animal';
 import getAnimalDetailsQuery from '../../sql-queries/animalDetails';
-import getActiveAnimalRegistrationQuery from '../../sql-queries/animalRegistration';
+import { getActiveAnimalRegistrationQuery } from '../../sql-queries/animalRegistration';
 import getImplantedAnimalMicrochipQuery from '../../sql-queries/animalMicrochip';
 import { getStatusTranslationQuery } from '../../sql-queries/status';
 

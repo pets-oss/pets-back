@@ -33,7 +33,8 @@ INSERT INTO animal
 ('Jupyteris', 2, 'sick', 'https://picsum.photos/id/237/300/300'),
 ('Pitoncas', 3, 'healthy', 'https://picsum.photos/id/237/300/300'),
 ('Javainis', 3, 'adopted', 'https://picsum.photos/id/237/300/300'),
-('Murkė', 1, 'healthy', 'https://picsum.photos/id/237/300/300');
+('Murkė', 1, 'healthy', 'https://picsum.photos/id/237/300/300'),
+('Grikis', 1, 'healthy', 'https://picsum.photos/id/237/300/300');
 
 INSERT INTO animal_details
 (animal_id, breed_id, gender, color, birth_date, weight, allergy, food) VALUES

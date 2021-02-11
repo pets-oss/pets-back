@@ -162,11 +162,11 @@ CREATE TABLE animal_details (
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
 
 CREATE TABLE animal_registration (
-    animal_id INTEGER REFERENCES animal(id) NOT NULL,
-    registration_no VARCHAR(256) NOT NULL,
-    registration_date DATE,
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id),
+    registration_no VARCHAR(256) NOT NULL UNIQUE,
+    registration_date DATE DEFAULT CURRENT_DATE,
     status registration_status DEFAULT 'Active',
-    PRIMARY KEY (animal_id, registration_no)
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TYPE chip_company_code AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12');
@@ -252,4 +252,7 @@ CREATE TRIGGER app_user_mod_time BEFORE UPDATE ON app_user
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);

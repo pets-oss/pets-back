@@ -54,7 +54,7 @@ To be able to test GraphQL queries, have your node server and database running l
 
 ### C.i. Validate data with interfaces
 
-When changing or writing new interfaces for validation, generate the validator, e.g. `npx typescript-json-validator test/animal.interface.ts Animal` https://github.com/ForbesLindesay/typescript-json-validator
+When changing or writing new interfaces for validation, generate the validator, e.g. `npx typescript-json-validator test/interfaces/animal.interface.ts Animal` https://github.com/ForbesLindesay/typescript-json-validator
 
 ### C.ii. Change URL of test backend
 
