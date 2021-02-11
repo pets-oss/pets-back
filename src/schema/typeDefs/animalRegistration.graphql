@@ -1,6 +1,5 @@
-"Animal registration status valid values"
 enum RegistrationStatus {
-  Active
+  Active,
   Inactive
 }
 
@@ -13,10 +12,10 @@ type AnimalRegistration {
   "Registration date"
   registrationDate: String
   """
-    Registration status ('Active' or 'Inactive') translation
-    Examples: status(language: "en") or just status - will return default language ("lt") translation
-    """
-    status("Language code" language: String = "lt"): String
+  Registration status ('Active' or 'Inactive') translation
+  Examples: status(language: "en") or just status - will return default language ("lt") translation
+  """
+  status("Language code" language: String = "lt"): String
 }
 
 input CreateAnimalRegistrationInput {

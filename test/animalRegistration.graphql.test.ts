@@ -25,7 +25,7 @@ describe ('animalRegistration Graphql mutations tests', () => {
             animalId: 6,
             registrationNo,
             registrationDate: dateIntString,
-            status: 'Active',
+            status: 'Aktyvus',
         }
 
         request.post('/graphql')
@@ -50,10 +50,10 @@ describe ('animalRegistration Graphql mutations tests', () => {
         const id = 6;
 
         const answer = {
-            animalId: id, 
+            animalId: id,
             registrationNo,
             registrationDate: dateIntString,
-            status: 'Active',
+            status: 'Aktyvus',
         };
 
         request.post('/graphql')
@@ -85,7 +85,7 @@ describe ('animalRegistration Graphql mutations tests', () => {
             animalId: 3,
             registrationNo: "123456Carl",
             registrationDate: dateIntString,
-            status: 'Active',
+            status: 'Aktyvus',
         };
 
         request.post('/graphql')
