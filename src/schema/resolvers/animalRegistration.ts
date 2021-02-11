@@ -1,22 +1,16 @@
 import { IResolvers } from 'graphql-tools';
 import {
-  getActiveLastAnimalRegistrationQuery,
-  getActiveAnimalRegistrationsQuery,
+  getActiveAnimalRegistrationQuery,
   createAnimalRegistrationQuery,
   updateAnimalRegistrationQuery,
   deleteAnimalRegistrationQuery,
-  undeleteAnimalRegistrationQuery,
 } from '../../sql-queries/animalRegistration';
 
 const resolvers: IResolvers = {
   Query: {
     registration: async (_, { id }, { pgClient }) => {
-      const dbResponse = await pgClient.query(getActiveLastAnimalRegistrationQuery(id));
+      const dbResponse = await pgClient.query(getActiveAnimalRegistrationQuery(id));
       return dbResponse.rows[0];
-    },
-    registrations: async (_, { id }, { pgClient }) => {
-      const dbResponse = await pgClient.query(getActiveAnimalRegistrationsQuery(id));
-      return dbResponse.rows;
     },
   },
   Mutation: {
@@ -28,12 +22,8 @@ const resolvers: IResolvers = {
       const dbResponse = await pgClient.query(updateAnimalRegistrationQuery(input));
       return dbResponse.rows[0];
     },
-    deleteAnimalRegistration: async (_, { input }, { pgClient }) => {
-      const dbResponse = await pgClient.query(deleteAnimalRegistrationQuery(input));
-      return dbResponse.rows[0];
-    },
-    undeleteAnimalRegistration: async (_, { input }, { pgClient }) => {
-      const dbResponse = await pgClient.query(undeleteAnimalRegistrationQuery(input));
+    deleteAnimalRegistration: async (_, { id }, { pgClient }) => {
+      const dbResponse = await pgClient.query(deleteAnimalRegistrationQuery(id));
       return dbResponse.rows[0];
     },
   },

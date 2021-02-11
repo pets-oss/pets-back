@@ -6,7 +6,7 @@ import {
   updateAnimalQuery,
 } from '../../sql-queries/animal';
 import getAnimalDetailsQuery from '../../sql-queries/animalDetails';
-import { getActiveLastAnimalRegistrationQuery } from '../../sql-queries/animalRegistration';
+import { getActiveAnimalRegistrationQuery } from '../../sql-queries/animalRegistration';
 import getImplantedAnimalMicrochipQuery from '../../sql-queries/animalMicrochip';
 
 const resolvers: IResolvers = {
@@ -39,7 +39,7 @@ const resolvers: IResolvers = {
     },
     registration: async ({ id }, __, { pgClient }) => {
       const dbResponse = await pgClient.query(
-        getActiveLastAnimalRegistrationQuery(id)
+        getActiveAnimalRegistrationQuery(id)
       );
       return dbResponse.rows[0];
     },

@@ -4,17 +4,6 @@ enum RegistrationStatus {
   Inactive
 }
 
-extend type Query {
-  """
-  Lookup animal registrations.
-
-  Examples:
-
-  animal(id: 1)
-  """
-  registrations("Animal id in database" id: Int!): [AnimalRegistration]
-}
-
 "Represents animal registration"
 type AnimalRegistration {
   "Animal id, for example 2"
@@ -25,13 +14,6 @@ type AnimalRegistration {
   registrationDate: String
   "Registration status ('Active' or 'Inactive')"
   status: RegistrationStatus
-}
-
-type AnimalRegistrationDelete {
-  "Animal id, for example 2"
-  animalId: Int!
-  "Registration number"
-  registrationNo: String!
 }
 
 input CreateAnimalRegistrationInput {
@@ -49,18 +31,11 @@ input UpdateAnimalRegistrationInput {
   "Animal id, for example 2"
   animalId: Int!
   "Registration number"
-  registrationNo: String!
-  "If newRegistrationNo provided, it updates the previous registrationNo, otherwise it just updates other fields"
-  newRegistrationNo: String
+  registrationNo: String
   "Registration date"
   registrationDate: String
   "Registration status ('Active' or 'Inactive')"
   status: RegistrationStatus
-}
-
-input AnimalRegistrationDeleteInput {
-    animalId: Int!
-    registrationNo: String!
 }
 
 extend type Mutation {
@@ -87,8 +62,5 @@ extend type Mutation {
   updateAnimalRegistration(input: UpdateAnimalRegistrationInput!): AnimalRegistration
 
   "Delete animal registration"
-  deleteAnimalRegistration(input: AnimalRegistrationDeleteInput!): AnimalRegistrationDelete
-
-  "Undelete animal registration"
-  undeleteAnimalRegistration(input: AnimalRegistrationDeleteInput!): AnimalRegistrationDelete
+  deleteAnimalRegistration(id: Int!): AnimalRegistration
 }

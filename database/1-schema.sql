@@ -162,13 +162,11 @@ CREATE TABLE animal_details (
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
 
 CREATE TABLE animal_registration (
-    animal_id INTEGER REFERENCES animal(id) NOT NULL,
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id),
     registration_no VARCHAR(256) NOT NULL,
     registration_date DATE DEFAULT CURRENT_DATE,
     status registration_status DEFAULT 'Active',
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    delete_time TIMESTAMP,
-    PRIMARY KEY (animal_id, registration_no)
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TYPE chip_company_code AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12');

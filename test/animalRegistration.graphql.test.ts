@@ -8,40 +8,24 @@ require('dotenv').config({ path: './test/.env' });
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-describe ('animalRegistration Graphql tests', () => {
-    it ('Get all animal_id=6 registrations', (done) => {
-        request.post('/graphql')
-        .send({
-            query: `{ registrations(id: 1)
-                ${animalRegistrationFields}
-            }`
-        })
-        .expect(200)
-        .end((err, res) => {
-            if (err) return done(err);
-            const { body: { data: { registrations } } } = res;
-            expect(registrations).to.be.an('array');
-            return done();
-        });
-    })
-})
-
 describe ('animalRegistration Graphql mutations tests', () => {
-    const registrationNo = `2021PandemicC19X${uuidv4()}`
+    const registrationNo = `2021PandemicC19X${uuidv4()}`;
+    const date = "2021-01-01";
+    const dateIntString = new Date("2021-01-01").getTime().toString();
 
     it ('Create animal_id=6 registration', (done) => {
         const mutation = 'createAnimalRegistration'
         const create = `{
             animalId: 6, 
             registrationNo: "${registrationNo}",
-            registrationDate: "2021-01-01",
+            registrationDate: "${date}",
             status: Active
         }`
         const answer = {
             animalId: 6,
             registrationNo: registrationNo,
-            registrationDate: new Date("2021-01-01").getTime().toString(),
-            status: 'Active'
+            registrationDate: dateIntString,
+            status: 'Active',
         }
 
         request.post('/graphql')
@@ -61,121 +45,23 @@ describe ('animalRegistration Graphql mutations tests', () => {
             });
     });
 
-    it ('Update animal_id=3 registration', (done) => {
-        const mutation = 'updateAnimalRegistration'
-        const update = `{
-            animalId: 3, 
-            registrationNo: "456Carl",
-            registrationDate: "2021-01-01",
-            status: Active
-        }`
-        const answer = {
-            animalId: 3, 
-            registrationNo: "456Carl",
-            registrationDate: new Date("2021-01-01").getTime().toString(),
-            status: 'Active'
-        }
-
-        request.post('/graphql')
-            .send({
-                query: `
-                    mutation {
-                        ${mutation}(input: ${update})
-                            ${animalRegistrationFields}
-                }`
-            })
-            .expect(200)
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(JSON.stringify(res.body.data[mutation]))
-                .equal(JSON.stringify(answer))
-                return done();
-            });
-    });
-
-    it ('Update animal_id=3 registrationNo', (done) => {
-        const mutation = 'updateAnimalRegistration'
-        const update = `{
-            animalId: 3, 
-            registrationNo: "456Carl",
-            newRegistrationNo: "${registrationNo}",
-            registrationDate: "2021-01-01",
-            status: Active
-        }`
-        const answer = {
-            animalId: 3, 
-            registrationNo: registrationNo,
-            registrationDate: new Date("2021-01-01").getTime().toString(),
-            status: 'Active'
-        }
-
-        request.post('/graphql')
-            .send({
-                query: `
-                    mutation {
-                        ${mutation}(input: ${update})
-                            ${animalRegistrationFields}
-                }`
-            })
-            .expect(200)
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(JSON.stringify(res.body.data[mutation]))
-                .equal(JSON.stringify(answer))
-                return done();
-            });
-    });
-
-    it ('Update animal_id=3 registrationNo to previous value (to be able to run the test again)', (done) => {
-        const mutation = 'updateAnimalRegistration'
-        const update = `{
-            animalId: 3,
-            registrationNo: "${registrationNo}",
-            newRegistrationNo: "456Carl",
-            registrationDate: "2021-01-07",
-            status: Active
-        }`
-        const answer = {
-            animalId: 3, 
-            registrationNo: "456Carl",
-            registrationDate: new Date("2021-01-07").getTime().toString(),
-            status: 'Active'
-        }
-
-        request.post('/graphql')
-            .send({
-                query: `
-                    mutation {
-                        ${mutation}(input: ${update})
-                            ${animalRegistrationFields}
-                }`
-            })
-            .expect(200)
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(JSON.stringify(res.body.data[mutation]))
-                .equal(JSON.stringify(answer))
-                return done();
-            });
-    });
-
     it ('Delete animal_id=6 registration', (done) => {
-        const mutation = 'deleteAnimalRegistration'
-        const update = `{
-            animalId: 6, 
-            registrationNo: "${registrationNo}",
-        }`
+        const mutation = 'deleteAnimalRegistration';
+        const id = 6;
+
         const answer = {
-            animalId: 6, 
+            animalId: id, 
             registrationNo: registrationNo,
-        }
+            registrationDate: dateIntString,
+            status: 'Active',
+        };
 
         request.post('/graphql')
             .send({
                 query: `
                     mutation {
-                        ${mutation}(input: ${update}) 
-                            { animalId registrationNo }
+                        ${mutation}(id: 6) 
+                            ${animalRegistrationFields}
                 }`
             })
             .expect(200)
@@ -187,23 +73,27 @@ describe ('animalRegistration Graphql mutations tests', () => {
             });
     });
 
-    it ('Undelete animal_id=6 registration', (done) => {
-        const mutation = 'undeleteAnimalRegistration'
+    it ('Update animal_id=3 registration', (done) => {
+        const mutation = 'updateAnimalRegistration';
         const update = `{
-            animalId: 6, 
-            registrationNo: "${registrationNo}",
-        }`
+            animalId: 3, 
+            registrationNo: "123456Carl",
+            registrationDate: "${date}",
+            status: Active
+        }`;
         const answer = {
-            animalId: 6, 
-            registrationNo: registrationNo,
-        }
+            animalId: 3,
+            registrationNo: "123456Carl",
+            registrationDate: dateIntString,
+            status: 'Active',
+        };
 
         request.post('/graphql')
             .send({
                 query: `
                     mutation {
-                        ${mutation}(input: ${update}) 
-                            { animalId registrationNo }
+                        ${mutation}(input: ${update})
+                            ${animalRegistrationFields}
                 }`
             })
             .expect(200)
