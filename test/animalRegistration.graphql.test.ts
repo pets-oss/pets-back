@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import { animalRegistrationFields } from './testFields';
 import { v4 as uuidv4 } from 'uuid';
+import { animalRegistrationFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -23,7 +23,7 @@ describe ('animalRegistration Graphql mutations tests', () => {
         }`
         const answer = {
             animalId: 6,
-            registrationNo: registrationNo,
+            registrationNo,
             registrationDate: dateIntString,
             status: 'Active',
         }
@@ -51,7 +51,7 @@ describe ('animalRegistration Graphql mutations tests', () => {
 
         const answer = {
             animalId: id, 
-            registrationNo: registrationNo,
+            registrationNo,
             registrationDate: dateIntString,
             status: 'Active',
         };
