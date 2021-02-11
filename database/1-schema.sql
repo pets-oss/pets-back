@@ -163,7 +163,7 @@ CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
 
 CREATE TABLE animal_registration (
     animal_id INTEGER PRIMARY KEY REFERENCES animal(id),
-    registration_no VARCHAR(256) NOT NULL,
+    registration_no VARCHAR(256) NOT NULL UNIQUE,
     registration_date DATE DEFAULT CURRENT_DATE,
     status registration_status DEFAULT 'Active',
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
