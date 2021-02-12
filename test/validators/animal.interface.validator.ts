@@ -3,6 +3,7 @@
 import {inspect} from 'util';
 import Ajv = require('ajv');
 import Animal from '../interfaces/animal.interface';
+
 export const ajv = new Ajv({"allErrors":true,"coerceTypes":false,"format":"fast","nullable":true,"unicode":true,"uniqueItems":true,"useDefaults":true});
 
 ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-06.json'));
@@ -86,9 +87,6 @@ export const AnimalSchema = {
       "defaultProperties": [
       ],
       "properties": {
-        "animalId": {
-          "type": "number"
-        },
         "registrationDate": {
           "type": [
             "null",
@@ -99,14 +97,10 @@ export const AnimalSchema = {
           "type": "string"
         },
         "status": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         }
       },
       "required": [
-        "animalId",
         "registrationDate",
         "registrationNo",
         "status"
@@ -130,10 +124,7 @@ export const AnimalSchema = {
           "type": "string"
         },
         "status": {
-          "type": [
-            "null",
-            "string"
-          ]
+          "type": "string"
         }
       },
       "required": [
@@ -211,11 +202,11 @@ export const isAnimal = ajv.compile(AnimalSchema) as ValidateFunction<Animal>;
 export default function validate(value: unknown): Animal {
   if (isAnimal(value)) {
     return value;
-  } else {
+  } 
     throw new Error(
-      ajv.errorsText(isAnimal.errors!.filter((e: any) => e.keyword !== 'if'), {dataVar: 'Animal'}) +
-      '\n\n' +
-      inspect(value),
+      `${ajv.errorsText(isAnimal.errors!.filter((e: any) => e.keyword !== 'if'), {dataVar: 'Animal'}) 
+      }\n\n${ 
+      inspect(value)}`,
     );
-  }
+  
 }

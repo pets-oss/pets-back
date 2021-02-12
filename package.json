@@ -14,6 +14,7 @@
     "dev": "tsc && nodemon dist/src/index.js",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/src/index.js",
     "test": "mocha -r ts-node/register test/*.test.ts",
+    "testSpecific": "mocha -r ts-node/register",
     "check-lint": "eslint 'src/**/*.ts' && eslint 'test/*test.ts'",
     "check-type": "tsc --noEmit --skipLibCheck"
   },

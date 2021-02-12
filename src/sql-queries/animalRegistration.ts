@@ -10,7 +10,7 @@ enum AnimalRegistrationStatus {
     Inactive
 }
 
-interface AnimalRegistrationInput {
+export interface AnimalRegistrationInput {
     animalId: number;
     registrationNo: String;
     registrationDate: String;
