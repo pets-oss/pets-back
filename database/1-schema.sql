@@ -198,7 +198,6 @@ CREATE TABLE animal_microchip (
     install_date DATE,
     install_place install_place NOT NULL,
     status chip_status DEFAULT 'Implanted',
-    delete_time TIMESTAMP,
     PRIMARY KEY (animal_id, microchip_id)
 );
 

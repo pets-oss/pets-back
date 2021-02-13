@@ -3,44 +3,49 @@ import {insert, select, update} from "sql-bricks-postgres";
 import snakeCaseKeys from 'snakecase-keys';
 import {MicrochipStatus} from "../../test/interfaces/animalMicrochip.interface";
 
-interface ImplantedAnimalMicrochipInput {
-    animal_id: number;
-    microchip_id: String;
-    chip_company_code: number;
-    install_date: String;
-    install_place: number;
+interface AnimalMicrochipInput {
+    animalId: number;
+    microchipId: String;
+    chipCompanyCode: number;
+    installDate: String;
+    installPlace: number;
     status: MicrochipStatus;
 }
 
+const table = 'animal_microchip';
+const returnFields = 'animal_id, microchip_id, chip_company_code, install_date, install_place, status';
+
 export const getImplantedAnimalMicrochipQuery = (animal_id: number): QueryConfig =>
-    select().from('animal_microchip').where({ animal_id, status: 'Implanted', delete_time: null }).toParams();
+    select().from(table).where({ animal_id, status: 'Implanted'}).toParams();
 
-export const getDeleteTimeQuery = (animal_id: number, microchip_id: String): QueryConfig =>
-    select('delete_time').from('animal_microchip').where({ animal_id, microchip_id }).toParams();
-
-export const createImplantedAnimalMicrochipQuery = (
-    input: ImplantedAnimalMicrochipInput
+export const createAnimalMicrochipQuery = (
+    input: AnimalMicrochipInput
 ): QueryConfig =>
-    insert('animal_microchip', snakeCaseKeys(input))
-        .returning(
-            'animal_id, microchip_id, chip_company_code, install_date, install_place, status, delete_time'
-        )
+    insert(table, snakeCaseKeys(input))
+        .returning(returnFields)
         .toParams();
 
-export const updateImplantedAnimalMicrochipQuery = (
-    input: ImplantedAnimalMicrochipInput
+export const updateAnimalMicrochipQuery = (
+    input: AnimalMicrochipInput
 ): QueryConfig =>
-    update('animal_microchip', snakeCaseKeys(input))
-        .where({ animal_id: input.animal_id, microchip_id: input.microchip_id })
-        .returning(
-            'animal_id, microchip_id, chip_company_code, install_date, install_place, status, delete_time'
-        )
+    update(table, snakeCaseKeys(input))
+        .where({ animal_id: input.animalId, microchip_id: input.microchipId })
+        .returning(returnFields)
         .toParams();
 
-export const deleteImplantedAnimalMicrochipQuery = (animal_id: number, microchip_id: String): QueryConfig =>
-    update('animal_microchip', { delete_time: 'NOW()' })
-        .where({ animal_id, microchip_id })
-        .returning(
-            'animal_id, microchip_id, chip_company_code, install_date, install_place, status, delete_time'
-        )
-        .toParams();
+export const deleteAnimalMicrochipQuery = (animal_id: number, microchip_id: String): QueryConfig => {
+    const text = `DELETE
+                FROM ${table}
+                WHERE animal_id = $1
+                  AND microchip_id = $2
+                RETURNING 
+                    animal_id,
+                    microchip_id;`;
+
+    const query = {
+        text,
+        values: [animal_id, microchip_id],
+    };
+
+    return query;
+}

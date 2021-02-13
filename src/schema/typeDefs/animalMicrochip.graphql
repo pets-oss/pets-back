@@ -19,39 +19,39 @@ type AnimalMicrochip {
 
 extend type Mutation {
   "Created microchip"
-  createMicrochip(input: CreateImplantedAnimalMicrochipInput!): AnimalMicrochip
+  createMicrochip(input: CreateAnimalMicrochipInput!): AnimalMicrochip
   "Updated microchip"
-  updateMicrochip(input: UpdateImplantedAnimalMicrochipInput!): AnimalMicrochip
+  updateMicrochip(input: UpdateAnimalMicrochipInput!): AnimalMicrochip
   "Deleted microchip"
-  deleteMicrochip(animal_id: Int!, microchip_id: String!): AnimalMicrochip
+  deleteMicrochip(animalId: Int!, microchipId: String!): AnimalMicrochip
 }
 
-input CreateImplantedAnimalMicrochipInput {
+input CreateAnimalMicrochipInput {
   "Animal id, for example 2"
-  animal_id: Int!
+  animalId: Int!
   "Microchip id"
-  microchip_id: String!
+  microchipId: String!
   "Chip company code"
-  chip_company_code: Int!
+  chipCompanyCode: Int!
   "Install date"
-  install_date: String
+  installDate: String
   "Install place"
-  install_place: Int!
+  installPlace: Int!
   "Microchip status ('Implanted' or 'Removed')"
   status: String!
 }
 
-input UpdateImplantedAnimalMicrochipInput {
+input UpdateAnimalMicrochipInput {
   "Animal id, for example 2"
-  animal_id: Int!
+  animalId: Int!
   "Microchip id"
-  microchip_id: String!
+  microchipId: String!
   "Chip company code"
-  chip_company_code: Int
+  chipCompanyCode: Int
   "Install date"
-  install_date: String
+  installDate: String
   "Install place"
-  install_place: Int
+  installPlace: Int
   "Microchip status ('Implanted' or 'Removed')"
   status: String
 }

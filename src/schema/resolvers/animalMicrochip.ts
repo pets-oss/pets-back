@@ -2,10 +2,9 @@ import { IResolvers } from 'graphql-tools';
 import { getStatusTranslationQuery } from '../../sql-queries/status';
 
 import {
-    createImplantedAnimalMicrochipQuery,
-    updateImplantedAnimalMicrochipQuery,
-    deleteImplantedAnimalMicrochipQuery,
-    getDeleteTimeQuery,
+    createAnimalMicrochipQuery,
+    updateAnimalMicrochipQuery,
+    deleteAnimalMicrochipQuery,
 } from "../../sql-queries/animalMicrochip";
 
 const defaultLanguage: string = 'lt';
@@ -20,7 +19,7 @@ const resolvers: IResolvers = {
     },
     Mutation: {
         createMicrochip: async (_, {input}, {pgClient}) => {
-            const dbResponse = await pgClient.query(createImplantedAnimalMicrochipQuery(input));
+            const dbResponse = await pgClient.query(createAnimalMicrochipQuery(input));
             return dbResponse.rows[0];
         },
         updateMicrochip: async (_, {input}, {pgClient}) => {
@@ -29,23 +28,11 @@ const resolvers: IResolvers = {
                     'You have to provide at least one data field when updating an entity'
                 );
             }
-            const getDeleteTimeResponse = await pgClient.query(
-                getDeleteTimeQuery(input.animal_id, input.microchip_id)
-            );
-            if (getDeleteTimeResponse.rows[0].delete_time) {
-                throw new Error('You are trying to update deleted animal microchip');
-            }
-            const dbResponse = await pgClient.query(updateImplantedAnimalMicrochipQuery(input));
+            const dbResponse = await pgClient.query(updateAnimalMicrochipQuery(input));
             return dbResponse.rows[0];
         },
-        deleteMicrochip: async (_, {animal_id, microchip_id}, {pgClient}) => {
-            const getDeleteTimeResponse = await pgClient.query(
-                getDeleteTimeQuery(animal_id, microchip_id)
-            );
-            if (getDeleteTimeResponse.rows[0].delete_time) {
-                throw new Error('Animal microchip is already deleted');
-            }
-            const dbResponse = await pgClient.query(deleteImplantedAnimalMicrochipQuery(animal_id, microchip_id));
+        deleteMicrochip: async (_, {animalId, microchipId}, {pgClient}) => {
+            const dbResponse = await pgClient.query(deleteAnimalMicrochipQuery(animalId, microchipId));
             return dbResponse.rows[0];
         },
     }
