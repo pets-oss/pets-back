@@ -4,8 +4,12 @@ type AnimalMicrochip {
   animalId: Int!
   "Microchip id"
   microchipId: String!
+  "Chip company code"
+  chipCompanyCode: Int!
   "Microchip install date"
   installDate: String
+  "Microchip install place"
+  installPlace: Int!
   """
   Microchip status ('Implanted' or 'Removed') translation
   Examples: status(language: "en") or just status - will return default language ("lt") translation
@@ -13,3 +17,41 @@ type AnimalMicrochip {
   status("Language code" language: String = "lt"): String
 }
 
+extend type Mutation {
+  "Created microchip"
+  createMicrochip(input: CreateAnimalMicrochipInput!): AnimalMicrochip
+  "Updated microchip"
+  updateMicrochip(input: UpdateAnimalMicrochipInput!): AnimalMicrochip
+  "Deleted microchip"
+  deleteMicrochip(animalId: Int!, microchipId: String!): AnimalMicrochip
+}
+
+input CreateAnimalMicrochipInput {
+  "Animal id, for example 2"
+  animalId: Int!
+  "Microchip id"
+  microchipId: String!
+  "Chip company code"
+  chipCompanyCode: Int!
+  "Install date"
+  installDate: String
+  "Install place"
+  installPlace: Int!
+  "Microchip status ('Implanted' or 'Removed')"
+  status: String!
+}
+
+input UpdateAnimalMicrochipInput {
+  "Animal id, for example 2"
+  animalId: Int!
+  "Microchip id"
+  microchipId: String!
+  "Chip company code"
+  chipCompanyCode: Int
+  "Install date"
+  installDate: String
+  "Install place"
+  installPlace: Int
+  "Microchip status ('Implanted' or 'Removed')"
+  status: String
+}

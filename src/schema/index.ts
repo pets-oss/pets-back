@@ -28,6 +28,7 @@ const schema = mergeSchemas({
   resolvers: merge(
     animalResolvers,
     animalDetailsResolvers,
+    animalMicrochipResolvers,
     genderResolvers,
     statusResolvers,
     breedResolvers,

@@ -1,21 +1,50 @@
 import { QueryConfig } from 'pg';
+import {insert, select, update} from "sql-bricks-postgres";
+import snakeCaseKeys from 'snakecase-keys';
 
-const getImplantedAnimalMicrochipQuery = (id: number): QueryConfig => {
-    const text = `SELECT
-                    animal_id,
-                    microchip_id,
-                    install_date,
-                    status
-                FROM public.animal_microchip
+interface AnimalMicrochipInput {
+    animalId: number;
+    microchipId: String;
+    chipCompanyCode: number;
+    installDate: String;
+    installPlace: number;
+    status: String;
+}
+
+const table = 'animal_microchip';
+const returnFields = 'animal_id, microchip_id, chip_company_code, install_date, install_place, status';
+
+export const getImplantedAnimalMicrochipQuery = (animal_id: number): QueryConfig =>
+    select().from(table).where({ animal_id, status: 'Implanted'}).toParams();
+
+export const createAnimalMicrochipQuery = (
+    input: AnimalMicrochipInput
+): QueryConfig =>
+    insert(table, snakeCaseKeys(input))
+        .returning(returnFields)
+        .toParams();
+
+export const updateAnimalMicrochipQuery = (
+    input: AnimalMicrochipInput
+): QueryConfig =>
+    update(table, snakeCaseKeys(input))
+        .where({ animal_id: input.animalId, microchip_id: input.microchipId })
+        .returning(returnFields)
+        .toParams();
+
+export const deleteAnimalMicrochipQuery = (animal_id: number, microchip_id: String): QueryConfig => {
+    const text = `DELETE
+                FROM ${table}
                 WHERE animal_id = $1
-                AND status = 'Implanted';`;
+                  AND microchip_id = $2
+                RETURNING 
+                    animal_id,
+                    microchip_id;`;
 
     const query = {
         text,
-        values: [id],
+        values: [animal_id, microchip_id],
     };
 
     return query;
-};
-
-export default getImplantedAnimalMicrochipQuery;
+}

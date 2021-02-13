@@ -7,7 +7,7 @@ import {
 } from '../../sql-queries/animal';
 import getAnimalDetailsQuery from '../../sql-queries/animalDetails';
 import { getActiveAnimalRegistrationQuery } from '../../sql-queries/animalRegistration';
-import getImplantedAnimalMicrochipQuery from '../../sql-queries/animalMicrochip';
+import { getImplantedAnimalMicrochipQuery } from '../../sql-queries/animalMicrochip';
 import { getStatusTranslationQuery } from '../../sql-queries/status';
 
 const defaultLanguage: string = 'lt';

@@ -40,7 +40,9 @@ export const animalMicrochipFields = `
     {
         animalId
         microchipId
+        chipCompanyCode
         installDate
+        installPlace
         status
     }
 `;
