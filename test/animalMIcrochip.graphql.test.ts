@@ -19,7 +19,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             chipCompanyCode: 1,
             installDate: "${date}",
             installPlace: 1,
-            status: Implanted
+            status: "Implanted"
         }`
         const answer = {
             animalId: 1,
@@ -27,7 +27,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             chipCompanyCode: 1,
             installDate: dateIntString,
             installPlace: 1,
-            status: "Implanted"
+            status: "Implantuotas"
         }
 
         request.post('/graphql')
@@ -54,7 +54,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             chipCompanyCode: 2,
             installDate: "${date}",
             installPlace: 2,
-            status: Removed
+            status: "Removed"
         }`
         const answer = {
             animalId: 1,
@@ -62,7 +62,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             chipCompanyCode: 2,
             installDate: dateIntString,
             installPlace: 2,
-            status: "Removed"
+            status: "Išimtas"
         }
 
         request.post('/graphql')

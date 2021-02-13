@@ -1,7 +1,6 @@
 import { QueryConfig } from 'pg';
 import {insert, select, update} from "sql-bricks-postgres";
 import snakeCaseKeys from 'snakecase-keys';
-import {MicrochipStatus} from "../../test/interfaces/animalMicrochip.interface";
 
 interface AnimalMicrochipInput {
     animalId: number;
@@ -9,7 +8,7 @@ interface AnimalMicrochipInput {
     chipCompanyCode: number;
     installDate: String;
     installPlace: number;
-    status: MicrochipStatus;
+    status: String;
 }
 
 const table = 'animal_microchip';
