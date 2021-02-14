@@ -66,3 +66,18 @@ export const animalFields = `
         modTime
     }
 `;
+
+export const userFields = `
+    {
+        id
+        username
+        name
+        surname
+        email
+        roles {
+            organizationId
+            roleType
+        }
+        modTime
+    }
+`;

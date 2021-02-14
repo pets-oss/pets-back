@@ -13,6 +13,7 @@ import colorResolvers from './resolvers/color';
 import animalMicrochipResolvers from './resolvers/animalMicrochip';
 import animalRegistrationResolvers from './resolvers/animalRegistration';
 import organizationResolvers from './resolvers/organization';
+import userResolvers from './resolvers/user';
 
 const schemaLocal = loadSchemaSync('src/schema/typeDefs/*.graphql', {
   loaders: [new GraphQLFileLoader()],
@@ -29,14 +30,14 @@ const schema = mergeSchemas({
     animalResolvers,
     animalDetailsResolvers,
     animalMicrochipResolvers,
+    animalRegistrationResolvers,
     genderResolvers,
     statusResolvers,
     breedResolvers,
     speciesResolvers,
     colorResolvers,
-    animalMicrochipResolvers,
     organizationResolvers,
-    animalRegistrationResolvers
+    userResolvers
   ),
 });
 

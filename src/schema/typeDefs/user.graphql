@@ -1,0 +1,67 @@
+extend type Query {
+  """
+  Lookup an user.
+
+  Examples:
+
+  user(id: 1)
+  """
+  user("user id in database" id: String!): User
+
+  """
+  Get all users.
+
+  Examples:
+
+  users
+  """
+  users: [User]
+}
+
+"Represents an user."
+type User {
+  "User id, for example 2"
+  id: String!
+  "User username"
+  username: String!
+  "User name"
+  name: String
+  "User surname"
+  surname: String
+  "User email"
+  email: String
+  "User roles"
+  roles: [Role]
+  "Modification time"
+  modTime: String
+}
+
+"Represents an user role."
+type Role {
+  "Organization id"
+  organizationId: Int!
+  "User role in organization"
+  roleType: String
+}
+
+extend type Mutation {
+  "Created user"
+  createUser(input: UserInput!): User
+  "Updated user"
+  updateUser(id: String, input: UserInput!): User
+  "Deleted user"
+  deleteUser(id: String!): User
+}
+
+input UserInput {
+  "User id"
+  id: String!
+  "User username"
+  username: String
+  "User name"
+  name: String
+  "User surname"
+  surname: String
+  "User email"
+  email: String
+}
