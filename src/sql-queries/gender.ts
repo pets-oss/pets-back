@@ -17,7 +17,7 @@ export const getGendersQuery = (language: string): QueryConfig => {
 
 export const getGenderQuery = (gender_id: string, language: string, defaultLanguage: string): QueryConfig => {
     const text = `
-        SELECT translation AS gender 
+        SELECT gender AS id, translation AS value 
         FROM gender_translation 
         WHERE gender = $1 
             AND language IN ($2, $3) 

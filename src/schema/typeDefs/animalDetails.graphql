@@ -11,12 +11,12 @@ type AnimalDetails {
   Animal species by language
   Examples: species(language: "en") or just species - will return default language ("lt") translation
   """
-  species("Language code" language: String = "lt"): String
+  species("Language code" language: String = "lt"): Species
   """
   Animal gender by language.
   Examples: gender(language: "en") or just gender - will return default language ("lt") translation
   """
-  gender("Language code" language: String = "lt"): String
+  gender("Language code" language: String = "lt"): Gender
   """
   Animal color by language
   Examples: color(language: "en") or just color - will return default language ("lt") translation

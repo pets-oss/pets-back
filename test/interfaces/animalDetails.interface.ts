@@ -1,8 +1,10 @@
+import Translation from './translation.interface';
+
 export default interface AnimalDetails {
     animalId: number,
     breed: string | null,
-    species: string | null,
-    gender: string | null,
+    species: Translation | null,
+    gender: Translation | null,
     color: string | null,
     birthDate: string | null,
     weight: number | null,

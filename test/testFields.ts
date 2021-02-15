@@ -17,8 +17,14 @@ export const animalDetailsFields = `
     {
         animalId
         breed
-        species
-        gender
+        species {
+            id
+            value
+        }
+        gender {
+            id
+            value
+        }
         color
         birthDate
         weight
