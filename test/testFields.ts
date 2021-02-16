@@ -29,7 +29,6 @@ export const animalDetailsFields = `
 
 export const animalRegistrationFields = `
     {
-        animalId
         registrationNo
         registrationDate
         status

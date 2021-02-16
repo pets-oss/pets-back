@@ -5,8 +5,6 @@ enum RegistrationStatus {
 
 "Represents animal registration"
 type AnimalRegistration {
-  "Animal id, for example 2"
-  animalId: Int!
   "Registration number"
   registrationNo: String!
   "Registration date"
@@ -18,9 +16,7 @@ type AnimalRegistration {
   status("Language code" language: String = "lt"): String
 }
 
-input CreateAnimalRegistrationInput {
-  "Animal id, for example 2"
-  animalId: Int!
+input AnimalRegistrationInput {
   "Registration number"
   registrationNo: String!
   "Registration date"
@@ -29,40 +25,7 @@ input CreateAnimalRegistrationInput {
   status: RegistrationStatus
 }
 
-input UpdateAnimalRegistrationInput {
-  "Animal id, for example 2"
-  animalId: Int!
-  "Registration number"
-  registrationNo: String
-  "Registration date"
-  registrationDate: String
-  "Registration status ('Active' or 'Inactive')"
-  status: RegistrationStatus
-}
-
 extend type Mutation {
-  "Create animal registration"
-  createAnimalRegistration(input: CreateAnimalRegistrationInput!): AnimalRegistration
-  
-  """
-  Update animal registration
-  Example ***
-  mutation {
-    updateAnimalRegistration(input: {
-      animalId: 3, 
-      registrationNo: "2021PandemicC19X00001",
-      registrationDate: "2021-01-01"
-      status: Active
-    }) {
-      animalId
-      registrationNo
-      registrationDate
-      status
-    }
-  } ***
-  """
-  updateAnimalRegistration(input: UpdateAnimalRegistrationInput!): AnimalRegistration
-
   "Delete animal registration"
   deleteAnimalRegistration(id: Int!): AnimalRegistration
 }

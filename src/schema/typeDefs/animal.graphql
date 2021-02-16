@@ -64,19 +64,23 @@ input CreateAnimalInput {
   image_url: String
   "Comments"
   comments: String
+  "AnimalRegistration"
+  registration: AnimalRegistrationInput!
 }
 
 input UpdateAnimalInput {
   "Animal id, for example 2"
   id: Int!
   "Animal name"
-  name: String!
+  name: String
   "Organization id"
-  organization: Int!
+  organization: Int
   "Status"
-  status: String!
+  status: String
   "Image URL"
-  image_url: String!
+  image_url: String
   "Comments"
-  comments: String!
+  comments: String
+  "AnimalRegistration"
+  registration: AnimalRegistrationInput
 }

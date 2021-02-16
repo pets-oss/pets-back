@@ -1,4 +1,11 @@
 import { QueryConfig } from 'pg';
+import { insert, update } from 'sql-bricks-postgres';
+import snakeCaseKeys from 'snakecase-keys';
+import { AnimalRegistrationInput } from './animalRegistration';
+
+const table = 'animal';
+const returnFields =
+  'id, name, organization, status, image_url, comments, mod_time';
 
 interface CreateAnimalInput {
   name: String;
@@ -6,6 +13,7 @@ interface CreateAnimalInput {
   status: String;
   image_url: String;
   comments: String;
+  registration: AnimalRegistrationInput;
 }
 
 interface UpdateAnimalInput {
@@ -15,6 +23,7 @@ interface UpdateAnimalInput {
   status: String;
   image_url: String;
   comments: String;
+  registration: AnimalRegistrationInput;
 }
 
 export const getAnimalQuery = (id: number): QueryConfig => {
@@ -56,69 +65,14 @@ export const getAnimalsQuery = (): QueryConfig => {
 };
 
 export const createAnimalQuery = (input: CreateAnimalInput): QueryConfig => {
-  const text = `INSERT INTO animal
-                 (name,
-                  organization,
-                  status,
-                  image_url,
-                  comments)
-                VALUES
-                 ($1,
-                  $2,
-                  $3,
-                  $4,
-                  $5)
-                RETURNING
-                  id,
-                  name,
-                  organization,
-                  status,
-                  image_url,
-                  comments,
-                  mod_time;`;
-
-  const query = {
-    text,
-    values: [
-      input.name,
-      input.organization,
-      input.status,
-      input.image_url,
-      input.comments,
-    ],
-  };
-
-  return query;
+  const { registration, ...animal } = input;
+  return insert(table, snakeCaseKeys(animal)).returning(returnFields).toParams();
 };
 
 export const updateAnimalQuery = (input: UpdateAnimalInput): QueryConfig => {
-  const text = `UPDATE animal SET
-                  name = $1,
-                  organization = $2,
-                  status = $3,
-                  image_url = $4,
-                  comments = $5
-                WHERE id = $6
-                RETURNING
-                  id,
-                  name,
-                  organization,
-                  status,
-                  image_url,
-                  comments,
-                  mod_time;`;
-
-  const query = {
-    text,
-    values: [
-      input.name,
-      input.organization,
-      input.status,
-      input.image_url,
-      input.comments,
-      input.id,
-    ],
-  };
-
-  return query;
+  const { registration, ...animal } = input;
+  return update(table, snakeCaseKeys(animal))
+    .where({ id: input.id })
+    .returning(returnFields)
+    .toParams();
 };

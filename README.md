@@ -63,6 +63,9 @@ By default tests will hit the default local backend `http://localhost:8081`. If 
 ```yaml
 TEST_URL=<URL>
 ```
+## D. Log DB queries (usually for debugging)
+
+Add `command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]` to docker-compose.yml under `db` configuration
 
 ---
 

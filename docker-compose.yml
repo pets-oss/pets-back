@@ -28,6 +28,7 @@ services:
       - database-data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
 
   adminer:
     image: adminer

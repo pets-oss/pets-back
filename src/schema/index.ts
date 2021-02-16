@@ -35,8 +35,8 @@ const schema = mergeSchemas({
     speciesResolvers,
     colorResolvers,
     animalMicrochipResolvers,
-    animalRegistrationResolvers,
     organizationResolvers,
+    animalRegistrationResolvers
   ),
 });
 
