@@ -12,26 +12,27 @@ import initClients from './utils/init-clients';
 initClients().then(({ pgClient }) => {
   const app = express();
 
-  app.use(
-    '/status',
-    (req, res) => {
-      res.sendStatus(200);
-    }
-  );
+  app.use('/status', (req, res) => {
+    res.sendStatus(200);
+  });
 
-  const snakeCaseFieldResolver = (source: any, args: any, contextValue: any, info: any) =>
-    source[snakeCase(info.fieldName)];  
+  const snakeCaseFieldResolver = (
+    source: any,
+    args: any,
+    contextValue: any,
+    info: any
+  ) => source[snakeCase(info.fieldName)];
 
   const jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
-      jwksUri: `${process.env.AUTH0_DOMAIN}.well-known/jwks.json`
+      jwksUri: `${process.env.AUTH0_DOMAIN}.well-known/jwks.json`,
     }),
     audience: process.env.AUTH0_AUDIENCE,
     issuer: process.env.AUTH0_DOMAIN,
-    algorithms: ['RS256']
+    algorithms: ['RS256'],
   });
 
   app.use(
@@ -42,11 +43,17 @@ initClients().then(({ pgClient }) => {
     graphqlExpress(() => ({
       fieldResolver: snakeCaseFieldResolver,
       schema,
-      context: { pgClient }
+      context: { pgClient },
     }))
   );
 
-  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
+  app.use(
+    '/graphiql',
+    graphiqlExpress({
+      endpointURL: '/graphql',
+      passHeader: `'Authorization': 'Bearer ${process.env.BEARER_TOKEN}'`,
+    })
+  );
 
   // process.env.PORT needed for heroku to bind to the correct port
   const PORT = process.env.PORT || 8081;

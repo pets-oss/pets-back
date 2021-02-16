@@ -18,6 +18,7 @@ describe('GraphQL animal integration tests', () => {
                       ${animalFields}
                   }`,
       })
+      .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
       .expect(200)
       .end((err, res) => {
         if (err) {
@@ -37,6 +38,7 @@ describe('GraphQL animal integration tests', () => {
                       ${animalFields}
                   }`,
       })
+      .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
       .expect(200)
       .end((err, res) => {
         if (err) {
@@ -93,6 +95,7 @@ describe('animal mutations tests', () => {
                           ${animalFields}
                   }`,
       })
+      .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
       .expect(200)
       .end((err, res) => {
         if (err) {
@@ -137,6 +140,7 @@ describe('animal mutations tests', () => {
                     ${animalFields}
                 }`,
       })
+      .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
       .expect(200)
       .end((err, res) => {
         if (err) {

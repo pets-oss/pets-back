@@ -39,6 +39,7 @@ describe('animalRegistration Graphql mutations tests', () => {
                             ${animalRegistrationFields}
                 }`,
       })
+      .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
