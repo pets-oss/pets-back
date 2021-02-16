@@ -91,11 +91,14 @@ const resolvers: IResolvers = {
       return dbResponse.rows[0];
     },
     status: async ({ status }, { language }, { pgClient }) => {
+      if (!status) {
+        return null;
+      }
       const dbResponse = await pgClient.query(
         getStatusTranslationQuery(status, language, defaultLanguage)
       );
-
-      return dbResponse.rows[0]?.status;
+      
+      return dbResponse.rows[0].status;
     },
   },
 };
