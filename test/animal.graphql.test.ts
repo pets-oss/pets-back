@@ -61,7 +61,7 @@ describe('animal mutations tests', () => {
   const registrationNumberCreate = `2021PandemicC19X${uuidv4()}`;
   const registrationNumberUpdate = `2021PandemicC19X${uuidv4()}`;
   const date = '2021-01-01';
-  const dateIntString = new Date('2021-01-01').getTime().toString();
+  const dateIntString = new Date(date).getTime().toString();
 
   it('Create animal', (done) => {
     const mutation = 'createAnimal';
