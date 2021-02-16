@@ -11,7 +11,7 @@ const resolvers: IResolvers = {
         gender: async ({ gender } , { language }, { pgClient }) => {
             const dbResponse = await pgClient.query(getGenderQuery(gender, language, defaultLanguage));
 
-            return dbResponse.rows[0].gender;
+            return dbResponse.rows[0];
         },
         breed: async ({ breed_id }, { language }, { pgClient }) => {
             const dbResponse = await pgClient.query(getBreedQuery(breed_id, language, defaultLanguage));
@@ -21,7 +21,7 @@ const resolvers: IResolvers = {
         species: async ({ breed_id }, { language }, { pgClient }) => {
             const dbResponse = await pgClient.query(getSpeciesByBreedIdQuery(breed_id, language, defaultLanguage));
 
-            return dbResponse.rows[0].species;
+            return dbResponse.rows[0];
         },
         color: async ({ color }, { language }, { pgClient }) => {
             const dbResponse = await pgClient.query(getColorQuery(color, language, defaultLanguage));

@@ -17,7 +17,7 @@ export const getSpeciesQuery = (language: string): QueryConfig => {
 
 export const getSpeciesByBreedIdQuery = (breed_id: number, language: string, defaultLanguage: string): QueryConfig => {
     const text = `
-        SELECT translation AS species
+        SELECT species AS id, translation AS value
         FROM species_translation 
         WHERE species = (SELECT species FROM breed WHERE id = $1) 
             AND language IN ($2, $3)

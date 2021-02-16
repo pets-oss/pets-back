@@ -52,15 +52,23 @@ export const AnimalSchema = {
           ]
         },
         "gender": {
-          "type": [
-            "null",
-            "string"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/default_1"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "species": {
-          "type": [
-            "null",
-            "string"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/default_1"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "weight": {
@@ -87,6 +95,26 @@ export const AnimalSchema = {
       "defaultProperties": [
       ],
       "properties": {
+        "id": {
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "value"
+      ],
+      "type": "object"
+    },
+    "default_2": {
+      "defaultProperties": [
+      ],
+      "properties": {
         "registrationDate": {
           "type": [
             "null",
@@ -107,7 +135,7 @@ export const AnimalSchema = {
       ],
       "type": "object"
     },
-    "default_2": {
+    "default_3": {
       "defaultProperties": [
       ],
       "properties": {
@@ -156,7 +184,7 @@ export const AnimalSchema = {
       ]
     },
     "microchip": {
-      "$ref": "#/definitions/default_2"
+      "$ref": "#/definitions/default_3"
     },
     "modTime": {
       "type": [
@@ -174,7 +202,7 @@ export const AnimalSchema = {
       "type": "number"
     },
     "registration": {
-      "$ref": "#/definitions/default_1"
+      "$ref": "#/definitions/default_2"
     },
     "status": {
       "type": [
@@ -202,11 +230,11 @@ export const isAnimal = ajv.compile(AnimalSchema) as ValidateFunction<Animal>;
 export default function validate(value: unknown): Animal {
   if (isAnimal(value)) {
     return value;
-  } 
+  }
     throw new Error(
       `${ajv.errorsText(isAnimal.errors!.filter((e: any) => e.keyword !== 'if'), {dataVar: 'Animal'}) 
       }\n\n${ 
       inspect(value)}`,
     );
-  
+
 }
