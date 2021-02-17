@@ -9,7 +9,6 @@ services:
       - SERVER_PORT=8080
     env_file:
       - database.env
-      - common.env
     volumes:
       - ./src:/usr/app/src
       - ./test:/usr/app/test
