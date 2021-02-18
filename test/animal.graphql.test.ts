@@ -51,7 +51,7 @@ describe('GraphQL animal integration tests', () => {
         } = res;
         expect(animals).to.be.an('array');
         validate(animals[0]);
-        expect(animals).to.have.length.above(5);
+        expect(animals).to.have.length.above(4);
         return done();
       });
   });
