@@ -33,7 +33,7 @@ describe ('GraphQL user integration tests', () => {
                 const { body: { data: { users } } } = res;
                 expect(users).to.be.an('array');
                 validate(users[0]);
-                expect(users).to.have.lengthOf(5);
+                expect(users).to.have.length.above(4);
                 return done();
             });
     });

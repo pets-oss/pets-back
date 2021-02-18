@@ -48,7 +48,7 @@ extend type Mutation {
   "Created user"
   createUser(input: UserInput!): User
   "Updated user"
-  updateUser(id: String, input: UserInput!): User
+  updateUser(input: UserInput!): User
   "Deleted user"
   deleteUser(id: String!): User
 }
