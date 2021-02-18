@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/index.js",
-    "dev": "tsc && nodemon dist/src/index.js",
+    "dev": "tsc && BEARER_TOKEN=`node dist/src/getBearerToken.js $npm_config_url $npm_config_client_id $npm_config_client_secret $npm_config_audience $npm_config_grant_type` nodemon dist/src/index.js && rm src/getBearerToken.js",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/src/index.js",
     "test": "mocha -r ts-node/register test/*.test.ts",
     "testAuthenticated": "tsc src/getBearerToken.ts && BEARER_TOKEN=`node src/getBearerToken.js $npm_config_url $npm_config_client_id $npm_config_client_secret $npm_config_audience $npm_config_grant_type` mocha -r ts-node/register test/*.test.ts && rm src/getBearerToken.js",
