@@ -6,7 +6,7 @@ type AnimalDetails {
   Animal breed by language.
   Examples: breed(language: "en") or just breed - will return default language ("lt") translation
   """
-  breed("Language code" language: String = "lt"): String
+  breed("Language code" language: String = "lt"): Breed
   """
   Animal species by language
   Examples: species(language: "en") or just species - will return default language ("lt") translation
@@ -21,7 +21,7 @@ type AnimalDetails {
   Animal color by language
   Examples: color(language: "en") or just color - will return default language ("lt") translation
   """
-  color("Language code" language: String = "lt"): String
+  color("Language code" language: String = "lt"): Color
   "Animal date of birth"
   birthDate: String
   "Animal weight (kg)"
@@ -30,4 +30,26 @@ type AnimalDetails {
   allergy: String
   "Animal food"
   food: String
+}
+
+input AnimalDetailsInput {
+  "Animal breed id"
+  breedId: Int
+  "Animal gender"
+  genderId: Int
+  "Animal color"
+  colorId: Int
+  "Animal date of birth"
+  birthDate: String
+  "Animal weight (kg)"
+  weight: Int
+  "Animal allergy"
+  allergy: String
+  "Animal food"
+  food: String
+}
+
+extend type Mutation {
+  "Delete animal details"
+  deleteAnimalDetails(id: Int!): AnimalDetails
 }

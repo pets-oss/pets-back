@@ -2,6 +2,7 @@ import { QueryConfig } from 'pg';
 import { insert, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 import { AnimalRegistrationInput } from './animalRegistration';
+import {AnimalDetailsInput} from "./animalDetails";
 
 const table = 'animal';
 const returnFields =
@@ -14,6 +15,7 @@ interface CreateAnimalInput {
   image_url: String;
   comments: String;
   registration: AnimalRegistrationInput;
+  details: AnimalDetailsInput;
 }
 
 interface UpdateAnimalInput {
@@ -24,6 +26,7 @@ interface UpdateAnimalInput {
   image_url: String;
   comments: String;
   registration: AnimalRegistrationInput;
+  details: AnimalDetailsInput;
 }
 
 export const getAnimalQuery = (id: number): QueryConfig => {
@@ -65,12 +68,12 @@ export const getAnimalsQuery = (): QueryConfig => {
 };
 
 export const createAnimalQuery = (input: CreateAnimalInput): QueryConfig => {
-  const { registration, ...animal } = input;
+  const { registration, details, ...animal } = input;
   return insert(table, snakeCaseKeys(animal)).returning(returnFields).toParams();
 };
 
 export const updateAnimalQuery = (input: UpdateAnimalInput): QueryConfig => {
-  const { registration, ...animal } = input;
+  const { registration, details, ...animal } = input;
   return update(table, snakeCaseKeys(animal))
     .where({ id: input.id })
     .returning(returnFields)

@@ -34,15 +34,23 @@ export const AnimalSchema = {
           ]
         },
         "breed": {
-          "type": [
-            "null",
-            "string"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/default_1"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "color": {
-          "type": [
-            "null",
-            "string"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/default_1"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "food": {

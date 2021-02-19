@@ -66,6 +66,8 @@ input CreateAnimalInput {
   comments: String
   "AnimalRegistration"
   registration: AnimalRegistrationInput!
+  "AnimalDetails"
+  details: AnimalDetailsInput
 }
 
 input UpdateAnimalInput {
@@ -83,4 +85,6 @@ input UpdateAnimalInput {
   comments: String
   "AnimalRegistration"
   registration: AnimalRegistrationInput
+  "AnimalDetails"
+  details: AnimalDetailsInput
 }

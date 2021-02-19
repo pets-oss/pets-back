@@ -151,8 +151,8 @@ CREATE TABLE animal (
 CREATE TABLE animal_details (
     animal_id INTEGER PRIMARY KEY REFERENCES animal(id),
     breed_id INTEGER REFERENCES breed(id),
-    gender gender,
-    color INTEGER REFERENCES color(code),
+    gender_id gender,
+    color_id INTEGER REFERENCES color(code),
     birth_date DATE,
     weight NUMERIC,
     allergy VARCHAR(128),
