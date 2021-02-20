@@ -35,17 +35,31 @@ initClients().then(({ pgClient }) => {
     algorithms: ['RS256'],
   });
 
-  app.use(
-    '/graphql',
-    cors(),
-    jwtCheck,
-    bodyParser.json(),
-    graphqlExpress(() => ({
-      fieldResolver: snakeCaseFieldResolver,
-      schema,
-      context: { pgClient },
-    }))
-  );
+  if (process.env.AUTH_DISABLED) {
+    app.use(
+      '/graphql',
+      cors(),
+      bodyParser.json(),
+      graphqlExpress(() => ({
+        fieldResolver: snakeCaseFieldResolver,
+        schema,
+        context: { pgClient },
+      }))
+    );
+  } else {
+    app.use(
+      '/graphql',
+      cors(),
+      jwtCheck,
+      bodyParser.json(),
+      graphqlExpress(() => ({
+        fieldResolver: snakeCaseFieldResolver,
+        schema,
+        context: { pgClient },
+      }))
+    );
+  }
+  
 
   app.use(
     '/graphiql',
