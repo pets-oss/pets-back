@@ -11,6 +11,7 @@ services:
       - AUTH0_AUDIENCE=$AUTH0_AUDIENCE
     env_file:
       - database.env
+      - common.env
     volumes:
       - ./src:/usr/app/src
       - ./test:/usr/app/test
