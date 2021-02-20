@@ -11,10 +11,10 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/index.js",
-    "dev": "tsc && BEARER_TOKEN=`node dist/src/getBearerToken.js $npm_config_url $npm_config_client_id $npm_config_client_secret $npm_config_audience $npm_config_grant_type` nodemon dist/src/index.js && rm src/getBearerToken.js",
+    "dev": "tsc && BEARER_TOKEN=`node dist/src/getBearerToken.js --url=$npm_config_url --client_id=$npm_config_client_id --client_secret=$npm_config_client_secret --audience=$npm_config_audience --grant_type=$npm_config_grant_type` nodemon dist/src/index.js && rm src/getBearerToken.js",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/src/index.js",
     "test": "mocha -r ts-node/register test/*.test.ts",
-    "testAuthenticated": "tsc src/getBearerToken.ts && BEARER_TOKEN=`node src/getBearerToken.js $npm_config_url $npm_config_client_id $npm_config_client_secret $npm_config_audience $npm_config_grant_type` mocha -r ts-node/register test/*.test.ts && rm src/getBearerToken.js",
+    "testAuthenticated": "tsc src/getBearerToken.ts && BEARER_TOKEN=`node src/getBearerToken.js --url=$npm_config_url --client_id=$npm_config_client_id --client_secret=$npm_config_client_secret --audience=$npm_config_audience --grant_type=$npm_config_grant_type` mocha -r ts-node/register test/*.test.ts && rm src/getBearerToken.js",
     "testSpecific": "mocha -r ts-node/register",
     "check-lint": "eslint 'src/**/*.ts' && eslint 'test/*test.ts'",
     "check-type": "tsc --noEmit --skipLibCheck"
@@ -50,6 +50,7 @@
     "@types/express-jwt": "^6.0.0",
     "@types/graphql": "^14.5.0",
     "@types/lodash": "^4.14.165",
+    "@types/minimist": "^1.2.1",
     "@types/mocha": "^8.2.0",
     "@types/pg": "^7.14.7",
     "@types/snakecase-keys": "^2.1.0",
@@ -66,6 +67,7 @@
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
     "husky": "^4.3.7",
+    "minimist": "^1.2.5",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.7",
     "npx": "^10.2.2",
