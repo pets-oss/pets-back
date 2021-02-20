@@ -15,6 +15,7 @@ describe ('GraphQL user integration tests', () => {
                 query: `{ user(id: "aiubfaw4io09") ${userFields} }`
             })
             .expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 validate(res.body.data.user);
@@ -28,6 +29,7 @@ describe ('GraphQL user integration tests', () => {
                 query: `{ users ${userFields} }`
             })
             .expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { users } } } = res;
@@ -52,6 +54,7 @@ describe ('GraphQL user integration tests', () => {
                         }) ${userFields}
                     }`
             }).expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { createUser } } } = res;
@@ -79,6 +82,7 @@ describe ('GraphQL user integration tests', () => {
                         }) ${userFields}
                     }`
             }).expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { updateUser } } } = res;
@@ -100,6 +104,7 @@ describe ('GraphQL user integration tests', () => {
                         deleteUser(id:  "TestID") ${userFields}
                     }`
             }).expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { deleteUser } } } = res;
@@ -119,6 +124,7 @@ describe ('GraphQL user integration tests', () => {
                 query: `{ user(id: "TestID") ${userFields} }`
             })
             .expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 expect(res.body.data.user).to.be.a('null');

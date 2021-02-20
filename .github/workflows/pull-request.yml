@@ -16,7 +16,7 @@ jobs:
       - uses: satackey/action-docker-layer-caching@v0.0.11
         name: Caching docker image...
         continue-on-error: true
-      - run: docker-compose up --build -d
+      - run: AUTH0_DOMAIN=${{secrets.AUTH0_DOMAIN}} AUTH0_AUDIENCE=${{secrets.AUTH0_AUDIENCE}} docker-compose up --build -d
         name: Building containers...
       - name: Waiting for backend...
         uses: nev7n/wait_for_response@v1
@@ -26,7 +26,7 @@ jobs:
           timeout: 20000
           interval: 200
       - name: Running tests...
-        run:  docker exec pets-back_gis-backend_1 npm test
+        run:  docker exec pets-back_gis-backend_1 npm run testAuthenticated --url=${{secrets.AUTH_TOKEN_URL}} --client_id=${{secrets.AUTH_CLIENT_ID}} --client_secret=${{secrets.AUTH_CLIENT_SECRET}} --audience=${{secrets.AUTH_AUDIENCE}} --grant_type=${{secrets.AUTH_GRANT_TYPE}}
   lint:
     name: Lint
     runs-on: ubuntu-latest
