@@ -60,12 +60,11 @@ initClients().then(({ pgClient }) => {
     );
   }
   
-
   app.use(
     '/graphiql',
     graphiqlExpress({
       endpointURL: '/graphql',
-      passHeader: `'Authorization': 'Bearer ${process.env.BEARER_TOKEN}'`,
+      passHeader: process.env.BEARER_TOKEN ? '' : `'Authorization': 'Bearer ${process.env.BEARER_TOKEN}'`,
     })
   );
 
