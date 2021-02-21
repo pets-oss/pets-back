@@ -53,17 +53,10 @@ const resolvers: IResolvers = {
 
         await pgClient.query('COMMIT');
 
-        const result = {
+        return {
           ...createAnimalResult.rows[0],
           registration: createRegistrationResult.rows[0],
-        };
-
-        if (!createDetailsResult) {
-          return result;
-        }
-        return {
-          ...result,
-          details: createDetailsResult.rows[0],
+          details: createDetailsResult?.rows[0],
         }
       } catch (e) {
         await pgClient.query('ROLLBACK');
