@@ -15,8 +15,10 @@ describe('animalDetails Graphql mutations tests', () => {
     const dateIntString = new Date(date).getTime().toString();
 
     before((done) => {
-        request.post('/graphql').send({
-            query: `
+        request
+            .post('/graphql')
+            .send({
+                query: `
                       mutation {
                       createAnimal(input: {
                           name: "Lokis",
@@ -38,17 +40,20 @@ describe('animalDetails Graphql mutations tests', () => {
                       })
                       {id}
                     }`,
-        }).end((err, res) => {
-            if (err) {
-                // eslint-disable-next-line no-console
-                console.log('Failed on animalDetails test preparation');
-                // eslint-disable-next-line no-console
-                console.log(res.body);
-                return done(err);
-            }
-            animalId = res.body.data.createAnimal.id;
-            return done();
-        });
+            })
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log('Failed on animalDetails test preparation');
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                animalId = res.body.data.createAnimal.id;
+                return done();
+            });
     });
 
     it('Delete animal details', (done) => {
@@ -87,6 +92,7 @@ describe('animalDetails Graphql mutations tests', () => {
                             ${animalDetailsFields}
                 }`,
             })
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
