@@ -8,6 +8,7 @@
   },
   "license": "MIT",
   "main": "index.js",
+  "private": "true",
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/index.js",
@@ -17,12 +18,8 @@
     "testAuthenticated": "tsc src/getBearerToken.ts && BEARER_TOKEN=`node src/getBearerToken.js --url=$npm_config_url --client_id=$npm_config_client_id --client_secret=$npm_config_client_secret --audience=$npm_config_audience --grant_type=$npm_config_grant_type` mocha -r ts-node/register test/*.test.ts && rm src/getBearerToken.js",
     "testSpecific": "mocha -r ts-node/register",
     "check-lint": "eslint 'src/**/*.ts' && eslint 'test/*test.ts'",
-    "check-type": "tsc --noEmit --skipLibCheck"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run check-lint & npm run check-type"
-    }
+    "check-type": "tsc --noEmit --skipLibCheck",
+    "postinstall": "husky install"
   },
   "author": "Kayak Kaunas",
   "dependencies": {
@@ -33,7 +30,6 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
-    "fsevents": "^2.3.1",
     "graphql": "^15.4.0",
     "graphql-constraint-directive": "^2.1.1",
     "graphql-tools": "^7.0.2",
@@ -66,11 +62,12 @@
     "eslint-config-airbnb-typescript": "^12.0.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-import": "^2.22.1",
-    "husky": "^4.3.7",
+    "husky": "^5.0.9",
     "minimist": "^1.2.5",
     "mocha": "^8.2.1",
     "nodemon": "^2.0.7",
     "npx": "^10.2.2",
+    "pinst": "^2.1.4",
     "prettier": "^2.2.1",
     "supertest": "^6.0.1",
     "ts-node": "^9.1.1",
