@@ -16,7 +16,10 @@ export const breedFields = `
 export const animalDetailsFields = `
     {
         animalId
-        breed
+        breed {
+            id
+            value
+        }
         species {
             id
             value
@@ -25,7 +28,10 @@ export const animalDetailsFields = `
             id
             value
         }
-        color
+        color {
+            id
+            value
+        }
         birthDate
         weight
         allergy
