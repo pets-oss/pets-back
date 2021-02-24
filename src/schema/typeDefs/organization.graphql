@@ -24,8 +24,6 @@ type Organization {
   id: Int!
   "Organization name"
   name: String
-  "Organization id"
-  organization: Int!
   "Country"
   country: String
   "City"
@@ -35,7 +33,7 @@ type Organization {
   "Phone"
   phone: String
   "Modification time"
-  modTime: String
+  modTime: String!
   "Delete time"
   deleteTime: String
 }
