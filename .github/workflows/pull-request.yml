@@ -11,6 +11,10 @@ jobs:
         with:
           source: ".github/workflows/test-database.env"
           target: "database.env"
+      - name: Creating common.env file...
+        uses: 1arp/create-a-file-action@0.2
+        with:
+          file: 'common.env'
       - run: docker-compose pull
         name: Pulling pull-only docker images...
       - uses: satackey/action-docker-layer-caching@v0.0.11
