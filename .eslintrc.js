@@ -11,6 +11,6 @@ module.exports = {
     project: './tsconfig.json',
   },
   "rules": {
-    'eol-last': ["error", "always"],
+    'eol-last': ["warn", "always"],
 }
 };
