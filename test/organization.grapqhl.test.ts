@@ -7,6 +7,13 @@ require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+const expectedResult = {
+    name: "Gyvūnija",
+    country: "Lithuania",
+    city: "Kaunas",
+    streetAddress: "Gyvūnų g. 65",
+    phone: "+37067634285"
+};
 
 let createdOrganizationId: Number;
 
@@ -43,14 +50,6 @@ describe ('GraphQL organization integration tests', () => {
     });
 
     it ('Creates organization with all fields', (done) => {
-        const expectedResult = {
-            name: "Gyvūnija",
-            country: "Lithuania",
-            city: "Kaunas",
-            streetAddress: "Gyvūnų g. 65",
-            phone: "+37067634285"
-        };
-        
         request.post('/graphql')
             .send({
                 query:
@@ -76,14 +75,6 @@ describe ('GraphQL organization integration tests', () => {
     });
 
     it ('Updates organization with all fields', (done) => {
-        const expectedResult = {
-            id: 2,
-            name: "Gyvūnija",
-            country: "Lithuania",
-            city: "Kaunas",
-            streetAddress: "Gyvūnų g. 65",
-            phone: "+37067634285"
-        };
         request.post('/graphql')
             .send({
                 query:
@@ -103,21 +94,12 @@ describe ('GraphQL organization integration tests', () => {
                 if (err) return done(err);
                 const { body: { data: { updateOrganization } } } = res;
                 validate(updateOrganization);
-                expect(updateOrganization).to.include(expectedResult);
+                expect(updateOrganization).to.include({id: 2, ...expectedResult});
                 return done();
             });
     });
 
     it ('Deletes organization', (done) => {
-        const expectedResult = {
-            id: createdOrganizationId,
-            name: "Gyvūnija",
-            country: "Lithuania",
-            city: "Kaunas",
-            streetAddress: "Gyvūnų g. 65",
-            phone: "+37067634285"
-        };
-
         request.post('/graphql')
             .send({
                 query:
@@ -130,7 +112,7 @@ describe ('GraphQL organization integration tests', () => {
                 if (err) return done(err);
                 const { body: { data: { deleteOrganization } } } = res;
                 validate(deleteOrganization);
-                expect(deleteOrganization).to.include(expectedResult);
+                expect(deleteOrganization).to.include({id: createdOrganizationId, ...expectedResult});
                 return done();
             });
     });
