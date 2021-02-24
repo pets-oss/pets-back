@@ -10,7 +10,7 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
-  "rules": {
-    'eol-last': ["warn", "always"],
-}
+  rules: {
+    'eol-last': ['warn', 'always'],
+  },
 };
