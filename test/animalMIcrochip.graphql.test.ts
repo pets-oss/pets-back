@@ -1,112 +1,87 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
+import { v4 as uuidv4 } from 'uuid';
 import { animalMicrochipFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
-
-const date = "2021-01-01";
-const dateIntString = new Date("2021-01-01").getTime().toString();
+let animalId: String;
 
 describe ('animalMicrochip Graphql mutations tests', () => {
-    it ('Create animalId=1, microchipId="abc" microchip', (done) => {
-        const mutation = 'createMicrochip'
-        const input = `{
-            animalId: 1,
-            microchipId: "abc", 
-            chipCompanyCode: 1,
-            installDate: "${date}",
-            installPlace: 1,
-            status: "Implanted"
-        }`
-        const answer = {
-            animalId: 1,
-            microchipId: "abc",
-            chipCompanyCode: 1,
-            installDate: dateIntString,
-            installPlace: 1,
-            status: "Implantuotas"
-        }
+    const registrationNo = `2021PandemicC19X${uuidv4()}`;
+    const date = '2021-01-01';
+    const dateIntString = new Date(date).getTime().toString();
 
-        request.post('/graphql')
+    before((done) => {
+        request
+            .post('/graphql')
             .send({
                 query: `
-                    mutation {
-                        ${mutation}(input: ${input}) 
-                            ${animalMicrochipFields}
-                }`
+                      mutation {
+                      createAnimal(input: {
+                          name: "Lokis",
+                          organization: 2,
+                          registration: {
+                              registrationNo: "${registrationNo}",
+                              registrationDate: "${date}",
+                              status: Active
+                          },
+                          microchip: {
+                              microchipId: "${registrationNo}",
+                              chipCompanyCode: 1,
+                              installDate: "${date}",
+                              installPlace: 1,
+                              status: Implanted
+                          }
+                      })
+                      {id}
+                    }`,
             })
-            .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+            .expect(200)
             .end((err, res) => {
-                if (err) return done(err);
-                expect(JSON.stringify(res.body.data[mutation])).equal(JSON.stringify(answer))
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log('Failed on animalDetails test preparation');
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                animalId = res.body.data.createAnimal.id;
                 return done();
             });
     });
 
-    it ('Update animalId=1, microchipId="abc" microchip', (done) => {
-        const mutation = 'updateMicrochip'
-        const input = `{
-            animalId: 1,
-            microchipId: "abc", 
-            chipCompanyCode: 2,
-            installDate: "${date}",
-            installPlace: 2,
-            status: "Removed"
-        }`
+    it('Delete animal microchip', (done) => {
+        const mutation = 'deleteAnimalMicrochip';
+
         const answer = {
-            animalId: 1,
-            microchipId: "abc",
-            chipCompanyCode: 2,
+            animalId,
+            microchipId: registrationNo,
+            chipCompanyCode: 1,
             installDate: dateIntString,
-            installPlace: 2,
-            status: "Išimtas"
-        }
+            installPlace: 1,
+            status: 'Implantuotas'
+        };
 
-        request.post('/graphql')
+        request
+            .post('/graphql')
             .send({
                 query: `
                     mutation {
-                        ${mutation}(input: ${input})
+                        ${mutation}(animalId: ${animalId}, microchipId: "${registrationNo}") 
                             ${animalMicrochipFields}
-                }`
+                }`,
             })
-            .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+            .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                expect(JSON.stringify(res.body.data[mutation])).equal(JSON.stringify(answer))
-                return done();
-            });
-    });
-
-    it ('Delete animalId=1, microchipId="abc" microchip', (done) => {
-        const mutation = 'deleteMicrochip'
-        const params = `
-            animalId: 1, 
-            microchipId: "abc",
-        `
-        const answer = {
-            animalId: 1,
-            microchipId: "abc",
-        }
-
-        request.post('/graphql')
-            .send({
-                query: `
-                    mutation {
-                        ${mutation}(${params}) 
-                            { animalId microchipId }
-                }`
-            })
-            .expect(200)
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .end((err, res) => {
-                if (err) return done(err);
-                expect(JSON.stringify(res.body.data[mutation])).equal(JSON.stringify(answer))
+                expect(JSON.stringify(res.body.data[mutation])).equal(
+                    JSON.stringify(answer)
+                );
                 return done();
             });
     });
