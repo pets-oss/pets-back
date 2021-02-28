@@ -3,7 +3,7 @@ on:
   push:
     paths:
       - '**.sql'
-    branches: [ main ]
+    branches: [ main, prod ]
   workflow_dispatch:
 
 jobs:
