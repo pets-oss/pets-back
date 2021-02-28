@@ -59,7 +59,7 @@ initClients().then(({ pgClient }) => {
       }))
     );
   }
-  
+
   app.use(
     '/graphiql',
     graphiqlExpress({
