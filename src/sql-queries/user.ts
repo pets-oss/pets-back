@@ -1,6 +1,6 @@
 import { QueryConfig } from 'pg';
 import { insert, select, update, deleteFrom } from 'sql-bricks-postgres';
-import snakeCaseKeys from "snakecase-keys";
+import snakeCaseKeys from 'snakecase-keys';
 
 interface UserInput {
     id: String,

@@ -1,7 +1,9 @@
 import initPostgres from '../services/postgres';
 
 export default async () => {
-  const pgClient = await initPostgres();
+    const pgClient = await initPostgres();
 
-  return { pgClient };
+    return {
+        pgClient
+    };
 };

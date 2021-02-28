@@ -5,7 +5,7 @@ import {
     createAnimalMicrochipQuery,
     updateAnimalMicrochipQuery,
     deleteAnimalMicrochipQuery,
-} from "../../sql-queries/animalMicrochip";
+} from '../../sql-queries/animalMicrochip';
 
 const defaultLanguage: string = 'lt';
 

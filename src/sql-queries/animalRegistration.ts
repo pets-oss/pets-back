@@ -1,5 +1,10 @@
-import { QueryConfig } from 'pg';
-import { insert, update } from 'sql-bricks-postgres';
+import {
+    QueryConfig
+} from 'pg';
+import {
+    insert,
+    update
+} from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 const table = 'animal_registration'
@@ -37,20 +42,22 @@ export const getActiveAnimalRegistrationQuery = (id: number): QueryConfig => {
 
 export const createAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
     insert(table, snakeCaseKeys(input))
-    .returning(returnFields)
-    .toParams();
+        .returning(returnFields)
+        .toParams();
 
 export const updateAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
     update(table, snakeCaseKeys(input))
-    .where({ animal_id: input.animalId })
-    .returning(returnFields)
-    .toParams();
+        .where({
+            animal_id: input.animalId
+        })
+        .returning(returnFields)
+        .toParams();
 
 export const deleteAnimalRegistrationQuery = (id: number): QueryConfig => {
     const text = `DELETE
                 FROM ${table}
                 WHERE animal_id = $1
-                RETURNING 
+                RETURNING
                     animal_id,
                     registration_no,
                     registration_date,

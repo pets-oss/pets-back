@@ -3,7 +3,7 @@ import { getGenderQuery } from '../../sql-queries/gender';
 import { getBreedQuery } from '../../sql-queries/breed';
 import { getSpeciesByBreedIdQuery } from '../../sql-queries/species';
 import { getColorQuery } from '../../sql-queries/color';
-import {deleteAnimalDetailsQuery} from "../../sql-queries/animalDetails";
+import {deleteAnimalDetailsQuery} from '../../sql-queries/animalDetails';
 
 const defaultLanguage: string = 'lt';
 

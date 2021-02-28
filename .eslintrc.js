@@ -13,6 +13,6 @@ module.exports = {
   rules: {
     'eol-last': ['warn', 'always'],
     'indent': ['error', 4],
-    'quotes': ['error', 'single'],
+    'quotes': ['warn', 'single'],
   },
 };

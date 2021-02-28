@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import {insert, select, update} from "sql-bricks-postgres";
+import {insert, select, update} from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 interface AnimalMicrochipInput {
@@ -37,7 +37,7 @@ export const deleteAnimalMicrochipQuery = (animal_id: number, microchip_id: Stri
                 FROM ${table}
                 WHERE animal_id = $1
                   AND microchip_id = $2
-                RETURNING 
+                RETURNING
                     animal_id,
                     microchip_id;`;
 

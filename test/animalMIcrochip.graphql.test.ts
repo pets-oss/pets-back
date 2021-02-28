@@ -1,8 +1,14 @@
-import { expect } from 'chai';
+import {
+    expect
+} from 'chai';
 import supertest from 'supertest';
-import { animalMicrochipFields } from './testFields';
+import {
+    animalMicrochipFields
+} from './testFields';
 
-require('dotenv').config({ path: './test/.env' });
+require('dotenv').config({
+    path: './test/.env'
+});
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
@@ -10,12 +16,12 @@ const request = supertest(url);
 const date = "2021-01-01";
 const dateIntString = new Date("2021-01-01").getTime().toString();
 
-describe ('animalMicrochip Graphql mutations tests', () => {
-    it ('Create animalId=1, microchipId="abc" microchip', (done) => {
+describe('animalMicrochip Graphql mutations tests', () => {
+    it('Create animalId=1, microchipId="abc" microchip', (done) => {
         const mutation = 'createMicrochip'
         const input = `{
             animalId: 1,
-            microchipId: "abc", 
+            microchipId: "abc",
             chipCompanyCode: 1,
             installDate: "${date}",
             installPlace: 1,
@@ -34,7 +40,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             .send({
                 query: `
                     mutation {
-                        ${mutation}(input: ${input}) 
+                        ${mutation}(input: ${input})
                             ${animalMicrochipFields}
                 }`
             })
@@ -47,11 +53,11 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             });
     });
 
-    it ('Update animalId=1, microchipId="abc" microchip', (done) => {
+    it('Update animalId=1, microchipId="abc" microchip', (done) => {
         const mutation = 'updateMicrochip'
         const input = `{
             animalId: 1,
-            microchipId: "abc", 
+            microchipId: "abc",
             chipCompanyCode: 2,
             installDate: "${date}",
             installPlace: 2,
@@ -83,10 +89,10 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             });
     });
 
-    it ('Delete animalId=1, microchipId="abc" microchip', (done) => {
+    it('Delete animalId=1, microchipId="abc" microchip', (done) => {
         const mutation = 'deleteMicrochip'
         const params = `
-            animalId: 1, 
+            animalId: 1,
             microchipId: "abc",
         `
         const answer = {
@@ -98,7 +104,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             .send({
                 query: `
                     mutation {
-                        ${mutation}(${params}) 
+                        ${mutation}(${params})
                             { animalId microchipId }
                 }`
             })

@@ -1,6 +1,6 @@
 import { QueryConfig } from 'pg';
-import {insert, update} from "sql-bricks-postgres";
-import snakeCaseKeys from "snakecase-keys";
+import {insert, update} from 'sql-bricks-postgres';
+import snakeCaseKeys from 'snakecase-keys';
 
 const table = 'animal_details'
 const returnFields = 'animal_id, breed_id, gender_id, color_id, birth_date, weight, allergy, food';
@@ -52,7 +52,7 @@ export const deleteAnimalDetailsQuery = (id: number): QueryConfig => {
     const text = `DELETE
                 FROM ${table}
                 WHERE animal_id = $1
-                RETURNING 
+                RETURNING
                     animal_id,
                     breed_id,
                     gender_id,
