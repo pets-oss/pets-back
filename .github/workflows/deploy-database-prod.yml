@@ -1,4 +1,4 @@
-name: Nuke & Redeploy Database (not prod safe)
+name: Nuke & Redeploy Database [prod]
 on:
   push:
     paths:

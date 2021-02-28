@@ -1,4 +1,4 @@
-name: Deploy Heroku
+name: Deploy Heroku [prod]
 on:
   push:
     paths:
