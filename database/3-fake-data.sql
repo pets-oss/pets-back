@@ -37,7 +37,7 @@ INSERT INTO animal
 ('Grikis', 1, 'healthy', 'https://picsum.photos/id/237/300/300');
 
 INSERT INTO animal_details
-(animal_id, breed_id, gender, color, birth_date, weight, allergy, food) VALUES
+(animal_id, breed_id, gender_id, color_id, birth_date, weight, allergy, food) VALUES
 (1, 205, '1', 61, '2020-08-01', 20, NULL, NULL),
 (2, 268, '1', 2, '2020-01-01', 1, NULL, NULL),
 (5, 389, '2', 4, '2019-09-16', 7, NULL, NULL),

@@ -39,6 +39,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
                 }`
             })
             .expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 expect(JSON.stringify(res.body.data[mutation])).equal(JSON.stringify(answer))
@@ -74,6 +75,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
                 }`
             })
             .expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 expect(JSON.stringify(res.body.data[mutation])).equal(JSON.stringify(answer))
@@ -101,6 +103,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
                 }`
             })
             .expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 expect(JSON.stringify(res.body.data[mutation])).equal(JSON.stringify(answer))

@@ -115,7 +115,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-database.env
+*.env
 dist
 node_modules
 

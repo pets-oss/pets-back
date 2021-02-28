@@ -7,8 +7,11 @@ services:
       - 8081:8081
     environment:
       - SERVER_PORT=8080
+      - AUTH0_DOMAIN=$AUTH0_DOMAIN
+      - AUTH0_AUDIENCE=$AUTH0_AUDIENCE
     env_file:
-      database.env
+      - database.env
+      - common.env
     volumes:
       - ./src:/usr/app/src
       - ./test:/usr/app/test
@@ -17,7 +20,7 @@ services:
       - ./tsconfig.json:/usr/app/tsconfig.json
       - /usr/app/node_modules
       - ./nodemon.json:/usr/app/nodemon.json
-    command: npm run dev
+    command: npm run dev --url=$AUTH_TOKEN_URL --client_id=$AUTH_CLIENT_ID --client_secret=$AUTH_CLIENT_SECRET --audience=$AUTH_AUDIENCE --grant_type=$AUTH_GRANT_TYPE
   db:
     image: postgres
     restart: always

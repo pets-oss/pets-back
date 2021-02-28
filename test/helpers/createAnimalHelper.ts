@@ -15,7 +15,9 @@ export default function createAnimal(done: Mocha.Done, request: supertest.SuperT
                       })
                       {id}
                     }`,
-    }).end((err, res) => {
+    })
+    .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+    .end((err, res) => {
       if (err) {
         // eslint-disable-next-line no-console
         console.log('Failed on animalRegistration test preparation');

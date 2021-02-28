@@ -2,10 +2,10 @@ import Translation from './translation.interface';
 
 export default interface AnimalDetails {
     animalId: number,
-    breed: string | null,
+    breed: Translation | null,
     species: Translation | null,
     gender: Translation | null,
-    color: string | null,
+    color: Translation | null,
     birthDate: string | null,
     weight: number | null,
     allergy: string | null,

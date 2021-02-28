@@ -17,7 +17,7 @@ export const getColorsQuery = (language: string): QueryConfig => {
 
 export const getColorQuery = (color_id: string, language: string, defaultLanguage: string): QueryConfig => {
     const text = `
-        SELECT translation AS color 
+        SELECT color AS id, translation AS value 
         FROM color_translation 
         WHERE color = $1 
             AND language IN ($2, $3)
