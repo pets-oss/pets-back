@@ -87,3 +87,15 @@ export const userFields = `
         modTime
     }
 `;
+
+export const organizationFields = `
+    {
+        id,
+        name,
+        country,
+        city,
+        streetAddress,
+        phone,
+        modTime
+    }
+`;
