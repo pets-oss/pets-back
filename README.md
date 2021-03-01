@@ -6,7 +6,7 @@ Production endpoint: https://petbook-back.herokuapp.com/graphql
 
 Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 
-**[Interactive API](https://petbook-back-dev.herokuapp.com/graphiql)** (dev environment only)
+**[Interactive API](https://petbook-back-dev.herokuapp.com/graphql)** (dev environment only)
 
 ## Contents
 
