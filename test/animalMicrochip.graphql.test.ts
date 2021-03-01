@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
 import { animalMicrochipFields } from './testFields';
+import createAnimal from "./helpers/createAnimalHelper";
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -15,43 +16,16 @@ describe ('animalMicrochip Graphql mutations tests', () => {
     const dateIntString = new Date(date).getTime().toString();
 
     before((done) => {
-        request
-            .post('/graphql')
-            .send({
-                query: `
-                      mutation {
-                      createAnimal(input: {
-                          name: "Lokis",
-                          organization: 2,
-                          registration: {
-                              registrationNo: "${registrationNo}",
-                              registrationDate: "${date}",
-                              status: Active
-                          },
-                          microchip: {
-                              microchipId: "${registrationNo}",
-                              chipCompanyCode: 1,
-                              installDate: "${date}",
-                              installPlace: 1,
-                              status: Implanted
-                          }
-                      })
-                      {id}
-                    }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
-            .end((err, res) => {
-                if (err) {
-                    // eslint-disable-next-line no-console
-                    console.log('Failed on animalDetails test preparation');
-                    // eslint-disable-next-line no-console
-                    console.log(res.body);
-                    return done(err);
-                }
-                animalId = res.body.data.createAnimal.id;
-                return done();
-            });
+        const microchipQuery = `microchip: {
+            microchipId: "${registrationNo}",
+                chipCompanyCode: 1,
+                installDate: "${date}",
+                installPlace: 1,
+                status: Implanted
+        }`;
+        createAnimal(done, request, registrationNo, date, (id: String) => {
+            animalId = id;
+        }, microchipQuery)
     });
 
     it('Delete animal microchip', (done) => {
