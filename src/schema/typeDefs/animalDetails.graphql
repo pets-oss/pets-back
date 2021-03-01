@@ -1,55 +1,55 @@
 "Represents an animal details."
 type AnimalDetails {
-  "Animal id, for example 2"
-  animalId: Int!
-  """
-  Animal breed by language.
-  Examples: breed(language: "en") or just breed - will return default language ("lt") translation
-  """
-  breed("Language code" language: String = "lt"): Breed
-  """
-  Animal species by language
-  Examples: species(language: "en") or just species - will return default language ("lt") translation
-  """
-  species("Language code" language: String = "lt"): Species
-  """
-  Animal gender by language.
-  Examples: gender(language: "en") or just gender - will return default language ("lt") translation
-  """
-  gender("Language code" language: String = "lt"): Gender
-  """
-  Animal color by language
-  Examples: color(language: "en") or just color - will return default language ("lt") translation
-  """
-  color("Language code" language: String = "lt"): Color
-  "Animal date of birth"
-  birthDate: String
-  "Animal weight (kg)"
-  weight: Float
-  "Animal allergy"
-  allergy: String
-  "Animal food"
-  food: String
+    "Animal id, for example 2"
+    animalId: Int!
+    """
+    Animal breed by language.
+    Examples: breed(language: "en") or just breed - will return default language ("lt") translation
+    """
+    breed("Language code" language: String = "lt"): Breed
+    """
+    Animal species by language
+    Examples: species(language: "en") or just species - will return default language ("lt") translation
+    """
+    species("Language code" language: String = "lt"): Species
+    """
+    Animal gender by language.
+    Examples: gender(language: "en") or just gender - will return default language ("lt") translation
+    """
+    gender("Language code" language: String = "lt"): Gender
+    """
+    Animal color by language
+    Examples: color(language: "en") or just color - will return default language ("lt") translation
+    """
+    color("Language code" language: String = "lt"): Color
+    "Animal date of birth"
+    birthDate: String
+    "Animal weight (kg)"
+    weight: Float
+    "Animal allergy"
+    allergy: String
+    "Animal food"
+    food: String
 }
 
 input AnimalDetailsInput {
-  "Animal breed id"
-  breedId: Int
-  "Animal gender"
-  genderId: Int
-  "Animal color"
-  colorId: Int
-  "Animal date of birth"
-  birthDate: String
-  "Animal weight (kg)"
-  weight: Int
-  "Animal allergy"
-  allergy: String
-  "Animal food"
-  food: String
+    "Animal breed id"
+    breedId: Int
+    "Animal gender"
+    genderId: Int
+    "Animal color"
+    colorId: Int
+    "Animal date of birth"
+    birthDate: String
+    "Animal weight (kg)"
+    weight: Int
+    "Animal allergy"
+    allergy: String
+    "Animal food"
+    food: String
 }
 
 extend type Mutation {
-  "Delete animal details"
-  deleteAnimalDetails(id: Int!): AnimalDetails
+    "Delete animal details"
+    deleteAnimalDetails(id: Int!): AnimalDetails
 }

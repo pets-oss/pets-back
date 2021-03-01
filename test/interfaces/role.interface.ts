@@ -1,4 +1,4 @@
 export default interface Role {
-    organizationId: number,
-    roleType: string | null
+    organizationId: number;
+    roleType: string | null;
 }

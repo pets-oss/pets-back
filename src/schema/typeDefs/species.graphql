@@ -1,18 +1,18 @@
 extend type Query {
-  """
-  Get all species.
+    """
+    Get all species.
 
-  Examples:
+    Examples:
 
-  species(language: "lt")
-  """
-  species("language code" language: String!): [Species]
+    species(language: "lt")
+    """
+    species("language code" language: String!): [Species]
 }
 
 "Represents a breed."
 type Species {
-  "Species id"
-  id: String!
-  "Species name"
-  value: String!
+    "Species id"
+    id: String!
+    "Species name"
+    value: String!
 }

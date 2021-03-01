@@ -1,4 +1,4 @@
 export default interface Translation {
-    id: number | string,
-    value: string
+    id: number | string;
+    value: string;
 }

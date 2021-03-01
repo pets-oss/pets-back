@@ -1,8 +1,16 @@
 import supertest from 'supertest';
 
-export default function createAnimal(done: Mocha.Done, request: supertest.SuperTest<supertest.Test>, registrationNo: String, date: String, setId: Function) {
-    request.post('/graphql').send({
-      query: `
+export default function createAnimal(
+    done: Mocha.Done,
+    request: supertest.SuperTest<supertest.Test>,
+    registrationNo: String,
+    date: String,
+    setId: Function
+) {
+    request
+        .post('/graphql')
+        .send({
+            query: `
                       mutation {
                       createAnimal(input: {
                           name: "Lokis",
@@ -15,17 +23,17 @@ export default function createAnimal(done: Mocha.Done, request: supertest.SuperT
                       })
                       {id}
                     }`,
-    })
-    .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-    .end((err, res) => {
-      if (err) {
-        // eslint-disable-next-line no-console
-        console.log('Failed on animalRegistration test preparation');
-        // eslint-disable-next-line no-console
-        console.log(res.body);
-        return done(err);
-      }
-      setId(res.body.data.createAnimal.id); 
-      return done();
-    });
-  }
+        })
+        .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        .end((err, res) => {
+            if (err) {
+                // eslint-disable-next-line no-console
+                console.log('Failed on animalRegistration test preparation');
+                // eslint-disable-next-line no-console
+                console.log(res.body);
+                return done(err);
+            }
+            setId(res.body.data.createAnimal.id);
+            return done();
+        });
+}

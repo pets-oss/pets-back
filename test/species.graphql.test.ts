@@ -1,14 +1,10 @@
-import {
-    expect
-} from 'chai';
+import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/translation.interface.validator';
-import {
-    translationFields
-} from './testFields';
+import { translationFields } from './testFields';
 
 require('dotenv').config({
-    path: './test/.env'
+    path: './test/.env',
 });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
@@ -29,9 +25,7 @@ describe('GraphQL species_translation integration tests', () => {
                 if (err) return done(err);
                 const {
                     body: {
-                        data: {
-                            species
-                        },
+                        data: { species },
                     },
                 } = res;
                 expect(species).to.be.an('array');

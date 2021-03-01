@@ -1,5 +1,5 @@
 export default interface Breed {
-    id: number,
-    code: string,
-    value: string
+    id: number;
+    code: string;
+    value: string;
 }

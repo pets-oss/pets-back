@@ -1,11 +1,9 @@
-import {
-    expect
-} from 'chai';
+import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/status.interface.validator';
 
 require('dotenv').config({
-    path: './test/.env'
+    path: './test/.env',
 });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
@@ -24,9 +22,7 @@ describe('Getting statuses', () => {
                 if (err) return done(err);
                 const {
                     body: {
-                        data: {
-                            statuses
-                        },
+                        data: { statuses },
                     },
                 } = res;
                 expect(statuses).to.be.an('array');

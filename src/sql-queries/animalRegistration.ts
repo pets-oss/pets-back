@@ -1,18 +1,13 @@
-import {
-    QueryConfig
-} from 'pg';
-import {
-    insert,
-    update
-} from 'sql-bricks-postgres';
+import { QueryConfig } from 'pg';
+import { insert, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
-const table = 'animal_registration'
+const table = 'animal_registration';
 const returnFields = 'animal_id, registration_no, registration_date, status';
 
 enum AnimalRegistrationStatus {
     Active,
-    Inactive
+    Inactive,
 }
 
 export interface AnimalRegistrationInput {
@@ -40,15 +35,17 @@ export const getActiveAnimalRegistrationQuery = (id: number): QueryConfig => {
     return query;
 };
 
-export const createAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
-    insert(table, snakeCaseKeys(input))
-        .returning(returnFields)
-        .toParams();
+export const createAnimalRegistrationQuery = (
+    input: AnimalRegistrationInput
+): QueryConfig =>
+    insert(table, snakeCaseKeys(input)).returning(returnFields).toParams();
 
-export const updateAnimalRegistrationQuery = (input: AnimalRegistrationInput): QueryConfig =>
+export const updateAnimalRegistrationQuery = (
+    input: AnimalRegistrationInput
+): QueryConfig =>
     update(table, snakeCaseKeys(input))
         .where({
-            animal_id: input.animalId
+            animal_id: input.animalId,
         })
         .returning(returnFields)
         .toParams();
@@ -69,4 +66,4 @@ export const deleteAnimalRegistrationQuery = (id: number): QueryConfig => {
     };
 
     return query;
-}
+};

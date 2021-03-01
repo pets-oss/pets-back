@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import {v4 as uuidv4} from 'uuid';
-import {animalDetailsFields} from './testFields';
+import { v4 as uuidv4 } from 'uuid';
+import { animalDetailsFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -63,7 +63,7 @@ describe('animalDetails Graphql mutations tests', () => {
             animalId,
             breed: {
                 id: 10,
-                value: 'Akitos'
+                value: 'Akitos',
             },
             species: {
                 id: '1',
@@ -75,12 +75,12 @@ describe('animalDetails Graphql mutations tests', () => {
             },
             color: {
                 id: 83,
-                value: 'Balta'
+                value: 'Balta',
             },
             birthDate: dateIntString,
             weight: 5,
             allergy: 'nera',
-            food: 'bet koks'
+            food: 'bet koks',
         };
 
         request
@@ -88,7 +88,7 @@ describe('animalDetails Graphql mutations tests', () => {
             .send({
                 query: `
                     mutation {
-                        ${mutation}(id: ${animalId}) 
+                        ${mutation}(id: ${animalId})
                             ${animalDetailsFields}
                 }`,
             })

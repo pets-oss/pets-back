@@ -1,12 +1,8 @@
-import {
-    Pool,
-    QueryConfig,
-    QueryResult
-} from 'pg';
+import { Pool, QueryConfig, QueryResult } from 'pg';
 
 interface PostgresClient {
-    disconnect: () => Promise < void > ;
-    query: (config: QueryConfig) => Promise < QueryResult > ;
+    disconnect: () => Promise<void>;
+    query: (config: QueryConfig) => Promise<QueryResult>;
 }
 
 const pgClient = (pool: Pool): PostgresClient => ({
@@ -34,13 +30,13 @@ const pgClient = (pool: Pool): PostgresClient => ({
 
 export default async () => {
     const connectionString = process.env.DATABASE_URL; // heroku postgres addon exports connection string as a DATABASE_URL.
-    const config = connectionString ?
-        {
-            connectionString,
-            ssl: {
-                rejectUnauthorized: false,
-            },
-        } :
+    const config = connectionString ? {
+        connectionString,
+        ssl: {
+            rejectUnauthorized: false,
+        },
+    }
+        :
         {
             user: process.env.POSTGRES_USER,
             host: process.env.POSTGRES_HOST,

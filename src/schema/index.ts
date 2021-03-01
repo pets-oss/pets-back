@@ -1,18 +1,14 @@
 import {
     mergeSchemas,
     makeExecutableSchema,
-    loadSchemaSync
+    loadSchemaSync,
 } from 'graphql-tools';
-import {
-    merge
-} from 'lodash';
-import {
-    GraphQLFileLoader
-} from '@graphql-tools/graphql-file-loader';
+import { merge } from 'lodash';
+import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 
 import {
     constraintDirective,
-    constraintDirectiveTypeDefs
+    constraintDirectiveTypeDefs,
 } from 'graphql-constraint-directive';
 import animalResolvers from './resolvers/animal';
 import animalDetailsResolvers from './resolvers/animalDetails';

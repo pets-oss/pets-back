@@ -1,11 +1,5 @@
-import {
-    QueryConfig
-} from 'pg';
-import {
-    select,
-    insert,
-    update
-} from 'sql-bricks-postgres';
+import { QueryConfig } from 'pg';
+import { select, insert, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 interface CreateOrganisationInput {
@@ -26,20 +20,29 @@ interface UpdateOrganizationInput {
 }
 
 export const getOrganizationQuery = (id: number): QueryConfig =>
-    select().from('organization').where({
-        id,
-        delete_time: null
-    }).toParams();
+    select()
+        .from('organization')
+        .where({
+            id,
+            delete_time: null,
+        })
+        .toParams();
 
 export const getDeleteTimeQuery = (id: number): QueryConfig =>
-    select('delete_time').from('organization').where({
-        id
-    }).toParams();
+    select('delete_time')
+        .from('organization')
+        .where({
+            id,
+        })
+        .toParams();
 
 export const getOrganizationsQuery = (): QueryConfig =>
-    select().from('organization').where({
-        delete_time: null
-    }).toParams();
+    select()
+        .from('organization')
+        .where({
+            delete_time: null,
+        })
+        .toParams();
 
 export const createOrganizationQuery = (
     input: CreateOrganisationInput
@@ -55,7 +58,7 @@ export const updateOrganizationQuery = (
 ): QueryConfig =>
     update('organization', snakeCaseKeys(input))
         .where({
-            id: input.id
+            id: input.id,
         })
         .returning(
             'id, name, country, city, street_address, phone, mod_time, delete_time'
@@ -64,10 +67,10 @@ export const updateOrganizationQuery = (
 
 export const deleteOrganizationQuery = (id: number): QueryConfig =>
     update('organization', {
-        delete_time: 'NOW()'
+        delete_time: 'NOW()',
     })
         .where({
-            id
+            id,
         })
         .returning(
             'id, name, country, city, street_address, phone, mod_time, delete_time'

@@ -1,22 +1,15 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import {
-    graphiqlExpress,
-    graphqlExpress
-} from 'apollo-server-express';
-import {
-    snakeCase
-} from 'lodash';
+import { graphiqlExpress, graphqlExpress } from 'apollo-server-express';
+import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 
 import schema from './schema';
 import initClients from './utils/init-clients';
 
-initClients().then(({
-    pgClient
-}) => {
+initClients().then(({ pgClient }) => {
     const app = express();
 
     app.use('/status', (req, res) => {
@@ -51,7 +44,7 @@ initClients().then(({
                 fieldResolver: snakeCaseFieldResolver,
                 schema,
                 context: {
-                    pgClient
+                    pgClient,
                 },
             }))
         );
@@ -65,7 +58,7 @@ initClients().then(({
                 fieldResolver: snakeCaseFieldResolver,
                 schema,
                 context: {
-                    pgClient
+                    pgClient,
                 },
             }))
         );
@@ -75,7 +68,9 @@ initClients().then(({
         '/graphiql',
         graphiqlExpress({
             endpointURL: '/graphql',
-            passHeader: process.env.BEARER_TOKEN ? '' : `'Authorization': 'Bearer ${process.env.BEARER_TOKEN}'`,
+            passHeader: process.env.BEARER_TOKEN
+                ? ''
+                : `'Authorization': 'Bearer ${process.env.BEARER_TOKEN}'`,
         })
     );
 

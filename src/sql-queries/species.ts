@@ -2,8 +2,8 @@ import { QueryConfig } from 'pg';
 
 export const getSpeciesQuery = (language: string): QueryConfig => {
     const text = `
-        SELECT 
-            species as id, 
+        SELECT
+            species as id,
             translation as value
         FROM species_translation
         WHERE language = $1;
@@ -11,15 +11,19 @@ export const getSpeciesQuery = (language: string): QueryConfig => {
 
     return {
         text,
-        values: [ language ]
+        values: [language],
     };
 };
 
-export const getSpeciesByBreedIdQuery = (breed_id: number, language: string, defaultLanguage: string): QueryConfig => {
+export const getSpeciesByBreedIdQuery = (
+    breed_id: number,
+    language: string,
+    defaultLanguage: string
+): QueryConfig => {
     const text = `
         SELECT species AS id, translation AS value
-        FROM species_translation 
-        WHERE species = (SELECT species FROM breed WHERE id = $1) 
+        FROM species_translation
+        WHERE species = (SELECT species FROM breed WHERE id = $1)
             AND language IN ($2, $3)
         ORDER BY language = $2 DESC
         LIMIT 1;
@@ -27,6 +31,6 @@ export const getSpeciesByBreedIdQuery = (breed_id: number, language: string, def
 
     return {
         text,
-        values: [ breed_id, language, defaultLanguage ]
-    }
+        values: [breed_id, language, defaultLanguage],
+    };
 };

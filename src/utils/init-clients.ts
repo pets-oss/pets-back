@@ -4,6 +4,6 @@ export default async () => {
     const pgClient = await initPostgres();
 
     return {
-        pgClient
+        pgClient,
     };
 };

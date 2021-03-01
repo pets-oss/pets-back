@@ -1,18 +1,18 @@
 extend type Query {
-  """
-  Get all statuses.
+    """
+    Get all statuses.
 
-  Examples:
+    Examples:
 
-  statuses(language: "lt")
-  """
-  statuses("language code" language: String!): [Status]
+    statuses(language: "lt")
+    """
+    statuses("language code" language: String!): [Status]
 }
 
 "Represents a status."
 type Status {
-  "Status id"
-  id: String!
-  "Status name"
-  value: String!
+    "Status id"
+    id: String!
+    "Status name"
+    value: String!
 }

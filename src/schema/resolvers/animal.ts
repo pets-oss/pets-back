@@ -1,6 +1,4 @@
-import {
-    IResolvers
-} from 'graphql-tools';
+import { IResolvers } from 'graphql-tools';
 import {
     getAnimalQuery,
     getAnimalsQuery,
@@ -12,43 +10,29 @@ import {
     createAnimalDetailsQuery,
     updateAnimalDetailsQuery,
 } from '../../sql-queries/animalDetails';
-import {
-    getImplantedAnimalMicrochipQuery
-} from '../../sql-queries/animalMicrochip';
+import { getImplantedAnimalMicrochipQuery } from '../../sql-queries/animalMicrochip';
 import {
     getActiveAnimalRegistrationQuery,
     createAnimalRegistrationQuery,
     updateAnimalRegistrationQuery,
 } from '../../sql-queries/animalRegistration';
-import {
-    getStatusTranslationQuery
-} from '../../sql-queries/status';
+import { getStatusTranslationQuery } from '../../sql-queries/status';
 
 const defaultLanguage: string = 'lt';
 
 const resolvers: IResolvers = {
     Query: {
-        animals: async (_, __, {
-            pgClient
-        }) => {
+        animals: async (_, __, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalsQuery());
             return dbResponse.rows;
         },
-        animal: async (_, {
-            id
-        }, {
-            pgClient
-        }) => {
+        animal: async (_, { id }, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalQuery(id));
             return dbResponse.rows[0];
         },
     },
     Mutation: {
-        createAnimal: async (_, {
-            input
-        }, {
-            pgClient
-        }) => {
+        createAnimal: async (_, { input }, { pgClient }) => {
             try {
                 await pgClient.query('BEGIN');
 
@@ -59,7 +43,7 @@ const resolvers: IResolvers = {
                 const createRegistrationResult = await pgClient.query(
                     createAnimalRegistrationQuery({
                         ...input.registration,
-                        animalId
+                        animalId,
                     })
                 );
 
@@ -68,9 +52,9 @@ const resolvers: IResolvers = {
                     createDetailsResult = await pgClient.query(
                         createAnimalDetailsQuery({
                             ...input.details,
-                            animalId
+                            animalId,
                         })
-                    )
+                    );
                 }
 
                 await pgClient.query('COMMIT');
@@ -79,17 +63,13 @@ const resolvers: IResolvers = {
                     ...createAnimalResult.rows[0],
                     registration: createRegistrationResult.rows[0],
                     details: createDetailsResult?.rows[0],
-                }
+                };
             } catch (e) {
                 await pgClient.query('ROLLBACK');
                 throw e;
             }
         },
-        updateAnimal: async (_, {
-            input
-        }, {
-            pgClient
-        }) => {
+        updateAnimal: async (_, { input }, { pgClient }) => {
             try {
                 await pgClient.query('BEGIN');
                 const updateAnimalResult = await pgClient.query(
@@ -110,16 +90,16 @@ const resolvers: IResolvers = {
                     updateDetailsResult = await pgClient.query(
                         updateAnimalDetailsQuery({
                             ...input.details,
-                            animalId: input.id
+                            animalId: input.id,
                         })
-                    )
+                    );
                 } else {
                     updateDetailsResult = await pgClient.query(
                         createAnimalDetailsQuery({
                             ...input.details,
-                            animalId: input.id
+                            animalId: input.id,
                         })
-                    )
+                    );
                 }
 
                 await pgClient.query('COMMIT');
@@ -135,41 +115,23 @@ const resolvers: IResolvers = {
         },
     },
     Animal: {
-        details: async ({
-            id
-        }, __, {
-            pgClient
-        }) => {
+        details: async ({ id }, __, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalDetailsQuery(id));
             return dbResponse.rows[0];
         },
-        registration: async ({
-            id
-        }, __, {
-            pgClient
-        }) => {
+        registration: async ({ id }, __, { pgClient }) => {
             const dbResponse = await pgClient.query(
                 getActiveAnimalRegistrationQuery(id)
             );
             return dbResponse.rows[0];
         },
-        microchip: async ({
-            id
-        }, __, {
-            pgClient
-        }) => {
+        microchip: async ({ id }, __, { pgClient }) => {
             const dbResponse = await pgClient.query(
                 getImplantedAnimalMicrochipQuery(id)
             );
             return dbResponse.rows[0];
         },
-        status: async ({
-            status
-        }, {
-            language
-        }, {
-            pgClient
-        }) => {
+        status: async ({ status }, { language }, { pgClient }) => {
             if (!status) {
                 return null;
             }

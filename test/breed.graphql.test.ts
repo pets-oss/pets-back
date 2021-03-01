@@ -1,14 +1,10 @@
-import {
-    expect
-} from 'chai';
+import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/breed.interface.validator';
-import {
-    breedFields
-} from './testFields';
+import { breedFields } from './testFields';
 
 require('dotenv').config({
-    path: './test/.env'
+    path: './test/.env',
 });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
@@ -29,9 +25,7 @@ describe('GraphQL breed integration tests', () => {
                 if (err) return done(err);
                 const {
                     body: {
-                        data: {
-                            breeds
-                        },
+                        data: { breeds },
                     },
                 } = res;
                 expect(breeds).to.be.an('array');
