@@ -5,20 +5,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync-branches:
+  repo-sync:
     runs-on: ubuntu-latest
-    name: Syncing prod with main
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Set up Node
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
         with:
-          node-version: 12
-      - name: Opening pull request
-        id: pull
-        uses: tretuna/sync-branches@1.2.0
+          persist-credentials: false
+      - name: repo-sync
+        uses: repo-sync/github-sync@v2
         with:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          FROM_BRANCH: "main"
-          TO_BRANCH: "prod"
+          source_repo: "https://github.com/pets-oss/pets-back.git"
+          source_branch: "main"
+          destination_branch: "prod"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
