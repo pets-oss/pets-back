@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
 import { animalMicrochipFields } from './testFields';
-import createAnimal from "./helpers/createAnimalHelper";
+import createAnimal from './helpers/createAnimalHelper';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -10,7 +10,7 @@ const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 let animalId: String;
 
-describe ('animalMicrochip Graphql mutations tests', () => {
+describe('animalMicrochip Graphql mutations tests', () => {
     const registrationNo = `2021PandemicC19X${uuidv4()}`;
     const date = '2021-01-01';
     const dateIntString = new Date(date).getTime().toString();
@@ -23,9 +23,16 @@ describe ('animalMicrochip Graphql mutations tests', () => {
                 installPlace: 1,
                 status: Implanted
         }`;
-        createAnimal(done, request, registrationNo, date, (id: String) => {
-            animalId = id;
-        }, microchipQuery)
+        createAnimal(
+            done,
+            request,
+            registrationNo,
+            date,
+            (id: String) => {
+                animalId = id;
+            },
+            microchipQuery
+        );
     });
 
     it('Delete animal microchip', (done) => {
@@ -37,7 +44,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             chipCompanyCode: 1,
             installDate: dateIntString,
             installPlace: 1,
-            status: 'Implantuotas'
+            status: 'Implantuotas',
         };
 
         request
@@ -45,7 +52,7 @@ describe ('animalMicrochip Graphql mutations tests', () => {
             .send({
                 query: `
                     mutation {
-                        ${mutation}(animalId: ${animalId}, microchipId: "${registrationNo}") 
+                        ${mutation}(animalId: ${animalId}, microchipId: "${registrationNo}")
                             ${animalMicrochipFields}
                 }`,
             })

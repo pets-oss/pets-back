@@ -1,52 +1,52 @@
 enum MicrochipStatus {
-  Implanted,
-  Removed
+    Implanted
+    Removed
 }
 
 "Represents an animal microchip."
 type AnimalMicrochip {
-  "Animal id, for example 2"
-  animalId: Int!
-  "Microchip id"
-  microchipId: String!
-  "Chip company code"
-  chipCompanyCode: Int!
-  "Microchip install date"
-  installDate: String
-  "Microchip install place"
-  installPlace: Int!
-  """
-  Microchip status ('Implanted' or 'Removed') translation
-  Examples: status(language: "en") or just status - will return default language ("lt") translation
-  """
-  status("Language code" language: String = "lt"): String
+    "Animal id, for example 2"
+    animalId: Int!
+    "Microchip id"
+    microchipId: String!
+    "Chip company code"
+    chipCompanyCode: Int!
+    "Microchip install date"
+    installDate: String
+    "Microchip install place"
+    installPlace: Int!
+    """
+    Microchip status ('Implanted' or 'Removed') translation
+    Examples: status(language: "en") or just status - will return default language ("lt") translation
+    """
+    status("Language code" language: String = "lt"): String
 }
 
 extend type Mutation {
-  "Deleted microchip"
-  deleteAnimalMicrochip(animalId: Int!, microchipId: String!): AnimalMicrochip
+    "Deleted microchip"
+    deleteAnimalMicrochip(animalId: Int!, microchipId: String!): AnimalMicrochip
 }
 
 input CreateAnimalMicrochipInput {
-  "Microchip id"
-  microchipId: String!
-  "Chip company code"
-  chipCompanyCode: Int!
-  "Install date"
-  installDate: String
-  "Install place"
-  installPlace: Int!
-  "Microchip status ('Implanted' or 'Removed')"
-  status: MicrochipStatus!
+    "Microchip id"
+    microchipId: String!
+    "Chip company code"
+    chipCompanyCode: Int!
+    "Install date"
+    installDate: String
+    "Install place"
+    installPlace: Int!
+    "Microchip status ('Implanted' or 'Removed')"
+    status: MicrochipStatus!
 }
 
 input UpdateAnimalMicrochipInput {
-  "Chip company code"
-  chipCompanyCode: Int
-  "Install date"
-  installDate: String
-  "Install place"
-  installPlace: Int
-  "Microchip status ('Implanted' or 'Removed')"
-  status: MicrochipStatus
+    "Chip company code"
+    chipCompanyCode: Int
+    "Install date"
+    installDate: String
+    "Install place"
+    installPlace: Int
+    "Microchip status ('Implanted' or 'Removed')"
+    status: MicrochipStatus
 }
