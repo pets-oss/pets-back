@@ -68,6 +68,8 @@ input CreateAnimalInput {
   registration: AnimalRegistrationInput!
   "AnimalDetails"
   details: AnimalDetailsInput
+  "AnimalMicrochip"
+  microchip: CreateAnimalMicrochipInput
 }
 
 input UpdateAnimalInput {
@@ -87,4 +89,6 @@ input UpdateAnimalInput {
   registration: AnimalRegistrationInput
   "AnimalDetails"
   details: AnimalDetailsInput
+  "AnimalMicrochip"
+  microchip: UpdateAnimalMicrochipInput
 }

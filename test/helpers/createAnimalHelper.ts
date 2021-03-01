@@ -1,6 +1,13 @@
 import supertest from 'supertest';
 
-export default function createAnimal(done: Mocha.Done, request: supertest.SuperTest<supertest.Test>, registrationNo: String, date: String, setId: Function) {
+export default function createAnimal(
+    done: Mocha.Done,
+    request: supertest.SuperTest<supertest.Test>,
+    registrationNo: String,
+    date: String,
+    setId: Function,
+    nestedQuery?: String
+) {
     request.post('/graphql').send({
       query: `
                       mutation {
@@ -12,6 +19,7 @@ export default function createAnimal(done: Mocha.Done, request: supertest.SuperT
                               registrationDate: "${date}",
                               status: Active
                           }
+                          ${nestedQuery ? `,${ nestedQuery}` : ``}
                       })
                       {id}
                     }`,
@@ -25,7 +33,7 @@ export default function createAnimal(done: Mocha.Done, request: supertest.SuperT
         console.log(res.body);
         return done(err);
       }
-      setId(res.body.data.createAnimal.id); 
+      setId(res.body.data.createAnimal.id);
       return done();
     });
   }

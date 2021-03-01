@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import {v4 as uuidv4} from 'uuid';
-import {animalDetailsFields} from './testFields';
+import { v4 as uuidv4 } from 'uuid';
+import { animalMicrochipFields } from './testFields';
 import createAnimal from "./helpers/createAnimalHelper";
 
 require('dotenv').config({ path: './test/.env' });
@@ -10,51 +10,34 @@ const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 let animalId: String;
 
-describe('animalDetails Graphql mutations tests', () => {
+describe ('animalMicrochip Graphql mutations tests', () => {
     const registrationNo = `2021PandemicC19X${uuidv4()}`;
     const date = '2021-01-01';
     const dateIntString = new Date(date).getTime().toString();
 
     before((done) => {
-        const detailsQuery = `details: {
-            breedId: 10,
-                genderId: 2,
-                colorId: 83,
-                birthDate: "${date}",
-                weight: 5,
-                allergy: "nera",
-                food: "bet koks"
+        const microchipQuery = `microchip: {
+            microchipId: "${registrationNo}",
+                chipCompanyCode: 1,
+                installDate: "${date}",
+                installPlace: 1,
+                status: Implanted
         }`;
         createAnimal(done, request, registrationNo, date, (id: String) => {
             animalId = id;
-        }, detailsQuery)
+        }, microchipQuery)
     });
 
-    it('Delete animal details', (done) => {
-        const mutation = 'deleteAnimalDetails';
+    it('Delete animal microchip', (done) => {
+        const mutation = 'deleteAnimalMicrochip';
 
         const answer = {
             animalId,
-            breed: {
-                id: 10,
-                value: 'Akitos'
-            },
-            species: {
-                id: '1',
-                value: 'Šuo',
-            },
-            gender: {
-                id: '2',
-                value: 'Patinas',
-            },
-            color: {
-                id: 83,
-                value: 'Balta'
-            },
-            birthDate: dateIntString,
-            weight: 5,
-            allergy: 'nera',
-            food: 'bet koks'
+            microchipId: registrationNo,
+            chipCompanyCode: 1,
+            installDate: dateIntString,
+            installPlace: 1,
+            status: 'Implantuotas'
         };
 
         request
@@ -62,8 +45,8 @@ describe('animalDetails Graphql mutations tests', () => {
             .send({
                 query: `
                     mutation {
-                        ${mutation}(id: ${animalId}) 
-                            ${animalDetailsFields}
+                        ${mutation}(animalId: ${animalId}, microchipId: "${registrationNo}") 
+                            ${animalMicrochipFields}
                 }`,
             })
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
