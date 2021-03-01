@@ -2,7 +2,7 @@ import { QueryConfig } from 'pg';
 import { insert, select, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
-interface AnimalMicrochipInput {
+export interface AnimalMicrochipInput {
     animalId: number;
     microchipId: String;
     chipCompanyCode: number;
@@ -43,7 +43,11 @@ export const deleteAnimalMicrochipQuery = (
                   AND microchip_id = $2
                 RETURNING
                     animal_id,
-                    microchip_id;`;
+                    microchip_id,
+                    chip_company_code,
+                    install_date,
+                    install_place,
+                    status;`;
 
     const query = {
         text,

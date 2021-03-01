@@ -1,14 +1,14 @@
-name: Nuke & Redeploy Database (not prod safe)
+name: Nuke & Redeploy Database [prod]
 on:
   push:
     paths:
       - '**.sql'
-    branches: [ main ]
+    branches: [ prod ]
   workflow_dispatch:
 
 jobs:
   redeploy-database:
-    environment: dev
+    environment: prod
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

@@ -1,4 +1,4 @@
-name: Deploy Heroku
+name: Deploy Heroku [prod]
 on:
   push:
     paths:
@@ -6,17 +6,17 @@ on:
       - '**.json'
       - 'test/**'
       - 'src/**'
-    branches: [ main ]
+    branches: [ prod ]
   workflow_dispatch:
 
 jobs:
   deploy-heroku:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.6.8 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "petbook-back-dev"
+          heroku_app_name: "petbook-back"
           heroku_email: "jbelevicius@kayak.com"
