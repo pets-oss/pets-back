@@ -50,7 +50,7 @@ Run `docker-compose -f docker-compose.yml -f docker-compose-debug.yml up -d`
 
 Tests run integration tests of the GraphQL service
 
-To be able to test GraphQL queries, have your node server and database running locally as described in [[A. Run Locally]](#a.-run-locally). Then simply hit `npm test`
+To be able to test GraphQL queries, have your node server and database running locally as described in [[A. Run Locally]](#a-run-locally). Then simply hit `npm test`
 
 ### C.i. Validate data with interfaces
 
