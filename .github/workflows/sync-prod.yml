@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          ref: prod
           persist-credentials: false
       - name: repo-sync
         uses: repo-sync/github-sync@v2
