@@ -2,7 +2,19 @@
 
 # Pet Information System Back-End
 
-Production https://petbook-back.herokuapp.com/graphiql
+Production endpoint: https://petbook-back.herokuapp.com/graphql
+
+Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
+
+**[Interactive API](https://petbook-back-dev.herokuapp.com/graphiql)** (dev environment only)
+
+## Contents
+
+- [A. Run locally](#a-run-locally)
+- [B. Debug](#b-debug)
+- [C. Test](#c-test)
+- [D. Log DB queries](#d-log-db-queries-usually-for-debugging)
+- [E. Common issues](#e-common-issues)
 
 ## A. Run locally
 
@@ -50,7 +62,7 @@ Run `docker-compose -f docker-compose.yml -f docker-compose-debug.yml up -d`
 
 Tests run integration tests of the GraphQL service
 
-To be able to test GraphQL queries, have your node server and database running locally as described in [[A. Run Locally]](#a-run-locally). Then simply hit `npm test`
+To be able to test GraphQL queries, have your node server and database running locally as described in [[A. Run Locally]](#a.-run-locally). Then simply hit `npm test`
 
 ### C.i. Validate data with interfaces
 
@@ -66,6 +78,14 @@ TEST_URL=<URL>
 ## D. Log DB queries (usually for debugging)
 
 Add `command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]` to docker-compose.yml under `db` configuration
+
+## E. Common Issues
+
+### Docker backend image doesnt start with docker-compose
+
+Usually happens when new node modules are added. `npm install` is done on dockerfile build. To solve:
+1. Remove the previously compiled docker image `docker image rm pets-back_gis-backend`.
+2. Run `docker-compose up -d`. This will force the dockerfile to be recompiled without cache
 
 ---
 
