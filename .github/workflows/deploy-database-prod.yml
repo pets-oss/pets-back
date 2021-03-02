@@ -1,7 +1,5 @@
 name: Nuke & Redeploy Database [prod]
 on:
-  push:
-    branches: [ prod ]
   workflow_dispatch:
 
 jobs:

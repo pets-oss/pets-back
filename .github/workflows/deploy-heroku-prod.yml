@@ -1,7 +1,5 @@
 name: Deploy Heroku [prod]
 on:
-  push:
-    branches: [ prod ]
   workflow_dispatch:
 
 jobs:
