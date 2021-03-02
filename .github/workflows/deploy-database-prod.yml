@@ -1,9 +1,10 @@
 name: Nuke & Redeploy Database [prod]
 on:
-  push:
-    paths:
-      - '**.sql'
+  workflow_run:
+    workflows: [ "Sync" ]
     branches: [ prod ]
+    types:
+      - completed
   workflow_dispatch:
 
 jobs:

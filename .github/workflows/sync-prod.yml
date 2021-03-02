@@ -1,4 +1,4 @@
-name: Sync prod to main
+name: Sync
 on:
   schedule:
     - cron: '0 22 * * *' # UTC time 22:00 (00:00 GMT+2)
