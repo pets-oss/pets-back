@@ -1,4 +1,4 @@
-name: Sync prod to main
+name: Sync
 on:
   schedule:
     - cron: '0 22 * * *' # UTC time 22:00 (00:00 GMT+2)
@@ -18,3 +18,23 @@ jobs:
           source_branch: "main"
           destination_branch: "prod"
           github_token: ${{ secrets.GITHUB_TOKEN }}
+  deploy-heroku:
+    runs-on: ubuntu-latest
+    needs: repo-sync
+    steps:
+      - name: Trigger heroku deploy [prod]
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Deploy Heroku [prod]
+          ref: prod
+          token: ${{ secrets.PERSONAL_TOKEN }}
+  deploy-database:
+    runs-on: ubuntu-latest
+    needs: repo-sync
+    steps:
+      - name: Trigger database deploy [prod]
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Nuke & Redeploy Database [prod]
+          ref: prod
+          token: ${{ secrets.PERSONAL_TOKEN }}

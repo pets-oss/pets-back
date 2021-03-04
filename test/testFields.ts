@@ -18,6 +18,7 @@ export const animalDetailsFields = `
         animalId
         breed {
             id
+            abbreviation
             value
         }
         species {

@@ -1,12 +1,5 @@
 name: Deploy Heroku [prod]
 on:
-  push:
-    paths:
-      - '**.ts'
-      - '**.json'
-      - 'test/**'
-      - 'src/**'
-    branches: [ prod ]
   workflow_dispatch:
 
 jobs:
