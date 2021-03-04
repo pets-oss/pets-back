@@ -37,6 +37,7 @@ describe('animalDetails Graphql mutations tests', () => {
             animalId,
             breed: {
                 id: 10,
+                abbreviation: 'AK',
                 value: 'Akitos'
             },
             species: {
