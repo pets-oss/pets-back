@@ -43,11 +43,7 @@ describe('GraphQL organization integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { organizations },
-                    },
-                } = res;
+                const { body: { data: { organizations } } } = res;
                 expect(organizations).to.be.an('array');
                 validate(organizations[0]);
                 expect(organizations).to.have.length.above(3);
@@ -73,12 +69,8 @@ describe('GraphQL organization integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { createOrganization },
-                    },
-                } = res;
-                createdOrganizationId = createOrganization.id;
+                const { body: { data: { createOrganization } } } = res;
+                ({ id: createdOrganizationId } = createOrganization);
                 validate(createOrganization);
                 expect(createOrganization).to.include(expectedResult);
                 return done();
@@ -104,11 +96,7 @@ describe('GraphQL organization integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { updateOrganization },
-                    },
-                } = res;
+                const { body: { data: { updateOrganization } } } = res;
                 validate(updateOrganization);
                 expect(updateOrganization).to.include({
                     id: 2,
@@ -130,11 +118,7 @@ describe('GraphQL organization integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { deleteOrganization },
-                    },
-                } = res;
+                const { body: { data: { deleteOrganization } } } = res;
                 validate(deleteOrganization);
                 expect(deleteOrganization).to.include({
                     id: createdOrganizationId,

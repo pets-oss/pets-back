@@ -52,7 +52,10 @@ describe('animalMicrochip Graphql mutations tests', () => {
             .send({
                 query: `
                     mutation {
-                        ${mutation}(animalId: ${animalId}, microchipId: "${registrationNo}")
+                        ${mutation}(
+                            animalId: ${animalId},
+                            microchipId: "${registrationNo}"
+                        )
                             ${animalMicrochipFields}
                 }`,
             })

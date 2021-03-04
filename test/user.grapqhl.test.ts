@@ -34,11 +34,7 @@ describe('GraphQL user integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { users },
-                    },
-                } = res;
+                const { body: { data: { users } } } = res;
                 expect(users).to.be.an('array');
                 validate(users[0]);
                 expect(users).to.have.length.above(4);
@@ -64,11 +60,7 @@ describe('GraphQL user integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { createUser },
-                    },
-                } = res;
+                const { body: { data: { createUser } } } = res;
                 validate(createUser);
                 expect(createUser.id).to.be.equals('TestID');
                 expect(createUser.username).to.be.equals('TestUsername');
@@ -97,11 +89,7 @@ describe('GraphQL user integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { updateUser },
-                    },
-                } = res;
+                const { body: { data: { updateUser } } } = res;
                 validate(updateUser);
                 expect(updateUser.id).to.be.equals('TestID');
                 expect(updateUser.username).to.be.equals('UpdatedTestUsername');
@@ -124,11 +112,7 @@ describe('GraphQL user integration tests', () => {
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { deleteUser },
-                    },
-                } = res;
+                const { body: { data: { deleteUser } } } = res;
                 validate(deleteUser);
                 expect(deleteUser.id).to.be.equals('TestID');
                 expect(deleteUser.username).to.be.equals('UpdatedTestUsername');

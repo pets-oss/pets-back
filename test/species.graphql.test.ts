@@ -3,9 +3,7 @@ import supertest from 'supertest';
 import validate from './validators/translation.interface.validator';
 import { translationFields } from './testFields';
 
-require('dotenv').config({
-    path: './test/.env',
-});
+require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
@@ -23,11 +21,7 @@ describe('GraphQL species_translation integration tests', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { species },
-                    },
-                } = res;
+                const { body: { data: { species } } } = res;
                 expect(species).to.be.an('array');
                 validate(species[0]);
                 return done();

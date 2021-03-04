@@ -4,9 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import validate from './validators/animal.interface.validator';
 import { animalFields } from './testFields';
 
-require('dotenv').config({
-    path: './test/.env',
-});
+require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
@@ -48,11 +46,7 @@ describe('GraphQL animal integration tests', () => {
                     console.log(res.body);
                     return done(err);
                 }
-                const {
-                    body: {
-                        data: { animals },
-                    },
-                } = res;
+                const { body: { data: { animals } } } = res;
                 expect(animals).to.be.an('array');
                 validate(animals[0]);
                 expect(animals).to.have.length.above(4);

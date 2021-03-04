@@ -3,9 +3,7 @@ import supertest from 'supertest';
 import validate from './validators/translation.interface.validator';
 import { translationFields } from './testFields';
 
-require('dotenv').config({
-    path: './test/.env',
-});
+require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
@@ -23,11 +21,7 @@ describe('GraphQL gender_translation integration tests', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { genders },
-                    },
-                } = res;
+                const { body: {data: { genders } } } = res;
                 expect(genders).to.be.an('array');
                 validate(genders[0]);
                 return done();

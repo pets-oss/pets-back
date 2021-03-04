@@ -3,9 +3,7 @@ import supertest from 'supertest';
 import validate from './validators/breed.interface.validator';
 import { breedFields } from './testFields';
 
-require('dotenv').config({
-    path: './test/.env',
-});
+require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
@@ -23,11 +21,7 @@ describe('GraphQL breed integration tests', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const {
-                    body: {
-                        data: { breeds },
-                    },
-                } = res;
+                const { body: {data: { breeds } } } = res;
                 expect(breeds).to.be.an('array');
                 validate(breeds[0]);
                 return done();

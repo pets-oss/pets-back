@@ -29,7 +29,8 @@ const pgClient = (pool: Pool): PostgresClient => ({
 });
 
 export default async () => {
-    const connectionString = process.env.DATABASE_URL; // heroku postgres addon exports connection string as a DATABASE_URL.
+    // heroku postgres addon exports connection string as a DATABASE_URL.
+    const connectionString = process.env.DATABASE_URL;
     const config = connectionString ? {
         connectionString,
         ssl: {
