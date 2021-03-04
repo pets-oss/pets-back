@@ -1,8 +1,15 @@
-import { mergeSchemas, makeExecutableSchema, loadSchemaSync } from 'graphql-tools';
+import {
+    mergeSchemas,
+    makeExecutableSchema,
+    loadSchemaSync,
+} from 'graphql-tools';
 import { merge } from 'lodash';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 
-import { constraintDirective, constraintDirectiveTypeDefs } from 'graphql-constraint-directive';
+import {
+    constraintDirective,
+    constraintDirectiveTypeDefs,
+} from 'graphql-constraint-directive';
 import animalResolvers from './resolvers/animal';
 import animalDetailsResolvers from './resolvers/animalDetails';
 import genderResolvers from './resolvers/gender';
@@ -16,29 +23,29 @@ import organizationResolvers from './resolvers/organization';
 import userResolvers from './resolvers/user';
 
 const schemaLocal = loadSchemaSync('src/schema/typeDefs/*.graphql', {
-  loaders: [new GraphQLFileLoader()],
+    loaders: [new GraphQLFileLoader()],
 });
 
 const schemaConstraint = makeExecutableSchema({
-  typeDefs: constraintDirectiveTypeDefs,
-  schemaTransforms: [constraintDirective()],
+    typeDefs: constraintDirectiveTypeDefs,
+    schemaTransforms: [constraintDirective()],
 });
 
 const schema = mergeSchemas({
-  schemas: [schemaLocal, schemaConstraint],
-  resolvers: merge(
-    animalResolvers,
-    animalDetailsResolvers,
-    animalMicrochipResolvers,
-    animalRegistrationResolvers,
-    genderResolvers,
-    statusResolvers,
-    breedResolvers,
-    speciesResolvers,
-    colorResolvers,
-    organizationResolvers,
-    userResolvers
-  ),
+    schemas: [schemaLocal, schemaConstraint],
+    resolvers: merge(
+        animalResolvers,
+        animalDetailsResolvers,
+        animalMicrochipResolvers,
+        animalRegistrationResolvers,
+        genderResolvers,
+        statusResolvers,
+        breedResolvers,
+        speciesResolvers,
+        colorResolvers,
+        organizationResolvers,
+        userResolvers
+    ),
 });
 
 export default schema;

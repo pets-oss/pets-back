@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import {v4 as uuidv4} from 'uuid';
 import {animalDetailsFields} from './testFields';
-import createAnimal from "./helpers/createAnimalHelper";
+import createAnimal from './helpers/createAnimalHelper';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -63,7 +63,7 @@ describe('animalDetails Graphql mutations tests', () => {
             .send({
                 query: `
                     mutation {
-                        ${mutation}(id: ${animalId}) 
+                        ${mutation}(id: ${animalId})
                             ${animalDetailsFields}
                 }`,
             })

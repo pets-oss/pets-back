@@ -1,31 +1,31 @@
 enum RegistrationStatus {
-  Active,
-  Inactive
+    Active
+    Inactive
 }
 
 "Represents animal registration"
 type AnimalRegistration {
-  "Registration number"
-  registrationNo: String!
-  "Registration date"
-  registrationDate: String
-  """
-  Registration status ('Active' or 'Inactive') translation
-  Examples: status(language: "en") or just status - will return default language ("lt") translation
-  """
-  status("Language code" language: String = "lt"): String
+    "Registration number"
+    registrationNo: String!
+    "Registration date"
+    registrationDate: String
+    """
+    Registration status ('Active' or 'Inactive') translation
+    Examples: status(language: "en") or just status - will return default language ("lt") translation
+    """
+    status("Language code" language: String = "lt"): String
 }
 
 input AnimalRegistrationInput {
-  "Registration number"
-  registrationNo: String!
-  "Registration date"
-  registrationDate: String
-  "Registration status ('Active' or 'Inactive')"
-  status: RegistrationStatus
+    "Registration number"
+    registrationNo: String!
+    "Registration date"
+    registrationDate: String
+    "Registration status ('Active' or 'Inactive')"
+    status: RegistrationStatus
 }
 
 extend type Mutation {
-  "Delete animal registration"
-  deleteAnimalRegistration(id: Int!): AnimalRegistration
+    "Delete animal registration"
+    deleteAnimalRegistration(id: Int!): AnimalRegistration
 }

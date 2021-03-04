@@ -1,8 +1,8 @@
 import { QueryConfig } from 'pg';
 
 export const getStatusesQuery = (language: string): QueryConfig => {
-    const text = `SELECT 
-                    status as id, 
+    const text = `SELECT
+                    status as id,
                     translation as value
                 FROM status_translation
                 WHERE language = $1;`;
@@ -15,7 +15,11 @@ export const getStatusesQuery = (language: string): QueryConfig => {
     return query;
 };
 
-export const getStatusTranslationQuery = (status: string, language: string, defaultLanguage: string): QueryConfig => {
+export const getStatusTranslationQuery = (
+    status: string,
+    language: string,
+    defaultLanguage: string
+): QueryConfig => {
     const text = `
         SELECT translation AS status
         FROM status_translation

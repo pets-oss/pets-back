@@ -11,42 +11,42 @@ const request = supertest(url);
 let animalId: String;
 
 describe('animalRegistration Graphql mutations tests', () => {
-  const registrationNo = `2021PandemicC19X${uuidv4()}`;
-  const date = '2021-01-01';
-  const dateIntString = new Date(date).getTime().toString();
+    const registrationNo = `2021PandemicC19X${uuidv4()}`;
+    const date = '2021-01-01';
+    const dateIntString = new Date(date).getTime().toString();
 
-  before((done) =>
-    createAnimal(done, request, registrationNo, date, (id: String) => {
-      animalId = id;
-    })
-  );
+    before((done) =>
+        createAnimal(done, request, registrationNo, date, (id: String) => {
+            animalId = id;
+        })
+    );
 
-  it('Delete animal_id=6 registration', (done) => {
-    const mutation = 'deleteAnimalRegistration';
+    it('Delete animal_id=6 registration', (done) => {
+        const mutation = 'deleteAnimalRegistration';
 
-    const answer = {
-      registrationNo,
-      registrationDate: dateIntString,
-      status: 'Aktyvus',
-    };
+        const answer = {
+            registrationNo,
+            registrationDate: dateIntString,
+            status: 'Aktyvus',
+        };
 
-    request
-      .post('/graphql')
-      .send({
-        query: `
+        request
+            .post('/graphql')
+            .send({
+                query: `
                     mutation {
-                        ${mutation}(id: ${animalId}) 
+                        ${mutation}(id: ${animalId})
                             ${animalRegistrationFields}
                 }`,
-      })
-      .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(JSON.stringify(res.body.data[mutation])).equal(
-          JSON.stringify(answer)
-        );
-        return done();
-      });
-  });
+            })
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(JSON.stringify(res.body.data[mutation])).equal(
+                    JSON.stringify(answer)
+                );
+                return done();
+            });
+    });
 });

@@ -1,6 +1,12 @@
 import { IResolvers } from 'graphql-tools';
-import {createUserQuery, deleteUserQuery, getUserQuery, getUsersQuery, updateUserQuery} from '../../sql-queries/user';
-import getUserRolesQuery from "../../sql-queries/role";
+import {
+    createUserQuery,
+    deleteUserQuery,
+    getUserQuery,
+    getUsersQuery,
+    updateUserQuery,
+} from '../../sql-queries/user';
+import getUserRolesQuery from '../../sql-queries/role';
 
 const resolvers: IResolvers = {
     Query: {
@@ -17,7 +23,7 @@ const resolvers: IResolvers = {
         roles: async ({ id }, __, { pgClient }) => {
             const dbResponse = await pgClient.query(getUserRolesQuery(id));
             return dbResponse.rows;
-        }
+        },
     },
     Mutation: {
         createUser: async (_, { input }, { pgClient }) => {
@@ -37,8 +43,8 @@ const resolvers: IResolvers = {
         deleteUser: async (_, { id }, { pgClient }) => {
             const dbResponse = await pgClient.query(deleteUserQuery(id));
             return dbResponse.rows[0];
-        }
-    }
+        },
+    },
 };
 
 export default resolvers;

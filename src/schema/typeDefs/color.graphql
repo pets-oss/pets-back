@@ -1,18 +1,18 @@
 extend type Query {
-  """
-  Get all colors.
+    """
+    Get all colors.
 
-  Examples:
+    Examples:
 
-  colors(language: "lt")
-  """
-  colors("language code" language: String!): [Gender]
+    colors(language: "lt")
+    """
+    colors("language code" language: String!): [Gender]
 }
 
 "Represents a color."
 type Color {
-  "Color id"
-  id: Int!
-  "Color name"
-  value: String!
+    "Color id"
+    id: Int!
+    "Color name"
+    value: String!
 }

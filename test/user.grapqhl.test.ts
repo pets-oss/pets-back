@@ -8,11 +8,12 @@ require('dotenv').config({ path: './test/.env' });
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-describe ('GraphQL user integration tests', () => {
-    it ('Returns user id="aiubfaw4io09" with all fields', (done) => {
-        request.post('/graphql')
+describe('GraphQL user integration tests', () => {
+    it('Returns user id="aiubfaw4io09" with all fields', (done) => {
+        request
+            .post('/graphql')
             .send({
-                query: `{ user(id: "aiubfaw4io09") ${userFields} }`
+                query: `{ user(id: "aiubfaw4io09") ${userFields} }`,
             })
             .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
@@ -23,10 +24,11 @@ describe ('GraphQL user integration tests', () => {
             });
     });
 
-    it ('Returns all users with all fields', (done) => {
-        request.post('/graphql')
+    it('Returns all users with all fields', (done) => {
+        request
+            .post('/graphql')
             .send({
-                query: `{ users ${userFields} }`
+                query: `{ users ${userFields} }`,
             })
             .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
@@ -40,11 +42,11 @@ describe ('GraphQL user integration tests', () => {
             });
     });
 
-    it ('Creates user with all fields', (done) => {
-        request.post('/graphql')
+    it('Creates user with all fields', (done) => {
+        request
+            .post('/graphql')
             .send({
-                query:
-                    `mutation {
+                query: `mutation {
                         createUser(input: {
                             id: "TestID",
                             username: "TestUsername",
@@ -52,27 +54,28 @@ describe ('GraphQL user integration tests', () => {
                             surname: "TestSurname",
                             email: "TestEmail"
                         }) ${userFields}
-                    }`
-            }).expect(200)
+                    }`,
+            })
+            .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { createUser } } } = res;
                 validate(createUser);
-                expect(createUser.id).to.be.equals('TestID')
-                expect(createUser.username).to.be.equals('TestUsername')
-                expect(createUser.name).to.be.equals('TestName')
-                expect(createUser.surname).to.be.equals('TestSurname')
-                expect(createUser.email).to.be.equals('TestEmail')
+                expect(createUser.id).to.be.equals('TestID');
+                expect(createUser.username).to.be.equals('TestUsername');
+                expect(createUser.name).to.be.equals('TestName');
+                expect(createUser.surname).to.be.equals('TestSurname');
+                expect(createUser.email).to.be.equals('TestEmail');
                 return done();
             });
     });
 
-    it ('Updates user with all fields', (done) => {
-        request.post('/graphql')
+    it('Updates user with all fields', (done) => {
+        request
+            .post('/graphql')
             .send({
-                query:
-                    `mutation {
+                query: `mutation {
                         updateUser(input: {
                             id: "TestID",
                             username: "UpdatedTestUsername",
@@ -80,48 +83,51 @@ describe ('GraphQL user integration tests', () => {
                             surname: "UpdatedTestSurname",
                             email: "UpdatedTestEmail"
                         }) ${userFields}
-                    }`
-            }).expect(200)
+                    }`,
+            })
+            .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { updateUser } } } = res;
                 validate(updateUser);
-                expect(updateUser.id).to.be.equals('TestID')
-                expect(updateUser.username).to.be.equals('UpdatedTestUsername')
-                expect(updateUser.name).to.be.equals('UpdatedTestName')
-                expect(updateUser.surname).to.be.equals('UpdatedTestSurname')
-                expect(updateUser.email).to.be.equals('UpdatedTestEmail')
+                expect(updateUser.id).to.be.equals('TestID');
+                expect(updateUser.username).to.be.equals('UpdatedTestUsername');
+                expect(updateUser.name).to.be.equals('UpdatedTestName');
+                expect(updateUser.surname).to.be.equals('UpdatedTestSurname');
+                expect(updateUser.email).to.be.equals('UpdatedTestEmail');
                 return done();
             });
     });
 
-    it ('Deletes user', (done) => {
-        request.post('/graphql')
+    it('Deletes user', (done) => {
+        request
+            .post('/graphql')
             .send({
-                query:
-                    `mutation {
+                query: `mutation {
                         deleteUser(id:  "TestID") ${userFields}
-                    }`
-            }).expect(200)
+                    }`,
+            })
+            .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { deleteUser } } } = res;
                 validate(deleteUser);
-                expect(deleteUser.id).to.be.equals('TestID')
-                expect(deleteUser.username).to.be.equals('UpdatedTestUsername')
-                expect(deleteUser.name).to.be.equals('UpdatedTestName')
-                expect(deleteUser.surname).to.be.equals('UpdatedTestSurname')
-                expect(deleteUser.email).to.be.equals('UpdatedTestEmail')
+                expect(deleteUser.id).to.be.equals('TestID');
+                expect(deleteUser.username).to.be.equals('UpdatedTestUsername');
+                expect(deleteUser.name).to.be.equals('UpdatedTestName');
+                expect(deleteUser.surname).to.be.equals('UpdatedTestSurname');
+                expect(deleteUser.email).to.be.equals('UpdatedTestEmail');
                 return done();
             });
     });
 
-    it ('Deleted user should not be in database', (done) => {
-        request.post('/graphql')
+    it('Deleted user should not be in database', (done) => {
+        request
+            .post('/graphql')
             .send({
-                query: `{ user(id: "TestID") ${userFields} }`
+                query: `{ user(id: "TestID") ${userFields} }`,
             })
             .expect(200)
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)

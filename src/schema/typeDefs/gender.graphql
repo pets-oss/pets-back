@@ -1,18 +1,18 @@
 extend type Query {
-  """
-  Get all genders.
+    """
+    Get all genders.
 
-  Examples:
+    Examples:
 
-  genders(language: "lt")
-  """
-  genders("language code" language: String!): [Gender]
+    genders(language: "lt")
+    """
+    genders("language code" language: String!): [Gender]
 }
 
 "Represents a gender."
 type Gender {
-  "Gender id"
-  id: String!
-  "Gender name"
-  value: String!
+    "Gender id"
+    id: String!
+    "Gender name"
+    value: String!
 }
