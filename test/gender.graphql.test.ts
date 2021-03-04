@@ -21,7 +21,7 @@ describe('GraphQL gender_translation integration tests', () => {
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const { body: {data: { genders } } } = res;
+                const { body: { data: { genders } } } = res;
                 expect(genders).to.be.an('array');
                 validate(genders[0]);
                 return done();
