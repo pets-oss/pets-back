@@ -1,8 +1,9 @@
 import Translation from './translation.interface';
+import Breed from "./breed.interface";
 
 export default interface AnimalDetails {
     animalId: number,
-    breed: Translation | null,
+    breed: Breed | null,
     species: Translation | null,
     gender: Translation | null,
     color: Translation | null,
