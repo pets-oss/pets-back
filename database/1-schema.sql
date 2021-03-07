@@ -11,6 +11,13 @@ CREATE TABLE organization (
     delete_time TIMESTAMP
 );
 
+-- MUNICIPALITY
+
+CREATE TABLE municipality (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(256) NOT NULL
+);
+
 -- USER
 
 CREATE TABLE app_user (
@@ -210,6 +217,12 @@ CREATE TABLE status_translation (
 
 COMMENT ON COLUMN status_translation.language is 'Language code based on BCP 47';
 
+CREATE TABLE former_animal_owner (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(256) NOT NULL,
+    surname VARCHAR(256),
+    phone VARCHAR(64)
+);
 
 -- EVENTS
 
@@ -239,6 +252,23 @@ CREATE TABLE animal_event_medical_record (
     expenses NUMERIC,
     date_time TIMESTAMP,
     comments TEXT
+);
+
+CREATE TABLE animal_event_found (
+    id SERIAL PRIMARY KEY,
+    address VARCHAR(256),
+    municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
+    date_time TIMESTAMP,
+    animal_id INTEGER REFERENCES animal(id) NOT NULL,
+    comments TEXT
+);
+
+CREATE TABLE animal_event_given_away (
+    id SERIAL PRIMARY KEY,
+    former_owner_id INTEGER REFERENCES former_animal_owner(id) NOT NULL,
+    reason TEXT,
+    animal_id INTEGER REFERENCES animal(id) NOT NULL,
+    date_time TIMESTAMP
 );
 
 -- DATE UPDATES
