@@ -33,13 +33,13 @@ type AnimalDetails {
 }
 
 input AnimalDetailsInput {
-    "Animal breed id"
+    "Animal breed id (any value from 'breeds' query)"
     breedId: Int
-    "Animal gender"
+    "Animal gender (any value from 'genders' query)"
     genderId: Int
-    "Animal color"
+    "Animal color (any value from 'colors' query)"
     colorId: Int
-    "Animal date of birth"
+    "Animal date of birth (year)"
     birthDate: String
     "Animal weight (kg)"
     weight: Int

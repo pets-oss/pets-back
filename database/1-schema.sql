@@ -143,7 +143,7 @@ CREATE TABLE animal (
     name VARCHAR(128),
     organization INTEGER REFERENCES organization(id) NOT NULL,
     status status,
-    image_url VARCHAR(512),
+    image_url VARCHAR(2048),
     comments TEXT,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
