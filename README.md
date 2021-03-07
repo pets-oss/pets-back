@@ -39,9 +39,15 @@ POSTGRES_HOST=pets-back_db_1
 POSTGRES_PORT=5432
 ```
 
-3. Install and run docker
-4. Run `docker-compose up -d` or `docker-compose up -d --build` if it is not the first time, and the Dockerfile was changed.
-5. Hack away - hot-reloading enabled
+3. Add common.env with the following values
+
+```yaml
+AUTH_DISABLED=true
+```
+
+4. Install and run docker
+5. Run `docker-compose up -d` or `docker-compose up -d --build` if it is not the first time, and the Dockerfile was changed.
+6. Hack away - hot-reloading enabled
 
 <!-- --- -->
 
