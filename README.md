@@ -45,7 +45,7 @@ POSTGRES_PORT=5432
 AUTH_DISABLED=true
 ```
 
-4. Install and run docker
+4. Make sure Docker is running
 5. Run `docker-compose up -d` or `docker-compose up -d --build` if it is not the first time, and the Dockerfile was changed.
 6. Hack away - hot-reloading enabled
 
