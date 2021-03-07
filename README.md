@@ -2,6 +2,15 @@
 
 # Pet Information System Back-End
 
+## Prerequisites
+
+* NodeJS > v10 https://nodejs.org/en/download/
+* Docker https://docs.docker.com/get-docker/
+* Docker Compose https://docs.docker.com/compose/install/
+* IDE is up to your preference, but VS Code is recommended https://code.visualstudio.com/download
+
+---------------
+
 Production endpoint: https://petbook-back.herokuapp.com/graphql
 
 Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
