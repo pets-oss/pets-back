@@ -32,7 +32,7 @@ input CreateAnimalMicrochipInput {
     microchipId: String!
     "Chip company code"
     chipCompanyCode: Int!
-    "Install date"
+    "Install date (UTC timestamp)"
     installDate: String
     "Install place"
     installPlace: Int!
