@@ -100,3 +100,22 @@ export const organizationFields = `
         modTime
     }
 `;
+
+export const eventTypeFields = `
+    {
+        id,
+        type
+    }
+`;
+
+export const eventFields = `
+    {
+        id,
+        animal,
+        type ${eventTypeFields},
+        expenses,
+        dateTime,
+        comments,
+        category
+    }
+`;
