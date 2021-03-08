@@ -53,13 +53,20 @@ extend type Mutation {
     updateAnimal(input: UpdateAnimalInput!): Animal
 }
 
+enum AnimalStatus {
+    healthy
+    vaccinated
+    sick
+    adopted
+}
+
 input CreateAnimalInput {
-    "Animal name"
+    "Animal name (128 characters max)"
     name: String
     "Organization id"
     organization: Int!
     "Status"
-    status: String
+    status: AnimalStatus
     "Image URL"
     image_url: String
     "Comments"
@@ -75,12 +82,12 @@ input CreateAnimalInput {
 input UpdateAnimalInput {
     "Animal id, for example 2"
     id: Int!
-    "Animal name"
+    "Animal name (128 characters max)"
     name: String
     "Organization id"
     organization: Int
     "Status"
-    status: String
+    status: AnimalStatus
     "Image URL"
     image_url: String
     "Comments"

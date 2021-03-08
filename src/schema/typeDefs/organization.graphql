@@ -48,29 +48,29 @@ extend type Mutation {
 }
 
 input CreateOrganisationInput {
-    "Organization name"
+    "Organization name (255 characters max)"
     name: String!
-    "Country"
+    "Country (128 characters max)"
     country: String
-    "City"
+    "City (128 characters max)"
     city: String
-    "Street address"
+    "Street address (255 characters max)"
     streetAddress: String
-    "Phone"
+    "Phone (64 characters max)"
     phone: String
 }
 
 input UpdateOrganizationInput {
     "Organization id, for example 2"
     id: Int!
-    "Organization name"
+    "Organization name (255 characters max)"
     name: String
-    "Country"
+    "Country (128 characters max)"
     country: String
-    "City"
+    "City (128 characters max)"
     city: String
-    "Street address"
+    "Street address (255 characters max)"
     streetAddress: String
-    "Phone"
+    "Phone (64 characters max)"
     phone: String
 }

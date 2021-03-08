@@ -2,10 +2,10 @@
 
 CREATE TABLE organization (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(256) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     country VARCHAR(128),
     city VARCHAR(128),
-    street_address VARCHAR(256),
+    street_address VARCHAR(255),
     phone VARCHAR(64),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     delete_time TIMESTAMP
@@ -21,18 +21,18 @@ CREATE TABLE municipality (
 -- USER
 
 CREATE TABLE app_user (
-    id VARCHAR(256) PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     username VARCHAR(128) NOT NULL,
-    name VARCHAR(256),
-    surname VARCHAR(256),
-    email VARCHAR(128),
+    name VARCHAR(255),
+    surname VARCHAR(255),
+    email VARCHAR(255),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TYPE role_type AS ENUM ('Owner', 'Member', 'Reader', 'Guest');
 
 CREATE TABLE app_user_roles (
-    user_id VARCHAR(256) REFERENCES app_user(id) NOT NULL,
+    user_id VARCHAR(255) REFERENCES app_user(id) NOT NULL,
     organization_id INTEGER REFERENCES organization(id) NOT NULL,
     role_type role_type DEFAULT 'Guest',
     PRIMARY KEY (user_id, organization_id)
@@ -135,7 +135,7 @@ CREATE TABLE color_pattern_translation (
     color_pattern INTEGER NOT NULL,
     species species NOT NULL,
     language VARCHAR(4) NOT NULL,
-    translation VARCHAR(256) NOT NULL,
+    translation VARCHAR(255) NOT NULL,
     PRIMARY KEY (color_pattern, species, language),
     FOREIGN KEY (color_pattern, species) REFERENCES color_pattern (code, species)
 );
@@ -150,7 +150,7 @@ CREATE TABLE animal (
     name VARCHAR(128),
     organization INTEGER REFERENCES organization(id) NOT NULL,
     status status,
-    image_url VARCHAR(512),
+    image_url VARCHAR(2048),
     comments TEXT,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -163,14 +163,14 @@ CREATE TABLE animal_details (
     birth_date DATE,
     weight NUMERIC,
     allergy VARCHAR(128),
-    food VARCHAR(256)
+    food VARCHAR(255)
 );
 
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
 
 CREATE TABLE animal_registration (
     animal_id INTEGER PRIMARY KEY REFERENCES animal(id),
-    registration_no VARCHAR(256) NOT NULL UNIQUE,
+    registration_no VARCHAR(255) NOT NULL UNIQUE,
     registration_date DATE DEFAULT CURRENT_DATE,
     status registration_status DEFAULT 'Active',
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
@@ -200,7 +200,7 @@ CREATE TYPE chip_status AS ENUM ('Implanted', 'Removed');
 
 CREATE TABLE animal_microchip (
     animal_id INTEGER REFERENCES animal(id) NOT NULL,
-    microchip_id VARCHAR(256) NOT NULL,
+    microchip_id VARCHAR(255) NOT NULL,
     chip_company_code chip_company_code NOT NULL,
     install_date DATE,
     install_place install_place NOT NULL,

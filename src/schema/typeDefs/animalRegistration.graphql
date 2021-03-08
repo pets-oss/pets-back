@@ -17,9 +17,9 @@ type AnimalRegistration {
 }
 
 input AnimalRegistrationInput {
-    "Registration number"
+    "Registration number (255 characters max)"
     registrationNo: String!
-    "Registration date"
+    "Registration date (UTC timestamp)"
     registrationDate: String
     "Registration status ('Active' or 'Inactive')"
     status: RegistrationStatus

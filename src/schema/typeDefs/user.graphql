@@ -54,14 +54,14 @@ extend type Mutation {
 }
 
 input UserInput {
-    "User id"
+    "User id  (255 characters max)"
     id: String!
-    "User username"
+    "User username (128 characters max)"
     username: String
-    "User name"
+    "User name (255 characters max)"
     name: String
-    "User surname"
+    "User surname (255 characters max)"
     surname: String
-    "User email"
+    "User email (255 characters max)"
     email: String
 }

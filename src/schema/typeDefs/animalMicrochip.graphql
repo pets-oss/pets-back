@@ -28,11 +28,11 @@ extend type Mutation {
 }
 
 input CreateAnimalMicrochipInput {
-    "Microchip id"
+    "Microchip id (255 characters max)"
     microchipId: String!
     "Chip company code"
     chipCompanyCode: Int!
-    "Install date"
+    "Install date (UTC timestamp)"
     installDate: String
     "Install place"
     installPlace: Int!
@@ -41,7 +41,7 @@ input CreateAnimalMicrochipInput {
 }
 
 input UpdateAnimalMicrochipInput {
-    "Chip company code"
+    "Chip company code (255 characters max)"
     chipCompanyCode: Int
     "Install date"
     installDate: String
