@@ -1,0 +1,58 @@
+extend type Query {
+    """
+    Get all events and types
+
+    Example:
+    events(language: "lt")
+    """
+    events("Language code" language: String!): [Events]
+}
+
+enum Category {
+    GENERAL,
+    MEDICAL
+}
+
+"Represents event"
+type Event {
+    "Event id"
+    id: Int!
+    "Animal id"
+    animal: Int!
+    "Event type"
+    type: EventType
+    "Event expenses"
+    expenses: Float
+    "Event date"
+    dateTime: String
+    "Event comments"
+    comments: String
+    "Event category"
+    category: Category
+}
+
+"Represents event type"
+type EventType {
+    "Event type id"
+    id: Int!
+    "Event type"
+    type: String!
+}
+
+"Represents events types"
+type Events {
+    "All events"
+    all: [Event]
+    "All animal events"
+    animalAll("Animal id", animalId: Int!): [Event]
+    "All general events"
+    general: [Event]
+    "Animal general events"
+    animalGeneral("Animal id", animalId: Int!): [Event]
+    "All medical events"
+    medical: [Event]
+    "Animal medical events"
+    animalMedical("Animal id", animalId: Int!): [Event]
+    "All event types"
+    types: [EventType]
+}
