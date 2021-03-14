@@ -4,6 +4,7 @@ import {
     getAnimalsQuery,
     createAnimalQuery,
     updateAnimalQuery,
+    deleteAnimalQuery,
 } from '../../sql-queries/animal';
 import {
     getAnimalDetailsQuery,
@@ -155,6 +156,11 @@ const resolvers: IResolvers = {
                 await pgClient.query('ROLLBACK');
                 throw e;
             }
+        },
+        deleteAnimal: async (_, { input }, { pgClient }) => {
+            const dbResponse = await pgClient.query(deleteAnimalQuery(input));
+
+            return dbResponse.rows[0];
         },
     },
     Animal: {
