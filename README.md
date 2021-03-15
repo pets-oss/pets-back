@@ -2,14 +2,7 @@
 
 # Pet Information System Back-End
 
-## Prerequisites
-
-* NodeJS > v10 https://nodejs.org/en/download/
-* Docker https://docs.docker.com/get-docker/
-* Docker Compose https://docs.docker.com/compose/install/
-* IDE is up to your preference, but VS Code is recommended https://code.visualstudio.com/download
-
----------------
+---
 
 Production endpoint: https://petbook-back.herokuapp.com/graphql
 
@@ -17,15 +10,26 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 
 **[Interactive API](https://petbook-back-dev.herokuapp.com/graphql)** (dev environment only)
 
-## Contents
+## Development guide contents
 
-- [A. Run locally](#a-run-locally)
-- [B. Debug](#b-debug)
-- [C. Test](#c-test)
-- [D. Log DB queries](#d-log-db-queries-usually-for-debugging)
-- [E. Common issues](#e-common-issues)
+- [A. Prerequisites](#a-prerequisites)
+- [B. Run locally](#b-run-locally)
+- [C. Debug](#c-debug)
+- [D. Test](#d-test)
+- [E. Log DB queries](#e-log-db-queries-usually-for-debugging)
+- [F. Common issues](#f-common-issues)
 
-## A. Run locally
+
+## A. Prerequisites
+
+* NodeJS > v10 https://nodejs.org/en/download/
+* Docker https://docs.docker.com/get-docker/
+* Docker Compose https://docs.docker.com/compose/install/
+* IDE is up to your preference, but VS Code is recommended https://code.visualstudio.com/download
+
+---
+
+## B. Run locally
 
 1. Install npm libraries with `npm install` command (if not installed previously)
 2. Add database.env with the following format (you can change values)
@@ -49,9 +53,7 @@ AUTH_DISABLED=true
 5. Run `docker-compose up -d` or `docker-compose up -d --build` if it is not the first time, and the Dockerfile was changed.
 6. Hack away - hot-reloading enabled
 
-<!-- --- -->
-
-### A.i. Refresh database when making changes to .sql files (will delete all data)
+### B.i. Refresh database when making changes to .sql files (will delete all data)
 
 1. Stop docker containers `docker-compose down`
 2. Search for the correct volume `docker volume list`
@@ -67,34 +69,34 @@ AUTH_DISABLED=true
 
 ---
 
-## B. Debug
+## C. Debug
 
 Run `docker-compose -f docker-compose.yml -f docker-compose-debug.yml up -d`
 
 ---
 
-## C. Test
+## D. Test
 
 Tests run integration tests of the GraphQL service
 
-To be able to test GraphQL queries, have your node server and database running locally as described in [[A. Run Locally]](#a-run-locally). Then simply hit `npm test`
+To be able to test GraphQL queries, have your node server and database running locally as described in [[B. Run Locally]](#b-run-locally). Then simply hit `npm test`
 
-### C.i. Validate data with interfaces
+### D.i. Validate data with interfaces
 
 When changing or writing new interfaces for validation, generate the validator, e.g. `npx typescript-json-validator test/interfaces/animal.interface.ts Animal` https://github.com/ForbesLindesay/typescript-json-validator
 
-### C.ii. Change URL of test backend
+### D.ii. Change URL of test backend
 
 By default tests will hit the default local backend `http://localhost:8081`. If you wish to change the URL of the backend, add a `.env` file in `test` directory with such contents
 
 ```yaml
 TEST_URL=<URL>
 ```
-## D. Log DB queries (usually for debugging)
+## E. Log DB queries (usually for debugging)
 
 Add `command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]` to docker-compose.yml under `db` configuration
 
-## E. Common Issues
+## F. Common Issues
 
 ### Docker backend image doesnt start with docker-compose
 
