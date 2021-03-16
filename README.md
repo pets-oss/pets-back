@@ -26,6 +26,7 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 
 * NodeJS > v10 https://nodejs.org/en/download/
 * IDE is up to your preference, but VS Code is recommended https://code.visualstudio.com/download
+
 **only if running with docker:**
 * Docker https://docs.docker.com/get-docker/
 * Docker Compose https://docs.docker.com/compose/install/
@@ -33,11 +34,11 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 
 ## B1. Setup with docker
 
-1. Install npm libraries with `npm install` command (if not installed previously)
-2. Copy and rename `database.env.sample` to `database.env`. `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` can be adjusted to your liking, but the default configuration will work as well
+1. Install npm libraries with `npm install` command (if not installed previously).
+2. Copy and rename `database.env.sample` to `database.env`. `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` can be adjusted to your liking, but the default configuration will work as well.
 3. Copy and rename `common.env.sample` to `common.env`. You can tweak the values to your liking, but the default configuration will work as well.
-4. Make sure Docker is running
-5. Run `docker-compose up -d` or `docker-compose up -d --build` if it is not the first time, and the Dockerfile was changed.
+4. Make sure Docker is running.
+5. Run `docker-compose up -d`
 
 ## B2. Setup without docker
 
@@ -54,16 +55,18 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
     - Click "Save".
 5. Create a new database:
     - Right click "Databases" and select Create > Database.
-    - Under the "General" tab, set the Name field (e.g. "gis"). Take not of the value you have chosen.
+    - Under the "General" tab, set the Name field (e.g. "gis"). Take note of the value you have chosen.
     - Click "Save".
 6. Upload data to tables:
     - Right click on the database entry you've just created and select "Query Tool"
     - Grant privileges to your new user: `GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO username_from_step_4`;
-    - For each file inside /database folder:
-        - Click on the little folder icon inside pgAdmin
+    - For each file inside `/database` folder:
+        - Click on the little folder icon inside the query tool
         - Choose the file (e.g. "1-schema.sql") and click Select
-        - Click the play button to run the query.
-7. Copy and rename `database.env.sample` to `database.env` and replace the `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` with the values you've set in the steps 4 and 5. Change `POSTGRES_HOST` to `localhost`
+        - Click the execute button to run the query.
+7. Copy and rename `database.env.sample` to `database.env`.  
+Replace the `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` with the values you've set in the steps 4 and 5.  
+Change `POSTGRES_HOST` to `localhost`
 9. Copy and rename `common.env.sample` to `common.env`. You can tweak the values to your liking, but the default configuration will work as well.
 10. Run `npm install` and `npm run win-dev`
 11. Check http://localhost:8081/graphql.
