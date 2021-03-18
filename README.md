@@ -60,7 +60,7 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 6. Upload data to tables:
     - Right click on the database entry you've just created and select "Query Tool"
     - Grant privileges to your new user: `GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO username_from_step_4`;
-    - For each file inside `/database` folder:
+    - Import SQL from `/database` folder in the number order (e.g. 1-schema.sql first, then 2-..., 3-..., etc.):
         - Click on the little folder icon inside the query tool
         - Choose the file (e.g. "1-schema.sql") and click Select
         - Click the execute button to run the query.
@@ -68,7 +68,7 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 Replace the `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` with the values you've set in the steps 4 and 5.  
 Change `POSTGRES_HOST` to `localhost`
 9. Copy and rename `common.env.sample` to `common.env`. You can tweak the values to your liking, but the default configuration will work as well.
-10. Run `npm install` and `npm run win-dev`
+10. Run `npm install` and `npm run dev-dockerless-win` if on windows or `npm run dev-dockerless`
 11. Check http://localhost:8081/graphql.
 
 ---

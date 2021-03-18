@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/src/index.js",
-    "win-dev": "tsc && del combined.env && type database.env >> combined.env && echo. >> combined.env && type common.env >> combined.env && nodemon -r dotenv/config dist/src/index.js dotenv_config_path=combined.env",
+    "dev-dockerless": "tsc && ./combine.sh && nodemon -r dotenv/config dist/src/index.js dotenv_config_path=combined.env",
+    "dev-dockerless-win": "tsc && ./combine.bat && nodemon -r dotenv/config dist/src/index.js dotenv_config_path=combined.env",
     "dev": "tsc && BEARER_TOKEN=`node dist/src/getBearerToken.js --url=$npm_config_url --client_id=$npm_config_client_id --client_secret=$npm_config_client_secret --audience=$npm_config_audience --grant_type=$npm_config_grant_type` nodemon dist/src/index.js && rm src/getBearerToken.js",
     "debug": "tsc && nodemon --inspect-brk=0.0.0.0 dist/src/index.js",
     "test": "mocha -r ts-node/register test/*.test.ts",
