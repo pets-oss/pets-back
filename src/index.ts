@@ -9,8 +9,7 @@ import schema from './schema';
 import initClients from './utils/init-clients';
 
 const { ApolloServer } = require('apollo-server-express');
-
-initClients().then(({ pgClient }) => {
+initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
     app.use('/status', (req, res) => {
@@ -39,7 +38,6 @@ initClients().then(({ pgClient }) => {
     app.use('/graphql', bodyParser.json());
     app.use(cors());
 
-
     if (process.env.AUTH_DISABLED !== 'true') {
         app.use('/graphql', jwtCheck);
     }
@@ -47,7 +45,7 @@ initClients().then(({ pgClient }) => {
     const server = new ApolloServer({
         schema,
         fieldResolver: snakeCaseFieldResolver,
-        context: { pgClient },
+        context: { pgClient, cloudinaryClient },
     });
 
     server.applyMiddleware({ app });
@@ -55,12 +53,12 @@ initClients().then(({ pgClient }) => {
     // process.env.PORT needed for heroku to bind to the correct port
     const PORT = process.env.PORT || 8081;
     app.listen(PORT, () => {
-    // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.log(`Go to http://localhost:${PORT}/graphql to run queries!`);
     });
 
     const handleShutdown = async () => {
-    // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console
         console.log('Exiting gracefully.');
 
         let exitCode = 0;
