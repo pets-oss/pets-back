@@ -13,7 +13,7 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 ## Development guide contents
 
 - [A. Prerequisites](#a-prerequisites)
-- B. Setup
+- [B. Setup](#b1-setup-with-docker-recommended)
     - [B1. with Docker (recommended)](#b1-setup-with-docker-recommended)
     - [B2. without Docker](#b2-setup-without-docker)
 - [C. Debug](#c-debug)
@@ -83,7 +83,7 @@ Run `docker-compose -f docker-compose.yml -f docker-compose-debug.yml up -d`
 
 Tests run integration tests of the GraphQL service
 
-To be able to test GraphQL queries, have your node server and database running locally as described in [[B. Run Locally]](#b-run-locally). Then simply hit `npm test`
+To be able to test GraphQL queries, have your node server and database running locally as described in  [[B. Setup]](#b1-setup-with-docker-recommended). Then simply hit `npm test`
 
 ### D.i. Validate data with interfaces
 
