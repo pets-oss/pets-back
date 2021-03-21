@@ -14,7 +14,7 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 
 - [A. Prerequisites](#a-prerequisites)
 - B. Setup
-    - [B1. with Docker](#b1-setup-with-docker)
+    - [B1. with Docker (recommended)](b1-setup-with-docker-recommended)
     - [B2. without Docker](#b2-setup-without-docker)
 - [C. Debug](#c-debug)
 - [D. Test](#d-test)
