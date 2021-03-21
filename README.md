@@ -32,7 +32,7 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 * Docker Compose https://docs.docker.com/compose/install/
 ---
 
-## B1. Setup with docker
+## B1. Setup with docker (recommended)
 
 1. Install npm libraries with `npm install` command (if not installed previously).
 2. Copy and rename `database.env.sample` to `database.env`. `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` can be adjusted to your liking, but the default configuration will work as well.
