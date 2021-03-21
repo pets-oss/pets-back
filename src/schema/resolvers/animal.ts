@@ -82,7 +82,7 @@ const resolvers: IResolvers = {
             const { image, ...inputData } = input;
 
             let data = {...inputData};
-            if (process.env.CLOUDINARY_DISABLED !== 'false') {
+            if (process.env.CLOUDINARY_DISABLED !== 'true') {
                 const imageUrl = await cloudinaryClient.uploadImage(image);
                 if (imageUrl) {
                     data = { ...inputData, imageUrl };
@@ -136,7 +136,7 @@ const resolvers: IResolvers = {
             const { image, ...inputData } = input;
 
             let data = {...inputData};
-            if (process.env.CLOUDINARY_DISABLED !== 'false') {
+            if (process.env.CLOUDINARY_DISABLED !== 'true') {
                 const imageUrl = await cloudinaryClient.uploadImage(image);
                 if (imageUrl) {
                     data = { ...inputData, imageUrl };
@@ -177,7 +177,7 @@ const resolvers: IResolvers = {
         },
         deleteAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
             const dbResponse = await pgClient.query(deleteAnimalQuery(input));
-            if (process.env.CLOUDINARY_DISABLED !== 'false' && dbResponse?.rows[0]?.image_url) {
+            if (process.env.CLOUDINARY_DISABLED !== 'true' && dbResponse?.rows[0]?.image_url) {
                 cloudinaryClient.deleteImage(dbResponse.rows[0].image_url);
             }
             return dbResponse.rows[0];
