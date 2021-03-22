@@ -78,33 +78,42 @@ const resolvers: IResolvers = {
         },
     },
     Mutation: {
-        createAnimal: async (_, { input }, { pgClient }) => {
+        createAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
+            const { image, ...inputData } = input;
+
+            let data = { ...inputData };
+            if (process.env.CLOUDINARY_DISABLED !== 'true') {
+                const imageUrl = await cloudinaryClient.uploadImage(image);
+                if (imageUrl) {
+                    data = { ...inputData, imageUrl };
+                }
+            }
             try {
                 await pgClient.query('BEGIN');
 
                 const createAnimalResult = await pgClient.query(
-                    createAnimalQuery(input)
+                    createAnimalQuery(data)
                 );
                 const animalId = createAnimalResult.rows[0].id;
                 const createRegistrationResult = await pgClient.query(
                     createAnimalRegistrationQuery({
-                        ...input.registration,
+                        ...data.registration,
                         animalId,
                     })
                 );
 
                 let createDetailsResult;
-                if (input.details) {
+                if (data.details) {
                     createDetailsResult = await pgClient.query(
-                        createAnimalDetailsQuery({ ...input.details, animalId })
+                        createAnimalDetailsQuery({ ...data.details, animalId })
                     );
                 }
 
                 let createMicrochipResult;
-                if (input.microchip) {
+                if (data.microchip) {
                     createMicrochipResult = await pgClient.query(
                         createAnimalMicrochipQuery({
-                            ...input.microchip,
+                            ...data.microchip,
                             animalId,
                         })
                     );
@@ -123,25 +132,46 @@ const resolvers: IResolvers = {
                 throw e;
             }
         },
-        updateAnimal: async (_, { input }, { pgClient }) => {
+        updateAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
+            const { image, ...inputData } = input;
+
+            let data = { ...inputData };
+            if (process.env.CLOUDINARY_DISABLED !== 'true') {
+                const imageUrl = await cloudinaryClient.uploadImage(image);
+                if (imageUrl) {
+                    data = { ...inputData, imageUrl };
+                }
+            }
             try {
                 await pgClient.query('BEGIN');
+
+                if (process.env.CLOUDINARY_DISABLED !== 'true') {
+                    const oldAnimalEntry = await pgClient.query(
+                        getAnimalQuery(data.id)
+                    );
+                    if (oldAnimalEntry?.rows[0]?.image_url) {
+                        cloudinaryClient.deleteImage(
+                            oldAnimalEntry.rows[0].image_url
+                        );
+                    }
+                }
+
                 const updateAnimalResult = await pgClient.query(
-                    updateAnimalQuery(input)
+                    updateAnimalQuery(data)
                 );
                 const updateRegistrationResult = await pgClient.query(
                     updateAnimalRegistrationQuery({
-                        ...input.registration,
-                        animalId: input.id,
+                        ...data.registration,
+                        animalId: data.id,
                     })
                 );
 
                 const updateDetailsResult = await getUpdateDetailsResult(
-                    input,
+                    data,
                     pgClient
                 );
                 const updateMicrochipResult = await getUpdateMicrochipResult(
-                    input,
+                    data,
                     pgClient
                 );
 
@@ -157,9 +187,14 @@ const resolvers: IResolvers = {
                 throw e;
             }
         },
-        deleteAnimal: async (_, { input }, { pgClient }) => {
+        deleteAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
             const dbResponse = await pgClient.query(deleteAnimalQuery(input));
-
+            if (
+                process.env.CLOUDINARY_DISABLED !== 'true' &&
+                dbResponse?.rows[0]?.image_url
+            ) {
+                cloudinaryClient.deleteImage(dbResponse.rows[0].image_url);
+            }
             return dbResponse.rows[0];
         },
     },
