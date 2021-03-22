@@ -19,7 +19,8 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 - [C. Debug](#c-debug)
 - [D. Test](#d-test)
 - [E. Log DB queries](#e-log-db-queries-usually-for-debugging)
-- [F. Common issues](#f-common-issues)
+- [F. Obtaining Cloudinary API key](#f-obtaining-cloudinary-api-key)
+- [G. Common issues](#g-common-issues)
 
 
 ## A. Prerequisites
@@ -36,7 +37,10 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 
 1. Install npm libraries with `npm install` command (if not installed previously).
 2. Copy and rename `database.env.sample` to `database.env`. `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` can be adjusted to your liking, but the default configuration will work as well.
-3. Copy and rename `common.env.sample` to `common.env`. You can tweak the values to your liking, but the default configuration will work as well.
+3. Copy and rename `common.env.sample` to `common.env`.  
+[Create a cloudinary account](#f-obtaining-cloudinary-api-key) and replace the `CLOUDINARY_URL` variable  
+**or**  
+Set `CLOUDINARY_DISABLED=true`
 4. Make sure Docker is running.
 5. Run `docker-compose up -d`
 
@@ -67,7 +71,10 @@ Development endpoint: https://petbook-back-dev.herokuapp.com/graphql
 7. Copy and rename `database.env.sample` to `database.env`.  
 Replace the `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` with the values you've set in the steps 4 and 5.  
 Change `POSTGRES_HOST` to `localhost`
-9. Copy and rename `common.env.sample` to `common.env`. You can tweak the values to your liking, but the default configuration will work as well.
+9. Copy and rename `common.env.sample` to `common.env`.  
+[Create a cloudinary account](#f-obtaining-cloudinary-api-key) and replace the `CLOUDINARY_URL` variable  
+**or**  
+Set `CLOUDINARY_DISABLED=true`
 10. Run `npm install` and `npm run dev-dockerless-win` if on windows or `npm run dev-dockerless`
 11. Check http://localhost:8081/graphql.
 
@@ -100,7 +107,14 @@ TEST_URL=<URL>
 
 Add `command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]` to docker-compose.yml under `db` configuration
 
-## F. Common Issues
+## F. Obtaining cloudinary API key
+1. Register on https://cloudinary.com/users/register/free
+2. Sign In
+3. Go to your [dashboard](https://cloudinary.com/console/)
+4. Copy the api environment variable:  
+![cloudinary dashboard](docs/cloudinary.png)
+
+## G. Common Issues
 
 ### Docker backend image doesnt start with docker-compose
 
