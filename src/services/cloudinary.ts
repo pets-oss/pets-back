@@ -8,12 +8,12 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
         imagePromise: Promise<any>
     ): Promise<string | undefined> => {
         const image = await imagePromise;
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (image) {
                 const uploadStream = cloudinary.uploader.upload_stream(
                     (error: any, result: any) => {
                         if (error) {
-                            resolve(undefined);
+                            reject(error);
                         } else {
                             resolve(result.secure_url);
                         }

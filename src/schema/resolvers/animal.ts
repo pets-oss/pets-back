@@ -83,9 +83,14 @@ const resolvers: IResolvers = {
 
             let data = {...inputData};
             if (process.env.CLOUDINARY_DISABLED !== 'true') {
-                const imageUrl = await cloudinaryClient.uploadImage(image);
-                if (imageUrl) {
-                    data = { ...inputData, imageUrl };
+                try { 
+                    const imageUrl = await cloudinaryClient.uploadImage(image);
+                    if (imageUrl) {
+                        data = { ...inputData, imageUrl };
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.debug(error);
                 }
             }
             try {
@@ -137,9 +142,14 @@ const resolvers: IResolvers = {
 
             let data = {...inputData};
             if (process.env.CLOUDINARY_DISABLED !== 'true') {
-                const imageUrl = await cloudinaryClient.uploadImage(image);
-                if (imageUrl) {
-                    data = { ...inputData, imageUrl };
+                try { 
+                    const imageUrl = await cloudinaryClient.uploadImage(image);
+                    if (imageUrl) {
+                        data = { ...inputData, imageUrl };
+                    }
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.debug(error);
                 }
             }
             try {
