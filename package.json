@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/pets-oss/pets-back"
   },
+  "engines": {
+    "node": "12.x"
+  },
   "license": "MIT",
   "main": "index.js",
   "private": "true",
