@@ -174,7 +174,7 @@ describe('animal mutations tests', () => {
                     return done(err);
                 }
                 expect(res.body.data[mutation]).to.deep.include(
-                    undefined
+                    expectedResponse
                 );
                 return done();
             });
