@@ -62,8 +62,6 @@ enum AnimalStatus {
     adopted
 }
 
-scalar Upload
-
 input CreateAnimalInput {
     "Animal name (128 characters max)"
     name: String
