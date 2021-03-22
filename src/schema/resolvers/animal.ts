@@ -83,13 +83,9 @@ const resolvers: IResolvers = {
 
             let data = { ...inputData };
             if (process.env.CLOUDINARY_DISABLED !== 'true') {
-                try {
-                    const imageUrl = await cloudinaryClient.uploadImage(image);
-                    if (imageUrl) {
-                        data = { ...inputData, imageUrl };
-                    }
-                } catch (error) {
-                    throw error;
+                const imageUrl = await cloudinaryClient.uploadImage(image);
+                if (imageUrl) {
+                    data = { ...inputData, imageUrl };
                 }
             }
             try {
@@ -141,13 +137,9 @@ const resolvers: IResolvers = {
 
             let data = { ...inputData };
             if (process.env.CLOUDINARY_DISABLED !== 'true') {
-                try {
-                    const imageUrl = await cloudinaryClient.uploadImage(image);
-                    if (imageUrl) {
-                        data = { ...inputData, imageUrl };
-                    }
-                } catch (error) {
-                    throw error;
+                const imageUrl = await cloudinaryClient.uploadImage(image);
+                if (imageUrl) {
+                    data = { ...inputData, imageUrl };
                 }
             }
             try {
