@@ -29,12 +29,12 @@ INSERT INTO app_user_roles
 
 INSERT INTO animal
 (name, organization, status, image_url) VALUES
-('Haskelis', 1, 'vaccinated', 'https://picsum.photos/id/237/300/300'),
-('Jupyteris', 2, 'sick', 'https://picsum.photos/id/237/300/300'),
-('Pitoncas', 3, 'healthy', 'https://picsum.photos/id/237/300/300'),
-('Javainis', 3, 'adopted', 'https://picsum.photos/id/237/300/300'),
-('Murkė', 1, 'healthy', 'https://picsum.photos/id/237/300/300'),
-('Grikis', 1, 'healthy', 'https://picsum.photos/id/237/300/300');
+('Haskelis', 1, 'vaccinated', NULL), 
+('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
+('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
+('Javainis', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
+('Murkė', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409529/fake-data/gn1tg08buymfp5ymt5mq.jpg'),
+('Grikis', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409536/fake-data/mfgnms8mf6vvgmowsmfc.jpg');
 
 INSERT INTO animal_details
 (animal_id, breed_id, gender_id, color_id, birth_date, weight, allergy, food) VALUES

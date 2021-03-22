@@ -11,6 +11,9 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
         return new Promise((resolve, reject) => {
             if (image) {
                 const uploadStream = cloudinary.uploader.upload_stream(
+                    {
+                        transformation: { width: 1200, height: 675, crop: "fill" }
+                    },
                     (error: any, result: any) => {
                         if (error) {
                             reject(error);
