@@ -81,16 +81,15 @@ const resolvers: IResolvers = {
         createAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
             const { image, ...inputData } = input;
 
-            let data = {...inputData};
+            let data = { ...inputData };
             if (process.env.CLOUDINARY_DISABLED !== 'true') {
-                try { 
+                try {
                     const imageUrl = await cloudinaryClient.uploadImage(image);
                     if (imageUrl) {
                         data = { ...inputData, imageUrl };
                     }
                 } catch (error) {
-                    // eslint-disable-next-line no-console
-                    console.debug(error);
+                    throw error;
                 }
             }
             try {
@@ -140,20 +139,31 @@ const resolvers: IResolvers = {
         updateAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
             const { image, ...inputData } = input;
 
-            let data = {...inputData};
+            let data = { ...inputData };
             if (process.env.CLOUDINARY_DISABLED !== 'true') {
-                try { 
+                try {
                     const imageUrl = await cloudinaryClient.uploadImage(image);
                     if (imageUrl) {
                         data = { ...inputData, imageUrl };
                     }
                 } catch (error) {
-                    // eslint-disable-next-line no-console
-                    console.debug(error);
+                    throw error;
                 }
             }
             try {
                 await pgClient.query('BEGIN');
+
+                if (process.env.CLOUDINARY_DISABLED !== 'true') {
+                    const oldAnimalEntry = await pgClient.query(
+                        getAnimalQuery(data.id)
+                    );
+                    if (oldAnimalEntry?.rows[0]?.image_url) {
+                        cloudinaryClient.deleteImage(
+                            oldAnimalEntry.rows[0].image_url
+                        );
+                    }
+                }
+
                 const updateAnimalResult = await pgClient.query(
                     updateAnimalQuery(data)
                 );
@@ -187,7 +197,10 @@ const resolvers: IResolvers = {
         },
         deleteAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
             const dbResponse = await pgClient.query(deleteAnimalQuery(input));
-            if (process.env.CLOUDINARY_DISABLED !== 'true' && dbResponse?.rows[0]?.image_url) {
+            if (
+                process.env.CLOUDINARY_DISABLED !== 'true' &&
+                dbResponse?.rows[0]?.image_url
+            ) {
                 cloudinaryClient.deleteImage(dbResponse.rows[0].image_url);
             }
             return dbResponse.rows[0];
