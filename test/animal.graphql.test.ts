@@ -60,6 +60,7 @@ describe('animal mutations tests', () => {
     const registrationNumberUpdate = `2021PandemicC19X${uuidv4()}`;
     const date = '2021-01-01';
     const dateIntString = new Date(date).getTime().toString();
+    let animalId = -1;
 
     it('Create animal', (done) => {
         const mutation = 'createAnimal';
@@ -99,6 +100,7 @@ describe('animal mutations tests', () => {
                     console.log(res.body);
                     return done(err);
                 }
+                animalId = res.body.data[mutation].id;
                 expect(res.body.data[mutation]).to.deep.include(answer);
                 return done();
             });
@@ -151,8 +153,8 @@ describe('animal mutations tests', () => {
 
     it('Delete animal', (done) => {
         const mutation = 'deleteAnimal';
-        const deleteInput = '{ id: 5 }';
-        const expectedResponse = { id: 5 };
+        const deleteInput = `{ id: ${animalId} }`;
+        const expectedResponse = { id: animalId };
 
         request
             .post('/graphql')
