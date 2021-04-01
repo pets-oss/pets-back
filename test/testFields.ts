@@ -119,3 +119,12 @@ export const eventFields = `
         category
     }
 `;
+
+export const organizationTaskFields = `
+    {
+        id,
+        title,
+        description,
+        isDone
+    }
+`;
