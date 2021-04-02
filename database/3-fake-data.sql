@@ -116,5 +116,5 @@ INSERT INTO former_animal_owner
 INSERT INTO animal_event_given_away
 (former_owner_id, reason, animal_id, date_time) VALUES
 (1, 'Have to go abroad', 1, '2021-01-07'),
-(2, 'Išvyksta į užsieny', 2, '2021-01-01'),
+(2, 'Išvyksta į užsienį', 2, '2021-01-01'),
 (3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
