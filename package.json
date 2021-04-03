@@ -7,7 +7,7 @@
     "url": "https://github.com/pets-oss/pets-back"
   },
   "engines": {
-    "node": "12.x"
+    "node": "14.x"
   },
   "license": "MIT",
   "main": "index.js",
@@ -38,6 +38,7 @@
     "express-jwt": "^6.0.0",
     "graphql": "^15.4.0",
     "graphql-tools": "^7.0.2",
+    "graphql-upload": "^11.0.0",
     "jwks-rsa": "^1.12.2",
     "lodash": "^4.17.20",
     "pg": "^8.5.1",
@@ -50,6 +51,7 @@
     "@types/express": "^4.17.9",
     "@types/express-jwt": "^6.0.0",
     "@types/graphql": "^14.5.0",
+    "@types/graphql-upload": "^8.0.4",
     "@types/lodash": "^4.14.165",
     "@types/minimist": "^1.2.1",
     "@types/mocha": "^8.2.0",
