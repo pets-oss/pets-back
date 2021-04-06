@@ -240,6 +240,18 @@ CREATE TABLE former_animal_owner (
     phone VARCHAR(64)
 );
 
+CREATE TABLE animal_gallery (
+    id SERIAL PRIMARY KEY,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    url VARCHAR(255)
+);
+
+CREATE TABLE animal_favorite(
+user_id VARCHAR(255) REFERENCES app_user(id) ON DELETE CASCADE NOT NULL,
+animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+PRIMARY KEY (user_id, animal_id)
+);
+
 -- EVENTS
 
 CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');
