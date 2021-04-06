@@ -14,6 +14,7 @@ import animalRegistrationResolvers from './resolvers/animalRegistration';
 import organizationResolvers from './resolvers/organization';
 import userResolvers from './resolvers/user';
 import eventResolvers from './resolvers/event';
+import uploadResolver from './resolvers/upload';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
@@ -29,7 +30,8 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
         colorResolvers,
         organizationResolvers,
         userResolvers,
-        eventResolvers
+        eventResolvers,
+        uploadResolver,
     ),
 });
 
