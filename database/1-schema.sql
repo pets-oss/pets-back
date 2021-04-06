@@ -221,7 +221,8 @@ CREATE TABLE former_animal_owner (
     id SERIAL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     surname VARCHAR(256),
-    phone VARCHAR(64)
+    phone VARCHAR(64),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- EVENTS
