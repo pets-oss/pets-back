@@ -162,6 +162,7 @@ CREATE TABLE animal_details (
     color_id INTEGER REFERENCES color(code),
     birth_date DATE,
     weight NUMERIC,
+    cage TEXT,
     allergy VARCHAR(128),
     food VARCHAR(255)
 );
