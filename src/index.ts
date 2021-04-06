@@ -7,6 +7,7 @@ import jwks from 'jwks-rsa';
 
 import schema from './schema';
 import initClients from './utils/init-clients';
+import { graphqlUploadExpress } from 'graphql-upload';
 
 const { ApolloServer } = require('apollo-server-express');
 initClients().then(({ pgClient, cloudinaryClient }) => {
@@ -42,7 +43,13 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         app.use('/graphql', jwtCheck);
     }
 
+    app.use('/graphql', graphqlUploadExpress({
+        maxFileSize: 10000000, // 10 MB
+        maxFiles: 20,
+      }));
+
     const server = new ApolloServer({
+        uploads: false,
         schema,
         fieldResolver: snakeCaseFieldResolver,
         context: { pgClient, cloudinaryClient },
