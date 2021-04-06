@@ -221,7 +221,8 @@ CREATE TABLE former_animal_owner (
     id SERIAL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     surname VARCHAR(256),
-    phone VARCHAR(64)
+    phone VARCHAR(64),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- EVENTS
@@ -285,4 +286,7 @@ CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER former_animal_owner_mod_time BEFORE UPDATE ON former_animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
