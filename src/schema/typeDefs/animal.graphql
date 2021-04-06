@@ -62,6 +62,8 @@ enum AnimalStatus {
     adopted
 }
 
+scalar Upload
+
 input CreateAnimalInput {
     "Animal name (128 characters max)"
     name: String
@@ -69,8 +71,8 @@ input CreateAnimalInput {
     organization: Int!
     "Status"
     status: AnimalStatus
-    "Image URL"
-    image_url: String
+    "Image File"
+    image: Upload
     "Comments"
     comments: String
     "AnimalRegistration"
@@ -90,8 +92,8 @@ input UpdateAnimalInput {
     organization: Int
     "Status"
     status: AnimalStatus
-    "Image URL"
-    image_url: String
+    "Image File"
+    image: Upload
     "Comments"
     comments: String
     "AnimalRegistration"
