@@ -163,7 +163,8 @@ CREATE TABLE animal_details (
     birth_date DATE,
     weight NUMERIC,
     allergy VARCHAR(128),
-    food VARCHAR(255)
+    food VARCHAR(255),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
@@ -285,4 +286,7 @@ CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
