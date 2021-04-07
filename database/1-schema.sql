@@ -163,7 +163,8 @@ CREATE TABLE animal_details (
     birth_date DATE,
     weight NUMERIC,
     allergy VARCHAR(128),
-    food VARCHAR(255)
+    food VARCHAR(255),
+    animal_behavior VARCHAR(255)
 );
 
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
