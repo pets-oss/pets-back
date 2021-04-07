@@ -219,6 +219,7 @@ COMMENT ON COLUMN status_translation.language is 'Language code based on BCP 47'
 
 CREATE TABLE former_animal_owner (
     id SERIAL PRIMARY KEY,
+    address VARCHAR(256),
     name VARCHAR(256) NOT NULL,
     surname VARCHAR(256),
     phone VARCHAR(64)
@@ -256,7 +257,8 @@ CREATE TABLE animal_event_medical_record (
 
 CREATE TABLE animal_event_found (
     id SERIAL PRIMARY KEY,
-    address VARCHAR(256),
+    address_street VARCHAR(256),
+    address_house_number VARCHAR(256),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
     date_time TIMESTAMP,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
