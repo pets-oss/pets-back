@@ -278,8 +278,6 @@ CREATE TABLE animal_event_given_away (
     date_time TIMESTAMP
 );
 
-
-
 -- DATE UPDATES
 
 CREATE EXTENSION moddatetime;
