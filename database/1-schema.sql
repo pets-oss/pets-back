@@ -208,6 +208,13 @@ CREATE TABLE animal_microchip (
     PRIMARY KEY (animal_id, microchip_id)
 );
 
+CREATE TABLE animal_favorite (
+    user_id VARCHAR(255) REFERENCES app_user(id) ON DELETE CASCADE,
+    animal_id INTEGER  REFERENCES animal(id) ON DELETE CASCADE,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY (user_id, animal_id)
+);
+
 CREATE TABLE status_translation (
     status VARCHAR(20) NOT NULL,
     language VARCHAR(4) NOT NULL,
@@ -270,6 +277,8 @@ CREATE TABLE animal_event_given_away (
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     date_time TIMESTAMP
 );
+
+
 
 -- DATE UPDATES
 
