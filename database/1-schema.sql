@@ -234,7 +234,7 @@ CREATE TABLE cage (
 
 CREATE TABLE animal_cage (
     animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    cage_id INTEGER KEY REFERENCES cage(id) NOT NULL
+    cage_id INTEGER REFERENCES cage(id) NOT NULL
 );
 
 -- EVENTS
