@@ -205,6 +205,7 @@ CREATE TABLE animal_microchip (
     install_date DATE,
     install_place install_place NOT NULL,
     status chip_status DEFAULT 'Implanted',
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (animal_id, microchip_id)
 );
 
@@ -223,17 +224,18 @@ CREATE TABLE former_animal_owner (
     surname VARCHAR(256),
     phone VARCHAR(64)
 );
+
 -- CAGES
 
 CREATE TABLE cage (
     id SERIAL PRIMARY KEY,
     name VARCHAR(32) NOT NUlL
-)
+);
 
 CREATE TABLE animal_cage (
     animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     cage_id INTEGER KEY REFERENCES cage(id) NOT NULL
-)
+);
 
 -- EVENTS
 
@@ -296,4 +298,7 @@ CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
