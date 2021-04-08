@@ -8,6 +8,7 @@ interface CreateOrganisationInput {
     city: String;
     streetAddress: String;
     phone: String;
+    companyCode: String;
 }
 
 interface UpdateOrganizationInput {
@@ -17,6 +18,7 @@ interface UpdateOrganizationInput {
     city: String;
     streetAddress: String;
     phone: String;
+    companyCode: String;
 }
 
 export const getOrganizationQuery = (id: number): QueryConfig =>
@@ -39,7 +41,7 @@ export const createOrganizationQuery = (
 ): QueryConfig =>
     insert('organization', snakeCaseKeys(input))
         .returning(
-            'id, name, country, city, street_address, phone, mod_time'
+            'id, name, country, city, street_address, phone, company_code, mod_time'
         )
         .toParams();
 
@@ -51,7 +53,7 @@ export const updateOrganizationQuery = (
             id: input.id,
         })
         .returning(
-            'id, name, country, city, street_address, phone, mod_time'
+            'id, name, country, city, street_address, phone, company_code, mod_time'
         )
         .toParams();
 
@@ -61,6 +63,6 @@ export const deleteOrganizationQuery = (id: number): QueryConfig =>
             id,
         })
         .returning(
-            'id, name, country, city, street_address, phone, mod_time'
+            'id, name, country, city, street_address, phone, company_code, mod_time'
         )
         .toParams();
