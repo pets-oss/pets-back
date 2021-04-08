@@ -4,7 +4,7 @@ import snakeCaseKeys from 'snakecase-keys';
 
 const table = 'animal_details';
 const returnFields =
-    'animal_id, breed_id, gender_id, color_id, birth_date, animal_behavior, weight, allergy, food';
+    'animal_id, breed_id, gender_id, color_id, birth_date, animal_behavior, weight, allergy, food, mod_time';
 
 export interface AnimalDetailsInput {
     animalId: number;
@@ -28,7 +28,8 @@ export const getAnimalDetailsQuery = (id: number): QueryConfig => {
                     animal_behavior,
                     weight,
                     allergy,
-                    food
+                    food,
+                    mod_time
                 FROM public.animal_details
                 WHERE animal_id = $1;`;
 
@@ -66,7 +67,8 @@ export const deleteAnimalDetailsQuery = (id: number): QueryConfig => {
                     animal_behavior,
                     weight,
                     allergy,
-                    food;`;
+                    food,
+                    mod_time;`;
 
     const query = {
         text,
