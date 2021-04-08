@@ -170,6 +170,7 @@ CREATE TABLE animal_details (
     gender_id gender,
     color_id INTEGER REFERENCES color(code),
     birth_date DATE,
+    animal_behavior VARCHAR(255),
     weight NUMERIC,
     allergy VARCHAR(128),
     food VARCHAR(255)
