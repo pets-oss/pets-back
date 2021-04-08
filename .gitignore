@@ -121,3 +121,5 @@ node_modules
 
 # IntelliJ IDEA
 .idea
+
+package-lock.json
