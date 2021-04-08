@@ -229,7 +229,8 @@ CREATE TABLE former_animal_owner (
 
 CREATE TABLE cage (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(32) NOT NUlL
+    name VARCHAR(32) NOT NUlL,
+    organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE animal_cage (
