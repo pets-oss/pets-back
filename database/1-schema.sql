@@ -307,3 +307,6 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);

@@ -13,7 +13,7 @@ export interface AnimalMicrochipInput {
 
 const table = 'animal_microchip';
 const returnFields =
-    'animal_id, microchip_id, chip_company_code, install_date, install_place, status';
+    'animal_id, microchip_id, chip_company_code, install_date, install_place, status, mod_time';
 
 export const getImplantedAnimalMicrochipQuery = (
     animal_id: number
@@ -47,7 +47,8 @@ export const deleteAnimalMicrochipQuery = (
                     chip_company_code,
                     install_date,
                     install_place,
-                    status;`;
+                    status,
+                    mod_time;`;
 
     const query = {
         text,
