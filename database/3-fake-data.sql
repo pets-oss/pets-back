@@ -29,7 +29,7 @@ INSERT INTO app_user_roles
 
 INSERT INTO animal
 (name, organization, status, image_url) VALUES
-('Haskelis', 1, 'vaccinated', NULL), 
+('Haskelis', 1, 'vaccinated', NULL),
 ('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
 ('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
 ('Javainis', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
@@ -118,3 +118,20 @@ INSERT INTO animal_event_given_away
 (1, 'Have to go abroad', 1, '2021-01-07'),
 (2, 'Išvyksta į užsienį', 2, '2021-01-01'),
 (3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
+
+INSERT INTO cage (name, organization_id) VALUES
+('Buda1', 1),
+('Buda2', 1),
+('Narvas1', 1),
+('2-1', 2),
+('3-small-1', 3),
+('3-big-1', 3);
+
+INSERT INTO animal_cage (animal_id, cage_id) VALUES
+(1, 1),
+(5, 2),
+(6, 3),
+(2, 4),
+(3, 5),
+(4, 6);
+
