@@ -119,7 +119,7 @@ INSERT INTO animal_event_given_away
 (2, 'Išvyksta į užsienį', 2, '2021-01-01'),
 (3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
 
--- ANIMAL FAVOURITE
+-- ANIMAL FAVORITE
 INSERT INTO animal_favorite 
 (user_id, animal_id) VALUES
 ('dhjbwau74a6', 1),

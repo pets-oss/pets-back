@@ -293,3 +293,6 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_favorite_mod_time BEFORE UPDATE ON animal_favorite
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
