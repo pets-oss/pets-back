@@ -5,7 +5,6 @@ import {
     createOrganizationQuery,
     updateOrganizationQuery,
     deleteOrganizationQuery,
-    getDeleteTimeQuery,
 } from '../../sql-queries/organization';
 
 const resolvers: IResolvers = {

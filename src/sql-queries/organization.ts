@@ -27,14 +27,6 @@ export const getOrganizationQuery = (id: number): QueryConfig =>
         })
         .toParams();
 
-export const getDeleteTimeQuery = (id: number): QueryConfig =>
-    select('delete_time')
-        .from('organization')
-        .where({
-            id,
-        })
-        .toParams();
-
 export const getOrganizationsQuery = (): QueryConfig =>
     select().from('organization').where({}).toParams();
 
