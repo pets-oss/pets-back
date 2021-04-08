@@ -243,7 +243,8 @@ CREATE TABLE former_animal_owner (
 CREATE TABLE animal_gallery (
     id SERIAL PRIMARY KEY,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    url VARCHAR(255)
+    url VARCHAR(2048),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE animal_favorite(
@@ -323,4 +324,7 @@ CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
