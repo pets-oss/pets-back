@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import { select, insert, update } from 'sql-bricks-postgres';
+import { select, insert, update, delete as remove } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 interface CreateOrganisationInput {
@@ -20,16 +20,7 @@ interface UpdateOrganizationInput {
 }
 
 export const getOrganizationQuery = (id: number): QueryConfig =>
-    select()
-        .from('organization')
-        .where({
-            id,
-            delete_time: null,
-        })
-        .toParams();
-
-export const getDeleteTimeQuery = (id: number): QueryConfig =>
-    select('delete_time')
+    select()  
         .from('organization')
         .where({
             id,
@@ -39,8 +30,7 @@ export const getDeleteTimeQuery = (id: number): QueryConfig =>
 export const getOrganizationsQuery = (): QueryConfig =>
     select()
         .from('organization')
-        .where({
-            delete_time: null,
+        .where({ 
         })
         .toParams();
 
@@ -49,7 +39,7 @@ export const createOrganizationQuery = (
 ): QueryConfig =>
     insert('organization', snakeCaseKeys(input))
         .returning(
-            'id, name, country, city, street_address, phone, mod_time, delete_time'
+            'id, name, country, city, street_address, phone, mod_time'
         )
         .toParams();
 
@@ -61,18 +51,16 @@ export const updateOrganizationQuery = (
             id: input.id,
         })
         .returning(
-            'id, name, country, city, street_address, phone, mod_time, delete_time'
+            'id, name, country, city, street_address, phone, mod_time'
         )
         .toParams();
 
 export const deleteOrganizationQuery = (id: number): QueryConfig =>
-    update('organization', {
-        delete_time: 'NOW()',
-    })
+    remove('organization')
         .where({
             id,
         })
         .returning(
-            'id, name, country, city, street_address, phone, mod_time, delete_time'
+            'id, name, country, city, street_address, phone, mod_time'
         )
         .toParams();

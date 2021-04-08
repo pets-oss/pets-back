@@ -4,8 +4,7 @@ import {
     getOrganizationsQuery,
     createOrganizationQuery,
     updateOrganizationQuery,
-    deleteOrganizationQuery,
-    getDeleteTimeQuery,
+    deleteOrganizationQuery, 
 } from '../../sql-queries/organization';
 
 const resolvers: IResolvers = {
@@ -31,28 +30,14 @@ const resolvers: IResolvers = {
                 throw new Error(
                     'You have to provide at least one data field when updating an entity'
                 );
-            }
-            const getDeleteTimeResponse = await pgClient.query(
-                getDeleteTimeQuery(input.id)
-            );
-            if (getDeleteTimeResponse.rows[0].delete_time) {
-                throw new Error(
-                    'You are trying to update deleted organization'
-                );
-            }
+            } 
             const dbResponse = await pgClient.query(
                 updateOrganizationQuery(input)
             );
 
             return dbResponse.rows[0];
         },
-        deleteOrganization: async (_, { id }, { pgClient }) => {
-            const getDeleteTimeResponse = await pgClient.query(
-                getDeleteTimeQuery(id)
-            );
-            if (getDeleteTimeResponse.rows[0].delete_time) {
-                throw new Error('Organization is already deleted');
-            }
+        deleteOrganization: async (_, { id }, { pgClient }) => { 
             const dbResponse = await pgClient.query(
                 deleteOrganizationQuery(id)
             );
