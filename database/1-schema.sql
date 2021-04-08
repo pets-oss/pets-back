@@ -223,6 +223,17 @@ CREATE TABLE former_animal_owner (
     surname VARCHAR(256),
     phone VARCHAR(64)
 );
+-- CAGES
+
+CREATE TABLE cage (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(32) NOT NUlL
+)
+
+CREATE TABLE animal_cage (
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    cage_id INTEGER KEY REFERENCES cage(id) NOT NULL
+)
 
 -- EVENTS
 
