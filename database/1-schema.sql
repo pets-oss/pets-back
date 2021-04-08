@@ -23,7 +23,7 @@ CREATE TABLE organization_task (
 -- MUNICIPALITY
 
 CREATE TABLE municipality (
-    id SERIAL PRIMARY KEY,
+    id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(256) NOT NULL
 );
 
