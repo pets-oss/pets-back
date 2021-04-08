@@ -118,3 +118,7 @@ INSERT INTO animal_event_given_away
 (1, 'Have to go abroad', 1, '2021-01-07'),
 (2, 'Išvyksta į užsienį', 2, '2021-01-01'),
 (3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
+
+INSERT INTO organization_task
+(title, description, organization_id, is_done) VALUES
+('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
