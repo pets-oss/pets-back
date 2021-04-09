@@ -46,7 +46,11 @@ describe('GraphQL animal integration tests', () => {
                     console.log(res.body);
                     return done(err);
                 }
-                const { body: { data: { animals } } } = res;
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
                 expect(animals).to.be.an('array');
                 validate(animals[0]);
                 expect(animals).to.have.length.above(4);
@@ -100,6 +104,7 @@ describe('animal mutations tests', () => {
                     console.log(res.body);
                     return done(err);
                 }
+                // eslint-disable-next-line prefer-destructuring
                 animalId = res.body.data[mutation].id;
                 expect(res.body.data[mutation]).to.deep.include(answer);
                 return done();

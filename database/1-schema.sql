@@ -10,6 +10,15 @@ CREATE TABLE organization (
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
+CREATE TABLE organization_task (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(500),
+    organization_id INTEGER REFERENCES organization(id) NOT NULL,
+    is_done BOOLEAN DEFAULT FALSE,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
 -- MUNICIPALITY
 
 CREATE TABLE municipality (
@@ -204,6 +213,7 @@ CREATE TABLE animal_microchip (
     install_date DATE,
     install_place install_place NOT NULL,
     status chip_status DEFAULT 'Implanted',
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (animal_id, microchip_id)
 );
 
@@ -284,4 +294,10 @@ CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
