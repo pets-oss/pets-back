@@ -123,7 +123,7 @@ INSERT INTO organization_task
 (title, description, organization_id, is_done) VALUES
 ('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
 
-INSERT INTO cage (name, organization_id) VALUES
+INSERT INTO organization_cage (name, organization_id) VALUES
 ('Buda1', 1),
 ('Buda2', 1),
 ('Narvas1', 1),

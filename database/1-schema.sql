@@ -235,7 +235,7 @@ CREATE TABLE former_animal_owner (
 
 -- CAGES
 
-CREATE TABLE cage (
+CREATE TABLE organization_cage (
     id SERIAL PRIMARY KEY,
     name VARCHAR(32) NOT NUlL,
     organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL,
@@ -244,7 +244,7 @@ CREATE TABLE cage (
 
 CREATE TABLE animal_cage (
     animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    cage_id INTEGER REFERENCES cage(id) NOT NULL
+    cage_id INTEGER REFERENCES organization_cage(id) NOT NULL
 );
 
 -- EVENTS
