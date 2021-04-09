@@ -29,7 +29,7 @@ INSERT INTO app_user_roles
 
 INSERT INTO animal
 (name, organization, status, image_url) VALUES
-('Haskelis', 1, 'vaccinated', NULL), 
+('Haskelis', 1, 'vaccinated', NULL),
 ('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
 ('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
 ('Javainis', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
@@ -103,9 +103,9 @@ INSERT INTO animal_event_medical_record
 (4, '8', 26.74, '2020-05-21', 'Yearly vaccine');
 
 INSERT INTO animal_event_found
-(address, municipality_id, date_time, animal_id, comments) VALUES
-('Vilniaus g.', 15, '2019-07-03', 4, NULL),
-('Maironio g. 3', 15, '2018-08-04', 5, NULL);
+(street, house_no, municipality_id, date_time, animal_id, comments) VALUES
+('Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL),
+('Maironio g.', '3', 15, '2018-08-04', 5, NULL);
 
 INSERT INTO former_animal_owner
 (name, surname, phone) VALUES
