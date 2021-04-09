@@ -7,8 +7,7 @@ CREATE TABLE organization (
     city VARCHAR(128),
     street_address VARCHAR(255),
     phone VARCHAR(64),
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    delete_time TIMESTAMP
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE organization_task (
