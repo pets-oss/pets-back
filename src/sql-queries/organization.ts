@@ -28,7 +28,7 @@ export const getOrganizationQuery = (id: number): QueryConfig =>
         .toParams();
 
 export const getOrganizationsQuery = (): QueryConfig =>
-    select().from('organization').where({}).toParams();
+    select().from('organization').toParams();
 
 export const createOrganizationQuery = (
     input: CreateOrganisationInput
