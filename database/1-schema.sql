@@ -240,6 +240,13 @@ CREATE TABLE former_animal_owner (
     phone VARCHAR(64)
 );
 
+CREATE TABLE animal_gallery (
+    id SERIAL PRIMARY KEY,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    url VARCHAR(2048),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
 -- EVENTS
 
 CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');
@@ -311,4 +318,7 @@ CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
