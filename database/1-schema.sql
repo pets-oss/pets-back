@@ -7,8 +7,16 @@ CREATE TABLE organization (
     city VARCHAR(128),
     street_address VARCHAR(255),
     phone VARCHAR(64),
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    delete_time TIMESTAMP
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE organization_task (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(500),
+    organization_id INTEGER REFERENCES organization(id) NOT NULL,
+    is_done BOOLEAN DEFAULT FALSE,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- MUNICIPALITY
@@ -257,7 +265,8 @@ CREATE TABLE animal_event_medical_record (
 
 CREATE TABLE animal_event_found (
     id SERIAL PRIMARY KEY,
-    address VARCHAR(256),
+    street VARCHAR(255) NOT NULL,
+    house_no VARCHAR(8),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
     date_time TIMESTAMP,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
@@ -289,4 +298,7 @@ CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
