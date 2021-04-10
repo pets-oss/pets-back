@@ -173,6 +173,7 @@ CREATE TABLE animal_details (
     allergy VARCHAR(128),
     animal_behavior VARCHAR (255),
     food VARCHAR(255),
+    animal_behavior VARCHAR(255),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
