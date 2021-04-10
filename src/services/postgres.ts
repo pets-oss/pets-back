@@ -30,22 +30,22 @@ const pgClient = (pool: Pool): PostgresClient => ({
 
 export default async () => {
     // heroku postgres addon exports connection string as a DATABASE_URL.
-    const connectionString = process.env.DATABASE_URL;
-    const config = connectionString ? {
-        connectionString,
+    const connectionStringConfig = {
+        connectionString: process.env.DATABASE_URL,
         ssl: {
             rejectUnauthorized: false,
         },
-    }
-        :
-        {
-            user: process.env.POSTGRES_USER,
-            host: process.env.POSTGRES_HOST,
-            database: process.env.POSTGRES_DB,
-            password: process.env.POSTGRES_PASSWORD,
-            port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
-        };
-    const pool = new Pool(config);
+    };
+    const config = {
+        user: process.env.POSTGRES_USER,
+        host: process.env.POSTGRES_HOST,
+        database: process.env.POSTGRES_DB,
+        password: process.env.POSTGRES_PASSWORD,
+        port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+    };
+    const pool = new Pool(
+        process.env.DATABASE_URL ? connectionStringConfig : config
+    );
 
     return pgClient(pool);
 };
