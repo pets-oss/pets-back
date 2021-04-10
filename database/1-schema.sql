@@ -14,7 +14,7 @@ CREATE TABLE organization_task (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(500),
-    organization_id INTEGER REFERENCES organization(id) NOT NULL,
+    organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL,
     is_done BOOLEAN DEFAULT FALSE,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
