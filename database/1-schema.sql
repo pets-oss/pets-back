@@ -171,7 +171,8 @@ CREATE TABLE animal_details (
     birth_date DATE,
     weight NUMERIC,
     allergy VARCHAR(128),
-    food VARCHAR(255)
+    food VARCHAR(255),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
@@ -217,6 +218,13 @@ CREATE TABLE animal_microchip (
     PRIMARY KEY (animal_id, microchip_id)
 );
 
+CREATE TABLE animal_favorite (
+    user_id VARCHAR(255) REFERENCES app_user(id) ON DELETE CASCADE,
+    animal_id INTEGER  REFERENCES animal(id) ON DELETE CASCADE,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY (user_id, animal_id)
+);
+
 CREATE TABLE status_translation (
     status VARCHAR(20) NOT NULL,
     language VARCHAR(4) NOT NULL,
@@ -230,7 +238,15 @@ CREATE TABLE former_animal_owner (
     id SERIAL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     surname VARCHAR(256),
-    phone VARCHAR(64)
+    phone VARCHAR(64),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE animal_gallery (
+    id SERIAL PRIMARY KEY,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    url VARCHAR(2048),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- CAGES
@@ -311,8 +327,20 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
+CREATE TRIGGER animal_favorite_mod_time BEFORE UPDATE ON animal_favorite
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
 CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER former_animal_owner_mod_time BEFORE UPDATE ON former_animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
