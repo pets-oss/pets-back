@@ -1,4 +1,4 @@
--- Current count of animals in organization grouped by species and gender
+-- Current count of animals in organization grouped by species and gender (https://github.com/pets-oss/pets-back/issues/149)
 
 WITH const AS (
     SELECT 'lt' AS lang
