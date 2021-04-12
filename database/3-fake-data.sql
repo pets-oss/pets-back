@@ -119,6 +119,21 @@ INSERT INTO animal_event_given_away
 (2, 'Išvyksta į užsienį', 2, '2021-01-01'),
 (3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
 
+-- ANIMAL FAVORITE
+INSERT INTO animal_favorite 
+(user_id, animal_id) VALUES
+('dhjbwau74a6', 1),
+('aiubfaw4io09', 1),
+('aiubfaw4io09' ,4),
+('afhu9w4f78', 2),
+('278y2378ryb', 3);
+
 INSERT INTO organization_task
 (title, description, organization_id, is_done) VALUES
 ('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
+
+INSERT INTO animal_gallery
+(animal_id, url) VALUES
+(5, 'https://picsum.photos/id/237/300/300'),
+(1, 'https://picsum.photos/id/237/300/300'),
+(2, 'https://picsum.photos/id/237/300/300');
