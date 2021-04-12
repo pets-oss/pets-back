@@ -7,14 +7,32 @@ import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
 import schema from './schema';
 import initClients from './utils/init-clients';
+import getAppVersion from './utils/getAppVersion';
 
 const { ApolloServer } = require('apollo-server-express');
 
 initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
-    app.use('/status', (req, res) => {
-        res.sendStatus(200);
+    app.use('/status', async (req, res) => {
+        const version = await getAppVersion();
+        const cloudinaryStatus = await cloudinaryClient.checkStatus();
+
+        const {
+            rows: [{ status: dbStatus }],
+        } = await pgClient.query({
+            text: 'SELECT TRUE as status',
+        });
+
+        res.send({
+            status:
+                cloudinaryStatus && dbStatus
+                    ? 'ok'
+                    : 'Houston we have a problem',
+            database: dbStatus ? 'ok' : 'not ok',
+            cloudinary: cloudinaryStatus ? 'ok' : 'not ok',
+            version,
+        });
     });
 
     const snakeCaseFieldResolver = (
