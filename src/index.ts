@@ -7,7 +7,7 @@ import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
 import schema from './schema';
 import initClients from './utils/init-clients';
-import getAppVersion from './utils/getAppVersion';
+import { version } from '../package.json';
 
 const { ApolloServer } = require('apollo-server-express');
 
@@ -15,7 +15,6 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
     app.use('/status', async (req, res) => {
-        const version = await getAppVersion();
         const cloudinaryStatus = await cloudinaryClient.checkStatus();
 
         const {
