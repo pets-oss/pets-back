@@ -29,7 +29,7 @@ INSERT INTO app_user_roles
 
 INSERT INTO animal
 (name, organization, status, image_url) VALUES
-('Haskelis', 1, 'vaccinated', NULL), 
+('Haskelis', 1, 'vaccinated', NULL),
 ('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
 ('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
 ('Javainis', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
@@ -103,9 +103,9 @@ INSERT INTO animal_event_medical_record
 (4, '8', 26.74, '2020-05-21', 'Yearly vaccine');
 
 INSERT INTO animal_event_found
-(address, municipality_id, date_time, animal_id, comments) VALUES
-('Vilniaus g.', 15, '2019-07-03', 4, NULL),
-('Maironio g. 3', 15, '2018-08-04', 5, NULL);
+(street, house_no, municipality_id, date_time, animal_id, comments) VALUES
+('Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL),
+('Maironio g.', '3', 15, '2018-08-04', 5, NULL);
 
 INSERT INTO former_animal_owner
 (name, surname, phone) VALUES
@@ -118,3 +118,22 @@ INSERT INTO animal_event_given_away
 (1, 'Have to go abroad', 1, '2021-01-07'),
 (2, 'Išvyksta į užsienį', 2, '2021-01-01'),
 (3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
+
+-- ANIMAL FAVORITE
+INSERT INTO animal_favorite 
+(user_id, animal_id) VALUES
+('dhjbwau74a6', 1),
+('aiubfaw4io09', 1),
+('aiubfaw4io09' ,4),
+('afhu9w4f78', 2),
+('278y2378ryb', 3);
+
+INSERT INTO organization_task
+(title, description, organization_id, is_done) VALUES
+('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
+
+INSERT INTO animal_gallery
+(animal_id, url) VALUES
+(5, 'https://picsum.photos/id/237/300/300'),
+(1, 'https://picsum.photos/id/237/300/300'),
+(2, 'https://picsum.photos/id/237/300/300');
