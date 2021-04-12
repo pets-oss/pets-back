@@ -39,9 +39,9 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
         cloudinary.uploader.destroy(publicId);
     },
     isOk: async () => {
-        const response = await cloudinary.api.ping()
+        const response = await cloudinary.api.ping();
         return response.status === 'ok';
-    }
+    },
 });
 
 const { v2 } = require('cloudinary');

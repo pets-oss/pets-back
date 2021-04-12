@@ -19,8 +19,8 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         let isCloudinaryActive = false;
         let version = '';
         try {
-            const results = await pgClient.query({text: "select true as ok"});
-            isDatabaseActive = results.rows[0]["ok"];
+            const results = await pgClient.query({ text: 'select true as ok' });
+            isDatabaseActive = results.rows[0].ok;
         } catch (error) {
             console.log(error);
         }
@@ -32,16 +32,16 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
             console.log(error);
         }
         try {
-             version = await getVersion();
+            version = await getVersion();
         } catch (error) {
             console.log(error);
         }
-    
+
         res.send({
-            'status': isDatabaseActive && isCloudinaryActive ? 'ok' : 'not ok',
-            'database': isDatabaseActive ? 'ok' : 'not ok',
-            'cloudinary': isCloudinaryActive ? 'ok' : 'not ok',
-            'version': version
+            status: isDatabaseActive && isCloudinaryActive ? 'ok' : 'not ok',
+            database: isDatabaseActive ? 'ok' : 'not ok',
+            cloudinary: isCloudinaryActive ? 'ok' : 'not ok',
+            version: version,
         });
     });
 
