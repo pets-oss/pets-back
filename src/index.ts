@@ -4,17 +4,49 @@ import cors from 'cors';
 import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
+import { graphqlUploadExpress } from 'graphql-upload';
+import getVersion from './getVersion'
 
 import schema from './schema';
 import initClients from './utils/init-clients';
-import { graphqlUploadExpress } from 'graphql-upload';
 
 const { ApolloServer } = require('apollo-server-express');
+
 initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
-    app.use('/status', (req, res) => {
-        res.sendStatus(200);
+    app.use('/status', async (req, res) => {
+        let isDataBasedActive = false
+        let isCloudinaryClient = false
+        let isVersion = ''
+
+        try {
+            const results = await pgClient.query({
+                text: 'select true as ok'
+            })
+            isDataBasedActive = results.rows[0].ok
+        } catch (error) {
+            console.log(error)
+        }
+
+        try {
+            isCloudinaryClient = await cloudinaryClient.isOk()
+        } catch (error) {
+            console.log(error)
+        }
+
+        try {
+            isVersion = await getVersion()
+        } catch (error) {
+            console.log(error)
+        }
+
+        res.send({
+            'status': 'ok',
+            'database': isDataBasedActive ? 'ok' : 'not ok',
+            'cloudinary': isCloudinaryClient ? 'ok' : 'not ok',
+            'version': isVersion
+        });
     });
 
     const snakeCaseFieldResolver = (
@@ -46,7 +78,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     app.use('/graphql', graphqlUploadExpress({
         maxFileSize: 10000000, // 10 MB
         maxFiles: 20,
-      }));
+    }));
 
     const server = new ApolloServer({
         uploads: false,

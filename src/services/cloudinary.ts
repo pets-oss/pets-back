@@ -1,6 +1,7 @@
 interface CloudinaryClient {
     uploadImage: (imagePromise: Promise<any>) => Promise<string | undefined>;
     deleteImage: (imageUrl: string) => void;
+    isOk: () => Promise<boolean>
 }
 
 const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
@@ -30,9 +31,13 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
     },
     deleteImage: (imageUrl: string) => {
         const parts = imageUrl.split('/');
-        const [ publicId ] = parts[parts.length - 1].split('.');
+        const [publicId] = parts[parts.length - 1].split('.');
         cloudinary.uploader.destroy(publicId);
     },
+    isOk: async () => {
+        const response = await cloudinary.api.ping()
+        return response.status === 'ok';
+    }
 });
 
 const cloudinary = require('cloudinary').v2;
