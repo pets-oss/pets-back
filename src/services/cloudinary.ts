@@ -16,8 +16,8 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
                         transformation: {
                             width: 1200,
                             height: 675,
-                            crop: 'fill',
-                        },
+                            crop: 'fill'
+                        }
                     },
                     (error: any, result: any) => {
                         if (error) {
@@ -38,7 +38,14 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
         const [publicId] = parts[parts.length - 1].split('.');
         cloudinary.uploader.destroy(publicId);
     },
-    checkStatus: async() => (await cloudinary.api.ping()).status === 'ok'
+    checkStatus: async () => {
+        try {
+            const { status } = await cloudinary.api.ping();
+            return status === 'ok';
+        } catch (e) {
+            return false;
+        }
+    }
 });
 
 const { v2 } = require('cloudinary');
