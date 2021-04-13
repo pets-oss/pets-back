@@ -15,7 +15,12 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
     app.use('/status', async (req, res) => {
-        const cloudinaryStatus = await cloudinaryClient.checkStatus();
+        let cloudinaryStatus;
+        try {
+            cloudinaryStatus = await cloudinaryClient.checkStatus();
+        } catch (err) {
+            console.log(err);
+        }
 
         const {
             rows: [{ status: dbStatus }],
