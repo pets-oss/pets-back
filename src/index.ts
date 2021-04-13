@@ -6,6 +6,7 @@ import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
 import getVersion from './getVersion'
+// import { version } from '../package.json';
 
 import schema from './schema';
 import initClients from './utils/init-clients';
@@ -16,36 +17,36 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
     app.use('/status', async (req, res) => {
-        let isDataBasedActive = false
-        let isCloudinaryClient = false
-        let isVersion = ''
+        let isDatabaseActive = false
+        let isCloudinaryClientActive = false
+        let Version = ''
 
         try {
             const results = await pgClient.query({
-                text: 'select true as ok'
+                text: 'select true as OK'
             })
-            isDataBasedActive = results.rows[0].ok
+            isDatabaseActive = results.rows[0]?.ok
         } catch (error) {
             console.log(error)
         }
 
         try {
-            isCloudinaryClient = await cloudinaryClient.isOk()
+            isCloudinaryClientActive = await cloudinaryClient.isOk()
         } catch (error) {
             console.log(error)
         }
 
         try {
-            isVersion = await getVersion()
+            Version = await getVersion()
         } catch (error) {
             console.log(error)
         }
 
         res.send({
-            'status': 'ok',
-            'database': isDataBasedActive ? 'ok' : 'not ok',
-            'cloudinary': isCloudinaryClient ? 'ok' : 'not ok',
-            'version': isVersion
+            'status': isDatabaseActive && isCloudinaryClientActive ? 'ok' : 'not ok',
+            'database': isDatabaseActive ? 'ok' : 'not ok',
+            'cloudinary': isCloudinaryClientActive ? 'ok' : 'not ok',
+            'version': Version
         });
     });
 
