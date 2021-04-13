@@ -19,7 +19,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         let isCloudinaryActive = false;
 
         try {
-            const results = await pgClient.query({ text: 'select true as ok' });
+            const results = await pgClient.query({ text: 'SELECT true AS ok' });
             isDatabaseActive = results.rows[0].ok;
         } catch (error) {
             console.log(error);
