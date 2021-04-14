@@ -7,8 +7,17 @@ CREATE TABLE organization (
     city VARCHAR(128),
     street_address VARCHAR(255),
     phone VARCHAR(64),
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    delete_time TIMESTAMP
+    company_code VARCHAR(25),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE organization_task (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description VARCHAR(500),
+    organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL,
+    is_done BOOLEAN DEFAULT FALSE,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- MUNICIPALITY
@@ -163,7 +172,9 @@ CREATE TABLE animal_details (
     birth_date DATE,
     weight NUMERIC,
     allergy VARCHAR(128),
-    food VARCHAR(255)
+    food VARCHAR(255),
+    animal_behavior VARCHAR(255),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TYPE registration_status AS ENUM ('Active', 'Inactive');
@@ -205,7 +216,15 @@ CREATE TABLE animal_microchip (
     install_date DATE,
     install_place install_place NOT NULL,
     status chip_status DEFAULT 'Implanted',
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (animal_id, microchip_id)
+);
+
+CREATE TABLE animal_favorite (
+    user_id VARCHAR(255) REFERENCES app_user(id) ON DELETE CASCADE,
+    animal_id INTEGER  REFERENCES animal(id) ON DELETE CASCADE,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY (user_id, animal_id)
 );
 
 CREATE TABLE status_translation (
@@ -221,7 +240,15 @@ CREATE TABLE former_animal_owner (
     id SERIAL PRIMARY KEY,
     name VARCHAR(256) NOT NULL,
     surname VARCHAR(256),
-    phone VARCHAR(64)
+    phone VARCHAR(64),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE animal_gallery (
+    id SERIAL PRIMARY KEY,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    url VARCHAR(2048),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- EVENTS
@@ -256,7 +283,8 @@ CREATE TABLE animal_event_medical_record (
 
 CREATE TABLE animal_event_found (
     id SERIAL PRIMARY KEY,
-    address VARCHAR(256),
+    street VARCHAR(255) NOT NULL,
+    house_no VARCHAR(8),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
     date_time TIMESTAMP,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
@@ -285,4 +313,22 @@ CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_favorite_mod_time BEFORE UPDATE ON animal_favorite
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER former_animal_owner_mod_time BEFORE UPDATE ON former_animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
