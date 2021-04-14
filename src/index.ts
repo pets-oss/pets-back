@@ -5,8 +5,7 @@ import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
-import getVersion from './getVersion'
-// import { version } from '../package.json';
+import { version } from '../package.json';
 
 import schema from './schema';
 import initClients from './utils/init-clients';
@@ -19,7 +18,6 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     app.use('/status', async (req, res) => {
         let isDatabaseActive = false
         let isCloudinaryClientActive = false
-        let Version = ''
 
         try {
             const results = await pgClient.query({
@@ -36,17 +34,11 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
             console.log(error)
         }
 
-        try {
-            Version = await getVersion()
-        } catch (error) {
-            console.log(error)
-        }
-
         res.send({
             'status': isDatabaseActive && isCloudinaryClientActive ? 'ok' : 'not ok',
             'database': isDatabaseActive ? 'ok' : 'not ok',
             'cloudinary': isCloudinaryClientActive ? 'ok' : 'not ok',
-            'version': Version
+            'version': version
         });
     });
 
