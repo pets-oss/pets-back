@@ -68,10 +68,13 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         app.use('/graphql', jwtCheck);
     }
 
-    app.use('/graphql', graphqlUploadExpress({
-        maxFileSize: 10000000, // 10 MB
-        maxFiles: 20,
-    }));
+    app.use(
+        '/graphql',
+        graphqlUploadExpress({
+            maxFileSize: 10000000, // 10 MB
+            maxFiles: 20,
+        })
+    );
 
     const server = new ApolloServer({
         uploads: false,
