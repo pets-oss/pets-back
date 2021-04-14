@@ -7,7 +7,7 @@ import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
 import schema from './schema';
 import initClients from './utils/init-clients';
-import getCurrentVersion from './getCurrentVersion';
+import { version } from '../package.json';
 
 const { ApolloServer } = require('apollo-server-express');
 
@@ -16,6 +16,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
 
     app.use('/status', async (req, res) => {
         let dbStatus = undefined;
+        let cloudinaryStatus = undefined;
         try {
             dbStatus = (
                 await pgClient.query({
@@ -25,13 +26,16 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         } catch (error) {
             console.log(error);
         }
-        const cloudinaryStatus = await cloudinaryClient.isOk();
-        const versionStatus = await getCurrentVersion();
+        try {
+            cloudinaryStatus = await cloudinaryClient.isOk();
+        } catch (error) {
+            console.log(error);
+        }
         res.send({
             status: dbStatus && cloudinaryStatus ? 'ok' : 'not_ok',
             database: dbStatus ? 'ok' : 'not_ok',
             cloudinary: cloudinaryStatus ? 'ok' : 'not_ok',
-            version: versionStatus,
+            version,
         });
     });
 
