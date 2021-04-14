@@ -16,20 +16,20 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
     app.use('/status', async (req, res) => {
-        let isDatabaseActive = false
-        let isCloudinaryClientActive = false
+        let isDatabaseActive = false;
+        let isCloudinaryClientActive = false;
 
         try {
             const results = await pgClient.query({
-                text: 'select true as OK'
+                text: 'SELECT true AS ok',
             })
-            isDatabaseActive = results.rows[0]?.ok
+            isDatabaseActive = results.rows[0]?.ok;
         } catch (error) {
             console.log(error)
         }
 
         try {
-            isCloudinaryClientActive = await cloudinaryClient.isOk()
+            isCloudinaryClientActive = await cloudinaryClient.isOk();
         } catch (error) {
             console.log(error)
         }
@@ -38,7 +38,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
             'status': isDatabaseActive && isCloudinaryClientActive ? 'ok' : 'not ok',
             'database': isDatabaseActive ? 'ok' : 'not ok',
             'cloudinary': isCloudinaryClientActive ? 'ok' : 'not ok',
-            'version': version
+            'version': version,
         });
     });
 

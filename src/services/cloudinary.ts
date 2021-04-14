@@ -1,7 +1,7 @@
 interface CloudinaryClient {
     uploadImage: (imagePromise: Promise<any>) => Promise<string | undefined>;
     deleteImage: (imageUrl: string) => void;
-    isOk: () => Promise<boolean>
+    isOk: () => Promise<boolean>;
 }
 
 const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
