@@ -39,12 +39,15 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
         cloudinary.uploader.destroy(publicId);
     },
     checkStatus: async () => {
+        let status = false;
         try {
-            const { status } = await cloudinary.api.ping();
-            return status === 'ok';
+            status = (await cloudinary.api.ping()).status === 'ok';
         } catch (e) {
-            return false;
+            // eslint-disable-next-line no-console
+            console.log(e);
         }
+
+        return status;
     }
 });
 

@@ -15,10 +15,16 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
     app.use('/status', async (req, res) => {
+        let databaseStatus = false;
 
-        const databaseStatus = (await pgClient.query({
-            text: 'SELECT TRUE AS OK'
-        })).rows?.[0].ok;
+        try {
+            databaseStatus = (await pgClient.query({
+                text: 'SELECT TRUE AS OK'
+            })).rows?.[0].ok;
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.log(e);
+        }
 
         const cloudinaryStatus = await cloudinaryClient.checkStatus();
 
@@ -42,11 +48,11 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
             cache: true,
             rateLimit: true,
             jwksRequestsPerMinute: 5,
-            jwksUri: `${process.env.AUTH0_DOMAIN}.well-known/jwks.json`,
+            jwksUri: `${process.env.AUTH0_DOMAIN}.well-known/jwks.json`
         }),
         audience: process.env.AUTH0_AUDIENCE,
         issuer: process.env.AUTH0_DOMAIN,
-        algorithms: ['RS256'],
+        algorithms: ['RS256']
     });
 
     app.use('/graphql', bodyParser.json());
@@ -60,7 +66,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         '/graphql',
         graphqlUploadExpress({
             maxFileSize: 10000000, // 10 MB
-            maxFiles: 20,
+            maxFiles: 20
         })
     );
 
@@ -68,7 +74,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         uploads: false,
         schema,
         fieldResolver: snakeCaseFieldResolver,
-        context: { pgClient, cloudinaryClient },
+        context: { pgClient, cloudinaryClient }
     });
 
     server.applyMiddleware({ app });
