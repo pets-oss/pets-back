@@ -1,0 +1,10 @@
+type AnimalItem {
+    id: Int!
+    animalId: Int
+    itemName: String!
+}
+
+type Query {
+    animalItems: [AnimalItem]
+    animalItem(id: Int): AnimalItem
+}
