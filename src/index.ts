@@ -5,6 +5,7 @@ import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
+import http from 'http';
 import { version } from '../package.json';
 
 import schema from './schema';
@@ -85,9 +86,12 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
 
     server.applyMiddleware({ app });
 
+    const httpServer = http.createServer(app);
+    server.installSubscriptionHandlers(httpServer);
+
     // process.env.PORT needed for heroku to bind to the correct port
     const PORT = process.env.PORT || 8081;
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
         // eslint-disable-next-line no-console
         console.log(`Go to http://localhost:${PORT}/graphql to run queries!`);
     });
