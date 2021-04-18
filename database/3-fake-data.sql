@@ -137,3 +137,12 @@ INSERT INTO animal_gallery
 (5, 'https://picsum.photos/id/237/300/300'),
 (1, 'https://picsum.photos/id/237/300/300'),
 (2, 'https://picsum.photos/id/237/300/300');
+
+--- ITEM
+INSERT INTO animal_item (animal_id, item_name)
+VALUES
+(1, 'Liemenė'),
+(1, 'Akiniai nuo saulės'),
+(3, 'Šukos'),
+(4, 'Draskyklė'),
+(5, 'Bėgimo ratelis');
