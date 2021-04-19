@@ -1,4 +1,6 @@
 import { IResolvers } from 'graphql-tools';
+
+import { PubSub } from 'apollo-server-express';
 import {
     getOrganizationQuery,
     getOrganizationsQuery,
@@ -6,6 +8,9 @@ import {
     updateOrganizationQuery,
     deleteOrganizationQuery,
 } from '../../sql-queries/organization';
+
+
+const pubsub = new PubSub();
 
 const resolvers: IResolvers = {
     Query: {
@@ -23,6 +28,7 @@ const resolvers: IResolvers = {
             const dbResponse = await pgClient.query(
                 createOrganizationQuery(input)
             );
+            pubsub.publish('ORGANIZATION_CREATED', { organizationCreated: dbResponse.rows[0] });
             return dbResponse.rows[0];
         },
         updateOrganization: async (_, { input }, { pgClient }) => {
@@ -44,6 +50,11 @@ const resolvers: IResolvers = {
             return dbResponse.rows[0];
         },
     },
+    Subscription: {
+        organizationCreated: {
+            subscribe: () => pubsub.asyncIterator(['ORGANIZATION_CREATED'])
+        }
+    }
 };
 
 export default resolvers;
