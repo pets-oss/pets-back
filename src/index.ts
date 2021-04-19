@@ -5,6 +5,9 @@ import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
+import http from 'http';
+import { version } from '../package.json';
+
 import schema from './schema';
 import initClients from './utils/init-clients';
 
@@ -13,8 +16,31 @@ const { ApolloServer } = require('apollo-server-express');
 initClients().then(({ pgClient, cloudinaryClient }) => {
     const app = express();
 
-    app.use('/status', (req, res) => {
-        res.sendStatus(200);
+    app.use('/status', async (req, res) => {
+        let isDatabaseActive = false;
+        let isCloudinaryClientActive = false;
+
+        try {
+            const results = await pgClient.query({
+                text: 'SELECT true AS ok',
+            })
+            isDatabaseActive = results.rows[0]?.ok;
+        } catch (error) {
+            console.log(error)
+        }
+
+        try {
+            isCloudinaryClientActive = await cloudinaryClient.isOk();
+        } catch (error) {
+            console.log(error)
+        }
+
+        res.send({
+            'status': isDatabaseActive && isCloudinaryClientActive ? 'ok' : 'not ok',
+            'database': isDatabaseActive ? 'ok' : 'not ok',
+            'cloudinary': isCloudinaryClientActive ? 'ok' : 'not ok',
+            'version': version,
+        });
     });
 
     const snakeCaseFieldResolver = (
@@ -60,9 +86,12 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
 
     server.applyMiddleware({ app });
 
+    const httpServer = http.createServer(app);
+    server.installSubscriptionHandlers(httpServer);
+
     // process.env.PORT needed for heroku to bind to the correct port
     const PORT = process.env.PORT || 8081;
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
         // eslint-disable-next-line no-console
         console.log(`Go to http://localhost:${PORT}/graphql to run queries!`);
     });
