@@ -13,6 +13,7 @@ export interface AnimalDetailsInput {
     colorId: number;
     birth_date: String;
     weight: number;
+
     allergy: String;
     food: String;
 }
