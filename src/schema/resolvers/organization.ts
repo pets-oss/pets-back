@@ -1,12 +1,16 @@
 import { IResolvers } from 'graphql-tools';
+
+import { PubSub } from 'apollo-server-express';
 import {
     getOrganizationQuery,
     getOrganizationsQuery,
     createOrganizationQuery,
     updateOrganizationQuery,
     deleteOrganizationQuery,
-    getDeleteTimeQuery,
 } from '../../sql-queries/organization';
+
+
+const pubsub = new PubSub();
 
 const resolvers: IResolvers = {
     Query: {
@@ -24,20 +28,13 @@ const resolvers: IResolvers = {
             const dbResponse = await pgClient.query(
                 createOrganizationQuery(input)
             );
+            pubsub.publish('ORGANIZATION_CREATED', { organizationCreated: dbResponse.rows[0] });
             return dbResponse.rows[0];
         },
         updateOrganization: async (_, { input }, { pgClient }) => {
             if (Object.keys(input).length < 2) {
                 throw new Error(
                     'You have to provide at least one data field when updating an entity'
-                );
-            }
-            const getDeleteTimeResponse = await pgClient.query(
-                getDeleteTimeQuery(input.id)
-            );
-            if (getDeleteTimeResponse.rows[0].delete_time) {
-                throw new Error(
-                    'You are trying to update deleted organization'
                 );
             }
             const dbResponse = await pgClient.query(
@@ -47,18 +44,17 @@ const resolvers: IResolvers = {
             return dbResponse.rows[0];
         },
         deleteOrganization: async (_, { id }, { pgClient }) => {
-            const getDeleteTimeResponse = await pgClient.query(
-                getDeleteTimeQuery(id)
-            );
-            if (getDeleteTimeResponse.rows[0].delete_time) {
-                throw new Error('Organization is already deleted');
-            }
             const dbResponse = await pgClient.query(
                 deleteOrganizationQuery(id)
             );
             return dbResponse.rows[0];
         },
     },
+    Subscription: {
+        organizationCreated: {
+            subscribe: () => pubsub.asyncIterator(['ORGANIZATION_CREATED'])
+        }
+    }
 };
 
 export default resolvers;

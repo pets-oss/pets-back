@@ -1,6 +1,7 @@
 interface CloudinaryClient {
     uploadImage: (imagePromise: Promise<any>) => Promise<string | undefined>;
     deleteImage: (imageUrl: string) => void;
+    isOk: () => Promise<boolean>;
 }
 
 const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
@@ -12,7 +13,11 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
             if (image) {
                 const uploadStream = cloudinary.uploader.upload_stream(
                     {
-                        transformation: { width: 1200, height: 675, crop: "fill" }
+                        transformation: {
+                            width: 1200,
+                            height: 675,
+                            crop: 'fill',
+                        },
                     },
                     (error: any, result: any) => {
                         if (error) {
@@ -30,11 +35,15 @@ const cloudinaryClient = (cloudinary: any): CloudinaryClient => ({
     },
     deleteImage: (imageUrl: string) => {
         const parts = imageUrl.split('/');
-        const [ publicId ] = parts[parts.length - 1].split('.');
+        const [publicId] = parts[parts.length - 1].split('.');
         cloudinary.uploader.destroy(publicId);
     },
+    isOk: async () => {
+        const response = await cloudinary.api.ping();
+        return response.status === 'ok';
+    }
 });
 
-const cloudinary = require('cloudinary').v2;
+const { v2 } = require('cloudinary');
 
-export default () => cloudinaryClient(cloudinary);
+export default () => cloudinaryClient(v2);
