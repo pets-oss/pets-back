@@ -55,9 +55,11 @@ SELECT
 	rs.year_month,
 	st.translation AS "species",
 	rs.circumstance,
-	o.Name AS "organization",
+	o.Id AS "organizationI_id",
 	rs.cnt
 FROM cte_stats rs
 JOIN (SELECT * FROM species_translation WHERE language = (SELECT lang FROM const)) AS st ON rs.species = st.species
 JOIN organization o ON o.id = rs.organization
 ORDER BY rs.year_month
+
+
