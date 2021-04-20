@@ -7,6 +7,6 @@ type OrganizationTask {
 }
  type Query {
     organizationTasks: [OrganizationTask]
-    organizationTask(id:Int): OrganizationTask
+    organizationTask(id: Int): OrganizationTask
 
  }
