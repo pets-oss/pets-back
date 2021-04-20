@@ -34,10 +34,15 @@ SELECT
 	'found' AS "circumstance",
 	count(aef.animal_id) AS "cnt"
 FROM animal_event_found aef
-INNER JOIN animal_details ad ON ad.animal_id = aef.animal_id
-INNER JOIN animal a ON a.id = ad.animal_id
-JOIN breed b ON b.id = ad.breed_id
-GROUP BY to_char(aef.date_time, 'yyyymm'), b.species, a.organization
+JOIN animal_details ad 
+    ON ad.animal_id = aef.animal_id
+JOIN animal a 
+    ON a.id = ad.animal_id
+JOIN breed b 
+    ON b.id = ad.breed_id
+GROUP BY to_char(aef.date_time, 'yyyymm'),
+     b.species, 
+     a.organization
 UNION
 SELECT
 	to_char(aega.date_time, 'yyyymm') AS "year_month",
@@ -46,10 +51,15 @@ SELECT
 	'given away' AS "circumstance",
 	count(aega.animal_id) AS "cnt"
 FROM animal_event_given_away aega
-JOIN animal_details ad ON ad.animal_id = aega.animal_id
-JOIN animal a ON a.id = ad.animal_id
-JOIN breed b ON b.id = ad.breed_id
-GROUP BY to_char(aega.date_time, 'yyyymm'), b.species, a.organization
+JOIN animal_details ad 
+    ON ad.animal_id = aega.animal_id
+JOIN animal a 
+    ON a.id = ad.animal_id
+JOIN breed b 
+    ON b.id = ad.breed_id
+GROUP BY to_char(aega.date_time, 'yyyymm'), 
+    b.species, 
+    a.organization
 )
 SELECT
 	rs.year_month,
@@ -58,8 +68,8 @@ SELECT
 	o.Id AS "organizationI_id",
 	rs.cnt
 FROM cte_stats rs
-JOIN (SELECT * FROM species_translation WHERE language = (SELECT lang FROM const)) AS st ON rs.species = st.species
-JOIN organization o ON o.id = rs.organization
+JOIN (SELECT * FROM species_translation WHERE language = (SELECT lang FROM const)) AS st 
+    ON rs.species = st.species
+JOIN organization o 
+    ON o.id = rs.organization
 ORDER BY rs.year_month
-
-
