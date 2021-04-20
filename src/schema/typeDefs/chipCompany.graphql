@@ -1,0 +1,18 @@
+extend type Query {
+    """
+    Get all chipCompanies.
+
+    Examples:
+
+    chipCompanies(language: "lt")
+    """
+    chipCompanies("language code" language: String!): [ChipCompany]
+}
+
+"Represents a chip company."
+type ChipCompany {
+    "Chip company id"
+    id: String!
+    "Chip company value"
+    value: String!
+}
