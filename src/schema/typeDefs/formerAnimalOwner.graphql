@@ -1,0 +1,11 @@
+type formerAnimalOwner {
+    id: Int!
+    name: String
+    surname: String
+    phone: String
+}
+
+type Query {
+    formerAnimalOwners: [formerAnimalOwner]
+    formerAnimalOwner(id: Int!): formerAnimalOwner
+}
