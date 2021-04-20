@@ -14,15 +14,21 @@ export const OrganizationTaskSchema = {
   ],
   "properties": {
     "description": {
-      "type": "string"
+      "type": [
+        "null",
+        "string"
+      ]
     },
     "id": {
       "type": "number"
     },
     "isDone": {
-      "type": "boolean"
+      "type": [
+        "null",
+        "boolean"
+      ]
     },
-    "organizationId": {
+    "organization": {
       "type": "number"
     },
     "title": {
@@ -30,8 +36,10 @@ export const OrganizationTaskSchema = {
     }
   },
   "required": [
+    "description",
     "id",
-    "organizationId",
+    "isDone",
+    "organization",
     "title"
   ],
   "type": "object"

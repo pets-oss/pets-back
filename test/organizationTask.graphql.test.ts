@@ -1,22 +1,18 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/organizationTask.interface.validator';
+import { organizationTaskFields } from './testFields';
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-describe('OrganizationTask test', () => {
+describe('GraphQL organization_task integration tests', () => {
     it('Returns organization tasks list', (done) => {
         request
             .post('/graphql')
             .send({
-                query: `{ organizationTasks {
-                        id,
-                        title,
-                        description,
-                        organizationId,
-                        isDone
-                    }
+                query: `{ organizationTasks
+                    ${organizationTaskFields}
                 }`
             })
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
@@ -39,13 +35,8 @@ describe('OrganizationTask test', () => {
         request
             .post('/graphql')
             .send({
-                query: `{ organizationTask(id: 1) {
-                            id,
-                            title,
-                            description,
-                            organizationId,
-                            isDone
-                    }
+                query: `{ organizationTask(id: 1)
+                    ${organizationTaskFields}
                 }`
             })
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
