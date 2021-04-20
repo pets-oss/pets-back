@@ -119,3 +119,12 @@ export const eventFields = `
         category
     }
 `;
+
+export const formerAnimalOwnerFields = `
+    {
+        id,
+        name,
+        surname,
+        phone
+    }
+`;
