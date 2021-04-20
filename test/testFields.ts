@@ -101,6 +101,16 @@ export const organizationFields = `
     }
 `;
 
+export const organizationTaskFields = `
+    {
+        id
+        title
+        description
+        organizationId
+        isDone
+    }
+`;
+
 export const eventTypeFields = `
     {
         id,
