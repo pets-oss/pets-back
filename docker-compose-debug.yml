@@ -11,7 +11,6 @@ services:
     volumes:
       - ./src:/usr/src/app
       - ./package.json:/usr/src/package.json
-      - ./package-lock.json:/usr/src/package-lock.json
       - ./tsconfig.json:/usr/src/tsconfig.json
       - ./node_modules:/usr/src/node_modules
       - ./nodemon.json:/usr/src/nodemon.json
