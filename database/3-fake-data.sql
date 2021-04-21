@@ -130,7 +130,9 @@ INSERT INTO animal_favorite
 
 INSERT INTO organization_task
 (title, description, organization_id, is_done) VALUES
-('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
+('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT),
+('Veterinaras Kordziui', 'Vieta: Partizanu g. 16a', 1, DEFAULT),
+('Veterinaras Dagui', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
 
 INSERT INTO animal_gallery
 (animal_id, url) VALUES

@@ -7,6 +7,7 @@ CREATE TABLE organization (
     city VARCHAR(128),
     street_address VARCHAR(255),
     phone VARCHAR(64),
+    company_code VARCHAR(25),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
@@ -14,7 +15,7 @@ CREATE TABLE organization_task (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     description VARCHAR(500),
-    organization_id INTEGER REFERENCES organization(id) NOT NULL,
+    organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL,
     is_done BOOLEAN DEFAULT FALSE,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -170,6 +171,7 @@ CREATE TABLE animal_details (
     color_id INTEGER REFERENCES color(code),
     birth_date DATE,
     weight NUMERIC,
+    cage VARCHAR(128),
     allergy VARCHAR(128),
     food VARCHAR(255),
     animal_behavior VARCHAR(255),
