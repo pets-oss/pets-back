@@ -56,19 +56,19 @@ export const getAnimalQuery = (id: number): QueryConfig => {
     return query;
 };
 
-export const getAnimalsQuery = (): QueryConfig => {
-    const text = `SELECT
-                    id,
-                    name,
-                    organization,
-                    status,
-                    image_url,
-                    comments,
-                    mod_time
-                FROM ${table};`;
-
+export const getAnimalsQuery = (ids: [number] | null): QueryConfig => {
+    const text = `SELECT id,
+                         name,
+                         organization,
+                         status,
+                         image_url,
+                         comments,
+                         mod_time
+                  FROM ${table}
+                  WHERE $1::int[] IS NULL OR id = ANY ($1);`;
     const query = {
         text,
+        values: [ids]
     };
 
     return query;
