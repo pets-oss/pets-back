@@ -17,6 +17,7 @@ import eventResolvers from './resolvers/event';
 import uploadResolver from './resolvers/upload';
 import chipCompanyResolvers from './resolvers/chipCompany';
 import organizationTask from './resolvers/organizationTask';
+import municipalityResolver from './resolvers/municipality';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
@@ -35,7 +36,8 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
         eventResolvers,
         uploadResolver,
         chipCompanyResolvers,
-        organizationTask
+        organizationTask,
+        municipalityResolver,
     ),
 });
 
