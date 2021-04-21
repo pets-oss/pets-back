@@ -18,6 +18,10 @@ extend type Query {
     organizations: [Organization]
 }
 
+type Subscription {
+    organizationCreated: Organization
+}
+
 "Represents an organization."
 type Organization {
     "Organization id, for example 2"
