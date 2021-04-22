@@ -252,6 +252,20 @@ CREATE TABLE animal_gallery (
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
+-- CAGES
+
+CREATE TABLE organization_cage (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(32) NOT NUlL,
+    organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL,
+    UNIQUE (name, organization_id)
+);
+
+CREATE TABLE animal_cage (
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    cage_id INTEGER REFERENCES organization_cage(id) NOT NULL
+);
+
 -- EVENTS
 
 CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');

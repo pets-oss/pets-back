@@ -129,3 +129,12 @@ export const organizationTaskFields = `
         isDone
     }
 `;
+
+export const formerAnimalOwnerFields = `
+    {
+        id,
+        name,
+        surname,
+        phone
+    }
+`;
