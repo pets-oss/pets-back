@@ -57,6 +57,34 @@ describe('GraphQL animal integration tests', () => {
                 return done();
             });
     });
+
+    it('Returns animals by array of ids [1,2,3] with all fields', (done) => {
+        request
+            .post('/graphql')
+            .send({
+                query: `{ animals (ids: [1,2,3])
+                      ${animalFields}
+                  }`,
+            })
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                expect(animals).to.be.an('array');
+                validate(animals[0]);
+                expect(animals).to.have.length(3);
+                return done();
+            });
+    });
 });
 
 describe('animal mutations tests', () => {
