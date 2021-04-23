@@ -19,6 +19,7 @@ import chipCompanyResolvers from './resolvers/chipCompany';
 import organizationTask from './resolvers/organizationTask';
 import municipalityResolver from './resolvers/municipality';
 import formerAnimalOwnerResolvers from './resolvers/formerAnimalOwner';
+import givenAwayEventResolvers from './resolvers/givenAwayEvent';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
@@ -40,6 +41,7 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
         organizationTask,
         municipalityResolver,
         formerAnimalOwnerResolvers,
+        givenAwayEventResolvers
     ),
 });
 

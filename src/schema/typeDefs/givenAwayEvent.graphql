@@ -1,0 +1,45 @@
+"Represents given away animal event"
+type GivenAwayEvent {
+    "Event id"
+    id: Int!
+    "Former owner id"
+    formerOwnerId: Int!
+    "Event date"
+    date: String
+    "Animal id"
+    animalId: Int!
+    "Event reason"
+    reason: String
+}
+
+extend type Mutation {
+    "Created animal event given away"
+    createGivenAwayEvent(input: CreateGivenAwayEventInput!): GivenAwayEvent
+    "Updated animal event given away"
+    updateGivenAwayEvent(input: UpdateGivenAwayEventInput!): GivenAwayEvent
+}
+
+input CreateGivenAwayEventInput {
+    "Former owner id"
+    formerOwnerId: Int!
+    "Event date in YYYY-MM-DD format"
+    date: String
+    "Animal id, e.g. 2"
+    animalId: Int!
+    "Event reason"
+    reason: String
+}
+
+input UpdateGivenAwayEventInput {
+    "Event id"
+    id: Int!
+    "Former owner id"
+    formerOwnerId: Int
+    "Event date in YYYY-MM-DD format"
+    date: String
+    "Animal id, e.g. 2"
+    animalId: Int
+    "Event reason"
+    reason: String
+}
+
