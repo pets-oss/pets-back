@@ -138,3 +138,13 @@ export const formerAnimalOwnerFields = `
         phone
     }
 `;
+
+export const givenAwayEventFields = `
+    {
+        id,
+        formerOwnerId,
+        date,
+        animalId,
+        reason
+    }
+`;
