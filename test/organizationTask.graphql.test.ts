@@ -30,7 +30,7 @@ describe('OrganizationTasks test', () => {
                 } = res;
                 validate(organizationTasks[0]);
                 expect(organizationTasks).to.be.an('array');
-                expect(organizationTasks).to.have.lengthOf(3);
+                expect(organizationTasks).length.to.be.above(5);
                 return done();
             });
     });

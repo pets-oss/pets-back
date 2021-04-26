@@ -130,9 +130,12 @@ INSERT INTO animal_favorite
 
 INSERT INTO organization_task
 (title, description, organization_id, is_done) VALUES
-('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT),
-('Veterinaras Kordziui', 'Vieta: Partizanu g. 16a', 1, DEFAULT),
-('Veterinaras Dagui', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
+('Vet for Murkė', 'Place: Kaunakiemio g. 15a', 1, DEFAULT),
+('Vet for Kordzis', 'Place: Partizanu g. 16a', 1, DEFAULT),
+('Take away trash', 'Trash should be put in the container. Container can be found near the southern wall of the shelter', 1, DEFAULT),
+('Pet dog Rudolf', 'Dog Rudolf starts to bark everyday at 12:00 if it doesnt get pat in the morning. Barking never stops.', 1, DEFAULT),
+('Order cat food', 'Cat food is running out. Order ASAP!', 1, true),
+('Dye hair for Dag', 'Place: Kaunakiemio g. 15a', 1, DEFAULT);
 
 INSERT INTO animal_gallery
 (animal_id, url) VALUES
