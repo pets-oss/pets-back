@@ -1,0 +1,30 @@
+extend type Query {
+    """
+    Get all former animal owners.
+
+    Examples:
+
+    formerAnimalOwners
+    """
+    formerAnimalOwners: [FormerAnimalOwner]
+    """
+    Get a former animal owner with a specific ID.
+
+    Examples:
+
+    formerAnimalOwner(id: 1)
+    """
+    formerAnimalOwner(id: Int!): FormerAnimalOwner
+}
+
+"Represents a former animal owner."
+type FormerAnimalOwner {
+    "Former animal owner ID, e.g., 1"
+    id: Int!
+    "Former animal owner name"
+    name: String!
+    "Former animal owner surname"
+    surname: String
+    "Former animal owner phone number"
+    phone: String
+}
