@@ -171,6 +171,7 @@ CREATE TABLE animal_details (
     color_id INTEGER REFERENCES color(code),
     birth_date DATE,
     weight NUMERIC,
+    cage VARCHAR(128),
     allergy VARCHAR(128),
     food VARCHAR(255),
     animal_behavior VARCHAR(255),
@@ -249,6 +250,20 @@ CREATE TABLE animal_gallery (
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     url VARCHAR(2048),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+-- CAGES
+
+CREATE TABLE organization_cage (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(32) NOT NUlL,
+    organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL,
+    UNIQUE (name, organization_id)
+);
+
+CREATE TABLE animal_cage (
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    cage_id INTEGER REFERENCES organization_cage(id) NOT NULL
 );
 
 -- EVENTS

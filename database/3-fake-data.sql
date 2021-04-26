@@ -120,7 +120,7 @@ INSERT INTO animal_event_given_away
 (3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
 
 -- ANIMAL FAVORITE
-INSERT INTO animal_favorite 
+INSERT INTO animal_favorite
 (user_id, animal_id) VALUES
 ('dhjbwau74a6', 1),
 ('aiubfaw4io09', 1),
@@ -130,10 +130,31 @@ INSERT INTO animal_favorite
 
 INSERT INTO organization_task
 (title, description, organization_id, is_done) VALUES
-('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
+('Vet for Murkė', 'Place: Kaunakiemio g. 15a', 1, DEFAULT),
+('Vet for Kordzis', 'Place: Partizanu g. 16a', 1, DEFAULT),
+('Take away trash', 'Trash should be put in the container. Container can be found near the southern wall of the shelter', 1, DEFAULT),
+('Pet dog Rudolf', 'Dog Rudolf starts to bark everyday at 12:00 if it doesnt get pat in the morning. Barking never stops.', 1, DEFAULT),
+('Order cat food', 'Cat food is running out. Order ASAP!', 1, true),
+('Dye hair for Dag', 'Place: Kaunakiemio g. 15a', 1, DEFAULT);
 
 INSERT INTO animal_gallery
 (animal_id, url) VALUES
 (5, 'https://picsum.photos/id/237/300/300'),
 (1, 'https://picsum.photos/id/237/300/300'),
 (2, 'https://picsum.photos/id/237/300/300');
+
+INSERT INTO organization_cage (name, organization_id) VALUES
+('Buda1', 1),
+('Buda2', 1),
+('Narvas1', 1),
+('2-1', 2),
+('3-small-1', 3),
+('3-big-1', 3);
+
+INSERT INTO animal_cage (animal_id, cage_id) VALUES
+(1, 1),
+(5, 2),
+(6, 3),
+(2, 4),
+(3, 5),
+(4, 6);
