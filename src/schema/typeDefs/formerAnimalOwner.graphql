@@ -28,3 +28,28 @@ type FormerAnimalOwner {
     "Former animal owner phone number"
     phone: String
 }
+
+extend type Mutation {
+    createFormerAnimalOwner(input: CreateFormerAnimalOwnerInput!): FormerAnimalOwner
+    updateFormerAnimalOwner(input: UpdateFormerAnimalOwnerInput!): FormerAnimalOwner
+}
+
+input CreateFormerAnimalOwnerInput {
+    "Former animal owner name (255 characters max)"
+    name: Name!
+    "Former animal owner surname (255 characters max)"
+    surname: Surname!
+    "Former animal owner phone number (+3706XXXXXXX)"
+    phone: Phone
+}
+
+input UpdateFormerAnimalOwnerInput {
+    "Former animal owner ID, e.g., 1"
+    id: Int!
+    "Former animal owner name (255 characters max)"
+    name: Name!
+    "Former animal owner surname (255 characters max)"
+    surname: Surname
+    "Former animal owner phone number (+3706XXXXXXX)"
+    phone: Phone
+}
