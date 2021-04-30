@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import { insert, update } from 'sql-bricks-postgres';
+import { in as $in, insert, gt, lt, gte, lte, select, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 import { AnimalRegistrationInput } from './animalRegistration';
 import { AnimalDetailsInput } from './animalDetails';
@@ -56,23 +56,30 @@ export const getAnimalQuery = (id: number): QueryConfig => {
     return query;
 };
 
-export const getAnimalsQuery = (ids: [number] | null): QueryConfig => {
-    const text = `SELECT id,
-                         name,
-                         organization,
-                         status,
-                         image_url,
-                         comments,
-                         mod_time
-                  FROM ${table}
-                  WHERE $1::int[] IS NULL OR id = ANY ($1);`;
-    const query = {
-        text,
-        values: [ids]
-    };
+interface AnimalsQueryInput {
+    ids?: [number] | null,
+    limit?: number | null,
+    reverse?: boolean | null,
+    offset?: string | null,
+}
 
-    return query;
-};
+export const getAnimalsHasPreviousQuery =
+    (offset: string, reverse: boolean = false): QueryConfig =>
+        select('CASE WHEN COUNT(*) > 0 THEN true ELSE false END as has_previous_page')
+            .from(table)
+            .where(reverse ? gte('id', offset) : lte('id', offset))
+            .toParams();
+
+export const getAnimalsQuery =
+    ({ ids, reverse, limit, offset }: AnimalsQueryInput): QueryConfig => {
+        let query = select(returnFields).from(table);
+        query = ids ? query.where($in('id', ids)) : query;
+        query = offset ? query.where(reverse? lt('id', offset): gt('id', offset)) : query;
+        query = reverse ? query.orderBy('id DESC') : query;
+        query = limit ? query.limit(limit) : query;
+
+        return query.toParams();
+    };
 
 export const createAnimalQuery = (input: CreateAnimalInput): QueryConfig => {
     const { registration, details, microchip, ...animal } = input;

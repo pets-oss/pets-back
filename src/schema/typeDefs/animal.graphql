@@ -13,9 +13,25 @@ extend type Query {
 
     Examples:
 
-    animals
+    animals, animals (ids: [1,2,3]), animals(first:3)
     """
-    animals(ids: [Int!]): [Animal]
+    animals(ids: [Int!], after: String, first: Int, before: String, last: Int): AnimalsConnection
+}
+
+"A connection to animals."
+type AnimalsConnection {
+    "Information for pagination."
+    pageInfo: PageInfo!
+    "A list of animal edges."
+    edges: [AnimalEdge]
+}
+
+"An edge in a connection."
+type AnimalEdge {
+    "The item at the end of the edge"
+    node: Animal
+    "A cursor for use in pagination"
+    cursor: String!
 }
 
 "Represents an animal."
