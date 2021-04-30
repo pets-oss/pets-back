@@ -27,7 +27,7 @@ const dateScalar = new GraphQLScalarType({
             validate(ast.value);
             return ast.value;
         }
-        return null;
+        throw new Error('Value must be a string');
     }
 });
 
