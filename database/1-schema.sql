@@ -284,7 +284,9 @@ CREATE TABLE animal_event_general (
     type event,
     expenses NUMERIC,
     date_time TIMESTAMP,
-    comments TEXT
+    comments TEXT,
+    author VARCHAR(255),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE animal_event_medical_record (
@@ -293,7 +295,9 @@ CREATE TABLE animal_event_medical_record (
     type event,
     expenses NUMERIC,
     date_time TIMESTAMP,
-    comments TEXT
+    comments TEXT,
+    author VARCHAR(255),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE animal_event_found (
@@ -303,7 +307,9 @@ CREATE TABLE animal_event_found (
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
     date_time TIMESTAMP,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    comments TEXT
+    comments TEXT,
+    author VARCHAR(255),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE animal_event_given_away (
@@ -311,7 +317,13 @@ CREATE TABLE animal_event_given_away (
     former_owner_id INTEGER REFERENCES former_animal_owner(id) NOT NULL,
     reason TEXT,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+<<<<<<< HEAD
     date_time DATE
+=======
+    date_time TIMESTAMP,
+    author VARCHAR(255),
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+>>>>>>> c758c89 (Added new fields (author and mod_time) to tables animal_event_general, animal_event_medical_record, animal_event_found and animal_event_given_away, resolves #213)
 );
 
 -- DATE UPDATES
@@ -346,4 +358,16 @@ CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER former_animal_owner_mod_time BEFORE UPDATE ON former_animal_owner
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_given_away_mod_time BEFORE UPDATE ON animal_event_given_away
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);

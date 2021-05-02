@@ -61,51 +61,51 @@ INSERT INTO animal_microchip
 (3, '2893402', '6', '2020-03-01', '4', DEFAULT);
 
 INSERT INTO animal_event_general
-(animal, type, expenses, date_time, comments) VALUES
-(2, '1', 109.03, '2020-07-01', 'Registration!'),
-(1, '1', 32.85, '2020-07-01', 'Registration!'),
-(1, '10', 246.08, '2020-07-02', 'Gavo švirkštą nuo pasiutligės.'),
-(3, '1', 22.35, '2020-07-03', 'Registration!'),
-(4, '1', 19.03, '2019-07-03', 'Registration!'),
-(5, '1', 75.44, '2017-07-03', 'Registration!'),
-(5, '11', 20.00, '2018-04-22', 'Labai supyko ant neblaivaus piliečio.'),
-(5, '10', 246.08, '2018-04-25', 'Gavo švirkštą nuo pasiutligės.'),
-(5, '2', 2.00, '2018-05-25', 'Pasikeitė laikytojas.'),
-(5, '3', 1.00, '2018-05-25', 'Pasikeitė laikymo vietos adresas.'),
-(5, '4', 2.00, '2018-05-30', 'Pasikeitė savininkas.'),
-(5, '3', 1.00, '2018-05-30', 'Pasikeitė laikymo vietos adresas.'),
-(5, '4', 2.00, '2018-06-04', 'Pasikeitė savininkas.'),
-(5, '3', 1.00, '2018-07-14', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-15', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-16', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-17', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-18', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-19', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-20', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-21', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-23', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-22', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-24', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-25', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-26', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-27', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-28', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-29', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-30', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-31', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-01', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-02', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.');
+(animal, type, expenses, date_time, comments, author) VALUES
+(2, '1', 109.03, '2020-07-01', 'Registration!', 'Benas'),
+(1, '1', 32.85, '2020-07-01', 'Registration!', 'Amelija'),
+(1, '10', 246.08, '2020-07-02', 'Gavo švirkštą nuo pasiutligės.', 'Jokūbas'),
+(3, '1', 22.35, '2020-07-03', 'Registration!', 'Matas'),
+(4, '1', 19.03, '2019-07-03', 'Registration!', 'Liepa'),
+(5, '1', 75.44, '2017-07-03', 'Registration!', 'Kamilė'),
+(5, '11', 20.00, '2018-04-22', 'Labai supyko ant neblaivaus piliečio.', 'Benas'),
+(5, '10', 246.08, '2018-04-25', 'Gavo švirkštą nuo pasiutligės.', 'Amelija'),
+(5, '2', 2.00, '2018-05-25', 'Pasikeitė laikytojas.', 'Matas'),
+(5, '3', 1.00, '2018-05-25', 'Pasikeitė laikymo vietos adresas.', 'Kamilė'),
+(5, '4', 2.00, '2018-05-30', 'Pasikeitė savininkas.', 'Liepa'),
+(5, '3', 1.00, '2018-05-30', 'Pasikeitė laikymo vietos adresas.', 'Kamilė'),
+(5, '4', 2.00, '2018-06-04', 'Pasikeitė savininkas.', 'Benas'),
+(5, '3', 1.00, '2018-07-14', 'Pasikeitė laikymo vietos adresas.', 'Kamilė'),
+(5, '3', 1.00, '2018-07-15', 'Pasikeitė laikymo vietos adresas.', 'Jokūbas'),
+(5, '3', 1.00, '2018-07-16', 'Pasikeitė laikymo vietos adresas.', 'Kamilė'),
+(5, '3', 1.00, '2018-07-17', 'Pasikeitė laikymo vietos adresas.', 'Benas'),
+(5, '3', 1.00, '2018-07-18', 'Pasikeitė laikymo vietos adresas.', 'Benas'),
+(5, '3', 1.00, '2018-07-19', 'Pasikeitė laikymo vietos adresas.', 'Amelija'),
+(5, '3', 1.00, '2018-07-20', 'Pasikeitė laikymo vietos adresas.', 'Matas'),
+(5, '3', 1.00, '2018-07-21', 'Pasikeitė laikymo vietos adresas.', 'Liepa'),
+(5, '3', 1.00, '2018-07-23', 'Pasikeitė laikymo vietos adresas.', 'Kamilė'),
+(5, '3', 1.00, '2018-07-22', 'Pasikeitė laikymo vietos adresas.', 'Jokūbas'),
+(5, '3', 1.00, '2018-07-24', 'Pasikeitė laikymo vietos adresas.', 'Kamilė'),
+(5, '3', 1.00, '2018-07-25', 'Pasikeitė laikymo vietos adresas.', 'Benas'),
+(5, '3', 1.00, '2018-07-26', 'Pasikeitė laikymo vietos adresas.', 'Amelija'),
+(5, '3', 1.00, '2018-07-27', 'Pasikeitė laikymo vietos adresas.', 'Matas'),
+(5, '3', 1.00, '2018-07-28', 'Pasikeitė laikymo vietos adresas.', 'Liepa'),
+(5, '3', 1.00, '2018-07-29', 'Pasikeitė laikymo vietos adresas.', 'Jokūbas'),
+(5, '3', 1.00, '2018-07-30', 'Pasikeitė laikymo vietos adresas.', 'Kamilė'),
+(5, '3', 1.00, '2018-07-31', 'Pasikeitė laikymo vietos adresas.', 'Benas'),
+(5, '3', 1.00, '2018-08-01', 'Pasikeitė laikymo vietos adresas.', 'Jokūbas'),
+(5, '3', 1.00, '2018-08-02', 'Pasikeitė laikymo vietos adresas.', 'Benas'),
+(5, '3', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.', 'Amelija'),
+(5, '3', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.', 'Matas');
 
 INSERT INTO animal_event_medical_record
-(animal, type, expenses, date_time, comments) VALUES
-(4, '8', 26.74, '2020-05-21', 'Yearly vaccine');
+(animal, type, expenses, date_time, comments, author) VALUES
+(4, '8', 26.74, '2020-05-21', 'Yearly vaccine', 'Matas');
 
 INSERT INTO animal_event_found
-(street, house_no, municipality_id, date_time, animal_id, comments) VALUES
-('Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL),
-('Maironio g.', '3', 15, '2018-08-04', 5, NULL);
+(street, house_no, municipality_id, date_time, animal_id, comments, author) VALUES
+('Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL, 'Amelija'),
+('Maironio g.', '3', 15, '2018-08-04', 5, NULL, 'Benas');
 
 INSERT INTO former_animal_owner
 (name, surname, phone) VALUES
@@ -114,10 +114,10 @@ INSERT INTO former_animal_owner
 ('Konfucijas', 'Šunmylys', '+000999');
 
 INSERT INTO animal_event_given_away
-(former_owner_id, reason, animal_id, date_time) VALUES
-(1, 'Have to go abroad', 1, '2021-01-07'),
-(2, 'Išvyksta į užsienį', 2, '2021-01-01'),
-(3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07');
+(former_owner_id, reason, animal_id, date_time, author) VALUES
+(1, 'Have to go abroad', 1, '2021-01-07', 'Liepa'),
+(2, 'Išvyksta į užsienį', 2, '2021-01-01', 'Jokūbas'),
+(3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07', 'Kamilė');
 
 -- ANIMAL FAVORITE
 INSERT INTO animal_favorite
