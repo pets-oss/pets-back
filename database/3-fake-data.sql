@@ -53,7 +53,7 @@ INSERT INTO animal_registration
 (3, '456Carl', '2021-01-07', DEFAULT);
 
 INSERT INTO animal_microchip
-(animal_id, microchip_id, chip_company_code, install_date, install_place, status) VALUES
+(animal_id, microchip_id, chip_company_code, install_date, install_place_id, status) VALUES
 (1, '123', '1', '2020-08-11', '1', DEFAULT),
 (2, '666666', '3', '2020-09-01', '2', DEFAULT),
 (5, '001010101', '4', '2020-09-01', '4', DEFAULT),
