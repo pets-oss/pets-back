@@ -1,4 +1,5 @@
 import { IResolvers } from 'graphql-tools';
+import { Validator } from 'node-input-validator';
 import {
     getAnimalQuery,
     getAnimalsQuery,
@@ -79,6 +80,28 @@ const resolvers: IResolvers = {
     },
     Mutation: {
         createAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
+            const createAnimalInputValidator = new Validator(input, {
+                name: 'maxLength:128',
+                organization: 'integer|min:1',
+                'registration.registrationDate': 'date|dateBeforeToday:0,days',
+                'details.breedId': 'integer|min:1',
+                'details.genderId': 'integer|min:1',
+                'details.colorId': 'integer|min:1',
+                'details.birthDate': 'date|dateBeforeToday:0,days',
+                'details.weight': 'integer|min:1',
+                'microchip.chipCompanyCode': 'integer|min:1',
+                'microchip.installDate': 'date|dateBeforeToday:0,days',
+                'microchip.installPlace': 'integer|min:1',
+            });
+
+            const isCreateAnimalInputValid = await createAnimalInputValidator.check();
+
+            if (!isCreateAnimalInputValid) {
+                throw new Error(
+                    JSON.stringify(createAnimalInputValidator.errors)
+                );
+            }
+
             const { image, ...inputData } = input;
 
             let data = { ...inputData };
@@ -94,7 +117,9 @@ const resolvers: IResolvers = {
                 const createAnimalResult = await pgClient.query(
                     createAnimalQuery(data)
                 );
-                const animalId = createAnimalResult.rows[0].id;
+                const {
+                    rows: [{ id: animalId }],
+                } = createAnimalResult;
                 const createRegistrationResult = await pgClient.query(
                     createAnimalRegistrationQuery({
                         ...data.registration,
@@ -133,6 +158,28 @@ const resolvers: IResolvers = {
             }
         },
         updateAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
+            const updateAnimalInputValidator = new Validator(input, {
+                name: 'maxLength:128',
+                organization: 'integer|min:1',
+                'registration.registrationDate': 'date|dateBeforeToday:0,days',
+                'details.breedId': 'integer|min:1',
+                'details.genderId': 'integer|min:1',
+                'details.colorId': 'integer|min:1',
+                'details.birthDate': 'date|dateBeforeToday:0,days',
+                'details.weight': 'integer|min:1',
+                'microchip.chipCompanyCode': 'integer|min:1',
+                'microchip.installDate': 'date|dateBeforeToday:0,days',
+                'microchip.installPlace': 'integer|min:1',
+            });
+
+            const isUpdateAnimalInputValid = await updateAnimalInputValidator.check();
+
+            if (!isUpdateAnimalInputValid) {
+                throw new Error(
+                    JSON.stringify(updateAnimalInputValidator.errors)
+                );
+            }
+
             const { image, ...inputData } = input;
 
             let data = { ...inputData };
