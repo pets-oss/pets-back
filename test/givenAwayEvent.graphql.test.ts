@@ -29,6 +29,7 @@ describe('GraphQL animal given away event integration tests', () => {
                     }`
             })
             .expect(200)
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { createGivenAwayEvent } } } = res;
@@ -49,7 +50,7 @@ describe('GraphQL animal given away event integration tests', () => {
                             reason: "Leaving country",
                             date: "2021-03-19",
                             animalId: 4
-                        })  ${givenAwayEventFields}
+                        }) ${givenAwayEventFields}
                     }`,
             })
             .expect(200)
@@ -57,7 +58,6 @@ describe('GraphQL animal given away event integration tests', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { updateGivenAwayEvent } } } = res;
-                console.log(updateGivenAwayEvent);
                 validate(updateGivenAwayEvent);
                 expect(updateGivenAwayEvent).to.include({
                     id: 1,

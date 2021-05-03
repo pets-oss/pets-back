@@ -42,4 +42,3 @@ input UpdateGivenAwayEventInput {
     "Event reason"
     reason: String
 }
-
