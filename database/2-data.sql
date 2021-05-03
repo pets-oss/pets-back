@@ -1413,8 +1413,8 @@ INSERT INTO color_pattern_translation
 
 -- CHIP INSTALL PLACE
 
-INSERT INTO install_place_translation
-(install_place, language, translation) VALUES
+INSERT INTO chip_install_place_translation
+(install_place_id, language, translation) VALUES
 ('1', 'lt', 'Tarp menčių'),
 ('2', 'lt', 'Kairėje kaklo pusėje'),
 ('3', 'lt', 'Dešinėje kaklo pusėje'),

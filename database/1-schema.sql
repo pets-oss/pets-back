@@ -198,15 +198,15 @@ CREATE TABLE chip_company_translation (
 );
 COMMENT ON COLUMN chip_company_translation.language is 'Language code based on BCP 47';
 
-CREATE TYPE install_place AS ENUM ('1', '2', '3', '4');
+CREATE TYPE install_place_id AS ENUM ('1', '2', '3', '4');
 
-CREATE TABLE install_place_translation (
-    install_place install_place NOT NULL,
+CREATE TABLE chip_install_place_translation (
+    install_place_id install_place_id NOT NULL,
     language VARCHAR(4) NOT NULL,
     translation VARCHAR(64) NOT NULL,
-    PRIMARY KEY (install_place, language)
+    PRIMARY KEY (install_place_id, language)
 );
-COMMENT ON COLUMN install_place_translation.language is 'Language code based on BCP 47';
+COMMENT ON COLUMN chip_install_place_translation.language is 'Language code based on BCP 47';
 
 CREATE TYPE chip_status AS ENUM ('Implanted', 'Removed');
 
@@ -215,7 +215,7 @@ CREATE TABLE animal_microchip (
     microchip_id VARCHAR(255) NOT NULL,
     chip_company_code chip_company_code NOT NULL,
     install_date DATE,
-    install_place install_place NOT NULL,
+    install_place_id install_place_id NOT NULL,
     status chip_status DEFAULT 'Implanted',
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (animal_id, microchip_id)

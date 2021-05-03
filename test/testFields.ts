@@ -54,7 +54,7 @@ export const animalMicrochipFields = `
         microchipId
         chipCompanyCode
         installDate
-        installPlace
+        installPlaceId
         status
     }
 `;

@@ -19,6 +19,9 @@ import chipCompanyResolvers from './resolvers/chipCompany';
 import organizationTask from './resolvers/organizationTask';
 import municipalityResolver from './resolvers/municipality';
 import formerAnimalOwnerResolvers from './resolvers/formerAnimalOwner';
+import dateResolver from './resolvers/date';
+import chipInstallPlaceTranslationResolver from './resolvers/chipInstallPlaceTranslation';
+import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
@@ -40,6 +43,9 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
         organizationTask,
         municipalityResolver,
         formerAnimalOwnerResolvers,
+        dateResolver,
+        chipInstallPlaceTranslationResolver,
+        animalFoundEventResolver,
     ),
 });
 
