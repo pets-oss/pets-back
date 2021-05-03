@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/animalEventFound.interface.validator';
+import { animalEventFoundFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -13,15 +14,7 @@ describe('Animal Event Found', () => {
             .post('/graphql')
             .send({
                 query: `{
-                    foundEvents {
-                      id
-                      street
-                      date
-                      houseNo
-                      animalId
-                      municipalityId
-                      comments
-                  }
+                    foundEvents ${animalEventFoundFields}
                 }`,
             })
             .expect(200)
@@ -35,6 +28,65 @@ describe('Animal Event Found', () => {
                 expect(foundEvents).to.be.an('array');
                 expect(foundEvents).to.have.length.above(1);
                 validate(foundEvents[0]);
+                return done();
+            });
+    });
+
+    it('Creates an animal event found', (done) => {
+        request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                    createFoundEvent (input: {
+                      street: "Gyvūnų gatvė",
+                      houseNo: "12345678",
+                      municipalityId: 5,
+                      date: "2021-05-03",
+                      animalId: 4,
+                      comments: "Dog was found dirty and hungry"
+                    }) ${animalEventFoundFields}
+                }`,
+            })
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+
+                const expectedResult = {
+                    street: 'Gyvūnų gatvė',
+                    houseNo: '12345678',
+                    municipalityId: 5,
+                    date: '2021-05-03',
+                    animalId: 4,
+                    comments: 'Dog was found dirty and hungry',
+                };
+                expect(res.body.data.createFoundEvent).to.deep.include(
+                    expectedResult
+                );
+                return done();
+            });
+    });
+
+    it('Validates if a date is of correct format', (done) => {
+        request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                    createFoundEvent (input: {
+                      street: "Gyvūnų gatvė",
+                      houseNo: "12345678",
+                      municipalityId: 5,
+                      date: "2021:05:03",
+                      animalId: 4,
+                      comments: "Dog was found dirty and hungry"
+                    }) ${animalEventFoundFields}
+                }`,
+            })
+            .expect(400)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(res.body.errors[0].message).to.include(
+                    'Value must be a string matching YYYY-MM-DD format'
+                );
                 return done();
             });
     });

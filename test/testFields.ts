@@ -138,3 +138,15 @@ export const formerAnimalOwnerFields = `
         phone
     }
 `;
+
+export const animalEventFoundFields = `
+    {
+        id,
+        street,
+        houseNo,
+        municipalityId,
+        date,
+        animalId,
+        comments
+    }
+`;
