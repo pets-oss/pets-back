@@ -20,7 +20,7 @@ describe('animalMicrochip Graphql mutations tests', () => {
             microchipId: "${registrationNo}",
                 chipCompanyCode: 1,
                 installDate: "${date}",
-                installPlace: 1,
+                installPlaceId: 1,
                 status: Implanted
         }`;
         createAnimal(
@@ -43,7 +43,7 @@ describe('animalMicrochip Graphql mutations tests', () => {
             microchipId: registrationNo,
             chipCompanyCode: 1,
             installDate: dateIntString,
-            installPlace: 1,
+            installPlaceId: 1,
             status: 'Implantuotas',
         };
 

@@ -14,7 +14,7 @@ type AnimalMicrochip {
     "Microchip install date"
     installDate: String
     "Microchip install place"
-    installPlace: Int!
+    installPlaceId: Int!
     """
     Microchip status ('Implanted' or 'Removed') translation
     Examples: status(language: "en") or just status - will return default language ("lt") translation
@@ -35,7 +35,7 @@ input CreateAnimalMicrochipInput {
     "Install date (UTC timestamp)"
     installDate: String
     "Install place"
-    installPlace: Int!
+    installPlaceId: Int!
     "Microchip status ('Implanted' or 'Removed')"
     status: MicrochipStatus!
 }
@@ -46,7 +46,7 @@ input UpdateAnimalMicrochipInput {
     "Install date"
     installDate: String
     "Install place"
-    installPlace: Int
+    installPlaceId: Int
     "Microchip status ('Implanted' or 'Removed')"
     status: MicrochipStatus
 }
