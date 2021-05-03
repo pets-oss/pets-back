@@ -46,8 +46,8 @@ describe('GraphQL animal given away event integration tests', () => {
                         updateGivenAwayEvent (input: {
                             id: 1,
                             formerOwnerId: 3,
-                            reason: 'Leaving country',
-                            date: '2021-03-19',
+                            reason: "Leaving country",
+                            date: "2021-03-19",
                             animalId: 4
                         })  ${givenAwayEventFields}
                     }`,
@@ -57,6 +57,7 @@ describe('GraphQL animal given away event integration tests', () => {
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { updateGivenAwayEvent } } } = res;
+                console.log(updateGivenAwayEvent);
                 validate(updateGivenAwayEvent);
                 expect(updateGivenAwayEvent).to.include({
                     id: 1,

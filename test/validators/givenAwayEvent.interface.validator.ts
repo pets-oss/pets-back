@@ -17,20 +17,9 @@ export const GivenAwayEventSchema = {
       "type": "number"
     },
     "date": {
-      "anyOf": [
-        {
-          "additionalProperties": false,
-          "description": "Allows manipulation and formatting of text strings and determination and location of substrings within strings.",
-          "patternProperties": {
-            "^[0-9]+$": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        {
-          "type": "null"
-        }
+      "type": [
+        "null",
+        "string"
       ]
     },
     "formerOwnerId": {
@@ -40,20 +29,9 @@ export const GivenAwayEventSchema = {
       "type": "number"
     },
     "reason": {
-      "anyOf": [
-        {
-          "additionalProperties": false,
-          "description": "Allows manipulation and formatting of text strings and determination and location of substrings within strings.",
-          "patternProperties": {
-            "^[0-9]+$": {
-              "type": "string"
-            }
-          },
-          "type": "object"
-        },
-        {
-          "type": "null"
-        }
+      "type": [
+        "null",
+        "string"
       ]
     }
   },

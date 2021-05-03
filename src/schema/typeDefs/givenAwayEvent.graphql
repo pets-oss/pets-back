@@ -5,7 +5,7 @@ type GivenAwayEvent {
     "Former owner id"
     formerOwnerId: Int!
     "Event date"
-    date: String
+    date: Date
     "Animal id"
     animalId: Int!
     "Event reason"
@@ -23,7 +23,7 @@ input CreateGivenAwayEventInput {
     "Former owner id"
     formerOwnerId: Int!
     "Event date in YYYY-MM-DD format"
-    date: String
+    date: Date
     "Animal id, e.g. 2"
     animalId: Int!
     "Event reason"
@@ -36,7 +36,7 @@ input UpdateGivenAwayEventInput {
     "Former owner id"
     formerOwnerId: Int
     "Event date in YYYY-MM-DD format"
-    date: String
+    date: Date
     "Animal id, e.g. 2"
     animalId: Int
     "Event reason"

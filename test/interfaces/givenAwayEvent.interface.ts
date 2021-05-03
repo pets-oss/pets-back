@@ -1,7 +1,7 @@
 export default interface GivenAwayEvent {
     id: number
     formerOwnerId: number
-    date: String | null
+    date: string | null
     animalId: number
-    reason: String | null
+    reason: string | null
 }
