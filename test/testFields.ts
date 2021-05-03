@@ -54,7 +54,7 @@ export const animalMicrochipFields = `
         microchipId
         chipCompanyCode
         installDate
-        installPlace
+        installPlaceId
         status
     }
 `;
@@ -117,5 +117,24 @@ export const eventFields = `
         dateTime,
         comments,
         category
+    }
+`;
+
+export const organizationTaskFields = `
+    {
+        id,
+        title,
+        description,
+        organization,
+        isDone
+    }
+`;
+
+export const formerAnimalOwnerFields = `
+    {
+        id,
+        name,
+        surname,
+        phone
     }
 `;

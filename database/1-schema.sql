@@ -171,6 +171,7 @@ CREATE TABLE animal_details (
     color_id INTEGER REFERENCES color(code),
     birth_date DATE,
     weight NUMERIC,
+    cage VARCHAR(128),
     allergy VARCHAR(128),
     food VARCHAR(255),
     animal_behavior VARCHAR(255),
@@ -197,15 +198,15 @@ CREATE TABLE chip_company_translation (
 );
 COMMENT ON COLUMN chip_company_translation.language is 'Language code based on BCP 47';
 
-CREATE TYPE install_place AS ENUM ('1', '2', '3', '4');
+CREATE TYPE install_place_id AS ENUM ('1', '2', '3', '4');
 
-CREATE TABLE install_place_translation (
-    install_place install_place NOT NULL,
+CREATE TABLE chip_install_place_translation (
+    install_place_id install_place_id NOT NULL,
     language VARCHAR(4) NOT NULL,
     translation VARCHAR(64) NOT NULL,
-    PRIMARY KEY (install_place, language)
+    PRIMARY KEY (install_place_id, language)
 );
-COMMENT ON COLUMN install_place_translation.language is 'Language code based on BCP 47';
+COMMENT ON COLUMN chip_install_place_translation.language is 'Language code based on BCP 47';
 
 CREATE TYPE chip_status AS ENUM ('Implanted', 'Removed');
 
@@ -214,7 +215,7 @@ CREATE TABLE animal_microchip (
     microchip_id VARCHAR(255) NOT NULL,
     chip_company_code chip_company_code NOT NULL,
     install_date DATE,
-    install_place install_place NOT NULL,
+    install_place_id install_place_id NOT NULL,
     status chip_status DEFAULT 'Implanted',
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (animal_id, microchip_id)
@@ -249,6 +250,20 @@ CREATE TABLE animal_gallery (
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     url VARCHAR(2048),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+-- CAGES
+
+CREATE TABLE organization_cage (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(32) NOT NUlL,
+    organization_id INTEGER REFERENCES organization(id) ON DELETE CASCADE NOT NULL,
+    UNIQUE (name, organization_id)
+);
+
+CREATE TABLE animal_cage (
+    animal_id INTEGER PRIMARY KEY REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    cage_id INTEGER REFERENCES organization_cage(id) NOT NULL
 );
 
 -- EVENTS

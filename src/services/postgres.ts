@@ -10,6 +10,7 @@ const pgClient = (pool: Pool): PostgresClient => ({
         try {
             await pool.end();
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error(error);
         }
     },

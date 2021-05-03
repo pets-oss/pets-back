@@ -1,0 +1,8 @@
+type municipality {
+    id: Int!
+    name: String!
+}
+
+type Query {
+    municipalities: [municipality]
+}

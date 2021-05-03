@@ -15,7 +15,7 @@ extend type Query {
 
     animals
     """
-    animals: [Animal]
+    animals(ids: [Int!]): [Animal]
 }
 
 "Represents an animal."
