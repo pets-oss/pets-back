@@ -91,7 +91,7 @@ const resolvers: IResolvers = {
                 'details.weight': 'integer|min:1',
                 'microchip.chipCompanyCode': 'integer|min:1',
                 'microchip.installDate': 'date|dateBeforeToday:0,days',
-                'microchip.installPlace': 'integer|min:1',
+                'microchip.installPlaceId': 'integer|min:1',
             });
 
             const isCreateAnimalInputValid = await createAnimalInputValidator.check();
@@ -169,7 +169,7 @@ const resolvers: IResolvers = {
                 'details.weight': 'integer|min:1',
                 'microchip.chipCompanyCode': 'integer|min:1',
                 'microchip.installDate': 'date|dateBeforeToday:0,days',
-                'microchip.installPlace': 'integer|min:1',
+                'microchip.installPlaceId': 'integer|min:1',
             });
 
             const isUpdateAnimalInputValid = await updateAnimalInputValidator.check();
