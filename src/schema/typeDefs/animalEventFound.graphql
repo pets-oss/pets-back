@@ -11,3 +11,16 @@ type FoundEvent {
     animalId: Int!
     comments: String
 }
+
+type Mutation {
+    createFoundEvent(input: CreateFoundEventInput!): FoundEvent
+}
+
+input CreateFoundEventInput {
+    street: String!
+    houseNo: String
+    municipalityId: Int!
+    date: Date
+    animalId: Int!
+    comments: String
+}

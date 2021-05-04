@@ -38,4 +38,77 @@ describe('Animal Event Found', () => {
                 return done();
             });
     });
+
+    it('Creates animal found event', (done) => {
+        request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                    createFoundEvent (input: {
+                      street: "Gyvūnų gatvė",
+                      houseNo: "582",
+                      municipalityId: 5,
+                      date: "2021-05-03",
+                      animalId: 4,
+                      comments: "Dog was found dirty and hungry"
+                    }) {
+                      id,
+                      street,
+                      houseNo,
+                      municipalityId,
+                      date,
+                      animalId,
+                      comments
+                    }
+                  }`,
+            })
+            .expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const expectedResult = {
+                    street: 'Gyvūnų gatvė',
+                    houseNo: '582',
+                    municipalityId: 5,
+                    date: '2021-05-03',
+                    animalId: 4,
+                    comments: 'Dog was found dirty and hungry',
+                };
+                expect(res.body.data.createFoundEvent).to.deep.include(
+                    expectedResult
+                );
+                return done();
+            });
+    });
+
+
+    it('Validates if data is correct format', (done) => {
+        request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                    createFoundEvent (input: {
+                      street: "Gyvūnų gatvė",
+                      houseNo: "582",
+                      municipalityId: 5,
+                      date: "2021-05-43",
+                      animalId: 4,
+                      comments: "Dog was found dirty and hungry"
+                    }) {
+                      id,
+                      street,
+                      houseNo,
+                      municipalityId,
+                      date,
+                      animalId,
+                      comments
+                    }
+                  }`,
+            })
+            .expect(400)
+            .end((err, res) => {
+                if (err) return done(err);
+                expect(res.body.errors[0].message).to.include('Invalid time value');
+                return done();
+            });
+    });
 });
