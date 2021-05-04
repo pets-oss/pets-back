@@ -19,7 +19,7 @@ export const getAnimalFoundEventsQuery = (): QueryConfig => {
 
 interface CreateAnimalEventFoundInput {
     street: string;
-    houseNo?: string;
+    houseNo: string;
     municipalityId: number;
     date: Date;
     animalId: number;
