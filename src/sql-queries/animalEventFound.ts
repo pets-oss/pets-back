@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import { insert, update } from 'sql-bricks-postgres';
+import { insert } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 const table = 'animal_event_found';
@@ -35,9 +35,9 @@ export const getAnimalFoundEventsQuery = (): QueryConfig => {
 export const createAnimalEventFound = (
     input: CreateAnimalEventFoundInput
 ): QueryConfig => {
-    let { date, ...inputData } = input;
-    let dateTime = date;
-    let data = { ...inputData, dateTime };
+    const { date, ...inputData } = input;
+    const dateTime = date;
+    const data = { ...inputData, dateTime };
 
     return insert(table, snakeCaseKeys(data))
         .returning(returnFields)
