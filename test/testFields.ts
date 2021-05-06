@@ -74,6 +74,21 @@ export const animalFields = `
     }
 `;
 
+export const animalConnectionFields = `
+    {
+        edges {
+            node ${animalFields}
+            cursor
+        }
+        pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+        }
+    }
+`;
+
 export const userFields = `
     {
         id

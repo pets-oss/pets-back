@@ -18,21 +18,34 @@ extend type Query {
     animals(ids: [Int!], after: String, first: Int, before: String, last: Int): AnimalsConnection
 }
 
-"A connection to animals."
 type AnimalsConnection {
-    "Information for pagination."
-    pageInfo: PageInfo!
-    "A list of animal edges."
     edges: [AnimalEdge]
+    pageInfo: PageInfo!
 }
 
-"An edge in a connection."
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+
 type AnimalEdge {
-    "The item at the end of the edge"
     node: Animal
-    "A cursor for use in pagination"
     cursor: String!
 }
+
+#type AnimalsConnection {
+#    edges: [AnimalEdge]
+#    pageinfo: PageInfo!
+#}
+#
+#type PageInfo {
+#    hasnextpage: Boolean!
+#    haspreviouspage: Boolean!
+#    startcursor: String
+#    endcursor: String
+#}
 
 "Represents an animal."
 type Animal {
