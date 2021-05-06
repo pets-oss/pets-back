@@ -1,6 +1,22 @@
 import { QueryConfig } from 'pg';
+import { update } from 'sql-bricks-postgres';
+import snakeCaseKeys from 'snakecase-keys';
 
-const getAnimalFoundEventsQuery = (): QueryConfig => {
+const table = 'animal_event_found';
+const returnFields =
+    'id, street, house_no, municipality_id, date_time AS date, animal_id, comments';
+
+interface UpdateAnimalEventFoundInput {
+    id: number;
+    street: String;
+    houseNo?: String;
+    municipalityId: number;
+    date: Date;
+    animalId: number;
+    comments: String;
+}
+
+export const getAnimalFoundEventsQuery = (): QueryConfig => {
     const text = `
         SELECT
             id,
@@ -17,4 +33,15 @@ const getAnimalFoundEventsQuery = (): QueryConfig => {
     };
 };
 
-export default getAnimalFoundEventsQuery;
+export const updateAnimalEventFound = (
+    input: UpdateAnimalEventFoundInput
+): QueryConfig => {
+    let { date, ...inputData } = input;
+    let dateTime = date;
+    let data = { ...inputData, dateTime };
+
+    return update(table, snakeCaseKeys(data))
+        .returning(returnFields)
+        .where({ id: data.id })
+        .toParams();
+};
