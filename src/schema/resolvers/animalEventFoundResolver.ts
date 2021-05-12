@@ -1,5 +1,6 @@
 import { IResolvers } from 'graphql-tools';
 import { Validator } from 'node-input-validator';
+import { ValidationError } from 'apollo-server-express';
 import {
     getAnimalFoundEventsQuery,
     createAnimalFoundEventQuery
@@ -27,7 +28,7 @@ const resolvers: IResolvers = {
                 await createFoundEventInputValidator.check();
 
             if (!isCreateFoundEventInputValid) {
-                throw new Error(
+                throw new ValidationError(
                     JSON.stringify(createFoundEventInputValidator.errors)
                 );
             }
