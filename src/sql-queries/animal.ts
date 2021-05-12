@@ -70,6 +70,10 @@ export const getAnimalsHasPreviousQuery =
             .where(reverse ? gte('id', offset) : lte('id', offset))
             .toParams();
 
+export const getAnimalsHasNextQuery = (offset: string) =>
+    getAnimalsHasPreviousQuery(offset);
+
+
 export const getAnimalsQuery =
     ({ ids, reverse, limit, offset }: AnimalsQueryInput): QueryConfig => {
         let query = select(returnFields).from(table);

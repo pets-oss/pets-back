@@ -1,4 +1,5 @@
 import { IResolvers } from 'graphql-tools';
+import { QueryResult } from 'pg';
 import {
     createAnimalQuery,
     deleteAnimalQuery,
@@ -81,14 +82,14 @@ interface SelectAnimalInput {
 }
 
 interface PageInfo {
-    hasNextPage: boolean,
-    hasPreviousPage: boolean,
-    startCursor: string | null,
-    endCursor: string | null
+    has_next_page: boolean,
+    has_previous_page: boolean,
+    start_cursor: string | null,
+    end_cursor: string | null
 }
 
 interface AnimalsConnection {
-    pageInfo: PageInfo,
+    page_info: PageInfo,
     edges: AnimalEdge[] | null,
 }
 
@@ -128,16 +129,40 @@ const resolvers: IResolvers = {
             let edges: AnimalEdge[] = [];
             let hasPreviousPage: boolean = false;
             let hasNextPage: boolean = false;
-
+            const promises: (() => Promise<QueryResult<any>>)[] = [];
             if (first || after) {
                 limit = first ? first + 1 : undefined;
                 offset = after;
                 // TODO: Promise.all
+                promises.push(() =>
+                    pgClient.query(getAnimalsQuery({
+                        ids,
+                        limit,
+                        offset
+                    })));
+                if (offset) promises.push(() =>
+                    pgClient
+                        .query(getAnimalsHasPreviousQuery(offset!)));
+                // const dbResponses: QueryResult<any>[] =
+                //     await Promise.all(promises);
+                // const animalRows = dbResponses[0].rows;
+
+                //
+                // hasNextPage = first ? animalRows.length > first : false;
+                // if (hasNextPage) {
+                //     animalRows.pop();
+                // }
+                // edges = animalRows.map(
+                //     (value: Animal) => ({
+                //         cursor: value.id.toString(),
+                //         node: value
+                //     }));
+
                 if (offset) {
                     const dbResponsePrevious = await pgClient
                         .query(getAnimalsHasPreviousQuery(offset));
-                    const rowsPrevious = dbResponsePrevious.rows;
-                    hasPreviousPage = !!rowsPrevious?.has_previous_page;
+                    hasPreviousPage = !!dbResponsePrevious.rows
+                        ?.has_previous_page;
                 }
                 const dbResponse = await pgClient.query(getAnimalsQuery({
                     ids,
@@ -172,24 +197,13 @@ const resolvers: IResolvers = {
             const firstEdge = edges[0];
             const lastEdge = edges[edges.length - 1];
 
-            // const connection = {
-            //     pageinfo: {
-            //         hasnextpage: hasNextPage,
-            //         haspreviouspage: hasPreviousPage,
-            //         startcursor: firstEdge ?
-            //             firstEdge.cursor.toString() : null,
-            //         endcursor: lastEdge ? lastEdge.cursor.toString() : null
-            //     },
-            //     edges
-            // };
-
             const connection: AnimalsConnection = {
-                pageInfo: {
-                    hasNextPage,
-                    hasPreviousPage,
-                    startCursor: firstEdge ?
+                page_info: {
+                    has_next_page: hasNextPage,
+                    has_previous_page: hasPreviousPage,
+                    start_cursor: firstEdge ?
                         firstEdge.cursor.toString() : null,
-                    endCursor: lastEdge ? lastEdge.cursor.toString() : null
+                    end_cursor: lastEdge ? lastEdge.cursor.toString() : null
                 },
                 edges
             };
