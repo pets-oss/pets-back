@@ -6,6 +6,9 @@ import {
     deleteFavoriteAnimalQuery,
 } from '../../sql-queries/favoriteAnimal';
 
+// TODO: update "userId" with an actual id of the current user
+const userId = 'aiubfaw4io09';
+
 interface FavoriteAnimal {
     user_id: String;
     animal_id: number;
@@ -14,10 +17,10 @@ interface FavoriteAnimal {
 
 const resolvers: IResolvers = {
     Query: {
-        favoriteAnimals: async (_, { user_id }, { pgClient }) => {
+        favoriteAnimals: async (_, __, { pgClient }) => {
             let dbResponse;
             dbResponse = await pgClient.query(
-                getFavoriteAnimalsQuery(user_id)
+                getFavoriteAnimalsQuery(userId)
             );
             
             if(dbResponse.rows){
@@ -33,14 +36,15 @@ const resolvers: IResolvers = {
         },
     },
     Mutation: {
-        createFavoriteAnimal: async (_, { input }, { pgClient }) => {
+        createFavoriteAnimal: async (_, { animalId }, { pgClient }) => {
             let dbResponse;
             dbResponse = await pgClient.query(
-                createFavoriteAnimalQuery(input)
+                createFavoriteAnimalQuery({
+                    userId,
+                    animalId
+                })
             );
 
-            // eslint-disable-next-line prefer-destructuring
-            const animalId = dbResponse.rows[0].animal_id;
             dbResponse = await pgClient.query(
                 getAnimalQuery(animalId)
             );
@@ -48,14 +52,15 @@ const resolvers: IResolvers = {
             return dbResponse.rows[0];
             
         },
-        deleteFavoriteAnimal: async (_, { input }, { pgClient }) => {
+        deleteFavoriteAnimal: async (_, { animalId }, { pgClient }) => {
             let dbResponse;
             dbResponse = await pgClient.query(
-                deleteFavoriteAnimalQuery(input)
+                deleteFavoriteAnimalQuery({
+                    userId,
+                    animalId
+                })
             );
             
-            // eslint-disable-next-line prefer-destructuring
-            const animalId = dbResponse.rows[0].animal_id;
             dbResponse = await pgClient.query(
                 getAnimalQuery(animalId)
             );
