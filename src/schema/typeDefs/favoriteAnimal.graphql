@@ -1,41 +1,17 @@
 extend type Query {
     """
-    Get all favorite animals by user id.
+    Get all favorite animals.
 
     Examples:
 
-    favoriteAnimals(user_id: "dhjbwau74a6")
+    favoriteAnimals
     """
-    favoriteAnimals("User id in database" user_id: String!): [Animal]
-}
-
-"Represents a favorite animal."
-type FavoriteAnimal {
-    "User id"
-    userId: String!
-    "Animal id"
-    animalId: Int!
-    "Modification time"
-    modTime: String
+    favoriteAnimals: [Animal]
 }
 
 extend type Mutation {
     "Added animal to favorite animals"
-    createFavoriteAnimal(input: CreateFavoriteAnimalInput!): Animal
+    createFavoriteAnimal("Animal id" animalId: Int!): Animal
     "Removed animal from favorite animals"
-    deleteFavoriteAnimal(input: DeleteFavoriteAnimalInput!): Animal
-}
-
-input CreateFavoriteAnimalInput {
-    "User id"
-    userId: String!
-    "Animal id"
-    animalId: Int!
-}
-
-input DeleteFavoriteAnimalInput {
-    "User id"
-    userId: String!
-    "Animal id"
-    animalId: Int!
+    deleteFavoriteAnimal("Animal id" animalId: Int!): Animal
 }
