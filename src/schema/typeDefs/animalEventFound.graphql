@@ -1,4 +1,4 @@
-type Query {
+extend type Query {
     foundEvents: [FoundEvent]
 }
 
@@ -10,4 +10,17 @@ type FoundEvent {
     date: Date
     animalId: Int!
     comments: String
+}
+
+input FoundEventInput {
+    street: String!
+    houseNo: String
+    municipalityId: Int!
+    date: Date
+    animalId: Int!
+    comments: String
+}
+
+extend type Mutation {
+    createFoundEvent(input: FoundEventInput!): FoundEvent
 }

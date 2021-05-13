@@ -94,7 +94,8 @@ const resolvers: IResolvers = {
                 'microchip.installPlaceId': 'integer|min:1',
             });
 
-            const isCreateAnimalInputValid = await createAnimalInputValidator.check();
+            const isCreateAnimalInputValid =
+                await createAnimalInputValidator.check();
 
             if (!isCreateAnimalInputValid) {
                 throw new Error(
@@ -172,7 +173,8 @@ const resolvers: IResolvers = {
                 'microchip.installPlaceId': 'integer|min:1',
             });
 
-            const isUpdateAnimalInputValid = await updateAnimalInputValidator.check();
+            const isUpdateAnimalInputValid =
+                await updateAnimalInputValidator.check();
 
             if (!isUpdateAnimalInputValid) {
                 throw new Error(
