@@ -26,6 +26,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
             })
             isDatabaseActive = results.rows[0]?.ok;
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.log(error)
         }
 
