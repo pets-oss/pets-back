@@ -29,20 +29,20 @@ INSERT INTO app_user_roles
 
 INSERT INTO animal
 (name, organization, status, image_url) VALUES
-('Haskelis', 1, 'vaccinated', NULL),
-('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
-('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
-('Javainis', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
-('Murkė', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409529/fake-data/gn1tg08buymfp5ymt5mq.jpg'),
-('Grikis', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409536/fake-data/mfgnms8mf6vvgmowsmfc.jpg');
+('Haskelis', 1, 'vaccinated', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
+('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
+('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
+('Javainė', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409529/fake-data/gn1tg08buymfp5ymt5mq.jpg'),
+('Murkė', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409536/fake-data/mfgnms8mf6vvgmowsmfc.jpg'),
+('Grikis', 1, 'healthy', NULL);
 
 INSERT INTO animal_details
 (animal_id, breed_id, gender_id, color_id, birth_date, weight, allergy, food) VALUES
-(1, 205, '1', 61, '2020-08-01', 20, NULL, NULL),
-(2, 268, '1', 2, '2020-01-01', 1, NULL, NULL),
-(5, 389, '2', 4, '2019-09-16', 7, NULL, NULL),
+(1, 205, '2', 61, '2020-08-01', 20, NULL, NULL),
+(2, 268, '2', 2, '2020-01-01', 1, NULL, NULL),
+(5, 389, '1', 4, '2019-09-16', 7, NULL, NULL),
 (4, 350, '1', 68, '2020-01-01', 0.4, NULL, NULL),
-(3, 422, '1', 32, '2020-01-01', 0.3, NULL, NULL);
+(3, 422, '2', 32, '2020-01-01', 0.3, NULL, NULL);
 
 INSERT INTO animal_registration
 (animal_id, registration_no, registration_date, status) VALUES

@@ -139,6 +139,18 @@ export const formerAnimalOwnerFields = `
     }
 `;
 
+export const animalFoundEventFields = `
+    {
+        id,
+        street,
+        houseNo,
+        municipalityId,
+        date,
+        animalId,
+        comments
+    }
+`
+
 export const givenAwayEventFields = `
     {
         id,
