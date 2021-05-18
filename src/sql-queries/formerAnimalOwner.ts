@@ -7,15 +7,15 @@ const returnFields = '*';
 
 interface CreateFormerAnimalOwnerInput {
     name: string
-    surname: string | null
-    phone: string | null
+    surname?: string | null
+    phone?: string | null
 }
 
 interface UpdateFormerAnimalOwnerInput {
     id: number
-    name: string
-    surname: string | null
-    phone: string | null
+    name?: string | null
+    surname?: string | null
+    phone?: string | null
 }
 
 export const getFormerAnimalOwnersQuery = (): QueryConfig => {

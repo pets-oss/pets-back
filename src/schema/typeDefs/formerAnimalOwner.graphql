@@ -47,7 +47,7 @@ input UpdateFormerAnimalOwnerInput {
     "Former animal owner ID, e.g., 1"
     id: Int!
     "Former animal owner name (255 characters max)"
-    name: Name!
+    name: Name
     "Former animal owner surname (255 characters max)"
     surname: Surname
     "Former animal owner phone number (+3706XXXXXXX)"
