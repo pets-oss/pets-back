@@ -3,7 +3,6 @@ import { insert, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 const table = 'former_animal_owner';
-const returnFields = '*';
 
 interface CreateFormerAnimalOwnerInput {
     name: string
@@ -19,7 +18,7 @@ interface UpdateFormerAnimalOwnerInput {
 }
 
 export const getFormerAnimalOwnersQuery = (): QueryConfig => {
-    const text = `SELECT ${returnFields} FROM ${table}`;
+    const text = `SELECT * FROM ${table}`;
 
     return {
         text
@@ -27,7 +26,7 @@ export const getFormerAnimalOwnersQuery = (): QueryConfig => {
 };
 
 export const getFormerAnimalOwnerQuery = (id: number): QueryConfig => {
-    const text = `SELECT ${returnFields} FROM ${table} WHERE id = $1`;
+    const text = `SELECT * FROM ${table} WHERE id = $1`;
 
     return {
         text,
@@ -38,12 +37,12 @@ export const getFormerAnimalOwnerQuery = (id: number): QueryConfig => {
 export const createFormerAnimalOwnerQuery =
     (input: CreateFormerAnimalOwnerInput): QueryConfig =>
         insert(table, snakeCaseKeys(input))
-            .returning(returnFields)
+            .returning('*')
             .toParams();
 
 export const updateFormerAnimalOwnerQuery =
     (input: UpdateFormerAnimalOwnerInput): QueryConfig =>
         update(table, snakeCaseKeys(input))
             .where({ id: input.id })
-            .returning(returnFields)
+            .returning('*')
             .toParams();
