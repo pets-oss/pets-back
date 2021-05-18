@@ -14,6 +14,8 @@ const expectedResult = {
 };
 
 describe('GraphQL former animal owner integration tests', () => {
+    let animalOwnerId = -1;
+
     it('Returns all former animal owners with all fields', (done) => {
         request
             .post('/graphql')
@@ -65,6 +67,7 @@ describe('GraphQL former animal owner integration tests', () => {
                 if (err) return done(err);
                 const { body: { data: { createFormerAnimalOwner } } } = res;
                 validate(createFormerAnimalOwner);
+                ({ id: animalOwnerId } = createFormerAnimalOwner);
                 expect(createFormerAnimalOwner).to.include(expectedResult);
                 return done();
             });
@@ -76,7 +79,7 @@ describe('GraphQL former animal owner integration tests', () => {
             .send({
                 query: `mutation {
                         updateFormerAnimalOwner (input: {
-                            id: 2,
+                            id: ${animalOwnerId},
                             name: "Rimas",
                             surname: "Petravičius",
                             phone: "+37068745124"
@@ -90,7 +93,7 @@ describe('GraphQL former animal owner integration tests', () => {
                 const { body: { data: { updateFormerAnimalOwner } } } = res;
                 validate(updateFormerAnimalOwner);
                 expect(updateFormerAnimalOwner).to.include({
-                    id: 2,
+                    id: animalOwnerId,
                     ...expectedResult,
                 });
                 return done();
