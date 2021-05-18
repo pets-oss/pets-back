@@ -10,7 +10,7 @@ const validate = (value: unknown, config: Config) => {
     if (typeof value !== 'string') {
         throw new Error(`${config.name} should be a string`);
     }
-    if (config.max && value.length > config.max) {
+    if (config.max != null && value.length > config.max) {
         throw new Error(`${config.name} max length is ${config.max}`);
     }
     if (config.pattern && !config.pattern.test(value)) {
