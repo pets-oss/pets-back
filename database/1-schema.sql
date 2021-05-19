@@ -311,7 +311,7 @@ CREATE TABLE animal_event_given_away (
     former_owner_id INTEGER REFERENCES former_animal_owner(id) NOT NULL,
     reason TEXT,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    date_time TIMESTAMP
+    date_time DATE
 );
 
 -- DATE UPDATES
@@ -339,7 +339,7 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details

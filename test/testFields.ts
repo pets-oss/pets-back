@@ -150,3 +150,13 @@ export const animalFoundEventFields = `
         comments
     }
 `
+
+export const givenAwayEventFields = `
+    {
+        id,
+        formerOwnerId,
+        date,
+        animalId,
+        reason
+    }
+`;
