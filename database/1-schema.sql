@@ -317,13 +317,9 @@ CREATE TABLE animal_event_given_away (
     former_owner_id INTEGER REFERENCES former_animal_owner(id) NOT NULL,
     reason TEXT,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-<<<<<<< HEAD
-    date_time DATE
-=======
     date_time TIMESTAMP,
     author VARCHAR(255),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
->>>>>>> c758c89 (Added new fields (author and mod_time) to tables animal_event_general, animal_event_medical_record, animal_event_found and animal_event_given_away, resolves #213)
 );
 
 -- DATE UPDATES
