@@ -1,58 +1,143 @@
 extend type Query {
     """
-    Get all events and types
+    Get all events
 
     Example:
-    events(language: "lt")
+    events
+    events(animalId: 1)
     """
-    events("Language code" language: String!): [Events]
+    events("Animal ID" animalId: Int, "Event groups" groups: [EventGroup]): [Event]
 }
 
-enum Category {
-    GENERAL,
-    MEDICAL
+enum EventGroup {
+    General,
+    Medical
+}
+
+enum EventType {
+    GivenAway,
+    Rescued,
+    CheckIn,
+    CheckOut,
+    Died,
+    TemporaryCare,
+    Microchipped,
+    LocationChange,
+    Medication,
+    Prophylaxis,
+    Surgery,
+    GenderElimination,
+    Inspection
 }
 
 "Represents event"
-type Event {
+interface Event {
     "Event id"
     id: Int!
     "Animal id"
-    animal: Int!
+    animalId: Int!
+    "Event group"
+    group: EventGroup!
     "Event type"
-    type: EventType
-    "Event expenses"
-    expenses: Float
+    type: EventType!
     "Event date"
     dateTime: String
     "Event comments"
     comments: String
-    "Event category"
-    category: Category
 }
 
-"Represents event type"
-type EventType {
-    "Event type id"
+"Represents medical and general event details"
+type EventDetails {
+    "Event costs"
+    expenses: Float
+}
+
+"Represents general event"
+type General implements Event {
+    "Event id"
     id: Int!
+    "Animal id"
+    animalId: Int!
+    "Event group"
+    group: EventGroup!
     "Event type"
-    type: String!
+    type: EventType!
+    "Event date"
+    dateTime: String
+    "Event comments"
+    comments: String
+    "Event details"
+    details: EventDetails!
 }
 
-"Represents events types"
-type Events {
-    "All events"
-    all: [Event]
-    "All animal events"
-    animalAll("Animal id", animalId: Int!): [Event]
-    "All general events"
-    general: [Event]
-    "Animal general events"
-    animalGeneral("Animal id", animalId: Int!): [Event]
-    "All medical events"
-    medical: [Event]
-    "Animal medical events"
-    animalMedical("Animal id", animalId: Int!): [Event]
-    "All event types"
-    types: [EventType]
+"Represents medical event"
+type Medical implements Event {
+    "Event id"
+    id: Int!
+    "Animal id"
+    animalId: Int!
+    "Event group"
+    group: EventGroup!
+    "Event type"
+    type: EventType!
+    "Event date"
+    dateTime: String
+    "Event comments"
+    comments: String
+    "Event details"
+    details: EventDetails!
+}
+
+"Represents found event details"
+type FoundEventDetails {
+    "Street"
+    street: String
+    "House number"
+    houseNo: String
+    "Municipality id"
+    municipalityId: Int
+}
+
+"Represents found event"
+type Found implements Event {
+    "Event id"
+    id: Int!
+    "Animal id"
+    animalId: Int!
+    "Event group"
+    group: EventGroup!
+    "Event type"
+    type: EventType!
+    "Event date"
+    dateTime: String
+    "Event comments"
+    comments: String
+    "Event details"
+    details: FoundEventDetails!
+}
+
+"Represents given away event details"
+type GivenAwayEventDetails {
+    "Former owner id"
+    formerOwnerId: Int
+    "Reason"
+    reason: String
+}
+
+"Represents given away event"
+type GivenAway implements Event {
+    "Event id"
+    id: Int!
+    "Animal id"
+    animalId: Int!
+    "Event group"
+    group: EventGroup!
+    "Event type"
+    type: EventType!
+    "Event date"
+    dateTime: String
+    "Event comments"
+    comments: String
+    "Event details"
+    details: GivenAwayEventDetails!
 }

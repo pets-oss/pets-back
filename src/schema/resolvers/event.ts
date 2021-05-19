@@ -1,75 +1,86 @@
 import { IResolvers } from 'graphql-tools';
 import {
-    getAllAnimalEvents,
-    getAllEvents,
-    getAllEventTypes,
-    getAllGeneralEvents,
-    getAllMedicalEvents,
-    getAnimalGeneralEvents,
-    getAnimalMedicalEvents,
-    getEventType
+    getFoundEventsQuery,
+    getGeneralEventsQuery,
+    getGivenAwayEventsQuery,
+    getMedicalEventsQuery,
 } from '../../sql-queries/event';
+
+function appendEventsDetails(events: any[]) {
+    return events.map((event: any) => ({
+        id: event.id,
+        animal_id: event.animal_id,
+        category: event.category,
+        group: event.group,
+        type: event.type,
+        date_time: event.date_time,
+        comments: event.comments,
+        details: {
+            expenses: event.expenses
+        }
+    }));
+}
+
+function appendFoundEventsDetails(events: any[]) {
+    return events.map((event: any) => ({
+        id: event.id,
+        animal_id: event.animal_id,
+        category: event.category,
+        group: event.group,
+        type: event.type,
+        date_time: event.date_time,
+        comments: event.comments,
+        details: {
+            street: event.street,
+            house_no: event.house_no,
+            municipality_id: event.municipality_id
+        }
+    }));
+}
+
+function appendGivenAwayEventsDetails(events: any[]) {
+    return events.map((event: any) => ({
+        id: event.id,
+        animal_id: event.animal_id,
+        category: event.category,
+        group: event.group,
+        type: event.type,
+        date_time: event.date_time,
+        comments: event.comments,
+        details: {
+            former_owner_id: event.former_owner_id,
+            reason: event.reason
+        }
+    }));
+}
 
 const resolvers: IResolvers = {
     Query: {
-        events: async (_, { language }, ___, { variableValues }) => {
-            Object.assign(variableValues, { language })
-            return [{}];
-        }
-    },
-    Events: {
-        types: async (_, __, { pgClient }, { variableValues }) => {
-            const { language } = variableValues;
+        events: async (_, { animalId, groups }, { pgClient }) => {
+            const events = [];
 
-            const dbResponse = await pgClient.query(getAllEventTypes(language));
+            if (!groups?.length || groups.includes('General')) {
+                const generalEvents = await pgClient.query(getGeneralEventsQuery(animalId));
+                const foundEvents = await pgClient.query(getFoundEventsQuery(animalId));
+                const givenAwayEvents = await pgClient.query(getGivenAwayEventsQuery(animalId));
 
-            return dbResponse.rows;
-        },
-        all: async (_, __, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAllEvents());
+                events.push(...appendEventsDetails(generalEvents.rows))
+                events.push(...appendFoundEventsDetails(foundEvents.rows))
+                events.push(...appendGivenAwayEventsDetails(givenAwayEvents.rows))
+            }
 
+            if (!groups?.length || groups.includes('Medical')) {
+                const medicalEvents = await pgClient.query(getMedicalEventsQuery(animalId));
 
-            return dbResponse.rows;
-        },
-        animalAll: async (_, { animalId }, { pgClient }) => {
-            const dbResponse = await pgClient
-                .query(getAllAnimalEvents(animalId));
+                events.push(...appendEventsDetails(medicalEvents.rows));
+            }
 
-            return dbResponse.rows;
-        },
-        general: async (_, __, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAllGeneralEvents());
-
-            return dbResponse.rows;
-        },
-        animalGeneral: async(_, { animalId }, { pgClient }) => {
-            const dbResponse = await pgClient
-                .query(getAnimalGeneralEvents(animalId));
-
-            return dbResponse.rows;
-        },
-        medical: async (_, __, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAllMedicalEvents());
-
-            return dbResponse.rows;
-        },
-        animalMedical: async(_, { animalId }, { pgClient }) => {
-            const dbResponse = await pgClient
-                .query(getAnimalMedicalEvents(animalId));
-
-            return dbResponse.rows;
+            return events;
         }
     },
     Event: {
-        type: async ({ type }, __, { pgClient }, { variableValues }) => {
-            const { language } = variableValues;
-
-            const dbResponse = await pgClient
-                .query(getEventType(type, language));
-
-            return dbResponse.rows[0];
-        }
-    }
+        __resolveType: ({ category }: { category: string }) => category
+    },
 }
 
 export default resolvers;
