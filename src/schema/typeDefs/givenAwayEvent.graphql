@@ -10,6 +10,8 @@ type GivenAwayEvent {
     animalId: Int!
     "Event reason"
     reason: String
+    "Author"
+    author: String!
 }
 
 extend type Mutation {
@@ -28,6 +30,8 @@ input CreateGivenAwayEventInput {
     animalId: Int!
     "Event reason"
     reason: String
+    "Author"
+    author: String!
 }
 
 input UpdateGivenAwayEventInput {
@@ -41,4 +45,6 @@ input UpdateGivenAwayEventInput {
     animalId: Int
     "Event reason"
     reason: String
+    "Author"
+    author: String!
 }

@@ -147,9 +147,10 @@ export const animalFoundEventFields = `
         municipalityId,
         date,
         animalId,
-        comments
+        comments,
+        author,
     }
-`
+`;
 
 export const givenAwayEventFields = `
     {
@@ -157,6 +158,7 @@ export const givenAwayEventFields = `
         formerOwnerId,
         date,
         animalId,
-        reason
+        reason,
+        author,
     }
 `;

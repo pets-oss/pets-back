@@ -285,7 +285,7 @@ CREATE TABLE animal_event_general (
     expenses NUMERIC,
     date_time TIMESTAMP,
     comments TEXT,
-    author VARCHAR(255),
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
@@ -296,7 +296,7 @@ CREATE TABLE animal_event_medical_record (
     expenses NUMERIC,
     date_time TIMESTAMP,
     comments TEXT,
-    author VARCHAR(255),
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
@@ -308,7 +308,7 @@ CREATE TABLE animal_event_found (
     date_time TIMESTAMP,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     comments TEXT,
-    author VARCHAR(255),
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
@@ -318,7 +318,7 @@ CREATE TABLE animal_event_given_away (
     reason TEXT,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     date_time TIMESTAMP,
-    author VARCHAR(255),
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
