@@ -1,12 +1,20 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/formerAnimalOwner.interface.validator';
-import { formerAnimalOwnerFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const formerAnimalOwnerFields = `
+    {
+        id,
+        name,
+        surname,
+        phone
+    }
+`;
 
 describe('GraphQL former animal owner integration tests', () => {
     it('Returns all former animal owners with all fields', (done) => {

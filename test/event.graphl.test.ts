@@ -1,11 +1,29 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import { eventFields, eventTypeFields } from './testFields';
 import validateEventType  from './validators/eventType.interface.validator';
 import validateEvent  from './validators/event.interface.validator';
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const eventTypeFields = `
+    {
+        id,
+        type
+    }
+`;
+
+const eventFields = `
+    {
+        id,
+        animal,
+        type ${eventTypeFields},
+        expenses,
+        dateTime,
+        comments,
+        category
+    }
+`;
 
 const EVENTS_QUERY: string = 'events(language: "lt")';
 

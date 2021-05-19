@@ -1,13 +1,30 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
+import { animalDetailsFields } from './animalDetails.graphql.test';
+import { animalMicrochipFields } from './animalMicrochip.graphql.test';
+import { animalRegistrationFields } from './animalRegistration.graphql.test';
 import validate from './validators/animal.interface.validator';
-import { animalFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const animalFields = `
+    {
+        id
+        organization
+        name
+        details ${animalDetailsFields}
+        registration ${animalRegistrationFields}
+        microchip ${animalMicrochipFields}
+        status
+        imageUrl
+        comments
+        modTime
+    }
+`;
 
 describe('GraphQL animal integration tests', () => {
     it('Returns animal id=1 with all fields', (done) => {
