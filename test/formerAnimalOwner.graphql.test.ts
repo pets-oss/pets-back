@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/formerAnimalOwner.interface.validator';
-import { formerAnimalOwnerFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -12,6 +11,15 @@ const expectedResult = {
     surname: 'Petravičius',
     phone: '+37068745124'
 };
+
+const formerAnimalOwnerFields = `
+    {
+        id,
+        name,
+        surname,
+        phone
+    }
+`;
 
 describe('GraphQL former animal owner integration tests', () => {
     let animalOwnerId = -1;

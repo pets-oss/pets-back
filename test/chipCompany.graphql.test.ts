@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/translation.interface.validator';
-import { translationFields } from './testFields';
+import { translationFields } from './translationFields';
 
 require('dotenv').config({ path: './test/.env' });
 

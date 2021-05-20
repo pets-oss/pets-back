@@ -29,20 +29,20 @@ INSERT INTO app_user_roles
 
 INSERT INTO animal
 (name, organization, status, image_url) VALUES
-('Haskelis', 1, 'vaccinated', NULL),
-('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
-('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
-('Javainis', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
-('Murkė', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409529/fake-data/gn1tg08buymfp5ymt5mq.jpg'),
-('Grikis', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409536/fake-data/mfgnms8mf6vvgmowsmfc.jpg');
+('Haskelis', 1, 'vaccinated', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409417/fake-data/mmkxxjn1usqyiokcpxh8.jpg'),
+('Jupyteris', 2, 'sick', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409467/fake-data/ovtg8cin5vzkvjnf9ot9.jpg'),
+('Pitoncas', 3, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409522/fake-data/qw3uotkxvupqfc5fo1al.jpg'),
+('Javainė', 3, 'adopted', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409529/fake-data/gn1tg08buymfp5ymt5mq.jpg'),
+('Murkė', 1, 'healthy', 'https://res.cloudinary.com/petbook-mvp/image/upload/v1616409536/fake-data/mfgnms8mf6vvgmowsmfc.jpg'),
+('Grikis', 1, 'healthy', NULL);
 
 INSERT INTO animal_details
 (animal_id, breed_id, gender_id, color_id, birth_date, weight, allergy, food) VALUES
-(1, 205, '1', 61, '2020-08-01', 20, NULL, NULL),
-(2, 268, '1', 2, '2020-01-01', 1, NULL, NULL),
-(5, 389, '2', 4, '2019-09-16', 7, NULL, NULL),
+(1, 205, '2', 61, '2020-08-01', 20, NULL, NULL),
+(2, 268, '2', 2, '2020-01-01', 1, NULL, NULL),
+(5, 389, '1', 4, '2019-09-16', 7, NULL, NULL),
 (4, 350, '1', 68, '2020-01-01', 0.4, NULL, NULL),
-(3, 422, '1', 32, '2020-01-01', 0.3, NULL, NULL);
+(3, 422, '2', 32, '2020-01-01', 0.3, NULL, NULL);
 
 INSERT INTO animal_registration
 (animal_id, registration_no, registration_date, status) VALUES
@@ -53,7 +53,7 @@ INSERT INTO animal_registration
 (3, '456Carl', '2021-01-07', DEFAULT);
 
 INSERT INTO animal_microchip
-(animal_id, microchip_id, chip_company_code, install_date, install_place, status) VALUES
+(animal_id, microchip_id, chip_company_code, install_date, install_place_id, status) VALUES
 (1, '123', '1', '2020-08-11', '1', DEFAULT),
 (2, '666666', '3', '2020-09-01', '2', DEFAULT),
 (5, '001010101', '4', '2020-09-01', '4', DEFAULT),
@@ -130,9 +130,12 @@ INSERT INTO animal_favorite
 
 INSERT INTO organization_task
 (title, description, organization_id, is_done) VALUES
-('Veterinaras Murkei', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT),
-('Veterinaras Kordziui', 'Vieta: Partizanu g. 16a', 1, DEFAULT),
-('Veterinaras Dagui', 'Vieta: Kaunakiemio g. 15a', 1, DEFAULT);
+('Vet for Murkė', 'Place: Kaunakiemio g. 15a', 1, DEFAULT),
+('Vet for Kordzis', 'Place: Partizanu g. 16a', 1, DEFAULT),
+('Take away trash', 'Trash should be put in the container. Container can be found near the southern wall of the shelter', 1, DEFAULT),
+('Pet dog Rudolf', 'Dog Rudolf starts to bark everyday at 12:00 if it doesnt get pat in the morning. Barking never stops.', 1, DEFAULT),
+('Order cat food', 'Cat food is running out. Order ASAP!', 1, true),
+('Dye hair for Dag', 'Place: Kaunakiemio g. 15a', 1, DEFAULT);
 
 INSERT INTO animal_gallery
 (animal_id, url) VALUES

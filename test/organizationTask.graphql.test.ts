@@ -1,10 +1,19 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/organizationTask.interface.validator';
-import { organizationTaskFields } from './testFields';
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const organizationTaskFields = `
+    {
+        id,
+        title,
+        description,
+        organization,
+        isDone
+    }
+`;
 
 describe('OrganizationTasks test', () => {
     it('Returns organization tasks list', (done) => {
@@ -30,7 +39,7 @@ describe('OrganizationTasks test', () => {
                 } = res;
                 validate(organizationTasks[0]);
                 expect(organizationTasks).to.be.an('array');
-                expect(organizationTasks).to.have.lengthOf(3);
+                expect(organizationTasks).length.to.be.above(5);
                 return done();
             });
     });
