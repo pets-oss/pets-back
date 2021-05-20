@@ -69,8 +69,10 @@ async function getUpdateMicrochipResult(input: any, pgClient: any) {
 
 const resolvers: IResolvers = {
     Query: {
-        animals: async (_, { ids }, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAnimalsQuery(ids));
+        animals: async (_, { ids, species, gender, breed }, { pgClient }) => {
+            const dbResponse = await pgClient.query(
+                getAnimalsQuery(ids, species, gender, breed)
+            );
             return dbResponse.rows;
         },
         animal: async (_, { id }, { pgClient }) => {
