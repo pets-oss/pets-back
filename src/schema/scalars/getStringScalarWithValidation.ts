@@ -36,7 +36,7 @@ const getStringScalarWithValidation = (config: Config) =>
             if (ast.kind === Kind.STRING) {
                 return validate(ast.value, config);
             }
-            return null;
+            throw new Error('Value must be a string');
         }
     }));
 
