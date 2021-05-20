@@ -1,12 +1,23 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/animalEventFound.interface.validator';
-import { animalFoundEventFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const animalFoundEventFields = `
+    {
+        id,
+        street,
+        houseNo,
+        municipalityId,
+        date,
+        animalId,
+        comments
+    }
+`;
 
 describe('Animal Event Found', () => {
     it('Returns all events', (done) => {

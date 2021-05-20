@@ -1,12 +1,24 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/organization.interface.validator';
-import { organizationFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const organizationFields = `
+    {
+        id,
+        name,
+        country,
+        city,
+        streetAddress,
+        phone,
+        modTime
+    }
+`;
+
 const expectedResult = {
     name: 'Gyvūnija',
     country: 'Lithuania',

@@ -1,12 +1,26 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/user.interface.validator';
-import { userFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const userFields = `
+    {
+        id
+        username
+        name
+        surname
+        email
+        roles {
+            organizationId
+            roleType
+        }
+        modTime
+    }
+`;
 
 describe('GraphQL user integration tests', () => {
     it('Returns user id="aiubfaw4io09" with all fields', (done) => {
