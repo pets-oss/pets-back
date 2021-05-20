@@ -9,13 +9,24 @@ extend type Query {
     animal("Animal id in database" id: Int!): Animal
 
     """
-    Get all animals.
+    Get all animals or animals filtered by animal ids, species, gender and breed ids.
 
     Examples:
 
     animals
+    animals(ids: [1, 2, 3])
+    animals(species: [1, 4], gender: [1, 2], breed: [205, 51])
     """
-    animals(ids: [Int!]): [Animal]
+    animals(
+        "Animal ids in database"
+        ids: [Int]
+        "Animal species ids in database"
+        species: [Int]
+        "Animal gender ids in database"
+        gender: [Int]
+        "Animal breed ids in database"
+        breed: [Int]
+    ): [Animal]
 }
 
 "Represents an animal."
