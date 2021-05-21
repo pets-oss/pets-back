@@ -59,7 +59,7 @@ const resolvers: IResolvers = {
         events: async (_, { animalId, groups }, { pgClient }) => {
             const events = [];
 
-            if (!groups?.length || groups.includes('General')) {
+            if (!groups || groups.includes('General')) {
                 const generalEvents = await pgClient.query(getGeneralEventsQuery(animalId));
                 const foundEvents = await pgClient.query(getFoundEventsQuery(animalId));
                 const givenAwayEvents = await pgClient.query(getGivenAwayEventsQuery(animalId));
@@ -69,7 +69,7 @@ const resolvers: IResolvers = {
                 events.push(...appendGivenAwayEventsDetails(givenAwayEvents.rows))
             }
 
-            if (!groups?.length || groups.includes('Medical')) {
+            if (!groups || groups.includes('Medical')) {
                 const medicalEvents = await pgClient.query(getMedicalEventsQuery(animalId));
 
                 events.push(...appendEventsDetails(medicalEvents.rows));
