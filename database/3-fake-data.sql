@@ -61,46 +61,43 @@ INSERT INTO animal_microchip
 (3, '2893402', '6', '2020-03-01', '4', DEFAULT);
 
 INSERT INTO animal_event_general
-(animal, type, expenses, date_time, comments) VALUES
-(2, '1', 109.03, '2020-07-01', 'Registration!'),
-(1, '1', 32.85, '2020-07-01', 'Registration!'),
-(1, '10', 246.08, '2020-07-02', 'Gavo švirkštą nuo pasiutligės.'),
-(3, '1', 22.35, '2020-07-03', 'Registration!'),
-(4, '1', 19.03, '2019-07-03', 'Registration!'),
-(5, '1', 75.44, '2017-07-03', 'Registration!'),
-(5, '11', 20.00, '2018-04-22', 'Labai supyko ant neblaivaus piliečio.'),
-(5, '10', 246.08, '2018-04-25', 'Gavo švirkštą nuo pasiutligės.'),
-(5, '2', 2.00, '2018-05-25', 'Pasikeitė laikytojas.'),
-(5, '3', 1.00, '2018-05-25', 'Pasikeitė laikymo vietos adresas.'),
-(5, '4', 2.00, '2018-05-30', 'Pasikeitė savininkas.'),
-(5, '3', 1.00, '2018-05-30', 'Pasikeitė laikymo vietos adresas.'),
-(5, '4', 2.00, '2018-06-04', 'Pasikeitė savininkas.'),
-(5, '3', 1.00, '2018-07-14', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-15', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-16', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-17', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-18', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-19', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-20', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-21', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-23', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-22', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-24', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-25', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-26', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-27', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-28', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-29', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-30', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-07-31', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-01', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-02', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.'),
-(5, '3', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.');
+(animal_id, type, expenses, date_time, comments) VALUES
+(2, 'CheckIn', 109.03, '2020-07-01', 'Registration!'),
+(1, 'CheckIn', 32.85, '2020-07-01', 'Registration!'),
+(3, 'CheckIn', 22.35, '2020-07-03', 'Registration!'),
+(4, 'CheckIn', 19.03, '2019-07-03', 'Registration!'),
+(5, 'CheckIn', 75.44, '2017-07-03', 'Registration!'),
+(5, 'Rescued', 2.00, '2018-05-25', 'Pasikeitė laikytojas.'),
+(5, 'LocationChange', 1.00, '2018-05-25', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'Rescued', 2.00, '2018-05-30', 'Pasikeitė savininkas.'),
+(5, 'LocationChange', 1.00, '2018-05-30', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'Rescued', 2.00, '2018-06-04', 'Pasikeitė savininkas.'),
+(5, 'LocationChange', 1.00, '2018-07-14', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-15', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-16', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-17', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-18', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-19', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-20', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-21', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-23', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-22', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-24', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-25', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-26', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-27', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-28', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-29', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-30', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-07-31', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-08-01', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-08-02', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'LocationChange', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.');
 
 INSERT INTO animal_event_medical_record
-(animal, type, expenses, date_time, comments) VALUES
-(4, '8', 26.74, '2020-05-21', 'Yearly vaccine');
+(animal_id, type, expenses, date_time, comments) VALUES
+(4, 'Prophylaxis', 26.74, '2020-05-21', 'Yearly vaccine');
 
 INSERT INTO animal_event_found
 (street, house_no, municipality_id, date_time, animal_id, comments) VALUES
