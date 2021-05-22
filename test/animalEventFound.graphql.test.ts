@@ -15,7 +15,8 @@ const animalFoundEventFields = `
         municipalityId,
         date,
         animalId,
-        comments
+        comments,
+        author
     }
 `;
 
