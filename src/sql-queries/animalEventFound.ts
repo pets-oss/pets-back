@@ -33,7 +33,7 @@ interface CreateAnimalFoundEventInput {
 }
 
 function dateToDateTime(input: CreateAnimalFoundEventInput) {
-    const {date, ...otherFields} = input;
+    const { date, ...otherFields } = input;
     return { dateTime: date, ...otherFields };
 }
 
