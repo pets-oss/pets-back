@@ -1,13 +1,25 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
-import { animalMicrochipFields } from './testFields';
 import createAnimal from './helpers/createAnimalHelper';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+// eslint-disable-next-line import/prefer-default-export
+export const animalMicrochipFields = `
+    {
+        animalId
+        microchipId
+        chipCompanyCode
+        installDate
+        installPlaceId
+        status
+    }
+`;
+
 let animalId: String;
 
 describe('animalMicrochip Graphql mutations tests', () => {

@@ -1,13 +1,30 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
+import { animalDetailsFields } from './animalDetails.graphql.test';
+import { animalMicrochipFields } from './animalMicrochip.graphql.test';
+import { animalRegistrationFields } from './animalRegistration.graphql.test';
 import validate from './validators/animal.interface.validator';
-import { animalFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const animalFields = `
+    {
+        id
+        organization
+        name
+        details ${animalDetailsFields}
+        registration ${animalRegistrationFields}
+        microchip ${animalMicrochipFields}
+        status
+        imageUrl
+        comments
+        modTime
+    }
+`;
 
 describe('GraphQL animal integration tests', () => {
     it('Returns animal id=1 with all fields', (done) => {
@@ -65,6 +82,36 @@ describe('GraphQL animal integration tests', () => {
                 query: `{ animals (ids: [1,2,3])
                       ${animalFields}
                   }`,
+            })
+            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+            .expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                expect(animals).to.be.an('array');
+                validate(animals[0]);
+                expect(animals).to.have.length(3);
+                return done();
+            });
+    });
+
+    it('Returns all animals with all fields filtered by species ids [1, 2], gender ids [1, 2] and breed ids [205, 268, 350]', (done) => {
+        request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (species: [1, 2], gender: [1, 2], breed: [205, 268, 350])
+                        ${animalFields}
+                }`,
             })
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .expect(200)

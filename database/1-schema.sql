@@ -268,20 +268,28 @@ CREATE TABLE animal_cage (
 
 -- EVENTS
 
-CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');
+CREATE TYPE event_group AS ENUM('General', 'Medical');
 
-CREATE TABLE event_translation (
-    event event NOT NULL,
-    language VARCHAR(4) NOT NULL,
-    translation VARCHAR(50) NOT NULL,
-    PRIMARY KEY (event, language)
+CREATE TYPE event_type AS ENUM (
+    'GivenAway',
+    'Rescued',
+    'CheckIn',
+    'CheckOut',
+    'Died',
+    'TemporaryCare',
+    'Microchipped',
+    'LocationChange',
+    'Medication',
+    'Prophylaxis',
+    'Surgery',
+    'GenderElimination',
+    'Inspection'
 );
-COMMENT ON COLUMN event_translation.language is 'Language code based on BCP 47';
 
 CREATE TABLE animal_event_general (
     id SERIAL PRIMARY KEY,
-    animal INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    type event,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    type event_type,
     expenses NUMERIC,
     date_time TIMESTAMP,
     comments TEXT,
@@ -291,8 +299,8 @@ CREATE TABLE animal_event_general (
 
 CREATE TABLE animal_event_medical_record (
     id SERIAL PRIMARY KEY,
-    animal INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    type event,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    type event_type,
     expenses NUMERIC,
     date_time TIMESTAMP,
     comments TEXT,

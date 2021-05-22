@@ -1,12 +1,22 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/givenAwayEvent.interface.validator';
-import { givenAwayEventFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+const givenAwayEventFields = `
+    {
+        id,
+        formerOwnerId,
+        date,
+        animalId,
+        reason
+    }
+`;
+
 const expectedResult = {
     formerOwnerId: 3,
     reason: 'Leaving country',

@@ -56,19 +56,40 @@ export const getAnimalQuery = (id: number): QueryConfig => {
     return query;
 };
 
-export const getAnimalsQuery = (ids: [number] | null): QueryConfig => {
-    const text = `SELECT id,
-                         name,
-                         organization,
-                         status,
-                         image_url,
-                         comments,
-                         mod_time
-                  FROM ${table}
-                  WHERE $1::int[] IS NULL OR id = ANY ($1);`;
+export const getAnimalsQuery = (
+    ids: [number] | null,
+    species: [number] | null,
+    gender: [number] | null,
+    breed: [number] | null
+): QueryConfig => {
+    const text = `
+        SELECT
+            ${table}.id,
+            ${table}.name,
+            ${table}.organization,
+            ${table}.status,
+            ${table}.image_url,
+            ${table}.comments,
+            ${table}.mod_time
+        FROM ${table}
+        JOIN animal_details AS ad
+            ON ${table}.id = ad.animal_id
+        JOIN breed AS b
+            ON ad.breed_id = b.id
+        WHERE ($1::int[] IS NULL OR ${table}.id = ANY ($1))
+            AND ($2::species[] IS NULL OR b.species = ANY ($2))
+            AND ($3::gender[] IS NULL OR ad.gender_id = ANY ($3))
+            AND ($4::int[] IS NULL OR ad.breed_id = ANY ($4));
+    `;
+
     const query = {
         text,
-        values: [ids]
+        values: [
+            ids,
+            species,
+            gender,
+            breed
+        ]
     };
 
     return query;

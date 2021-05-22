@@ -49,6 +49,7 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
         animalFoundEventResolver,
         givenAwayEventResolvers
     ),
+    inheritResolversFromInterfaces: true,
 });
 
 export default schema;
