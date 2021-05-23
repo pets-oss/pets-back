@@ -3,7 +3,7 @@ import { Validator } from 'node-input-validator';
 import { ValidationError } from 'apollo-server-express';
 import {
     getAnimalFoundEventsQuery,
-    createAnimalFoundEventQuery
+    createAnimalFoundEventQuery,
 } from '../../sql-queries/animalEventFound';
 
 const resolvers: IResolvers = {
@@ -13,7 +13,7 @@ const resolvers: IResolvers = {
                 getAnimalFoundEventsQuery()
             );
             return dbResponse.rows;
-        }
+        },
     },
     Mutation: {
         createFoundEvent: async (_, { input }, { pgClient }) => {
@@ -22,10 +22,11 @@ const resolvers: IResolvers = {
                 houseNo: 'maxLength:8',
                 municipalityId: 'integer|min:1',
                 animalId: 'integer|min:1',
-                date: 'date|dateBeforeToday:0,days'
+                date: 'date|dateBeforeToday:0,days',
+                author: 'maxLength:255',
             });
-            const isCreateFoundEventInputValid =
-                await createFoundEventInputValidator.check();
+            // eslint-disable-next-line max-len
+            const isCreateFoundEventInputValid = await createFoundEventInputValidator.check();
 
             if (!isCreateFoundEventInputValid) {
                 throw new ValidationError(
@@ -37,8 +38,8 @@ const resolvers: IResolvers = {
                 createAnimalFoundEventQuery(input)
             );
             return dbResponse.rows[0];
-        }
-    }
+        },
+    },
 };
 
 export default resolvers;

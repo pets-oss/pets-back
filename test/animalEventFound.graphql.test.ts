@@ -15,7 +15,8 @@ const animalFoundEventFields = `
         municipalityId,
         date,
         animalId,
-        comments
+        comments,
+        author
     }
 `;
 
@@ -32,17 +33,18 @@ describe('Animal Event Found', () => {
                       houseNo
                       animalId
                       municipalityId
-                      comments
+                      comments,
+                      author
                   }
-                }`
+                }`,
             })
             .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 const {
                     body: {
-                        data: { foundEvents }
-                    }
+                        data: { foundEvents },
+                    },
                 } = res;
                 expect(foundEvents).to.be.an('array');
                 expect(foundEvents).to.have.length.above(1);
@@ -61,7 +63,8 @@ describe('Animal Event Found mutations tests', () => {
                 municipalityId: 5,
                 date: "2021-03-19",
                 animalId: 4,
-                comments: "Dog was found dirty and hungry"
+                comments: "Dog was found dirty and hungry",
+                author: "dhjbwau74a6"
           }`;
         const answer = {
             street: 'Gyvūnų gatvė',
@@ -69,7 +72,8 @@ describe('Animal Event Found mutations tests', () => {
             municipalityId: 5,
             date: '2021-03-19',
             animalId: 4,
-            comments: 'Dog was found dirty and hungry'
+            comments: 'Dog was found dirty and hungry',
+            author: 'dhjbwau74a6',
         };
 
         request
@@ -79,7 +83,7 @@ describe('Animal Event Found mutations tests', () => {
                       mutation {
                           ${mutation}(input: ${create})
                                 ${animalFoundEventFields}
-                  }`
+                  }`,
             })
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .expect(200)
@@ -101,7 +105,8 @@ describe('Animal Event Found mutations tests', () => {
                 municipalityId: 5,
                 date: "2040-03-19",
                 animalId: 4,
-                comments: "Dog was found dirty and hungry"
+                comments: "Dog was found dirty and hungry",
+                author: "dhjbwau74a6",
           }`;
 
         request
@@ -111,7 +116,7 @@ describe('Animal Event Found mutations tests', () => {
                       mutation {
                           ${mutation}(input: ${create})
                             ${animalFoundEventFields}
-                  }`
+                  }`,
             })
             .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
             .expect(200)

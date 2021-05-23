@@ -3,7 +3,7 @@ import { insert } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 const table = 'animal_event_found';
-const returningFields = 'id, street, house_no, municipality_id, date_time AS date, animal_id, comments';
+const returningFields = 'id, street, house_no, municipality_id, date_time AS date, animal_id, comments, author';
 
 export const getAnimalFoundEventsQuery = (): QueryConfig => {
     const text = `
@@ -13,7 +13,8 @@ export const getAnimalFoundEventsQuery = (): QueryConfig => {
                municipality_id,
                date_time AS date,
                animal_id,
-               comments
+               comments,
+               author
         FROM animal_event_found;`;
 
     return {
@@ -28,6 +29,7 @@ interface CreateAnimalFoundEventInput {
     date: String
     animalId: number
     comments: String
+    author: String
 }
 
 function dateToDateTime(input: CreateAnimalFoundEventInput) {
@@ -39,4 +41,3 @@ export const createAnimalFoundEventQuery =
     (input: CreateAnimalFoundEventInput): QueryConfig =>
         insert(table, snakeCaseKeys(dateToDateTime(input)))
             .returning(returningFields).toParams();
-

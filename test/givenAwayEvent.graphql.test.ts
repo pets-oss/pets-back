@@ -13,7 +13,8 @@ const givenAwayEventFields = `
         formerOwnerId,
         date,
         animalId,
-        reason
+        reason,
+        author
     }
 `;
 
@@ -22,6 +23,7 @@ const expectedResult = {
     reason: 'Leaving country',
     date: '2021-03-19',
     animalId: 4,
+    author: 'dhjbwau74a6',
 };
 
 describe('GraphQL animal given away event integration tests', () => {
@@ -35,6 +37,7 @@ describe('GraphQL animal given away event integration tests', () => {
                             reason: "Leaving country",
                             date: "2021-03-19",
                             animalId: 4,
+                            author: "dhjbwau74a6"
                         }) ${givenAwayEventFields}
                     }`
             })
@@ -59,7 +62,8 @@ describe('GraphQL animal given away event integration tests', () => {
                             formerOwnerId: 3,
                             reason: "Leaving country",
                             date: "2021-03-19",
-                            animalId: 4
+                            animalId: 4,
+                            author: "dhjbwau74a6"
                         }) ${givenAwayEventFields}
                     }`,
             })
