@@ -11,7 +11,6 @@ type FoundEvent {
     animalId: Int!
     author: String!
     comments: String
-    author: String!
 }
 
 input FoundEventInput {
@@ -22,7 +21,6 @@ input FoundEventInput {
     animalId: Int!
     author: String!
     comments: String
-    author: String!
 }
 
 extend type Mutation {
