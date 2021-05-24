@@ -9,8 +9,8 @@ type FoundEvent {
     municipalityId: Int!
     date: Date
     animalId: Int!
-    comments: String
     author: String!
+    comments: String
 }
 
 input FoundEventInput {
@@ -19,8 +19,8 @@ input FoundEventInput {
     municipalityId: Int!
     date: Date
     animalId: Int!
-    comments: String
     author: String!
+    comments: String
 }
 
 extend type Mutation {

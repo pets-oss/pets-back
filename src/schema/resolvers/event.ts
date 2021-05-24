@@ -3,7 +3,6 @@ import {
     getFoundEventsQuery,
     getGeneralEventsQuery,
     getGivenAwayEventsQuery,
-    getMedicalEventsQuery,
 } from '../../sql-queries/event';
 
 function appendEventsDetails(events: any[]) {
@@ -14,7 +13,9 @@ function appendEventsDetails(events: any[]) {
         group: event.group,
         type: event.type,
         date_time: event.date_time,
+        create_time: event.create_time,
         comments: event.comments,
+        author: event.author,
         details: {
             expenses: event.expenses
         }
@@ -29,7 +30,9 @@ function appendFoundEventsDetails(events: any[]) {
         group: event.group,
         type: event.type,
         date_time: event.date_time,
+        create_time: event.create_time,
         comments: event.comments,
+        author: event.author,
         details: {
             street: event.street,
             house_no: event.house_no,
@@ -46,12 +49,59 @@ function appendGivenAwayEventsDetails(events: any[]) {
         group: event.group,
         type: event.type,
         date_time: event.date_time,
+        create_time: event.create_time,
         comments: event.comments,
+        author: event.author,
         details: {
-            former_owner_id: event.former_owner_id,
+            former_owner: {
+                id: event.former_owner_id,
+                name: event.name,
+                surname: event.surname,
+                phone: event.phone 
+
+            },
             reason: event.reason
         }
     }));
+}
+
+function getMedicationEvents() {
+    return [{
+        id: 50,
+        animal_id: 1,
+        group: 'Medical',
+        type: 'Medication',
+        date_time: '2021-05-23',
+        create_time: '2021-05-23',
+        author: 'Ignas',
+        details: {
+            comments: 'Dog can\'t sleep, so I gave a few pills',
+            treatment: 'Some pills from insomnia',
+            expenses: 2.0
+        }
+    }];
+}
+
+function getMicrochippingEvents() {
+    return [{
+        id: 51,
+        animal_id: 2,
+        group: 'General',
+        type: 'Microchipping',
+        date_time: '2021-05-23',
+        create_time: '2021-05-23',
+        author: 'Ignas',
+        details: {
+            microchip: {
+                microchip_id: 1,
+                chip_company_code: 2,
+                install_date: '2021-05-22',
+                install_place_id: 2,
+                status: 'Implanted'
+            },
+            comments: 'Dog can be identified now, good.',
+        }
+    }];
 }
 
 const resolvers: IResolvers = {
@@ -67,19 +117,18 @@ const resolvers: IResolvers = {
                 events.push(...appendEventsDetails(generalEvents.rows))
                 events.push(...appendFoundEventsDetails(foundEvents.rows))
                 events.push(...appendGivenAwayEventsDetails(givenAwayEvents.rows))
+                events.push(...getMicrochippingEvents());
             }
 
             if (!groups || groups.includes('Medical')) {
-                const medicalEvents = await pgClient.query(getMedicalEventsQuery(animalId));
-
-                events.push(...appendEventsDetails(medicalEvents.rows));
+                events.push(...getMedicationEvents());
             }
 
             return events;
         }
     },
     Event: {
-        __resolveType: ({ category }: { category: string }) => category
+        __resolveType: ({ type }: { type: string }) => type
     },
 }
 
