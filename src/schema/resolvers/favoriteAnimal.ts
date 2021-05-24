@@ -6,9 +6,6 @@ import {
     deleteFavoriteAnimalQuery,
 } from '../../sql-queries/favoriteAnimal';
 
-// TODO: update "userId" with an actual id of the current user
-const userId = 'aiubfaw4io09';
-
 interface FavoriteAnimal {
     user_id: String;
     animal_id: number;
@@ -17,7 +14,13 @@ interface FavoriteAnimal {
 
 const resolvers: IResolvers = {
     Query: {
-        favoriteAnimals: async (_, __, { pgClient }) => {
+        favoriteAnimals: async (_, __, { pgClient, userId }) => {
+            if (!userId) {
+                throw new Error(
+                    'Favorite animals could not be retrieved due to undefined user id'
+                );
+            }
+            
             let dbResponse;
             dbResponse = await pgClient.query(
                 getFavoriteAnimalsQuery(userId)
@@ -28,7 +31,7 @@ const resolvers: IResolvers = {
                     (animal: FavoriteAnimal) => animal.animal_id
                 );
                 dbResponse = await pgClient.query(
-                    getAnimalsQuery(animalIds)
+                    getAnimalsQuery(animalIds, null, null, null)
                 );
             }
 
@@ -36,7 +39,13 @@ const resolvers: IResolvers = {
         },
     },
     Mutation: {
-        createFavoriteAnimal: async (_, { animalId }, { pgClient }) => {
+        createFavoriteAnimal: async (_, { animalId }, { pgClient, userId }) => {
+            if (!userId) {
+                throw new Error(
+                    'Animal could not be added to the list of favorite animals due to undefined user id'
+                );
+            }
+            
             let dbResponse;
             dbResponse = await pgClient.query(
                 createFavoriteAnimalQuery({
@@ -52,7 +61,13 @@ const resolvers: IResolvers = {
             return dbResponse.rows[0];
             
         },
-        deleteFavoriteAnimal: async (_, { animalId }, { pgClient }) => {
+        deleteFavoriteAnimal: async (_, { animalId }, { pgClient, userId }) => {
+            if (!userId) {
+                throw new Error(
+                    'Animal could not be removed from the list of favorite animals due to undefined user id'
+                );
+            }
+            
             let dbResponse;
             dbResponse = await pgClient.query(
                 deleteFavoriteAnimalQuery({
