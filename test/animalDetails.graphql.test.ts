@@ -86,7 +86,7 @@ describe('animalDetails Graphql mutations tests', () => {
             food: 'bet koks'
         };
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -94,9 +94,11 @@ describe('animalDetails Graphql mutations tests', () => {
                         ${mutation}(id: ${animalId})
                             ${animalDetailsFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 expect(JSON.stringify(res.body.data[mutation])).equal(

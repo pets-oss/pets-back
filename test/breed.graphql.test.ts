@@ -17,15 +17,17 @@ const breedFields = `
 
 describe('GraphQL breed integration tests', () => {
     it('Returns all breeds translation in "lt" with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ breeds(species: "2", language: "lt")
                     ${breedFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: {data: { breeds } } } = res;

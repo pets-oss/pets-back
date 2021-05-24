@@ -76,7 +76,7 @@ describe('Animal Event Found mutations tests', () => {
             author: 'dhjbwau74a6',
         };
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -84,9 +84,11 @@ describe('Animal Event Found mutations tests', () => {
                           ${mutation}(input: ${create})
                                 ${animalFoundEventFields}
                   }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
@@ -109,7 +111,7 @@ describe('Animal Event Found mutations tests', () => {
                 author: "dhjbwau74a6",
           }`;
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -117,9 +119,11 @@ describe('Animal Event Found mutations tests', () => {
                           ${mutation}(input: ${create})
                             ${animalFoundEventFields}
                   }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console

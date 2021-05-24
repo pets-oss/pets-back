@@ -18,35 +18,39 @@ const formerAnimalOwnerFields = `
 
 describe('GraphQL former animal owner integration tests', () => {
     it('Returns all former animal owners with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ formerAnimalOwners ${formerAnimalOwnerFields} }`,
             })
-            .expect(200)
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .end((err, res) => {
-                if (err) return done(err);
-                const { body: { data: { formerAnimalOwners } } } = res;
-                expect(formerAnimalOwners).to.be.an('array');
-                validate(formerAnimalOwners[0]);
-                expect(formerAnimalOwners).to.have.length.above(2);
-                return done();
-            });
+            .expect(200);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.end((err, res) => {
+            if (err) return done(err);
+            const { body: { data: { formerAnimalOwners } } } = res;
+            expect(formerAnimalOwners).to.be.an('array');
+            validate(formerAnimalOwners[0]);
+            expect(formerAnimalOwners).to.have.length.above(2);
+            return done();
+        });
     });
 
     it('Returns former animal owner id=1 with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ formerAnimalOwner(id: 1) ${formerAnimalOwnerFields} }`,
             })
-            .expect(200)
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .end((err, res) => {
-                if (err) return done(err);
-                validate(res.body.data.formerAnimalOwner);
-                return done();
-            });
+            .expect(200);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.end((err, res) => {
+            if (err) return done(err);
+            validate(res.body.data.formerAnimalOwner);
+            return done();
+        });
     });
 });

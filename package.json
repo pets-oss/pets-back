@@ -40,6 +40,7 @@
     "graphql-tools": "^7.0.2",
     "graphql-upload": "^11.0.0",
     "jwks-rsa": "^1.12.2",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.20",
     "node-input-validator": "^4.4.1",
     "pg": "^8.5.1",
