@@ -9,7 +9,7 @@ const request = supertest(url);
 
 describe('GraphQL municipality integration test', () => {
     it('Returns all municipalities with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -20,9 +20,11 @@ describe('GraphQL municipality integration test', () => {
                   }
                 }
               `,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console

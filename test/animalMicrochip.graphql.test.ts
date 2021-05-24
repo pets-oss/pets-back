@@ -59,7 +59,7 @@ describe('animalMicrochip Graphql mutations tests', () => {
             status: 'Implantuotas',
         };
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -70,9 +70,11 @@ describe('animalMicrochip Graphql mutations tests', () => {
                         )
                             ${animalMicrochipFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 expect(JSON.stringify(res.body.data[mutation])).equal(

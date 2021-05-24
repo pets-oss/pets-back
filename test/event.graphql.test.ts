@@ -21,15 +21,17 @@ const eventFields = `
 
 describe('GraphQL event integration tests', () => {
     it('Return list of events with generic information', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ events
                   ${eventFields}
               }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console

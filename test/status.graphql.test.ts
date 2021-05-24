@@ -9,13 +9,15 @@ const request = supertest(url);
 
 describe('Getting statuses', () => {
     it('Returns all statuses', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: '{ statuses(language: "lt") {id, value} }',
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { statuses } } } = res;
