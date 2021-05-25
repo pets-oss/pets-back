@@ -7,7 +7,7 @@ interface Config {
     pattern?: RegExp
 }
 
-const validate = (value: unknown, config: Config) => {
+export const validate = (value: unknown, config: Config) => {
     if (typeof value !== 'string') {
         throw new ValidationError(`${config.name} should be a string`);
     }
