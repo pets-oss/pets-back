@@ -1413,8 +1413,8 @@ INSERT INTO color_pattern_translation
 
 -- CHIP INSTALL PLACE
 
-INSERT INTO install_place_translation
-(install_place, language, translation) VALUES
+INSERT INTO chip_install_place_translation
+(install_place_id, language, translation) VALUES
 ('1', 'lt', 'Tarp menčių'),
 ('2', 'lt', 'Kairėje kaklo pusėje'),
 ('3', 'lt', 'Dešinėje kaklo pusėje'),
@@ -1436,22 +1436,6 @@ INSERT INTO chip_company_translation
 ('10', 'lt', 'ISOBlue'),
 ('11', 'lt', 'BARTMED'),
 ('12', 'lt', 'Schippers');
-
--- EVENT
-
-INSERT INTO event_translation
-(event, language, translation) VALUES
-('1', 'lt', 'Ženklinimas ir įregistravimas'),
-('2', 'lt', 'Laikytojo pasikeitimas'),
-('3', 'lt', 'Laikymo vietos pasikeitimas'),
-('4', 'lt', 'Savininko pasikeitimas'),
-('5', 'lt', 'Dingimas'),
-('6', 'lt', 'Suradimas'),
-('7', 'lt', 'Nugaišimas'),
-('8', 'lt', 'Nugaišinimas'),
-('9', 'lt', 'Išvežimas'),
-('10', 'lt', 'Vakcinavimas'),
-('11', 'lt', 'Augintinio agresyvumas');
 
 --- STATUS
 

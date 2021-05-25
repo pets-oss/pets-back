@@ -9,13 +9,33 @@ extend type Query {
     animal("Animal id in database" id: Int!): Animal
 
     """
-    Get all animals.
+    Get all animals or animals filtered by animal ids, species, gender and breed ids.
 
     Examples:
 
-    animals, animals (ids: [1,2,3]), animals(first:3)
+    animals
+    animals(ids: [1, 2, 3])
+    animals(species: [1, 4], gender: [1, 2], breed: [205, 51])
+    animals(first: 5)
     """
-    animals(ids: [Int!], after: String, first: Int, before: String, last: Int): AnimalsConnection
+    animals(
+        "Animal ids in database"
+        ids: [Int]
+        "Animal species ids in database"
+        species: [Int]
+        "Animal gender ids in database"
+        gender: [Int]
+        "Animal breed ids in database"
+        breed: [Int],
+        "Cursor to return animals after that cursor"
+        after: String,
+        "A non‐negative integer"
+        first: Int,
+        "Cursor to return animals before that cursor"
+        before: String,
+        "A non‐negative integer"
+        last: Int
+    ): AnimalsConnection
 }
 
 "A connection to animals."

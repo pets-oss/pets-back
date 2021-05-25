@@ -1,28 +1,28 @@
 import { IResolvers } from 'graphql-tools';
+import { Validator } from 'node-input-validator';
 import {
-    createAnimalQuery,
-    deleteAnimalQuery,
     getAnimalQuery,
     getAnimalsQuery,
-    updateAnimalQuery
+    createAnimalQuery,
+    updateAnimalQuery,
+    deleteAnimalQuery,
 } from '../../sql-queries/animal';
 import {
-    createAnimalDetailsQuery,
     getAnimalDetailsQuery,
-    updateAnimalDetailsQuery
+    createAnimalDetailsQuery,
+    updateAnimalDetailsQuery,
 } from '../../sql-queries/animalDetails';
 import {
     createAnimalMicrochipQuery,
     getImplantedAnimalMicrochipQuery,
-    updateAnimalMicrochipQuery
+    updateAnimalMicrochipQuery,
 } from '../../sql-queries/animalMicrochip';
 import {
-    createAnimalRegistrationQuery,
     getActiveAnimalRegistrationQuery,
-    updateAnimalRegistrationQuery
+    createAnimalRegistrationQuery,
+    updateAnimalRegistrationQuery,
 } from '../../sql-queries/animalRegistration';
 import { getStatusTranslationQuery } from '../../sql-queries/status';
-import Animal from '../../../test/interfaces/animal.interface';
 
 const defaultLanguage: string = 'lt';
 
@@ -34,14 +34,14 @@ async function getUpdateDetailsResult(input: any, pgClient: any) {
         return pgClient.query(
             updateAnimalDetailsQuery({
                 ...input.details,
-                animalId: input.id
+                animalId: input.id,
             })
         );
     }
     return pgClient.query(
         createAnimalDetailsQuery({
             ...input.details,
-            animalId: input.id
+            animalId: input.id,
         })
     );
 }
@@ -55,50 +55,26 @@ async function getUpdateMicrochipResult(input: any, pgClient: any) {
             updateAnimalMicrochipQuery({
                 ...input.microchip,
                 animalId: input.id,
-                microchipId: getAnimalMicrochipResponse.rows[0].microchipId
+                microchipId: getAnimalMicrochipResponse.rows[0].microchipId,
             })
         );
     }
     return pgClient.query(
         createAnimalMicrochipQuery({
             ...input.microchip,
-            animalId: input.id
+            animalId: input.id,
         })
     );
 }
 
-interface SelectAnimalInput {
-    ids?: [number],
-    after?: string | null,
-    first?: number | null,
-    before?: string | null,
-    last?: number | null
+interface Animal {
+    id: number
 }
-
-interface PageInfo {
-    has_next_page: boolean,
-    has_previous_page: boolean,
-    start_cursor: string | null,
-    end_cursor: string | null
-}
-
-interface AnimalsConnection {
-    page_info: PageInfo,
-    edges: AnimalEdge[] | null,
-}
-
-interface AnimalEdge {
-    node: Animal
-    cursor: string
-}
-
 const resolvers: IResolvers = {
     Query: {
-        animals: async (
-            _,
-            { ids, first, after, last, before }: SelectAnimalInput,
-            { pgClient }
-        ): Promise<AnimalsConnection> => {
+        animals: async (_,
+            { ids, species, gender, breed,  first, after, last, before },
+            { pgClient }) => {
             if ((first || after) && (last || before)) {
                 throw new Error('Feature not implemented, try only with first and after or last and before');
             }
@@ -112,12 +88,15 @@ const resolvers: IResolvers = {
             const limit = first || last;
             const cursor = after || before;
 
-            const dbResponse = await pgClient.query(getAnimalsQuery({
+            const dbResponse = await pgClient.query(getAnimalsQuery(
                 ids,
-                limit: limit ? limit + 1 : limit,
-                cursor: cursor ? Buffer.from(cursor, 'base64').toString() : undefined,
-                reverse
-            }));
+                species,
+                gender,
+                breed,
+                limit ? limit + 1 : limit,
+                reverse,
+                cursor ? Buffer.from(cursor, 'base64').toString() : null
+            ));
 
             let { rows } = dbResponse;
             const hasMore = limit ? rows.length > limit : false;
@@ -146,15 +125,41 @@ const resolvers: IResolvers = {
                 },
                 edges
             };
+            // const dbResponse = await pgClient.query(
+            //     getAnimalsQuery(ids, species, gender, breed)
+            // );
+            // return dbResponse.rows;
         },
-
         animal: async (_, { id }, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalQuery(id));
             return dbResponse.rows[0];
-        }
+        },
     },
     Mutation: {
         createAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
+            const createAnimalInputValidator = new Validator(input, {
+                name: 'maxLength:128',
+                organization: 'integer|min:1',
+                'registration.registrationDate': 'date|dateBeforeToday:0,days',
+                'details.breedId': 'integer|min:1',
+                'details.genderId': 'integer|min:1',
+                'details.colorId': 'integer|min:1',
+                'details.birthDate': 'date|dateBeforeToday:0,days',
+                'details.weight': 'integer|min:1',
+                'microchip.chipCompanyCode': 'integer|min:1',
+                'microchip.installDate': 'date|dateBeforeToday:0,days',
+                'microchip.installPlaceId': 'integer|min:1',
+            });
+
+            const isCreateAnimalInputValid =
+                await createAnimalInputValidator.check();
+
+            if (!isCreateAnimalInputValid) {
+                throw new Error(
+                    JSON.stringify(createAnimalInputValidator.errors)
+                );
+            }
+
             const { image, ...inputData } = input;
 
             let data = { ...inputData };
@@ -170,11 +175,13 @@ const resolvers: IResolvers = {
                 const createAnimalResult = await pgClient.query(
                     createAnimalQuery(data)
                 );
-                const animalId = createAnimalResult.rows[0].id;
+                const {
+                    rows: [{ id: animalId }],
+                } = createAnimalResult;
                 const createRegistrationResult = await pgClient.query(
                     createAnimalRegistrationQuery({
                         ...data.registration,
-                        animalId
+                        animalId,
                     })
                 );
 
@@ -190,7 +197,7 @@ const resolvers: IResolvers = {
                     createMicrochipResult = await pgClient.query(
                         createAnimalMicrochipQuery({
                             ...data.microchip,
-                            animalId
+                            animalId,
                         })
                     );
                 }
@@ -201,7 +208,7 @@ const resolvers: IResolvers = {
                     ...createAnimalResult.rows[0],
                     registration: createRegistrationResult.rows[0],
                     details: createDetailsResult?.rows[0],
-                    microchip: createMicrochipResult?.rows[0]
+                    microchip: createMicrochipResult?.rows[0],
                 };
             } catch (e) {
                 await pgClient.query('ROLLBACK');
@@ -209,6 +216,29 @@ const resolvers: IResolvers = {
             }
         },
         updateAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
+            const updateAnimalInputValidator = new Validator(input, {
+                name: 'maxLength:128',
+                organization: 'integer|min:1',
+                'registration.registrationDate': 'date|dateBeforeToday:0,days',
+                'details.breedId': 'integer|min:1',
+                'details.genderId': 'integer|min:1',
+                'details.colorId': 'integer|min:1',
+                'details.birthDate': 'date|dateBeforeToday:0,days',
+                'details.weight': 'integer|min:1',
+                'microchip.chipCompanyCode': 'integer|min:1',
+                'microchip.installDate': 'date|dateBeforeToday:0,days',
+                'microchip.installPlaceId': 'integer|min:1',
+            });
+
+            const isUpdateAnimalInputValid =
+                await updateAnimalInputValidator.check();
+
+            if (!isUpdateAnimalInputValid) {
+                throw new Error(
+                    JSON.stringify(updateAnimalInputValidator.errors)
+                );
+            }
+
             const { image, ...inputData } = input;
 
             let data = { ...inputData };
@@ -238,7 +268,7 @@ const resolvers: IResolvers = {
                 const updateRegistrationResult = await pgClient.query(
                     updateAnimalRegistrationQuery({
                         ...data.registration,
-                        animalId: data.id
+                        animalId: data.id,
                     })
                 );
 
@@ -256,7 +286,7 @@ const resolvers: IResolvers = {
                     ...updateAnimalResult.rows[0],
                     registration: updateRegistrationResult.rows[0],
                     details: updateDetailsResult.rows[0],
-                    microchip: updateMicrochipResult.rows[0]
+                    microchip: updateMicrochipResult.rows[0],
                 };
             } catch (e) {
                 await pgClient.query('ROLLBACK');
@@ -272,7 +302,7 @@ const resolvers: IResolvers = {
                 cloudinaryClient.deleteImage(dbResponse.rows[0].image_url);
             }
             return dbResponse.rows[0];
-        }
+        },
     },
     Animal: {
         details: async ({ id }, __, { pgClient }) => {
@@ -300,8 +330,8 @@ const resolvers: IResolvers = {
             );
 
             return dbResponse.rows[0].status;
-        }
-    }
+        },
+    },
 };
 
 export default resolvers;

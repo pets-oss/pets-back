@@ -1,22 +1,33 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/organizationTask.interface.validator';
-import { organizationTaskFields } from './testFields';
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
+const organizationTaskFields = `
+    {
+        id,
+        title,
+        description,
+        organization,
+        isDone
+    }
+`;
+
 describe('OrganizationTasks test', () => {
     it('Returns organization tasks list', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ organizationTasks 
                         ${organizationTaskFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
@@ -36,15 +47,17 @@ describe('OrganizationTasks test', () => {
     });
 
     it('Returns specific organization task by id', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ organizationTask(id: 1)
                         ${organizationTaskFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console

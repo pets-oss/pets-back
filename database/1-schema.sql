@@ -198,15 +198,15 @@ CREATE TABLE chip_company_translation (
 );
 COMMENT ON COLUMN chip_company_translation.language is 'Language code based on BCP 47';
 
-CREATE TYPE install_place AS ENUM ('1', '2', '3', '4');
+CREATE TYPE install_place_id AS ENUM ('1', '2', '3', '4');
 
-CREATE TABLE install_place_translation (
-    install_place install_place NOT NULL,
+CREATE TABLE chip_install_place_translation (
+    install_place_id install_place_id NOT NULL,
     language VARCHAR(4) NOT NULL,
     translation VARCHAR(64) NOT NULL,
-    PRIMARY KEY (install_place, language)
+    PRIMARY KEY (install_place_id, language)
 );
-COMMENT ON COLUMN install_place_translation.language is 'Language code based on BCP 47';
+COMMENT ON COLUMN chip_install_place_translation.language is 'Language code based on BCP 47';
 
 CREATE TYPE chip_status AS ENUM ('Implanted', 'Removed');
 
@@ -215,7 +215,7 @@ CREATE TABLE animal_microchip (
     microchip_id VARCHAR(255) NOT NULL,
     chip_company_code chip_company_code NOT NULL,
     install_date DATE,
-    install_place install_place NOT NULL,
+    install_place_id install_place_id NOT NULL,
     status chip_status DEFAULT 'Implanted',
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (animal_id, microchip_id)
@@ -268,32 +268,46 @@ CREATE TABLE animal_cage (
 
 -- EVENTS
 
-CREATE TYPE event AS ENUM ('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11');
+CREATE TYPE event_group AS ENUM('General', 'Medical');
 
-CREATE TABLE event_translation (
-    event event NOT NULL,
-    language VARCHAR(4) NOT NULL,
-    translation VARCHAR(50) NOT NULL,
-    PRIMARY KEY (event, language)
+CREATE TYPE event_type AS ENUM (
+    'GivenAway',
+    'Found',
+    'CheckIn',
+    'CheckOut',
+    'Died',
+    'TemporaryCare',
+    'Microchipped',
+    'LocationChange',
+    'Medication',
+    'Prophylaxis',
+    'Surgery',
+    'GenderElimination',
+    'Inspection'
 );
-COMMENT ON COLUMN event_translation.language is 'Language code based on BCP 47';
 
 CREATE TABLE animal_event_general (
     id SERIAL PRIMARY KEY,
-    animal INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    type event,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    type event_type,
     expenses NUMERIC,
     date_time TIMESTAMP,
-    comments TEXT
+    comments TEXT,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE animal_event_medical_record (
     id SERIAL PRIMARY KEY,
-    animal INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    type event,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    type event_type,
     expenses NUMERIC,
     date_time TIMESTAMP,
-    comments TEXT
+    comments TEXT,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE animal_event_found (
@@ -302,8 +316,11 @@ CREATE TABLE animal_event_found (
     house_no VARCHAR(8),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
     date_time TIMESTAMP,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    comments TEXT
+    comments TEXT,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE animal_event_given_away (
@@ -311,7 +328,11 @@ CREATE TABLE animal_event_given_away (
     former_owner_id INTEGER REFERENCES former_animal_owner(id) NOT NULL,
     reason TEXT,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    date_time TIMESTAMP
+    date_time TIMESTAMP,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    comments TEXT
 );
 
 -- DATE UPDATES
@@ -339,11 +360,23 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER former_animal_owner_mod_time BEFORE UPDATE ON former_animal_owner
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER animal_event_given_away_mod_time BEFORE UPDATE ON animal_event_given_away
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);

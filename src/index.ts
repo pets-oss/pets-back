@@ -10,6 +10,7 @@ import { version } from '../package.json';
 
 import schema from './schema';
 import initClients from './utils/init-clients';
+import extractUserId from './utils/extract-user-id';
 
 const { ApolloServer } = require('apollo-server-express');
 
@@ -26,6 +27,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
             })
             isDatabaseActive = results.rows[0]?.ok;
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.log(error)
         }
 
@@ -81,7 +83,11 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         uploads: false,
         schema,
         fieldResolver: snakeCaseFieldResolver,
-        context: { pgClient, cloudinaryClient },
+        context: ({req}: {req: any}) => ({
+            pgClient,
+            cloudinaryClient,
+            userId: extractUserId(req)
+        }),
     });
 
     server.applyMiddleware({ app });

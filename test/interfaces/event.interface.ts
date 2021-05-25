@@ -1,16 +1,30 @@
-import EventType from './eventType.interface';
+enum EventGroup {
+    General = 'General',
+    Medical = 'Medical'
+}
 
-enum Category {
-    GENERAL = 'GENERAL',
-    MEDICAL = 'MEDICAL'
+enum EventType {
+    GivenAway = 'GivenAway',
+    Found = 'Found',
+    CheckIn = 'CheckIn',
+    CheckOut = 'CheckOut',
+    Died = 'Died',
+    TemporaryCare = 'TemporaryCare',
+    Microchipping = 'Microchipping',
+    LocationChange = 'LocationChange',
+    Medication = 'Medication',
+    Prophylaxis = 'Prophylaxis',
+    Surgery = 'Surgery',
+    GenderElimination = 'GenderElimination',
+    Inspection = 'Inspection'
 }
 
 export default interface Event {
     id: number,
-    animal: number,
+    animalId: number,
+    group: EventGroup,
     type: EventType,
-    expenses: number | null,
     dateTime: string | null,
-    comments: string | null,
-    category: Category
+    createTime: string | null,
+    author: string | null
 }

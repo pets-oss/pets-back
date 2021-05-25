@@ -13,39 +13,43 @@ export const EventSchema = {
   "defaultProperties": [
   ],
   "definitions": {
-    "Category": {
+    "EventGroup": {
       "enum": [
-        "GENERAL",
-        "MEDICAL"
+        "General",
+        "Medical"
       ],
       "type": "string"
     },
-    "default": {
-      "defaultProperties": [
+    "EventType": {
+      "enum": [
+        "CheckIn",
+        "CheckOut",
+        "Died",
+        "Found",
+        "GenderElimination",
+        "GivenAway",
+        "Inspection",
+        "LocationChange",
+        "Medication",
+        "Microchipping",
+        "Prophylaxis",
+        "Surgery",
+        "TemporaryCare"
       ],
-      "properties": {
-        "id": {
-          "type": "number"
-        },
-        "type": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "id",
-        "type"
-      ],
-      "type": "object"
+      "type": "string"
     }
   },
   "properties": {
-    "animal": {
+    "animalId": {
       "type": "number"
     },
-    "category": {
-      "$ref": "#/definitions/Category"
+    "author": {
+      "type": [
+        "null",
+        "string"
+      ]
     },
-    "comments": {
+    "createTime": {
       "type": [
         "null",
         "string"
@@ -57,25 +61,22 @@ export const EventSchema = {
         "string"
       ]
     },
-    "expenses": {
-      "type": [
-        "null",
-        "number"
-      ]
+    "group": {
+      "$ref": "#/definitions/EventGroup"
     },
     "id": {
       "type": "number"
     },
     "type": {
-      "$ref": "#/definitions/default"
+      "$ref": "#/definitions/EventType"
     }
   },
   "required": [
-    "animal",
-    "category",
-    "comments",
+    "animalId",
+    "author",
+    "createTime",
     "dateTime",
-    "expenses",
+    "group",
     "id",
     "type"
   ],

@@ -8,24 +8,25 @@ require('dotenv').config({ path: './test/.env' });
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-describe('GraphQL species_translation integration tests', () => {
-    it('Returns all species translation in "lt" with all fields', (done) => {
-        let req = request
+describe('GraphQL chip install place integration tests', () => {
+    it('Returns all chip install places in "lt" with all fields', (done) => {
+        request
             .post('/graphql')
             .send({
-                query: `{ species(language: "lt")
+                query: `{ chipInstallPlaces(language: "lt")
                     ${translationFields}
                 }`,
-            });
-        if (process.env.BEARER_TOKEN) {
-            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
-        req.expect(200)
+            })
+            .expect(200)
             .end((err, res) => {
                 if (err) return done(err);
-                const { body: { data: { species } } } = res;
-                expect(species).to.be.an('array');
-                validate(species[0]);
+                const {
+                    body: {
+                        data: { chipInstallPlaces },
+                    },
+                } = res;
+                expect(chipInstallPlaces).to.be.an('array');
+                validate(chipInstallPlaces[0]);
                 return done();
             });
     });

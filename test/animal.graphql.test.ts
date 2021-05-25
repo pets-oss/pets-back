@@ -1,26 +1,59 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import { v4 as uuidv4 } from 'uuid';
+import { animalDetailsFields } from './animalDetails.graphql.test';
+import { animalMicrochipFields } from './animalMicrochip.graphql.test';
+import { animalRegistrationFields } from './animalRegistration.graphql.test';
 import validate from './validators/animal.interface.validator';
 import validateAnimalConnection from './validators/animalConnection.interface.validator';
-import { animalConnectionFields, animalFields } from './testFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
+const animalFields = `
+    {
+        id
+        organization
+        name
+        details ${animalDetailsFields}
+        registration ${animalRegistrationFields}
+        microchip ${animalMicrochipFields}
+        status
+        imageUrl
+        comments
+        modTime
+    }
+`;
+
+const animalConnectionFields = `
+    {
+        edges {
+            node ${animalFields}
+            cursor
+        }
+        pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+        }
+    }
+`;
 describe('GraphQL animal integration tests', () => {
     it('Returns animal id=1 with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ animal(id: 1)
                       ${animalFields}
                   }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
@@ -32,15 +65,17 @@ describe('GraphQL animal integration tests', () => {
             });
     });
     it('Returns all animals with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
-                query: `{ animals (first: 3)
+                query: `{ animals
                        ${animalConnectionFields}
                   }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
@@ -54,21 +89,55 @@ describe('GraphQL animal integration tests', () => {
                 } = res;
                 validateAnimalConnection(animals);
                 expect(animals.edges).to.be.an('array');
-                console.log(animals.pageInfo);
+                expect(animals.edges).to.have.length.above(4)
                 return done();
             });
     });
 
     it('Returns animals by array of ids [1,2,3] with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `{ animals (ids: [1,2,3])
                       ${animalFields}
                   }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                expect(animals).to.be.an('array');
+                validate(animals[0]);
+                expect(animals).to.have.length(3);
+                return done();
+            });
+    });
+
+    it('Returns all animals with all fields filtered by species ids [1, 2], gender ids [1, 2] and breed ids [205, 268, 350]', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (species: [1, 2], gender: [1, 2], breed: [205, 268, 350])
+                        ${animalFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
@@ -116,7 +185,7 @@ describe('animal mutations tests', () => {
             },
         };
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -124,9 +193,11 @@ describe('animal mutations tests', () => {
                           ${mutation}(input: ${create})
                           ${animalFields}
                   }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
@@ -163,7 +234,7 @@ describe('animal mutations tests', () => {
             },
         };
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -171,9 +242,11 @@ describe('animal mutations tests', () => {
                 ${mutation}(input: ${update})
                     ${animalFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
@@ -190,7 +263,7 @@ describe('animal mutations tests', () => {
         const deleteInput = `{ id: ${animalId} }`;
         const expectedResponse = { id: animalId };
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -198,9 +271,11 @@ describe('animal mutations tests', () => {
                 ${mutation}(input: ${deleteInput})
                     ${animalFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
             .end((err, res) => {
                 if (err) {
                     // eslint-disable-next-line no-console
