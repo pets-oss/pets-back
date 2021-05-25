@@ -1,13 +1,41 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import {v4 as uuidv4} from 'uuid';
-import {animalDetailsFields} from './testFields';
 import createAnimal from './helpers/createAnimalHelper';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
+
+// eslint-disable-next-line import/prefer-default-export
+export const animalDetailsFields = `
+    {
+        animalId
+        breed {
+            id
+            abbreviation
+            value
+        }
+        species {
+            id
+            value
+        }
+        gender {
+            id
+            value
+        }
+        color {
+            id
+            value
+        }
+        birthDate
+        weight
+        allergy
+        food
+    }
+`;
+
 let animalId: String;
 
 describe('animalDetails Graphql mutations tests', () => {
@@ -58,7 +86,7 @@ describe('animalDetails Graphql mutations tests', () => {
             food: 'bet koks'
         };
 
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `
@@ -66,9 +94,11 @@ describe('animalDetails Graphql mutations tests', () => {
                         ${mutation}(id: ${animalId})
                             ${animalDetailsFields}
                 }`,
-            })
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .expect(200)
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 expect(JSON.stringify(res.body.data[mutation])).equal(

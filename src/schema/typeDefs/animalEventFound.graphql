@@ -9,6 +9,7 @@ type FoundEvent {
     municipalityId: Int!
     date: Date
     animalId: Int!
+    author: String!
     comments: String
 }
 
@@ -18,6 +19,7 @@ input FoundEventInput {
     municipalityId: Int!
     date: Date
     animalId: Int!
+    author: String!
     comments: String
 }
 

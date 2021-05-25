@@ -1,58 +1,164 @@
 extend type Query {
     """
-    Get all events and types
+    Get all events
 
     Example:
-    events(language: "lt")
+    events
+    events(animalId: 1)
     """
-    events("Language code" language: String!): [Events]
+    events("Animal ID" animalId: Int, "Event groups" groups: [EventGroup]): [Event]
 }
 
-enum Category {
-    GENERAL,
-    MEDICAL
+enum EventGroup {
+    General,
+    Medical
 }
 
-"Represents event"
-type Event {
-    "Event id"
+enum EventType {
+    GivenAway,
+    Found,
+    CheckIn,
+    CheckOut,
+    Died,
+    TemporaryCare,
+    Microchipping,
+    LocationChange,
+    Medication,
+    Prophylaxis,
+    Surgery,
+    GenderElimination,
+    Inspection
+}
+
+interface Event {
     id: Int!
-    "Animal id"
-    animal: Int!
-    "Event type"
-    type: EventType
-    "Event expenses"
-    expenses: Float
-    "Event date"
-    dateTime: String
-    "Event comments"
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!
+    details: EventDetails!
+}
+
+interface EventDetails {
     comments: String
-    "Event category"
-    category: Category
 }
 
-"Represents event type"
-type EventType {
-    "Event type id"
+type MicrochippingDetails implements EventDetails {
+    microchip: AnimalMicrochip!
+    comments: String
+}
+
+type Microchipping implements Event {
     id: Int!
-    "Event type"
-    type: String!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!
+    details: MicrochippingDetails!
 }
 
-"Represents events types"
-type Events {
-    "All events"
-    all: [Event]
-    "All animal events"
-    animalAll("Animal id", animalId: Int!): [Event]
-    "All general events"
-    general: [Event]
-    "Animal general events"
-    animalGeneral("Animal id", animalId: Int!): [Event]
-    "All medical events"
-    medical: [Event]
-    "Animal medical events"
-    animalMedical("Animal id", animalId: Int!): [Event]
-    "All event types"
-    types: [EventType]
+type MedicationDetails implements EventDetails {
+    treatment: String!
+    expenses: Float
+    comments: String
+}
+
+type Medication implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!
+    details: MedicationDetails!
+}
+
+type CheckInDetails implements EventDetails {
+    registrationData: AnimalRegistration!
+    comments: String
+}
+
+type CheckIn implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!,
+    details: CheckInDetails!
+}
+
+type CheckOutDetails implements EventDetails {
+    temporary: Boolean!
+    newOwner: String! "Will be used similar object as FormerAnimalOwner"
+    document: Document
+    comments: String
+}
+
+type CheckOut implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!
+    details: CheckOutDetails!
+}
+
+type FoundDetails implements EventDetails {
+    street: String
+    houseNo: String
+    municipalityId: Int!
+    comments: String
+}
+
+type Found implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!
+    details: FoundDetails!
+}
+
+type GivenAwayDetails implements EventDetails{
+    formerOwner: FormerAnimalOwner!
+    reason: String
+    comments: String
+}
+
+type GivenAway implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!
+    details: GivenAwayDetails!
+}
+
+type LocationChangeDetails implements EventDetails {
+    location: String!
+    comments: String
+}
+
+type LocationChange implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: String!
+    details: LocationChangeDetails!
 }
