@@ -1,11 +1,17 @@
 import getStringScalar from './getStringScalarWithValidation';
-import config from '../../config';
+import { phoneFormatByCountry } from '../../config';
 
-const nameScalar = getStringScalar({ name: 'Name', max: 255 });
-const surnameScalar = getStringScalar({ name: 'Surname', max: 255 });
-const phoneScalar = getStringScalar({
+export const nameScalar = getStringScalar({ name: 'Name', max: 255 });
+export const surnameScalar = getStringScalar({ name: 'Surname', max: 255 });
+
+function getPhoneCodes() {
+    const phoneCountryCodes = Object.values(phoneFormatByCountry);
+    return phoneCountryCodes.length > 0 ?
+        phoneCountryCodes.join('|') : '370';
+}
+
+export const phoneScalar = getStringScalar({
     name: 'Phone',
-    pattern: new RegExp(`^\\+${config.phoneCountryCode}\\d{8,10}$`)
+    pattern: new RegExp(`^\\+(${getPhoneCodes()})\\d{8,10}$`)
 });
 
-export { nameScalar, surnameScalar, phoneScalar };
