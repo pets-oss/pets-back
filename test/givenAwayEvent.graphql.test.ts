@@ -13,7 +13,8 @@ const givenAwayEventFields = `
         formerOwnerId,
         date,
         animalId,
-        reason
+        reason,
+        author
     }
 `;
 
@@ -22,11 +23,12 @@ const expectedResult = {
     reason: 'Leaving country',
     date: '2021-03-19',
     animalId: 4,
+    author: 'dhjbwau74a6',
 };
 
 describe('GraphQL animal given away event integration tests', () => {
     it('Creates animal given away event with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `mutation {
@@ -35,22 +37,25 @@ describe('GraphQL animal given away event integration tests', () => {
                             reason: "Leaving country",
                             date: "2021-03-19",
                             animalId: 4,
+                            author: "dhjbwau74a6"
                         }) ${givenAwayEventFields}
                     }`
             })
-            .expect(200)
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .end((err, res) => {
-                if (err) return done(err);
-                const { body: { data: { createGivenAwayEvent } } } = res;
-                validate(createGivenAwayEvent);
-                expect(createGivenAwayEvent).to.include(expectedResult);
-                return done();
-            });
+            .expect(200);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.end((err, res) => {
+            if (err) return done(err);
+            const { body: { data: { createGivenAwayEvent } } } = res;
+            validate(createGivenAwayEvent);
+            expect(createGivenAwayEvent).to.include(expectedResult);
+            return done();
+        });
     });
 
     it('Updates givenAwayEvent with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `mutation {
@@ -59,21 +64,24 @@ describe('GraphQL animal given away event integration tests', () => {
                             formerOwnerId: 3,
                             reason: "Leaving country",
                             date: "2021-03-19",
-                            animalId: 4
+                            animalId: 4,
+                            author: "dhjbwau74a6"
                         }) ${givenAwayEventFields}
                     }`,
             })
-            .expect(200)
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .end((err, res) => {
-                if (err) return done(err);
-                const { body: { data: { updateGivenAwayEvent } } } = res;
-                validate(updateGivenAwayEvent);
-                expect(updateGivenAwayEvent).to.include({
-                    id: 1,
-                    ...expectedResult,
-                });
-                return done();
+            .expect(200);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        } 
+        req.end((err, res) => {
+            if (err) return done(err);
+            const { body: { data: { updateGivenAwayEvent } } } = res;
+            validate(updateGivenAwayEvent);
+            expect(updateGivenAwayEvent).to.include({
+                id: 1,
+                ...expectedResult,
             });
+            return done();
+        });
     });
 });

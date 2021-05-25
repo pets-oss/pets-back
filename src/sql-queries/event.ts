@@ -1,54 +1,55 @@
 import { QueryConfig } from 'pg';
-import { select } from 'sql-bricks-postgres';
 
-export const getAllEventTypes = (language: string): QueryConfig =>
-    select('event AS id', 'translation AS type')
-        .from('event_translation')
-        .where({ language })
-        .toParams();
+export const getGeneralEventsQuery = (animalId: number | null): QueryConfig => {
+    const text = `
+        SELECT *, 'General' AS group
+        FROM animal_event_general
+        WHERE ($1::int IS NULL OR animal_id = $1)
+    `;
 
-export const getEventType = (eventId: number, language: string): QueryConfig =>
-    select('event AS id', 'translation AS type')
-        .from('event_translation')
-        .where({ language, event: eventId })
-        .toParams();
+    return {
+        text,
+        values: [ animalId ]
+    }
+}
 
-export const getAllEvents = (): QueryConfig =>
-    select('*', '\'GENERAL\' AS category')
-        .from('animal_event_general')
-        .union()
-        .select('*', '\'MEDICAL\' as category')
-        .from('animal_event_medical_record')
-        .toParams();
+export const getMedicalEventsQuery = (animalId: number | null): QueryConfig => {
+    const text = `
+        SELECT *, 'Medical' AS group
+        FROM animal_event_medical_record
+        WHERE ($1::int IS NULL OR animal_id = $1)
+    `;
 
-export const getAllAnimalEvents = (animalId: number): QueryConfig =>
-    select('*', '\'GENERAL\' AS category')
-        .from('animal_event_general')
-        .where({ animal: animalId })
-        .union()
-        .select('*', '\'MEDICAL\' as category')
-        .from('animal_event_medical_record')
-        .where({ animal: animalId })
-        .toParams();
+    return {
+        text,
+        values: [ animalId ]
+    }
+}
 
-export const getAllGeneralEvents = (): QueryConfig =>
-    select('*', '\'GENERAL\' AS category')
-        .from('animal_event_general')
-        .toParams();
+export const getFoundEventsQuery = (animalId: number | null): QueryConfig => {
+    const text = `
+        SELECT *, 'General' AS group, 'Found' AS type
+        FROM animal_event_found
+        WHERE ($1::int IS NULL OR animal_id = $1)
+    `;
 
-export const getAnimalGeneralEvents = (animalId: number): QueryConfig =>
-    select('*', '\'GENERAL\' AS category')
-        .from('animal_event_general')
-        .where({ animal: animalId })
-        .toParams();
+    return {
+        text,
+        values: [ animalId ]
+    }
+}
 
-export const getAllMedicalEvents = (): QueryConfig =>
-    select('*', '\'MEDICAL\' AS category')
-        .from('animal_event_medical_record')
-        .toParams();
+export const getGivenAwayEventsQuery = (animalId: number | null): QueryConfig => {
+    const text = `
+        SELECT *, 'General' AS group, 'GivenAway' AS type
+        FROM animal_event_given_away
+        LEFT JOIN former_animal_owner ON former_animal_owner.id = animal_event_given_away.former_owner_id
+        WHERE ($1::int IS NULL OR animal_event_given_away.animal_id = $1)
+    `;
 
-export const getAnimalMedicalEvents = (animalId: number): QueryConfig =>
-    select('*', '\'MEDICAL\' AS category')
-        .from('animal_event_medical_record')
-        .where({ animal: animalId })
-        .toParams();
+    return {
+        text,
+        values: [ animalId ]
+    }
+}
+

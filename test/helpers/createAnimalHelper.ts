@@ -8,7 +8,7 @@ export default function createAnimal(
     setId: Function,
     nestedQuery?: String
 ) {
-    request
+    let req = request
         .post('/graphql')
         .send({
             query: `
@@ -21,21 +21,23 @@ export default function createAnimal(
                               registrationDate: "${date}",
                               status: Active
                           }
-                          ${nestedQuery ? `,${nestedQuery}` : ``}
+                          ${nestedQuery ? `,${nestedQuery}` : ''}
                       })
                       {id}
                     }`,
-        })
-        .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        .end((err, res) => {
-            if (err) {
-                // eslint-disable-next-line no-console
-                console.log('Failed on animalRegistration test preparation');
-                // eslint-disable-next-line no-console
-                console.log(res.body);
-                return done(err);
-            }
-            setId(res.body.data.createAnimal.id);
-            return done();
         });
+    if (process.env.BEARER_TOKEN) {
+        req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+    } 
+    req.end((err, res) => {
+        if (err) {
+            // eslint-disable-next-line no-console
+            console.log('Failed on animalRegistration test preparation');
+            // eslint-disable-next-line no-console
+            console.log(res.body);
+            return done(err);
+        }
+        setId(res.body.data.createAnimal.id);
+        return done();
+    });
 }

@@ -3,7 +3,7 @@ import { insert, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 const table = 'animal_event_given_away';
-const returnFields = 'id, former_owner_id, date_time as date, animal_id, reason';
+const returnFields = 'id, former_owner_id, date_time as date, animal_id, reason, author';
 const dateToDateTime =
     (input: CreateGivenAwayEventInput | UpdateGivenAwayEventInput) => {
         const { date, ...inputWithoutDate } = input;
@@ -15,6 +15,7 @@ interface CreateGivenAwayEventInput {
     date: string
     animalId: number
     reason: string
+    author: string
 }
 
 interface UpdateGivenAwayEventInput {
@@ -23,6 +24,7 @@ interface UpdateGivenAwayEventInput {
     date: string
     animalId: number
     reason: string
+    author: string
 }
 
 export const createGivenAwayEventQuery = (

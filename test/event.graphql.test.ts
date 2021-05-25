@@ -1,25 +1,32 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import validate from './validators/municipality.interface.validator';
+import validate from './validators/event.interface.validator';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-describe('GraphQL municipality integration test', () => {
-    it('Returns all municipalities with all fields', (done) => {
+const eventFields = `
+    {
+        id,
+        animalId,
+        group,
+        type,
+        dateTime,
+        createTime
+        author
+    }
+`;
+
+describe('GraphQL event integration tests', () => {
+    it('Return list of events with generic information', (done) => {
         let req = request
             .post('/graphql')
             .send({
-                query: `
-                {
-                  municipalities {
-                    id,
-                    name
-                  }
-                }
-              `,
+                query: `{ events
+                  ${eventFields}
+              }`,
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
@@ -33,12 +40,12 @@ describe('GraphQL municipality integration test', () => {
                 }
                 const {
                     body: {
-                        data: { municipalities },
+                        data: { events },
                     },
                 } = res;
-                validate(municipalities[0]);
-                expect(municipalities).to.be.an('array');
-                expect(municipalities).length.above(10);
+                expect(events).to.be.an('array');
+                validate(events[0]);
+                expect(events).to.have.length.above(4);
                 return done();
             });
     });
