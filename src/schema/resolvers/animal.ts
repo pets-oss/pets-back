@@ -1,10 +1,8 @@
 import { IResolvers } from 'graphql-tools';
-import { QueryResult } from 'pg';
 import {
     createAnimalQuery,
     deleteAnimalQuery,
     getAnimalQuery,
-    getAnimalsHasPreviousQuery,
     getAnimalsQuery,
     updateAnimalQuery
 } from '../../sql-queries/animal';
@@ -24,11 +22,7 @@ import {
     updateAnimalRegistrationQuery
 } from '../../sql-queries/animalRegistration';
 import { getStatusTranslationQuery } from '../../sql-queries/status';
-import AnimalDetails from '../../../test/interfaces/animalDetails.interface';
-import AnimalRegistration
-    from '../../../test/interfaces/animalRegistration.interface';
-import AnimalMicrochip
-    from '../../../test/interfaces/animalMicrochip.interface';
+import Animal from '../../../test/interfaces/animal.interface';
 
 const defaultLanguage: string = 'lt';
 
@@ -75,10 +69,10 @@ async function getUpdateMicrochipResult(input: any, pgClient: any) {
 
 interface SelectAnimalInput {
     ids?: [number],
-    after?: string,
-    first?: number,
-    before?: string,
-    last?: number
+    after?: string | null,
+    first?: number | null,
+    before?: string | null,
+    last?: number | null
 }
 
 interface PageInfo {
@@ -98,119 +92,62 @@ interface AnimalEdge {
     cursor: string
 }
 
-interface Animal {
-    id: number;
-    organization: number;
-    name: string | null;
-    details: AnimalDetails;
-    registration: AnimalRegistration;
-    microchip: AnimalMicrochip;
-    status: string | null;
-    imageUrl: string | null;
-    comments: string | null;
-    modTime: string | null;
-}
-
 const resolvers: IResolvers = {
     Query: {
         animals: async (
             _,
-            { ids, first, last, after, before }: SelectAnimalInput,
+            { ids, first, after, last, before }: SelectAnimalInput,
             { pgClient }
-        ) => {
-            if (first && first < 0) {
-                throw new Error('first can not be less than zero)');
+        ): Promise<AnimalsConnection> => {
+            if ((first || after) && (last || before)) {
+                throw new Error('Feature not implemented, try only with first and after or last and before');
             }
-            if (last && last < 0) {
-                throw new Error('last can not be less than zero)');
+            if (first != null && first < 0) {
+                throw new Error('first can not be less than zero');
             }
-            let limit: number | undefined;
-            let offset: string | undefined;
-            let edges: AnimalEdge[] = [];
-            let hasPreviousPage: boolean = false;
-            let hasNextPage: boolean = false;
-            const promises: (() => Promise<QueryResult<any>>)[] = [];
-            if (first || after) {
-                limit = first ? first + 1 : undefined;
-                offset = after;
-                // TODO: Promise.all
-                promises.push(() =>
-                    pgClient.query(getAnimalsQuery({
-                        ids,
-                        limit,
-                        offset
-                    })));
-                if (offset) promises.push(() =>
-                    pgClient
-                        .query(getAnimalsHasPreviousQuery(offset!)));
-                // const dbResponses: QueryResult<any>[] =
-                //     await Promise.all(promises);
-                // const animalRows = dbResponses[0].rows;
+            if (last != null && last < 0) {
+                throw new Error('last can not be less than zero');
+            }
+            const reverse = !!(last || before);
+            const limit = first || last;
+            const cursor = after || before;
 
-                //
-                // hasNextPage = first ? animalRows.length > first : false;
-                // if (hasNextPage) {
-                //     animalRows.pop();
-                // }
-                // edges = animalRows.map(
-                //     (value: Animal) => ({
-                //         cursor: value.id.toString(),
-                //         node: value
-                //     }));
+            const dbResponse = await pgClient.query(getAnimalsQuery({
+                ids,
+                limit: limit ? limit + 1 : limit,
+                cursor: cursor ? Buffer.from(cursor, 'base64').toString() : undefined,
+                reverse
+            }));
 
-                if (offset) {
-                    const dbResponsePrevious = await pgClient
-                        .query(getAnimalsHasPreviousQuery(offset));
-                    hasPreviousPage = !!dbResponsePrevious.rows
-                        ?.has_previous_page;
-                }
-                const dbResponse = await pgClient.query(getAnimalsQuery({
-                    ids,
-                    limit,
-                    offset
-                }));
-                const { rows } = dbResponse;
-                hasNextPage = first ? rows.length > first : false;
-                if (hasNextPage) {
-                    rows.pop();
-                }
-                edges = rows.map(
-                    (value: Animal) => ({
-                        cursor: value.id.toString(),
-                        node: value
-                    }));
-            } else if (last || before) {
-                limit = last ? last + 1 : last;
-                offset = before;
-                // TODO: needs implementation
-                return {
-                    pageInfo: {
-                        startCursor: null,
-                        endCursor: null,
-                        hasPreviousPage: false,
-                        hasNextPage: false
-                    },
-                    edges: []
-                };
+            let { rows } = dbResponse;
+            const hasMore = limit ? rows.length > limit : false;
+            if (hasMore) {
+                rows.pop();
             }
+            if (reverse) {
+                rows = rows.reverse();
+            }
+
+            const edges = rows.map((value: Animal) => ({
+                cursor: Buffer.from(value.id.toString()).toString('base64'),
+                node: value
+            }));
 
             const firstEdge = edges[0];
             const lastEdge = edges[edges.length - 1];
 
-            const connection: AnimalsConnection = {
+            return {
                 page_info: {
-                    has_next_page: hasNextPage,
-                    has_previous_page: hasPreviousPage,
+                    has_next_page: reverse ? false : hasMore,
+                    has_previous_page: reverse ? hasMore : false,
                     start_cursor: firstEdge ?
-                        firstEdge.cursor.toString() : null,
-                    end_cursor: lastEdge ? lastEdge.cursor.toString() : null
+                        firstEdge.cursor : null,
+                    end_cursor: lastEdge ? lastEdge.cursor : null
                 },
                 edges
             };
-            console.log(connection);
-            return connection;
-        }
-        ,
+        },
+
         animal: async (_, { id }, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalQuery(id));
             return dbResponse.rows[0];
