@@ -33,7 +33,7 @@ describe('GraphQL former animal owner integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             const { body: { data: { formerAnimalOwners } } } = res;
@@ -53,7 +53,7 @@ describe('GraphQL former animal owner integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             validate(res.body.data.formerAnimalOwner);
@@ -62,7 +62,7 @@ describe('GraphQL former animal owner integration tests', () => {
     });
 
     it('Creates former animal owner with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `mutation {
@@ -71,22 +71,24 @@ describe('GraphQL former animal owner integration tests', () => {
                             surname: "Petravičius",
                             phone: "+37068745124"
                           }) ${formerAnimalOwnerFields}
-                    }`,
+                    }`
             })
-            .expect(200)
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .end((err, res) => {
-                if (err) return done(err);
-                const { body: { data: { createFormerAnimalOwner } } } = res;
-                validate(createFormerAnimalOwner);
-                ({ id: animalOwnerId } = createFormerAnimalOwner);
-                expect(createFormerAnimalOwner).to.include(expectedResult);
-                return done();
-            });
+            .expect(200);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`);
+        }
+        req.end((err, res) => {
+            if (err) return done(err);
+            const { body: { data: { createFormerAnimalOwner } } } = res;
+            validate(createFormerAnimalOwner);
+            ({ id: animalOwnerId } = createFormerAnimalOwner);
+            expect(createFormerAnimalOwner).to.include(expectedResult);
+            return done();
+        });
     });
 
     it('Updates former animal owner with all fields', (done) => {
-        request
+        let req = request
             .post('/graphql')
             .send({
                 query: `mutation {
@@ -96,19 +98,21 @@ describe('GraphQL former animal owner integration tests', () => {
                             surname: "Petravičius",
                             phone: "+37068745124"
                         }) ${formerAnimalOwnerFields}
-                    }`,
+                    }`
             })
-            .expect(200)
-            .set('Authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-            .end((err, res) => {
-                if (err) return done(err);
-                const { body: { data: { updateFormerAnimalOwner } } } = res;
-                validate(updateFormerAnimalOwner);
-                expect(updateFormerAnimalOwner).to.include({
-                    id: animalOwnerId,
-                    ...expectedResult,
-                });
-                return done();
+            .expect(200);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`);
+        }
+        req.end((err, res) => {
+            if (err) return done(err);
+            const { body: { data: { updateFormerAnimalOwner } } } = res;
+            validate(updateFormerAnimalOwner);
+            expect(updateFormerAnimalOwner).to.include({
+                id: animalOwnerId,
+                ...expectedResult
             });
+            return done();
+        });
     });
 });
