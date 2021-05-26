@@ -13,7 +13,7 @@ export const AnimalConnectionSchema = {
   "defaultProperties": [
   ],
   "definitions": {
-    "AnimalEdge": {
+    "Edge<default>": {
       "defaultProperties": [
       ],
       "properties": {
@@ -30,6 +30,31 @@ export const AnimalConnectionSchema = {
       ],
       "type": "object"
     },
+    "PageInfo": {
+      "defaultProperties": [
+      ],
+      "properties": {
+        "endCursor": {
+          "type": "string"
+        },
+        "hasNextPage": {
+          "type": "boolean"
+        },
+        "hasPreviousPage": {
+          "type": "boolean"
+        },
+        "startCursor": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "endCursor",
+        "hasNextPage",
+        "hasPreviousPage",
+        "startCursor"
+      ],
+      "type": "object"
+    },
     "default": {
       "defaultProperties": [
       ],
@@ -41,7 +66,14 @@ export const AnimalConnectionSchema = {
           ]
         },
         "details": {
-          "$ref": "#/definitions/default_1"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/default_1"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "id": {
           "type": "number"
@@ -53,7 +85,14 @@ export const AnimalConnectionSchema = {
           ]
         },
         "microchip": {
-          "$ref": "#/definitions/default_5"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/default_5"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "modTime": {
           "type": [
@@ -71,7 +110,14 @@ export const AnimalConnectionSchema = {
           "type": "number"
         },
         "registration": {
-          "$ref": "#/definitions/default_4"
+          "anyOf": [
+            {
+              "$ref": "#/definitions/default_4"
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "status": {
           "type": [
@@ -271,42 +317,17 @@ export const AnimalConnectionSchema = {
         "status"
       ],
       "type": "object"
-    },
-    "default_6": {
-      "defaultProperties": [
-      ],
-      "properties": {
-        "endCursor": {
-          "type": "string"
-        },
-        "hasNextPage": {
-          "type": "boolean"
-        },
-        "hasPreviousPage": {
-          "type": "boolean"
-        },
-        "startCursor": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "endCursor",
-        "hasNextPage",
-        "hasPreviousPage",
-        "startCursor"
-      ],
-      "type": "object"
     }
   },
   "properties": {
     "edges": {
       "items": {
-        "$ref": "#/definitions/AnimalEdge"
+        "$ref": "#/definitions/Edge<default>"
       },
       "type": "array"
     },
     "pageInfo": {
-      "$ref": "#/definitions/default_6"
+      "$ref": "#/definitions/PageInfo"
     }
   },
   "required": [

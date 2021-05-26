@@ -99,7 +99,7 @@ describe('GraphQL animal integration tests', () => {
             .post('/graphql')
             .send({
                 query: `{ animals (ids: [1,2,3])
-                      ${animalFields}
+                      ${animalConnectionFields}
                   }`,
             });
         if (process.env.BEARER_TOKEN) {
@@ -117,9 +117,9 @@ describe('GraphQL animal integration tests', () => {
                         data: { animals },
                     },
                 } = res;
-                expect(animals).to.be.an('array');
-                validate(animals[0]);
-                expect(animals).to.have.length(3);
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(3);
                 return done();
             });
     });
@@ -131,7 +131,7 @@ describe('GraphQL animal integration tests', () => {
                 query: `
                 {
                     animals (species: [1, 2], gender: [1, 2], breed: [205, 268, 350])
-                        ${animalFields}
+                        ${animalConnectionFields}
                 }`,
             });
         if (process.env.BEARER_TOKEN) {
@@ -149,9 +149,41 @@ describe('GraphQL animal integration tests', () => {
                         data: { animals },
                     },
                 } = res;
-                expect(animals).to.be.an('array');
-                validate(animals[0]);
-                expect(animals).to.have.length(3);
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(3);
+                return done();
+            });
+    });
+
+    it('Returns first 2 animals', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (first: 2)
+                        ${animalConnectionFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(2);
                 return done();
             });
     });

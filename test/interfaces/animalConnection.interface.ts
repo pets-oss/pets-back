@@ -1,12 +1,8 @@
 import Animal from './animal.interface';
-import PageInfo from './pageInfo.interface';
+import Connection from './connection.interface';
 
-export default interface AnimalConnection {
-    edges: AnimalEdge[]
-    pageInfo: PageInfo
+export default interface AnimalConnection extends Connection<Animal> {
+
 }
 
-interface AnimalEdge {
-    node: Animal
-    cursor: string
-}
+
