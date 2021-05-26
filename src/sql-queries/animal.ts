@@ -67,16 +67,17 @@ export const getAnimalsQuery = (
 ): QueryConfig => {
 
     let query = select(`
-    ${table}.id,
-    ${table}.name,
-    ${table}.organization,
-    ${table}.status,
-    ${table}.image_url,
-    ${table}.comments,
-    ${table}.mod_time`).from(table)
+        ${table}.id,
+        ${table}.name,
+        ${table}.organization,
+        ${table}.status,
+        ${table}.image_url,
+        ${table}.comments,
+        ${table}.mod_time`)
+        .from(table)
         .leftJoin('animal_details as ad').on(`${table}.id`,'ad.animal_id')
         .leftJoin('breed AS b').on('ad.breed_id','b.id');
-    query = ids ? query.where($in('id', ids)) : query;
+    query = ids ? query.where($in(`${table}.id`, ids)) : query;
     query = species ? query.where($in('b.species', species)) : query;
     query = gender ? query.where($in('ad.gender_id', gender)) : query;
     query = breed ? query.where($in('ad.breed_id', breed)) : query;
@@ -85,39 +86,6 @@ export const getAnimalsQuery = (
     query = limit ? query.limit(limit) : query;
 
     return query.toParams();
-
-    // const text = `
-    //     SELECT
-    //         ${table}.id,
-    //         ${table}.name,
-    //         ${table}.organization,
-    //         ${table}.status,
-    //         ${table}.image_url,
-    //         ${table}.comments,
-    //         ${table}.mod_time
-    //     FROM ${table}
-    //     JOIN animal_details AS ad
-    //         ON ${table}.id = ad.animal_id
-    //     JOIN breed AS b
-    //         ON ad.breed_id = b.id
-    //     WHERE ($1::int[] IS NULL OR ${table}.id = ANY ($1))
-    //         AND ($2::species[] IS NULL OR b.species = ANY ($2))
-    //         AND ($3::gender[] IS NULL OR ad.gender_id = ANY ($3))
-    //         AND ($4::int[] IS NULL OR ad.breed_id = ANY ($4));
-    // `;
-    //
-    // const query = {
-    //     text,
-    //     values: [
-    //         ids,
-    //         species,
-    //         gender,
-    //         breed
-    //     ]
-    // };
-    //
-    // return query;
-
 };
 
 export const createAnimalQuery = (input: CreateAnimalInput): QueryConfig => {
