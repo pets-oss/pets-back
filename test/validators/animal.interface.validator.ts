@@ -200,7 +200,14 @@ export const AnimalSchema = {
       ]
     },
     "details": {
-      "$ref": "#/definitions/default"
+      "anyOf": [
+        {
+          "$ref": "#/definitions/default"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "id": {
       "type": "number"
@@ -212,7 +219,14 @@ export const AnimalSchema = {
       ]
     },
     "microchip": {
-      "$ref": "#/definitions/default_4"
+      "anyOf": [
+        {
+          "$ref": "#/definitions/default_4"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "modTime": {
       "type": [
@@ -230,7 +244,14 @@ export const AnimalSchema = {
       "type": "number"
     },
     "registration": {
-      "$ref": "#/definitions/default_3"
+      "anyOf": [
+        {
+          "$ref": "#/definitions/default_3"
+        },
+        {
+          "type": "null"
+        }
+      ]
     },
     "status": {
       "type": [
