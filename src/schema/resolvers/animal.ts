@@ -125,10 +125,6 @@ const resolvers: IResolvers = {
                 },
                 edges
             };
-            // const dbResponse = await pgClient.query(
-            //     getAnimalsQuery(ids, species, gender, breed)
-            // );
-            // return dbResponse.rows;
         },
         animal: async (_, { id }, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalQuery(id));
