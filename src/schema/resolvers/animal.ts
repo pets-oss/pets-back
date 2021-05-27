@@ -100,7 +100,7 @@ const resolvers: IResolvers = {
             ));
 
             let { rows } = dbResponse;
-            const hasMore = limit != null ? rows.length > limit : false;
+            const hasMore = limit != null && rows.length > limit;
             if (hasMore) {
                 rows.pop();
             }
