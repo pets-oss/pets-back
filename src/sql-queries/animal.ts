@@ -75,14 +75,14 @@ export const getAnimalsQuery = (
         ${table}.comments,
         ${table}.mod_time`)
         .from(table)
-        .leftJoin('animal_details as ad').on(`${table}.id`,'ad.animal_id')
+        .leftJoin('animal_details AS ad').on(`${table}.id`,'ad.animal_id')
         .leftJoin('breed AS b').on('ad.breed_id','b.id');
     query = ids ? query.where($in(`${table}.id`, ids)) : query;
     query = species ? query.where($in('b.species', species)) : query;
     query = gender ? query.where($in('ad.gender_id', gender)) : query;
     query = breed ? query.where($in('ad.breed_id', breed)) : query;
-    query = cursor ? query.where(reverse ? lt('id', cursor) : gt('id', cursor)) : query;
-    query = reverse ? query.orderBy('id DESC') : query;
+    query = cursor ? query.where(reverse ? lt(`${table}.id`, cursor) : gt(`${table}.id`, cursor)) : query;
+    query = reverse ? query.orderBy(`${table}.id DESC`) : query.orderBy(`${table}.id`);
     query = limit ? query.limit(limit) : query;
 
     return query.toParams();
