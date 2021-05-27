@@ -65,7 +65,6 @@ export const getAnimalsQuery = (
     reverse: boolean | null,
     cursor: string | null,
 ): QueryConfig => {
-
     let query = select(`
         ${table}.id,
         ${table}.name,
@@ -83,7 +82,7 @@ export const getAnimalsQuery = (
     query = breed ? query.where($in('ad.breed_id', breed)) : query;
     query = cursor ? query.where(reverse ? lt(`${table}.id`, cursor) : gt(`${table}.id`, cursor)) : query;
     query = reverse ? query.orderBy(`${table}.id DESC`) : query.orderBy(`${table}.id`);
-    query = limit ? query.limit(limit) : query;
+    query = limit != null ? query.limit(limit) : query;
 
     return query.toParams();
 };

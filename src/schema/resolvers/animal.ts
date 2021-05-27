@@ -75,7 +75,7 @@ const resolvers: IResolvers = {
         animals: async (_,
             { ids, species, gender, breed,  first, after, last, before },
             { pgClient }) => {
-            if ((first || after) && (last || before)) {
+            if ((first ?? after) != null && (last ?? before) != null) {
                 throw new Error('Feature not implemented, try only with first and after or last and before');
             }
             if (first != null && first < 0) {
@@ -85,22 +85,22 @@ const resolvers: IResolvers = {
                 throw new Error('last can not be less than zero');
             }
 
-            const reverse = !!(last || before);
-            const limit = first || last;
-            const cursor = after || before;
+            const reverse = (last ?? before) != null
+            const limit = first ?? last;
+            const cursor = after ?? before;
 
             const dbResponse = await pgClient.query(getAnimalsQuery(
                 ids,
                 species,
                 gender,
                 breed,
-                limit ? limit + 1 : limit,
+                limit != null ? limit + 1 : limit,
                 reverse,
                 cursor ? Buffer.from(cursor, 'base64').toString() : null
             ));
 
             let { rows } = dbResponse;
-            const hasMore = limit ? rows.length > limit : false;
+            const hasMore = limit != null ? rows.length > limit : false;
             if (hasMore) {
                 rows.pop();
             }
