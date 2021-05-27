@@ -23,10 +23,12 @@ import dateResolver from './resolvers/date';
 import chipInstallPlaceTranslationResolver from './resolvers/chipInstallPlaceTranslation';
 import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
 import givenAwayEventResolvers from './resolvers/givenAwayEvent';
+import customScalarsResolvers from './resolvers/scalars';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
     resolvers: merge(
+        customScalarsResolvers,
         animalResolvers,
         animalDetailsResolvers,
         animalMicrochipResolvers,
