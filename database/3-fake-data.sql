@@ -60,6 +60,13 @@ INSERT INTO animal_microchip
 (4, '29387', '5', '2020-04-14', '3', DEFAULT),
 (3, '2893402', '6', '2020-03-01', '4', DEFAULT);
 
+INSERT INTO events 
+(animal_id, group_enum, type, date_time, author, comments) VALUES
+(1, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine'),
+(2, 'Medical', 'Surgery', '2020-05-22', 'aiubfaw4io09', 'Fast recovery after surgey'),
+(3, 'Medical', 'Medication', '2020-05-21', 'dhjbwau74a6', 'Tick medications'),
+(4, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine');
+
 INSERT INTO animal_event_general
 (animal_id, type, expenses, date_time, comments, author) VALUES
 (2, 'CheckIn', 109.03, '2020-07-01', 'Registration!', 'dhjbwau74a6'),
@@ -92,8 +99,7 @@ INSERT INTO animal_event_general
 (5, 'LocationChange', 1.00, '2018-07-31', 'Pasikeitė laikymo vietos adresas.', '0932hfdsa'),
 (5, 'LocationChange', 1.00, '2018-08-01', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78'),
 (5, 'LocationChange', 1.00, '2018-08-02', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-(5, 'LocationChange', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-(5, 'LocationChange', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78');
+(5, 'LocationChange', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),(5, 'LocationChange', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78');
 
 INSERT INTO animal_event_medical_record
 (animal_id, type, expenses, date_time, comments, author) VALUES
