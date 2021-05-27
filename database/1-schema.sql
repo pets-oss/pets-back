@@ -239,8 +239,8 @@ COMMENT ON COLUMN status_translation.language is 'Language code based on BCP 47'
 
 CREATE TABLE former_animal_owner (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(256) NOT NULL,
-    surname VARCHAR(256),
+    name VARCHAR(255) NOT NULL,
+    surname VARCHAR(255),
     phone VARCHAR(64),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
