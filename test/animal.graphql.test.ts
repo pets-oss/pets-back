@@ -187,6 +187,38 @@ describe('GraphQL animal integration tests', () => {
                 return done();
             });
     });
+
+    it('Returns first 2 animals after cursor="MQ=="', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (first: 2, after: "MQ==")
+                        ${animalConnectionFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(2);
+                return done();
+            });
+    });
 });
 
 describe('animal mutations tests', () => {
