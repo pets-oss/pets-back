@@ -84,6 +84,7 @@ const resolvers: IResolvers = {
             if (last != null && last < 0) {
                 throw new Error('last can not be less than zero');
             }
+
             const reverse = !!(last || before);
             const limit = first || last;
             const cursor = after || before;
@@ -112,16 +113,12 @@ const resolvers: IResolvers = {
                 node: value
             }));
 
-            const firstEdge = edges[0];
-            const lastEdge = edges[edges.length - 1];
-
             return {
                 page_info: {
                     has_next_page: reverse ? false : hasMore,
                     has_previous_page: reverse ? hasMore : false,
-                    start_cursor: firstEdge ?
-                        firstEdge.cursor : null,
-                    end_cursor: lastEdge ? lastEdge.cursor : null
+                    start_cursor: edges[0]?.cursor,
+                    end_cursor: edges[edges.length - 1]?.cursor
                 },
                 edges
             };
