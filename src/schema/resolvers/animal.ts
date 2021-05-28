@@ -74,7 +74,7 @@ interface Animal {
 const resolvers: IResolvers = {
     Query: {
         animals: async (_,
-            { ids, species, gender, breed, first, after, last, before },
+            { ids, species, gender, breed, after, first, before, last },
             { pgClient }) => {
             if ((first ?? after) != null && (last ?? before) != null) {
                 throw new ValidationError('Feature not implemented, try only with first and after or last and before');
