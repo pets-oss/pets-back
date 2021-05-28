@@ -24,10 +24,12 @@ import chipInstallPlaceTranslationResolver from './resolvers/chipInstallPlaceTra
 import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
 import givenAwayEventResolvers from './resolvers/givenAwayEvent';
 import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
+import customScalarsResolvers from './resolvers/scalars';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
     resolvers: merge(
+        customScalarsResolvers,
         animalResolvers,
         animalDetailsResolvers,
         animalMicrochipResolvers,
