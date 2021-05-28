@@ -1,35 +1,35 @@
 import { IResolvers } from 'graphql-tools';
 import { ValidationError } from 'apollo-server-express';
 import {
-    getFormerAnimalOwnersQuery,
-    getFormerAnimalOwnerQuery,
-    createFormerAnimalOwnerQuery,
-    updateFormerAnimalOwnerQuery
-} from '../../sql-queries/formerAnimalOwner';
+    getAnimalOwnersQuery,
+    getAnimalOwnerQuery,
+    createAnimalOwnerQuery,
+    updateAnimalOwnerQuery
+} from '../../sql-queries/animalOwner';
 
 const resolvers: IResolvers = {
     Query: {
-        formerAnimalOwners: async (_, __, { pgClient }) => {
+        animalOwners: async (_, __, { pgClient }) => {
             const dbResponse = await pgClient.query(
-                getFormerAnimalOwnersQuery()
+                getAnimalOwnersQuery()
             );
             return dbResponse.rows;
         },
-        formerAnimalOwner: async (_, { id }, { pgClient }) => {
+        animalOwner: async (_, { id }, { pgClient }) => {
             const dbResponse = await pgClient.query(
-                getFormerAnimalOwnerQuery(id)
+                getAnimalOwnerQuery(id)
             );
             return dbResponse.rows[0];
         }
     },
     Mutation: {
-        createFormerAnimalOwner: async (_, { input }, { pgClient }) => {
+        createAnimalOwner: async (_, { input }, { pgClient }) => {
             const dbResponse = await pgClient.query(
-                createFormerAnimalOwnerQuery(input)
+                createAnimalOwnerQuery(input)
             );
             return dbResponse.rows[0];
         },
-        updateFormerAnimalOwner: async (
+        updateAnimalOwner: async (
             _,
             { input },
             { pgClient }
@@ -44,7 +44,7 @@ const resolvers: IResolvers = {
             }
 
             const dbResponse = await pgClient.query(
-                updateFormerAnimalOwnerQuery(input)
+                updateAnimalOwnerQuery(input)
             );
             return dbResponse.rows[0];
         }

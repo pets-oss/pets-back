@@ -104,7 +104,7 @@ INSERT INTO animal_event_found
 ('Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL, 'aiubfaw4io09'),
 ('Maironio g.', '3', 15, '2018-08-04', 5, NULL, 'dhjbwau74a6');
 
-INSERT INTO former_animal_owner
+INSERT INTO animal_owner
 (name, surname, phone) VALUES
 ('Laisvyda', 'Katmeilė', '1234'),
 ('Bonifacas', 'Tabletė', '4321'),
