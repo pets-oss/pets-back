@@ -4,6 +4,7 @@ import {
     getGeneralEventsQuery,
     getGivenAwayEventsQuery,
 } from '../../sql-queries/event';
+import { getAuthor } from './author';
 
 function appendEventsDetails(events: any[]) {
     return events.map((event: any) => ({
@@ -57,7 +58,7 @@ function appendGivenAwayEventsDetails(events: any[]) {
                 id: event.former_owner_id,
                 name: event.name,
                 surname: event.surname,
-                phone: event.phone 
+                phone: event.phone
 
             },
             reason: event.reason
@@ -73,7 +74,7 @@ function getMedicationEvents() {
         type: 'Medication',
         date_time: '2021-05-23',
         create_time: '2021-05-23',
-        author: 'Ignas',
+        author: 'aiubfaw4io09',
         details: {
             comments: 'Dog can\'t sleep, so I gave a few pills',
             treatment: 'Some pills from insomnia',
@@ -90,7 +91,7 @@ function getMicrochippingEvents() {
         type: 'Microchipping',
         date_time: '2021-05-23',
         create_time: '2021-05-23',
-        author: 'Ignas',
+        author: 'aiubfaw4io09',
         details: {
             microchip: {
                 microchip_id: 1,
@@ -127,7 +128,31 @@ const resolvers: IResolvers = {
             return events;
         }
     },
+    Found: {
+        author: getAuthor
+    },
+    GivenAway: {
+        author: getAuthor
+    },
+    CheckIn: {
+        author: getAuthor
+    },
+    CheckOut: {
+        author: getAuthor
+    },
+    LocationChange: {
+        author: getAuthor
+    },
+    Microchipping: {
+        author: getAuthor
+    },
+    Medication: {
+        author: getAuthor
+    },
     Event: {
+        // hoped for inheritance, but
+        // IT DOES NOT WORK THIS WAY :(
+        // author: getAuthor,
         __resolveType: ({ type }: { type: string }) => type
     },
 }

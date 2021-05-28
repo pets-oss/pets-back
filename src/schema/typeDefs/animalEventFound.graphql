@@ -9,7 +9,7 @@ type FoundEvent {
     municipalityId: Int!
     date: Date
     animalId: Int!
-    author: String!
+    author: Author!
     comments: String
 }
 

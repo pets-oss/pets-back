@@ -24,6 +24,7 @@ import chipInstallPlaceTranslationResolver from './resolvers/chipInstallPlaceTra
 import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
 import givenAwayEventResolvers from './resolvers/givenAwayEvent';
 import customScalarsResolvers from './resolvers/scalars';
+import authorResolvers from './resolvers/author';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
@@ -49,7 +50,8 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
         dateResolver,
         chipInstallPlaceTranslationResolver,
         animalFoundEventResolver,
-        givenAwayEventResolvers
+        givenAwayEventResolvers,
+        authorResolvers,
     ),
     inheritResolversFromInterfaces: true,
 });
