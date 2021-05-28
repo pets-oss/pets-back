@@ -99,7 +99,8 @@ INSERT INTO animal_event_general
 (5, 'LocationChange', 1.00, '2018-07-31', 'Pasikeitė laikymo vietos adresas.', '0932hfdsa'),
 (5, 'LocationChange', 1.00, '2018-08-01', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78'),
 (5, 'LocationChange', 1.00, '2018-08-02', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-(5, 'LocationChange', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),(5, 'LocationChange', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78');
+(5, 'LocationChange', 1.00, '2018-08-03', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
+(5, 'LocationChange', 1.00, '2018-08-04', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78');
 
 INSERT INTO animal_event_medical_record
 (animal_id, type, expenses, date_time, comments, author) VALUES
