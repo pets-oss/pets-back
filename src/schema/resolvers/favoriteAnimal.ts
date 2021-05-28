@@ -1,5 +1,6 @@
+import { ValidationError } from 'apollo-server-express';
 import { IResolvers } from 'graphql-tools';
-import { getAnimalQuery, getAnimalsQuery } from '../../sql-queries/animal';
+import { getAnimalsQuery } from '../../sql-queries/animal';
 import {
     getFavoriteAnimalsQuery,
     createFavoriteAnimalQuery,
@@ -16,7 +17,7 @@ const resolvers: IResolvers = {
     Query: {
         favoriteAnimals: async (_, __, { pgClient, userId }) => {
             if (!userId) {
-                throw new Error(
+                throw new ValidationError(
                     'Favorite animals could not be retrieved due to undefined user id'
                 );
             }
@@ -41,21 +42,16 @@ const resolvers: IResolvers = {
     Mutation: {
         createFavoriteAnimal: async (_, { animalId }, { pgClient, userId }) => {
             if (!userId) {
-                throw new Error(
+                throw new ValidationError(
                     'Animal could not be added to the list of favorite animals due to undefined user id'
                 );
             }
             
-            let dbResponse;
-            dbResponse = await pgClient.query(
+            const dbResponse = await pgClient.query(
                 createFavoriteAnimalQuery({
                     userId,
                     animalId
                 })
-            );
-
-            dbResponse = await pgClient.query(
-                getAnimalQuery(animalId)
             );
             
             return dbResponse.rows[0];
@@ -63,21 +59,16 @@ const resolvers: IResolvers = {
         },
         deleteFavoriteAnimal: async (_, { animalId }, { pgClient, userId }) => {
             if (!userId) {
-                throw new Error(
+                throw new ValidationError(
                     'Animal could not be removed from the list of favorite animals due to undefined user id'
                 );
             }
             
-            let dbResponse;
-            dbResponse = await pgClient.query(
+            const dbResponse = await pgClient.query(
                 deleteFavoriteAnimalQuery({
                     userId,
                     animalId
                 })
-            );
-            
-            dbResponse = await pgClient.query(
-                getAnimalQuery(animalId)
             );
             
             return dbResponse.rows[0];

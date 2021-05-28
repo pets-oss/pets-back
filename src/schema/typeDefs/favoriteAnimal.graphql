@@ -11,7 +11,17 @@ extend type Query {
 
 extend type Mutation {
     "Added animal to favorite animals"
-    createFavoriteAnimal("Animal id" animalId: Int!): Animal
+    createFavoriteAnimal("Animal id" animalId: Int!): FavoriteAnimal
     "Removed animal from favorite animals"
-    deleteFavoriteAnimal("Animal id" animalId: Int!): Animal
+    deleteFavoriteAnimal("Animal id" animalId: Int!): FavoriteAnimal
+}
+
+"Represents a favorite animal."
+type FavoriteAnimal {
+    "Animal id"
+    animalId: Int!
+    "User id"
+    userId: String!
+    "Modification time"
+    modTime: String
 }
