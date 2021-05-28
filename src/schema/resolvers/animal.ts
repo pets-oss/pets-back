@@ -1,5 +1,6 @@
 import { IResolvers } from 'graphql-tools';
 import { Validator } from 'node-input-validator';
+import { ValidationError } from 'apollo-server-express';
 import {
     getAnimalQuery,
     getAnimalsQuery,
@@ -73,16 +74,16 @@ interface Animal {
 const resolvers: IResolvers = {
     Query: {
         animals: async (_,
-            { ids, species, gender, breed,  first, after, last, before },
+            { ids, species, gender, breed, first, after, last, before },
             { pgClient }) => {
             if ((first ?? after) != null && (last ?? before) != null) {
-                throw new Error('Feature not implemented, try only with first and after or last and before');
+                throw new ValidationError('Feature not implemented, try only with first and after or last and before');
             }
             if (first != null && first < 0) {
-                throw new Error('first can not be less than zero');
+                throw new ValidationError('first can not be less than zero');
             }
             if (last != null && last < 0) {
-                throw new Error('last can not be less than zero');
+                throw new ValidationError('last can not be less than zero');
             }
 
             const reverse = (last ?? before) != null
