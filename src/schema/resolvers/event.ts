@@ -2,7 +2,7 @@ import { IResolvers } from 'graphql-tools';
 import {
     getFoundEventsQuery,
     getGeneralEventsQuery,
-    getGivenAwayEventsQuery,
+    getGivenAwayEventsQuery
 } from '../../sql-queries/event';
 import { getAuthor } from './author';
 
@@ -91,7 +91,7 @@ function getMicrochippingEvents() {
         type: 'Microchipping',
         date_time: '2021-05-23',
         create_time: '2021-05-23',
-        author: 'aiubfaw4io09',
+        author: 'afhu9w4f78',
         details: {
             microchip: {
                 microchip_id: 1,
