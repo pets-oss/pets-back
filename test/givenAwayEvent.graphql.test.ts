@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/givenAwayEvent.interface.validator';
+import { authorFields } from './event.graphql.test';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -14,7 +15,7 @@ const givenAwayEventFields = `
         date,
         animalId,
         reason,
-        author
+        author ${authorFields}
     }
 `;
 
@@ -23,7 +24,13 @@ const expectedResult = {
     reason: 'Leaving country',
     date: '2021-03-19',
     animalId: 4,
-    author: 'dhjbwau74a6',
+    author: {
+        email: 'green@mamba.lt',
+        id: 'dhjbwau74a6',
+        name: 'Sveikas',
+        surname: 'Ūsas',
+        username: 'Svx'
+    }
 };
 
 describe('GraphQL animal given away event integration tests', () => {
@@ -43,13 +50,13 @@ describe('GraphQL animal given away event integration tests', () => {
             })
             .expect(200);
         if (process.env.BEARER_TOKEN) {
-            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`);
+        }
         req.end((err, res) => {
             if (err) return done(err);
             const { body: { data: { createGivenAwayEvent } } } = res;
             validate(createGivenAwayEvent);
-            expect(createGivenAwayEvent).to.include(expectedResult);
+            expect(createGivenAwayEvent).to.deep.include(expectedResult);
             return done();
         });
     });
@@ -71,13 +78,13 @@ describe('GraphQL animal given away event integration tests', () => {
             })
             .expect(200);
         if (process.env.BEARER_TOKEN) {
-            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`);
+        }
         req.end((err, res) => {
             if (err) return done(err);
             const { body: { data: { updateGivenAwayEvent } } } = res;
             validate(updateGivenAwayEvent);
-            expect(updateGivenAwayEvent).to.include({
+            expect(updateGivenAwayEvent).to.deep.include({
                 id: 1,
                 ...expectedResult,
             });

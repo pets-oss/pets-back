@@ -7,6 +7,16 @@ require('dotenv').config({ path: './test/.env' });
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
+// eslint-disable-next-line import/prefer-default-export
+export const authorFields = `
+    {
+        id,
+        username,
+        name,
+        surname,
+        email,
+    }
+`;
 const eventFields = `
     {
         id,
@@ -15,7 +25,7 @@ const eventFields = `
         type,
         dateTime,
         createTime
-        author
+        author ${authorFields}
     }
 `;
 
@@ -30,7 +40,7 @@ describe('GraphQL event integration tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
