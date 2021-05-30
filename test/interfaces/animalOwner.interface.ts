@@ -1,4 +1,4 @@
-export default interface FormerAnimalOwner {
+export default interface AnimalOwner {
     id: number;
     name: string;
     surname: string | null;
