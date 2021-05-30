@@ -57,10 +57,10 @@ export const getAnimalQuery = (id: number): QueryConfig => {
 };
 
 export const getAnimalsQuery = (
-    ids: [number] | null,
-    species: [number] | null,
-    gender: [number] | null,
-    breed: [number] | null,
+    ids?: [number] | null,
+    species?: [number] | null,
+    gender?: [number] | null,
+    breed?: [number] | null,
     limit?: number | null,
     reverse?: boolean | null,
     cursor?: string | null,
