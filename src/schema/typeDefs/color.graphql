@@ -6,7 +6,7 @@ extend type Query {
 
     colors(language: "lt")
     """
-    colors("language code" language: String!): [Gender]
+    colors("language code" language: String!): [Color]
 }
 
 "Represents a color."

@@ -23,6 +23,7 @@ import dateResolver from './resolvers/date';
 import chipInstallPlaceTranslationResolver from './resolvers/chipInstallPlaceTranslation';
 import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
 import givenAwayEventResolvers from './resolvers/givenAwayEvent';
+import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
 import customScalarsResolvers from './resolvers/scalars';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
@@ -49,7 +50,8 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
         dateResolver,
         chipInstallPlaceTranslationResolver,
         animalFoundEventResolver,
-        givenAwayEventResolvers
+        givenAwayEventResolvers,
+        favoriteAnimalResolvers,
     ),
     inheritResolversFromInterfaces: true,
 });
