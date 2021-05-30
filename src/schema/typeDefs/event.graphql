@@ -131,7 +131,7 @@ type Found implements Event {
 }
 
 type GivenAwayDetails implements EventDetails{
-    formerOwner: FormerAnimalOwner!
+    formerOwner: AnimalOwner!
     reason: String
     comments: String
 }

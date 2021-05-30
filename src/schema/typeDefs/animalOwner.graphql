@@ -1,0 +1,55 @@
+extend type Query {
+    """
+    Get all animal owners.
+
+    Examples:
+
+    animalOwners
+    """
+    animalOwners: [AnimalOwner]
+    """
+    Get a animal owner with a specific ID.
+
+    Examples:
+
+    animalOwner(id: 1)
+    """
+    animalOwner(id: Int!): AnimalOwner
+}
+
+"Represents a animal owner."
+type AnimalOwner {
+    "Animal owner ID, e.g., 1"
+    id: Int!
+    "Animal owner name"
+    name: String!
+    "Animal owner surname"
+    surname: String
+    "Animal owner phone number"
+    phone: String
+}
+
+extend type Mutation {
+    createAnimalOwner(input: CreateAnimalOwnerInput!): AnimalOwner
+    updateAnimalOwner(input: UpdateAnimalOwnerInput!): AnimalOwner
+}
+
+input CreateAnimalOwnerInput {
+    "Animal owner name (255 characters max)"
+    name: Name!
+    "Animal owner surname (255 characters max)"
+    surname: Surname!
+    "Animal owner phone number (+370XXXXXXXX)"
+    phone: Phone
+}
+
+input UpdateAnimalOwnerInput {
+    "Animal owner ID, e.g., 1"
+    id: Int!
+    "Animal owner name (255 characters max)"
+    name: Name
+    "Animal owner surname (255 characters max)"
+    surname: Surname
+    "Animal owner phone number (+370XXXXXXXX)"
+    phone: Phone
+}

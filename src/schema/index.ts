@@ -18,12 +18,13 @@ import uploadResolver from './resolvers/upload';
 import chipCompanyResolvers from './resolvers/chipCompany';
 import organizationTask from './resolvers/organizationTask';
 import municipalityResolver from './resolvers/municipality';
-import formerAnimalOwnerResolvers from './resolvers/formerAnimalOwner';
+import animalOwnerResolvers from './resolvers/animalOwner';
 import dateResolver from './resolvers/date';
 import chipInstallPlaceTranslationResolver
     from './resolvers/chipInstallPlaceTranslation';
 import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
 import givenAwayEventResolvers from './resolvers/givenAwayEvent';
+import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
 import customScalarsResolvers from './resolvers/scalars';
 import authorResolvers from './resolvers/author';
 
@@ -50,10 +51,12 @@ const schemaWithResolvers = addResolversToSchema({
         chipCompanyResolvers,
         organizationTask,
         municipalityResolver,
-        formerAnimalOwnerResolvers,
+        animalOwnerResolvers,
         dateResolver,
         chipInstallPlaceTranslationResolver,
         animalFoundEventResolver,
+        givenAwayEventResolvers,
+        favoriteAnimalResolvers,
         givenAwayEventResolvers,
         authorResolvers,
     ),

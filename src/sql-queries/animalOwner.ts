@@ -2,22 +2,22 @@ import { QueryConfig } from 'pg';
 import { insert, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
-const table = 'former_animal_owner';
+const table = 'animal_owner';
 
-interface CreateFormerAnimalOwnerInput {
+interface CreateAnimalOwnerInput {
     name: string
     surname?: string | null
     phone?: string | null
 }
 
-interface UpdateFormerAnimalOwnerInput {
+interface UpdateAnimalOwnerInput {
     id: number
     name?: string | null
     surname?: string | null
     phone?: string | null
 }
 
-export const getFormerAnimalOwnersQuery = (): QueryConfig => {
+export const getAnimalOwnersQuery = (): QueryConfig => {
     const text = `SELECT * FROM ${table}`;
 
     return {
@@ -25,7 +25,7 @@ export const getFormerAnimalOwnersQuery = (): QueryConfig => {
     };
 };
 
-export const getFormerAnimalOwnerQuery = (id: number): QueryConfig => {
+export const getAnimalOwnerQuery = (id: number): QueryConfig => {
     const text = `SELECT * FROM ${table} WHERE id = $1`;
 
     return {
@@ -34,14 +34,14 @@ export const getFormerAnimalOwnerQuery = (id: number): QueryConfig => {
     };
 };
 
-export const createFormerAnimalOwnerQuery =
-    (input: CreateFormerAnimalOwnerInput): QueryConfig =>
+export const createAnimalOwnerQuery =
+    (input: CreateAnimalOwnerInput): QueryConfig =>
         insert(table, snakeCaseKeys(input))
             .returning('*')
             .toParams();
 
-export const updateFormerAnimalOwnerQuery =
-    (input: UpdateFormerAnimalOwnerInput): QueryConfig =>
+export const updateAnimalOwnerQuery =
+    (input: UpdateAnimalOwnerInput): QueryConfig =>
         update(table, snakeCaseKeys(input))
             .where({ id: input.id })
             .returning('*')
