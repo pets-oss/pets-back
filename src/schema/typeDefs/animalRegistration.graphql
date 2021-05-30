@@ -3,6 +3,10 @@ enum RegistrationStatus {
     Inactive
 }
 
+extend type Query {
+    registration("Animal id in database" id: Int!): AnimalRegistration
+}
+
 "Represents animal registration"
 type AnimalRegistration {
     "Registration number"
