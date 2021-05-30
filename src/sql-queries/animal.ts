@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import { in as $in, insert, gt, lt, select, update } from 'sql-bricks-postgres';
+import { gt, in as $in, insert, lt, select, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 import { AnimalRegistrationInput } from './animalRegistration';
 import { AnimalDetailsInput } from './animalDetails';
@@ -61,9 +61,9 @@ export const getAnimalsQuery = (
     species: [number] | null,
     gender: [number] | null,
     breed: [number] | null,
-    limit: number | null,
-    reverse: boolean | null,
-    cursor: string | null,
+    limit?: number | null,
+    reverse?: boolean | null,
+    cursor?: string | null,
 ): QueryConfig => {
     let query = select(`
         ${table}.id,
