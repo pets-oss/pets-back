@@ -2,7 +2,7 @@ import { IResolvers } from 'graphql-tools';
 import {
     getFoundEventsQuery,
     getGeneralEventsQuery,
-    getGivenAwayEventsQuery
+    getGivenAwayEventsQuery,
 } from '../../sql-queries/event';
 import { getAuthor } from './author';
 
@@ -128,31 +128,8 @@ const resolvers: IResolvers = {
             return events;
         }
     },
-    Found: {
-        author: getAuthor
-    },
-    GivenAway: {
-        author: getAuthor
-    },
-    CheckIn: {
-        author: getAuthor
-    },
-    CheckOut: {
-        author: getAuthor
-    },
-    LocationChange: {
-        author: getAuthor
-    },
-    Microchipping: {
-        author: getAuthor
-    },
-    Medication: {
-        author: getAuthor
-    },
     Event: {
-        // hoped for inheritance, but
-        // IT DOES NOT WORK THIS WAY :(
-        // author: getAuthor,
+        author: getAuthor,
         __resolveType: ({ type }: { type: string }) => type
     },
 }
