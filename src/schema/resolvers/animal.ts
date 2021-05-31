@@ -1,5 +1,6 @@
 import { IResolvers } from 'graphql-tools';
 import { Validator } from 'node-input-validator';
+import { ValidationError } from 'apollo-server-express';
 import {
     getAnimalQuery,
     getAnimalsQuery,
@@ -67,13 +68,61 @@ async function getUpdateMicrochipResult(input: any, pgClient: any) {
     );
 }
 
+interface Animal {
+    id: number
+}
 const resolvers: IResolvers = {
     Query: {
-        animals: async (_, { ids, species, gender, breed }, { pgClient }) => {
-            const dbResponse = await pgClient.query(
-                getAnimalsQuery(ids, species, gender, breed)
-            );
-            return dbResponse.rows;
+        animals: async (_,
+            { ids, species, gender, breed, after, first, before, last },
+            { pgClient }) => {
+            if ((first ?? after) != null && (last ?? before) != null) {
+                throw new ValidationError('Feature not implemented, try only with first and after or last and before');
+            }
+            if (first != null && first < 0) {
+                throw new ValidationError('first can not be less than zero');
+            }
+            if (last != null && last < 0) {
+                throw new ValidationError('last can not be less than zero');
+            }
+
+            const reverse = (last ?? before) != null
+            const limit = first ?? last;
+            const cursor = after ?? before;
+
+            const dbResponse = await pgClient.query(getAnimalsQuery(
+                ids,
+                species,
+                gender,
+                breed,
+                limit != null ? limit + 1 : limit,
+                reverse,
+                cursor ? Buffer.from(cursor, 'base64').toString() : null
+            ));
+
+            let { rows } = dbResponse;
+            const hasMore = limit != null && rows.length > limit;
+            if (hasMore) {
+                rows.pop();
+            }
+            if (reverse) {
+                rows = rows.reverse();
+            }
+
+            const edges = rows.map((value: Animal) => ({
+                cursor: Buffer.from(value.id.toString()).toString('base64'),
+                node: value
+            }));
+
+            return {
+                page_info: {
+                    has_next_page: reverse ? false : hasMore,
+                    has_previous_page: reverse ? hasMore : false,
+                    start_cursor: edges[0]?.cursor,
+                    end_cursor: edges[edges.length - 1]?.cursor
+                },
+                edges
+            };
         },
         animal: async (_, { id }, { pgClient }) => {
             const dbResponse = await pgClient.query(getAnimalQuery(id));

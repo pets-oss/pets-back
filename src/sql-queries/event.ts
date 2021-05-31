@@ -43,7 +43,7 @@ export const getGivenAwayEventsQuery = (animalId: number | null): QueryConfig =>
     const text = `
         SELECT *, 'General' AS group, 'GivenAway' AS type
         FROM animal_event_given_away
-        LEFT JOIN former_animal_owner ON former_animal_owner.id = animal_event_given_away.former_owner_id
+        LEFT JOIN animal_owner ON animal_owner.id = animal_event_given_away.former_owner_id
         WHERE ($1::int IS NULL OR animal_event_given_away.animal_id = $1)
     `;
 

@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import { insert, update } from 'sql-bricks-postgres';
+import { gt, in as $in, insert, lt, select, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 import { AnimalRegistrationInput } from './animalRegistration';
 import { AnimalDetailsInput } from './animalDetails';
@@ -57,42 +57,34 @@ export const getAnimalQuery = (id: number): QueryConfig => {
 };
 
 export const getAnimalsQuery = (
-    ids: [number] | null,
-    species: [number] | null,
-    gender: [number] | null,
-    breed: [number] | null
+    ids?: [number] | null,
+    species?: [number] | null,
+    gender?: [number] | null,
+    breed?: [number] | null,
+    limit?: number | null,
+    reverse?: boolean | null,
+    cursor?: string | null,
 ): QueryConfig => {
-    const text = `
-        SELECT
-            ${table}.id,
-            ${table}.name,
-            ${table}.organization,
-            ${table}.status,
-            ${table}.image_url,
-            ${table}.comments,
-            ${table}.mod_time
-        FROM ${table}
-        JOIN animal_details AS ad
-            ON ${table}.id = ad.animal_id
-        JOIN breed AS b
-            ON ad.breed_id = b.id
-        WHERE ($1::int[] IS NULL OR ${table}.id = ANY ($1))
-            AND ($2::species[] IS NULL OR b.species = ANY ($2))
-            AND ($3::gender[] IS NULL OR ad.gender_id = ANY ($3))
-            AND ($4::int[] IS NULL OR ad.breed_id = ANY ($4));
-    `;
+    let query = select(`
+        ${table}.id,
+        ${table}.name,
+        ${table}.organization,
+        ${table}.status,
+        ${table}.image_url,
+        ${table}.comments,
+        ${table}.mod_time`)
+        .from(table)
+        .leftJoin('animal_details AS ad').on(`${table}.id`,'ad.animal_id')
+        .leftJoin('breed AS b').on('ad.breed_id','b.id');
+    query = ids ? query.where($in(`${table}.id`, ids)) : query;
+    query = species ? query.where($in('b.species', species)) : query;
+    query = gender ? query.where($in('ad.gender_id', gender)) : query;
+    query = breed ? query.where($in('ad.breed_id', breed)) : query;
+    query = cursor ? query.where(reverse ? lt(`${table}.id`, cursor) : gt(`${table}.id`, cursor)) : query;
+    query = reverse ? query.orderBy(`${table}.id DESC`) : query.orderBy(`${table}.id`);
+    query = limit != null ? query.limit(limit) : query;
 
-    const query = {
-        text,
-        values: [
-            ids,
-            species,
-            gender,
-            breed
-        ]
-    };
-
-    return query;
+    return query.toParams();
 };
 
 export const createAnimalQuery = (input: CreateAnimalInput): QueryConfig => {

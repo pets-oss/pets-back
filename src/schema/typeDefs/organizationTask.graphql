@@ -5,8 +5,7 @@ type OrganizationTask {
     organization: Int!
     isDone: Boolean
 }
- type Query {
+ extend type Query {
     organizationTasks: [OrganizationTask]
     organizationTask(id: Int): OrganizationTask
-
  }

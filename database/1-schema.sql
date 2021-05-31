@@ -236,10 +236,10 @@ CREATE TABLE status_translation (
 );
 COMMENT ON COLUMN status_translation.language is 'Language code based on BCP 47';
 
-CREATE TABLE former_animal_owner (
+CREATE TABLE animal_owner (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(256) NOT NULL,
-    surname VARCHAR(256),
+    name VARCHAR(255) NOT NULL,
+    surname VARCHAR(255),
     phone VARCHAR(64),
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -324,7 +324,7 @@ CREATE TABLE animal_event_found (
 
 CREATE TABLE animal_event_given_away (
     id SERIAL PRIMARY KEY,
-    former_owner_id INTEGER REFERENCES former_animal_owner(id) NOT NULL,
+    former_owner_id INTEGER REFERENCES animal_owner(id) NOT NULL,
     reason TEXT,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     date_time TIMESTAMP,
@@ -377,10 +377,10 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER former_animal_owner_mod_time BEFORE UPDATE ON former_animal_owner 
+CREATE TRIGGER events_mod_time BEFORE UPDATE ON events
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER events_mod_time BEFORE UPDATE ON events 
+CREATE TRIGGER animal_owner_mod_time BEFORE UPDATE ON animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general 
@@ -392,5 +392,6 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_given_away_mod_time BEFORE UPDATE ON animal_event_given_away 
+CREATE TRIGGER animal_event_given_away_mod_time BEFORE UPDATE ON animal_event_given_away
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+

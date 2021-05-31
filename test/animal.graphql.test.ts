@@ -5,6 +5,7 @@ import { animalDetailsFields } from './animalDetails.graphql.test';
 import { animalMicrochipFields } from './animalMicrochip.graphql.test';
 import { animalRegistrationFields } from './animalRegistration.graphql.test';
 import validate from './validators/animal.interface.validator';
+import validateAnimalConnection from './validators/animalConnection.interface.validator';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -26,6 +27,20 @@ const animalFields = `
     }
 `;
 
+const animalConnectionFields = `
+    {
+        edges {
+            node ${animalFields}
+            cursor
+        }
+        pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+        }
+    }
+`;
 describe('GraphQL animal integration tests', () => {
     it('Returns animal id=1 with all fields', (done) => {
         let req = request
@@ -37,7 +52,7 @@ describe('GraphQL animal integration tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
@@ -54,12 +69,12 @@ describe('GraphQL animal integration tests', () => {
             .post('/graphql')
             .send({
                 query: `{ animals
-                      ${animalFields}
+                       ${animalConnectionFields}
                   }`,
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
@@ -72,9 +87,9 @@ describe('GraphQL animal integration tests', () => {
                         data: { animals },
                     },
                 } = res;
-                expect(animals).to.be.an('array');
-                validate(animals[0]);
-                expect(animals).to.have.length.above(4);
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length.above(4)
                 return done();
             });
     });
@@ -84,12 +99,12 @@ describe('GraphQL animal integration tests', () => {
             .post('/graphql')
             .send({
                 query: `{ animals (ids: [1,2,3])
-                      ${animalFields}
+                      ${animalConnectionFields}
                   }`,
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
@@ -102,9 +117,9 @@ describe('GraphQL animal integration tests', () => {
                         data: { animals },
                     },
                 } = res;
-                expect(animals).to.be.an('array');
-                validate(animals[0]);
-                expect(animals).to.have.length(3);
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(3);
                 return done();
             });
     });
@@ -116,12 +131,12 @@ describe('GraphQL animal integration tests', () => {
                 query: `
                 {
                     animals (species: [1, 2], gender: [1, 2], breed: [205, 268, 350])
-                        ${animalFields}
+                        ${animalConnectionFields}
                 }`,
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
@@ -134,9 +149,73 @@ describe('GraphQL animal integration tests', () => {
                         data: { animals },
                     },
                 } = res;
-                expect(animals).to.be.an('array');
-                validate(animals[0]);
-                expect(animals).to.have.length(3);
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(3);
+                return done();
+            });
+    });
+
+    it('Returns first 2 animals', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (first: 2)
+                        ${animalConnectionFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(2);
+                return done();
+            });
+    });
+
+    it('Returns first 2 animals after cursor="MQ=="', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (first: 2, after: "MQ==")
+                        ${animalConnectionFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(2);
                 return done();
             });
     });
@@ -181,7 +260,7 @@ describe('animal mutations tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
@@ -230,7 +309,7 @@ describe('animal mutations tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
@@ -259,7 +338,7 @@ describe('animal mutations tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
