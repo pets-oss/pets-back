@@ -16,6 +16,7 @@ extend type Query {
     animals
     animals(ids: [1, 2, 3])
     animals(species: [1, 4], gender: [1, 2], breed: [205, 51])
+    animals(first: 5)
     """
     animals(
         "Animal ids in database"
@@ -25,8 +26,44 @@ extend type Query {
         "Animal gender ids in database"
         gender: [Int]
         "Animal breed ids in database"
-        breed: [Int]
-    ): [Animal]
+        breed: [Int],
+        "Cursor to return animals after that cursor"
+        after: String,
+        "A non‐negative integer"
+        first: Int,
+        "Cursor to return animals before that cursor"
+        before: String,
+        "A non‐negative integer"
+        last: Int
+    ): AnimalsConnection
+}
+
+"A connection to animals."
+type AnimalsConnection {
+    "Information for pagination."
+    pageInfo: PageInfo!
+    "A list of animal edges."
+    edges: [AnimalEdge]
+}
+
+"Information about pagination in a connection."
+type PageInfo {
+    "When paginating forwards, are there more items?"
+    hasNextPage: Boolean!
+    "When paginating backwards, are there more items?"
+    hasPreviousPage: Boolean!
+    "When paginating backwards, the cursor to continue."
+    startCursor: String
+    "When paginating forwards, the cursor to continue."
+    endCursor: String
+}
+
+"An edge in a connection."
+type AnimalEdge {
+    "The item at the end of the edge"
+    node: Animal
+    "A cursor for use in pagination"
+    cursor: String!
 }
 
 "Represents an animal."
