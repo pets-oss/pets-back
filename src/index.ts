@@ -24,17 +24,17 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         try {
             const results = await pgClient.query({
                 text: 'SELECT true AS ok',
-            })
+            });
             isDatabaseActive = results.rows[0]?.ok;
         } catch (error) {
             // eslint-disable-next-line no-console
-            console.log(error)
+            console.log(error);
         }
 
         try {
             isCloudinaryClientActive = await cloudinaryClient.isOk();
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
 
         res.send({
@@ -82,8 +82,23 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     const server = new ApolloServer({
         uploads: false,
         schema,
+        formatResponse: (response: any) => {
+            if (response.errors) {
+                console.log(response);
+                // eslint-disable-next-line default-case
+                switch (response.errors[0].extensions.code) {
+                case 'GRAPHQL_VALIDATION_FAILED':
+                case 'BAD_USER_INPUT':
+                    console.log(response?.http?.status);
+                    // response.http.status.set(400);
+                    break;
+                }
+                return response;
+            }
+            return null;
+        },
         fieldResolver: snakeCaseFieldResolver,
-        context: ({req}: {req: any}) => ({
+        context: ({ req }: { req: any }) => ({
             pgClient,
             cloudinaryClient,
             userId: extractUserId(req)

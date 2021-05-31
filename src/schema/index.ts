@@ -56,7 +56,6 @@ const schemaWithResolvers = addResolversToSchema({
         animalFoundEventResolver,
         givenAwayEventResolvers,
         favoriteAnimalResolvers,
-        givenAwayEventResolvers,
     ),
     inheritResolversFromInterfaces: true,
 });
