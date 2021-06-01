@@ -43,12 +43,6 @@ export const EventSchema = {
       "defaultProperties": [
       ],
       "properties": {
-        "email": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
         "id": {
           "type": "string"
         },
@@ -63,17 +57,12 @@ export const EventSchema = {
             "null",
             "string"
           ]
-        },
-        "username": {
-          "type": "string"
         }
       },
       "required": [
-        "email",
         "id",
         "name",
-        "surname",
-        "username"
+        "surname"
       ],
       "type": "object"
     }

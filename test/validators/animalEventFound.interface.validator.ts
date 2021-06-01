@@ -18,12 +18,6 @@ export const AnimalEventFoundSchema = {
       "defaultProperties": [
       ],
       "properties": {
-        "email": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
         "id": {
           "type": "string"
         },
@@ -38,17 +32,12 @@ export const AnimalEventFoundSchema = {
             "null",
             "string"
           ]
-        },
-        "username": {
-          "type": "string"
         }
       },
       "required": [
-        "email",
         "id",
         "name",
-        "surname",
-        "username"
+        "surname"
       ],
       "type": "object"
     }

@@ -25,11 +25,9 @@ const expectedResult = {
     date: '2021-03-19',
     animalId: 4,
     author: {
-        email: 'green@mamba.lt',
         id: 'dhjbwau74a6',
         name: 'Sveikas',
         surname: 'Ūsas',
-        username: 'Svx'
     }
 };
 

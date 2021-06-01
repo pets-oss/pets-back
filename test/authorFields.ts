@@ -2,9 +2,7 @@
 export const authorFields = `
     {
         id,
-        username,
         name,
         surname,
-        email,
     }
 `;

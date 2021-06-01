@@ -68,10 +68,8 @@ describe('Animal Event Found mutations tests', () => {
             comments: 'Dog was found dirty and hungry',
             author: {
                 id: 'dhjbwau74a6',
-                email: 'green@mamba.lt',
                 name: 'Sveikas',
                 surname: 'Ūsas',
-                username: 'Svx',
             },
         };
 

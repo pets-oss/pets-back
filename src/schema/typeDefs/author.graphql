@@ -2,12 +2,8 @@
 type Author {
     "id"
     id: String!
-    "User username"
-    username: String!
     "User name"
     name: String
     "User surname"
     surname: String
-    "User email"
-    email: String
 }
