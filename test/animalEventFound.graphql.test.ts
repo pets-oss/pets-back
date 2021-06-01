@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/animalEventFound.interface.validator';
-import { authorFields } from './event.graphql.test';
+import { authorFields } from './authorFields';
+
 
 require('dotenv').config({ path: './test/.env' });
 

@@ -1,22 +1,13 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/event.interface.validator';
+import { authorFields } from './authorFields';
 
 require('dotenv').config({ path: './test/.env' });
 
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-// eslint-disable-next-line import/prefer-default-export
-export const authorFields = `
-    {
-        id,
-        username,
-        name,
-        surname,
-        email,
-    }
-`;
 const eventFields = `
     {
         id,
