@@ -43,7 +43,7 @@ type AnimalsConnection {
     "Information for pagination."
     pageInfo: PageInfo!
     "A list of animal edges."
-    edges: [AnimalEdge]
+    edges: [AnimalEdge!]!
 }
 
 "Information about pagination in a connection."
