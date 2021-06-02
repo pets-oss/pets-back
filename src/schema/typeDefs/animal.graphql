@@ -55,7 +55,8 @@ type PageInfo {
     "When paginating backwards, the cursor to continue."
     startCursor: String
     "When paginating forwards, the cursor to continue."
-    endCursor: String
+    endCursor: String,
+    totalCount: Int!
 }
 
 "An edge in a connection."

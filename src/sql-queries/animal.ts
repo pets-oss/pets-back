@@ -72,7 +72,8 @@ export const getAnimalsQuery = (
         ${table}.status,
         ${table}.image_url,
         ${table}.comments,
-        ${table}.mod_time`)
+        ${table}.mod_time,
+        (SELECT COUNT(*) FROM ${table}) AS total_count`)
         .from(table)
         .leftJoin('animal_details AS ad').on(`${table}.id`,'ad.animal_id')
         .leftJoin('breed AS b').on('ad.breed_id','b.id');
