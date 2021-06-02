@@ -162,3 +162,9 @@ INSERT INTO animal_cage (animal_id, cage_id) VALUES
 (2, 4),
 (3, 5),
 (4, 6);
+
+INSERT INTO medication_event_details (event_id, treatment, expenses) VALUES
+(1, 'Some pills from Prophylaxis', 20.00),
+(2, 'Some pills for recovery from surgey', 45.00),
+(3, 'Some pills from Tick', 15.00),
+(4, 'Some pills from Prophylaxis', 20.00);
