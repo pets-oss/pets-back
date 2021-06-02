@@ -6,9 +6,9 @@ export default interface Animal {
     id: number;
     organization: number;
     name: string | null;
-    details: AnimalDetails;
-    registration: AnimalRegistration;
-    microchip: AnimalMicrochip;
+    details: AnimalDetails | null;
+    registration: AnimalRegistration | null;
+    microchip: AnimalMicrochip | null;
     status: string | null;
     imageUrl: string | null;
     comments: string | null;

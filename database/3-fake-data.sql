@@ -60,6 +60,13 @@ INSERT INTO animal_microchip
 (4, '29387', '5', '2020-04-14', '3', DEFAULT),
 (3, '2893402', '6', '2020-03-01', '4', DEFAULT);
 
+INSERT INTO events 
+(animal_id, group_enum, type, date_time, author, comments) VALUES
+(1, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine'),
+(2, 'Medical', 'Surgery', '2020-05-22', 'aiubfaw4io09', 'Fast recovery after surgey'),
+(3, 'Medical', 'Medication', '2020-05-21', 'dhjbwau74a6', 'Tick medications'),
+(4, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine');
+
 INSERT INTO animal_event_general
 (animal_id, type, expenses, date_time, comments, author) VALUES
 (2, 'CheckIn', 109.03, '2020-07-01', 'Registration!', 'dhjbwau74a6'),
@@ -104,7 +111,7 @@ INSERT INTO animal_event_found
 ('Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL, 'aiubfaw4io09'),
 ('Maironio g.', '3', 15, '2018-08-04', 5, NULL, 'dhjbwau74a6');
 
-INSERT INTO former_animal_owner
+INSERT INTO animal_owner
 (name, surname, phone) VALUES
 ('Laisvyda', 'Katmeilė', '1234'),
 ('Bonifacas', 'Tabletė', '4321'),
