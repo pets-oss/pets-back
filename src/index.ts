@@ -64,7 +64,6 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         algorithms: ['RS256'],
     });
 
-    app.use('/graphql', bodyParser.json());
     app.use(cors());
 
     if (process.env.AUTH_DISABLED !== 'true') {
