@@ -223,7 +223,7 @@ CREATE TABLE animal_microchip (
 
 CREATE TABLE animal_favorite (
     user_id VARCHAR(255) REFERENCES app_user(id) ON DELETE CASCADE,
-    animal_id INTEGER  REFERENCES animal(id) ON DELETE CASCADE,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (user_id, animal_id)
 );
@@ -234,7 +234,6 @@ CREATE TABLE status_translation (
     translation VARCHAR(20) NOT NULL,
     PRIMARY KEY (status, language)
 );
-
 COMMENT ON COLUMN status_translation.language is 'Language code based on BCP 47';
 
 CREATE TABLE animal_owner (
@@ -268,7 +267,7 @@ CREATE TABLE animal_cage (
 
 -- EVENTS
 
-CREATE TYPE event_group AS ENUM('General', 'Medical');
+CREATE TYPE event_group AS ENUM ('General', 'Medical');
 
 CREATE TYPE event_type AS ENUM (
     'GivenAway',
@@ -335,6 +334,18 @@ CREATE TABLE animal_event_given_away (
     comments TEXT
 );
 
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    group_enum event_group,
+    type event_type,
+    date_time TIMESTAMP,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    comments TEXT
+);
+
 -- DATE UPDATES
 
 CREATE EXTENSION moddatetime;
@@ -345,38 +356,42 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER app_user_mod_time BEFORE UPDATE ON app_user
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
+CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
+CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_favorite_mod_time BEFORE UPDATE ON animal_favorite
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
+CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
+CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
+CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details 
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER events_mod_time BEFORE UPDATE ON events
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_owner_mod_time BEFORE UPDATE ON animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general
+CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record
+CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found
+CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found 
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_event_given_away_mod_time BEFORE UPDATE ON animal_event_given_away
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
