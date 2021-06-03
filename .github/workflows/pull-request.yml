@@ -32,6 +32,11 @@ jobs:
           interval: 200
       - name: Running tests...
         run:  docker exec pets-back_gis-backend_1 npm run test
+      - name: Dump api logs
+        uses: jwalton/gh-docker-logs@v1
+        with:
+          images: 'node'
+          tail: '500'
   lint:
     name: Lint
     runs-on: ubuntu-latest
