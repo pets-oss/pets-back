@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/event.interface.validator';
+import { authorFields } from './authorFields';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -15,7 +16,7 @@ const eventFields = `
         type,
         dateTime,
         createTime
-        author
+        author ${authorFields}
     }
 `;
 
@@ -30,7 +31,7 @@ describe('GraphQL event integration tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {

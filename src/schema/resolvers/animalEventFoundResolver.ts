@@ -2,11 +2,15 @@ import { IResolvers } from 'graphql-tools';
 import { Validator } from 'node-input-validator';
 import { ValidationError } from 'apollo-server-express';
 import {
-    getAnimalFoundEventsQuery,
     createAnimalFoundEventQuery,
+    getAnimalFoundEventsQuery,
 } from '../../sql-queries/animalEventFound';
+import { getAuthor } from './author';
 
 const resolvers: IResolvers = {
+    FoundEvent: {
+        author: getAuthor
+    },
     Query: {
         foundEvents: async (_, __, { pgClient }) => {
             const dbResponse = await pgClient.query(

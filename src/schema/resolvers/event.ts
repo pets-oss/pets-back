@@ -4,6 +4,7 @@ import {
     getGeneralEventsQuery,
     getGivenAwayEventsQuery,
 } from '../../sql-queries/event';
+import { getAuthor } from './author';
 
 function appendEventsDetails(events: any[]) {
     return events.map((event: any) => ({
@@ -57,7 +58,7 @@ function appendGivenAwayEventsDetails(events: any[]) {
                 id: event.former_owner_id,
                 name: event.name,
                 surname: event.surname,
-                phone: event.phone 
+                phone: event.phone
 
             },
             reason: event.reason
@@ -73,7 +74,7 @@ function getMedicationEvents() {
         type: 'Medication',
         date_time: '2021-05-23',
         create_time: '2021-05-23',
-        author: 'Ignas',
+        author: 'aiubfaw4io09',
         details: {
             comments: 'Dog can\'t sleep, so I gave a few pills',
             treatment: 'Some pills from insomnia',
@@ -90,7 +91,7 @@ function getMicrochippingEvents() {
         type: 'Microchipping',
         date_time: '2021-05-23',
         create_time: '2021-05-23',
-        author: 'Ignas',
+        author: 'afhu9w4f78',
         details: {
             microchip: {
                 microchip_id: 1,
@@ -128,6 +129,7 @@ const resolvers: IResolvers = {
         }
     },
     Event: {
+        author: getAuthor,
         __resolveType: ({ type }: { type: string }) => type
     },
 }

@@ -1,3 +1,5 @@
+import Author from './author.interface';
+
 enum EventGroup {
     General = 'General',
     Medical = 'Medical'
@@ -26,5 +28,5 @@ export default interface Event {
     type: EventType,
     dateTime: string | null,
     createTime: string | null,
-    author: string | null
+    author: Author | null,
 }
