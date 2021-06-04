@@ -65,27 +65,39 @@ export const getAnimalsQuery = (
     reverse?: boolean | null,
     cursor?: string | null,
 ): QueryConfig => {
-    let query = select(`
-        ${table}.id,
-        ${table}.name,
-        ${table}.organization,
-        ${table}.status,
-        ${table}.image_url,
-        ${table}.comments,
-        ${table}.mod_time,
-        (SELECT COUNT(*) FROM ${table}) AS total_count`)
-        .from(table)
-        .leftJoin('animal_details AS ad').on(`${table}.id`,'ad.animal_id')
-        .leftJoin('breed AS b').on('ad.breed_id','b.id');
-    query = ids ? query.where($in(`${table}.id`, ids)) : query;
-    query = species ? query.where($in('b.species', species)) : query;
-    query = gender ? query.where($in('ad.gender_id', gender)) : query;
-    query = breed ? query.where($in('ad.breed_id', breed)) : query;
-    query = cursor ? query.where(reverse ? lt(`${table}.id`, cursor) : gt(`${table}.id`, cursor)) : query;
-    query = reverse ? query.orderBy(`${table}.id DESC`) : query.orderBy(`${table}.id`);
-    query = limit != null ? query.limit(limit) : query;
 
-    return query.toParams();
+
+    let subQuery = select(`
+        a.id,
+        a.name,
+        a.organization,
+        a.status,
+        a.image_url,
+        a.comments,
+        a.mod_time`)
+        .from(`${table} as a`)
+        .leftJoin('animal_details AS ad').on('a.id', 'ad.animal_id')
+        .leftJoin('breed AS b').on('ad.breed_id', 'b.id');
+
+    subQuery = ids ? subQuery.where($in('a.id', ids)) : subQuery;
+    subQuery = species ? subQuery.where($in('b.species', species)) : subQuery;
+    subQuery = gender ? subQuery.where($in('ad.gender_id', gender)) : subQuery;
+    subQuery = breed ? subQuery.where($in('ad.breed_id', breed)) : subQuery;
+
+    const baseQuery =
+        `WITH
+            selected as (${subQuery.toString()}),
+            total_count as (SELECT COUNT(*) as total_count FROM selected)`;
+
+    let pagination = select().from('selected');
+    pagination = cursor ? pagination.where(reverse ? lt('selected.id', cursor) : gt('selected.id', cursor)) : pagination;
+    pagination = reverse ? pagination.orderBy('selected.id DESC') : pagination.orderBy('selected.id');
+    pagination = limit != null ? pagination.limit(limit) : pagination;
+    pagination = pagination.crossJoin('total_count');
+
+    return {
+        text: `${baseQuery}${pagination.toString()}`
+    };
 };
 
 export const createAnimalQuery = (input: CreateAnimalInput): QueryConfig => {
