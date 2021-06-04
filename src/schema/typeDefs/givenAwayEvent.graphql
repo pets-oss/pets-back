@@ -11,7 +11,7 @@ type GivenAwayEvent {
     "Event reason"
     reason: String
     "Author"
-    author: String!
+    author: Author!
 }
 
 extend type Mutation {

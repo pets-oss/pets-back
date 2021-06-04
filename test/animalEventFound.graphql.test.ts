@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
 import validate from './validators/animalEventFound.interface.validator';
+import { authorFields } from './authorFields';
+
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -16,7 +18,7 @@ const animalFoundEventFields = `
         date,
         animalId,
         comments,
-        author
+        author ${authorFields}
     }
 `;
 
@@ -26,16 +28,7 @@ describe('Animal Event Found', () => {
             .post('/graphql')
             .send({
                 query: `{
-                    foundEvents {
-                      id
-                      street
-                      date
-                      houseNo
-                      animalId
-                      municipalityId
-                      comments,
-                      author
-                  }
+                    foundEvents ${animalFoundEventFields}
                 }`,
             })
             .expect(200)
@@ -73,7 +66,11 @@ describe('Animal Event Found mutations tests', () => {
             date: '2021-03-19',
             animalId: 4,
             comments: 'Dog was found dirty and hungry',
-            author: 'dhjbwau74a6',
+            author: {
+                id: 'dhjbwau74a6',
+                name: 'Sveikas',
+                surname: 'Ūsas',
+            },
         };
 
         let req = request
@@ -87,7 +84,7 @@ describe('Animal Event Found mutations tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {
@@ -122,7 +119,7 @@ describe('Animal Event Found mutations tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) {

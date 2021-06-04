@@ -37,7 +37,7 @@ interface Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!
+    author: Author!
     details: EventDetails!
 }
 
@@ -57,7 +57,7 @@ type Microchipping implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!
+    author: Author!
     details: MicrochippingDetails!
 }
 
@@ -74,7 +74,7 @@ type Medication implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!
+    author: Author!
     details: MedicationDetails!
 }
 
@@ -90,7 +90,7 @@ type CheckIn implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!,
+    author: Author!,
     details: CheckInDetails!
 }
 
@@ -108,7 +108,7 @@ type CheckOut implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!
+    author: Author!
     details: CheckOutDetails!
 }
 
@@ -126,7 +126,7 @@ type Found implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!
+    author: Author!
     details: FoundDetails!
 }
 
@@ -143,7 +143,7 @@ type GivenAway implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!
+    author: Author!
     details: GivenAwayDetails!
 }
 
@@ -159,6 +159,6 @@ type LocationChange implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: String!
+    author: Author!
     details: LocationChangeDetails!
 }

@@ -1,0 +1,9 @@
+"Represents an app user"
+type Author {
+    "id"
+    id: String!
+    "User name"
+    name: String
+    "User surname"
+    surname: String
+}
