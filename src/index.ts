@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
@@ -81,21 +80,6 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
     const server = new ApolloServer({
         uploads: false,
         schema,
-        formatResponse: (response: any) => {
-            if (response.errors) {
-                console.log(response);
-                // eslint-disable-next-line default-case
-                switch (response.errors[0].extensions.code) {
-                case 'GRAPHQL_VALIDATION_FAILED':
-                case 'BAD_USER_INPUT':
-                    console.log(response?.http?.status);
-                    // response.http.status.set(400);
-                    break;
-                }
-                return response;
-            }
-            return null;
-        },
         fieldResolver: snakeCaseFieldResolver,
         context: ({ req }: { req: any }) => ({
             pgClient,
