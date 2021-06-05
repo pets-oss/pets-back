@@ -123,6 +123,7 @@ describe('GraphQL animal integration tests', () => {
                 validateAnimalConnection(animals);
                 expect(animals.edges).to.be.an('array');
                 expect(animals.edges).to.have.length(3);
+                expect(animals.pageInfo.totalCount).to.equal(3);
                 return done();
             });
     });

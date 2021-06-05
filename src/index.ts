@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
