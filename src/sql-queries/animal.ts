@@ -74,7 +74,7 @@ export const getAnimalsQuery = (
         a.image_url,
         a.comments,
         a.mod_time`)
-        .from(`${table} as a`);
+        .from(`${table} AS a`);
     query = species || gender || breed ?
         query.leftJoin('animal_details AS ad').on('a.id', 'ad.animal_id')
         : query;
@@ -88,7 +88,7 @@ export const getAnimalsQuery = (
     const queryParams = query.toParams();
 
     const selected = 'selected'
-    let pagination = select().from('selected as s');
+    let pagination = select().from(`${selected} AS s`);
     pagination = cursor ? pagination.where(reverse ? lt('s.id', cursor) : gt('s.id', cursor)) : pagination;
     pagination = reverse ? pagination.orderBy('s.id DESC') : pagination.orderBy('s.id');
     pagination = limit != null ? pagination.limit(limit) : pagination;
@@ -96,8 +96,8 @@ export const getAnimalsQuery = (
     const paginationParams = pagination.toParams();
 
     return {
-        text: `WITH ${selected} as (${queryParams.text}),
-            total_count as (SELECT COUNT(*) as total_count FROM ${selected})
+        text: `WITH ${selected} AS (${queryParams.text}),
+            total_count AS (SELECT COUNT(*) AS total_count FROM ${selected})
             ${paginationParams.text}`,
         values: [...queryParams.values, ...paginationParams.values]
     };
