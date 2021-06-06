@@ -5,7 +5,8 @@ import { animalDetailsFields } from './animalDetails.graphql.test';
 import { animalMicrochipFields } from './animalMicrochip.graphql.test';
 import { animalRegistrationFields } from './animalRegistration.graphql.test';
 import validate from './validators/animal.interface.validator';
-import validateAnimalConnection from './validators/animalConnection.interface.validator';
+import validateAnimalConnection
+    from './validators/animalConnection.interface.validator';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -38,6 +39,7 @@ const animalConnectionFields = `
             endCursor
             hasNextPage
             hasPreviousPage
+            totalCount
         }
     }
 `;
@@ -90,6 +92,7 @@ describe('GraphQL animal integration tests', () => {
                 validateAnimalConnection(animals);
                 expect(animals.edges).to.be.an('array');
                 expect(animals.edges).to.have.length.above(4)
+                expect(animals.edges.length).equal(animals.pageInfo.totalCount);
                 return done();
             });
     });
@@ -120,6 +123,7 @@ describe('GraphQL animal integration tests', () => {
                 validateAnimalConnection(animals);
                 expect(animals.edges).to.be.an('array');
                 expect(animals.edges).to.have.length(3);
+                expect(animals.pageInfo.totalCount).to.equal(3);
                 return done();
             });
     });
