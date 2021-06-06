@@ -212,3 +212,11 @@ INSERT INTO animal_cage (animal_id, cage_id) VALUES
 (2, 4),
 (3, 5),
 (4, 6);
+
+INSERT INTO microchipping_event_details
+(event_id, microchip_id) VALUES
+(1, '123'),
+(2, '666666'),
+(5, '001010101'),
+(4, '29387'),
+(3, '2893402');
