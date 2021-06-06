@@ -56,8 +56,7 @@ describe('Animal Event Found mutations tests', () => {
                 municipalityId: 5,
                 date: "2021-03-19",
                 animalId: 4,
-                comments: "Dog was found dirty and hungry",
-                author: "dhjbwau74a6"
+                comments: "Dog was found dirty and hungry"
           }`;
         const answer = {
             street: 'Gyvūnų gatvė',
@@ -67,9 +66,9 @@ describe('Animal Event Found mutations tests', () => {
             animalId: 4,
             comments: 'Dog was found dirty and hungry',
             author: {
-                id: 'dhjbwau74a6',
-                name: 'Sveikas',
-                surname: 'Ūsas',
+                id: 'userIdForTesting',
+                name: 'Ąžuolas',
+                surname: 'Krušna',
             },
         };
 
@@ -104,8 +103,7 @@ describe('Animal Event Found mutations tests', () => {
                 municipalityId: 5,
                 date: "2040-03-19",
                 animalId: 4,
-                comments: "Dog was found dirty and hungry",
-                author: "dhjbwau74a6",
+                comments: "Dog was found dirty and hungry"
           }`;
 
         let req = request
