@@ -1,3 +1,5 @@
+import Author from './author.interface';
+
 export default interface AnimalEventFound {
     id: number;
     street: string;
@@ -6,5 +8,5 @@ export default interface AnimalEventFound {
     date: string | null;
     animalId: number;
     comments: string | null;
-    author: string;
+    author: Author;
 }

@@ -1,4 +1,4 @@
-import { loadSchemaSync } from 'graphql-tools';
+import { addResolversToSchema, loadSchemaSync } from 'graphql-tools';
 import { merge } from 'lodash';
 import { GraphQLFileLoader } from '@graphql-tools/graphql-file-loader';
 
@@ -20,7 +20,8 @@ import organizationTask from './resolvers/organizationTask';
 import municipalityResolver from './resolvers/municipality';
 import animalOwnerResolvers from './resolvers/animalOwner';
 import dateResolver from './resolvers/date';
-import chipInstallPlaceTranslationResolver from './resolvers/chipInstallPlaceTranslation';
+import chipInstallPlaceTranslationResolver
+    from './resolvers/chipInstallPlaceTranslation';
 import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
 import givenAwayEventResolvers from './resolvers/givenAwayEvent';
 import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
@@ -28,6 +29,9 @@ import customScalarsResolvers from './resolvers/scalars';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
+});
+const schemaWithResolvers = addResolversToSchema({
+    schema,
     resolvers: merge(
         customScalarsResolvers,
         animalResolvers,
@@ -56,4 +60,4 @@ const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     inheritResolversFromInterfaces: true,
 });
 
-export default schema;
+export default schemaWithResolvers;

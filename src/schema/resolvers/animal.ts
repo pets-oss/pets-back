@@ -2,15 +2,15 @@ import { IResolvers } from 'graphql-tools';
 import { Validator } from 'node-input-validator';
 import { ValidationError } from 'apollo-server-express';
 import {
+    createAnimalQuery,
+    deleteAnimalQuery,
     getAnimalQuery,
     getAnimalsQuery,
-    createAnimalQuery,
     updateAnimalQuery,
-    deleteAnimalQuery,
 } from '../../sql-queries/animal';
 import {
-    getAnimalDetailsQuery,
     createAnimalDetailsQuery,
+    getAnimalDetailsQuery,
     updateAnimalDetailsQuery,
 } from '../../sql-queries/animalDetails';
 import {
@@ -19,8 +19,8 @@ import {
     updateAnimalMicrochipQuery,
 } from '../../sql-queries/animalMicrochip';
 import {
-    getActiveAnimalRegistrationQuery,
     createAnimalRegistrationQuery,
+    getActiveAnimalRegistrationQuery,
     updateAnimalRegistrationQuery,
 } from '../../sql-queries/animalRegistration';
 import { getStatusTranslationQuery } from '../../sql-queries/status';
@@ -113,13 +113,13 @@ const resolvers: IResolvers = {
                 cursor: Buffer.from(value.id.toString()).toString('base64'),
                 node: value
             }));
-
             return {
                 page_info: {
                     has_next_page: reverse ? false : hasMore,
                     has_previous_page: reverse ? hasMore : false,
                     start_cursor: edges[0]?.cursor,
-                    end_cursor: edges[edges.length - 1]?.cursor
+                    end_cursor: edges[edges.length - 1]?.cursor,
+                    total_count: rows[0]?.total_count || 0
                 },
                 edges
             };

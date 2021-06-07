@@ -9,8 +9,9 @@ interface Edge<T> {
 }
 
 interface PageInfo {
-    startCursor: string;
-    endCursor: string;
+    startCursor: string | null;
+    endCursor: string | null;
     hasNextPage: boolean;
     hasPreviousPage: boolean;
+    totalCount: number;
 }

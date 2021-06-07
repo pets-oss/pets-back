@@ -43,7 +43,7 @@ type AnimalsConnection {
     "Information for pagination."
     pageInfo: PageInfo!
     "A list of animal edges."
-    edges: [AnimalEdge]
+    edges: [AnimalEdge!]!
 }
 
 "Information about pagination in a connection."
@@ -55,7 +55,8 @@ type PageInfo {
     "When paginating backwards, the cursor to continue."
     startCursor: String
     "When paginating forwards, the cursor to continue."
-    endCursor: String
+    endCursor: String,
+    totalCount: Int!
 }
 
 "An edge in a connection."

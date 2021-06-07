@@ -1,10 +1,14 @@
 import { IResolvers } from 'graphql-tools';
 import {
     createGivenAwayEventQuery,
-    updateGivenAwayEventQuery
+    updateGivenAwayEventQuery,
 } from '../../sql-queries/animalEventGivenAway';
+import { getAuthor } from './author';
 
 const resolvers: IResolvers = {
+    GivenAwayEvent: {
+        author: getAuthor
+    },
     Mutation: {
         createGivenAwayEvent: async (_, { input }, { pgClient }) => {
             const dbResponse = await pgClient.query(

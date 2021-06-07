@@ -351,6 +351,15 @@ CREATE TABLE medication_event_details (
     event_id INTEGER REFERENCES events(id) ON DELETE CASCADE NOT NULL,
     treatment VARCHAR(255),
     expenses NUMERIC
+  );
+
+CREATE TABLE event_location_change_details (
+    id SERIAL PRIMARY KEY,
+    event_id INTEGER REFERENCES events(id) ON DELETE CASCADE NOT NULL,
+    street VARCHAR(255) NOT NULL,
+    house_no VARCHAR(8),
+    municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- DATE UPDATES
@@ -363,25 +372,25 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER app_user_mod_time BEFORE UPDATE ON app_user
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal 
+CREATE TRIGGER animal_mod_time BEFORE UPDATE ON animal
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration 
+CREATE TRIGGER animal_registration_mod_time BEFORE UPDATE ON animal_registration
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_favorite_mod_time BEFORE UPDATE ON animal_favorite
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip 
+CREATE TRIGGER animal_microchip_mod_time BEFORE UPDATE ON animal_microchip
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task 
+CREATE TRIGGER organization_task_mod_time BEFORE UPDATE ON organization_task
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery 
+CREATE TRIGGER animal_gallery_mod_time BEFORE UPDATE ON animal_gallery
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details 
+CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER events_mod_time BEFORE UPDATE ON events
@@ -390,15 +399,14 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_owner_mod_time BEFORE UPDATE ON animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general 
+CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record 
+CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found 
+CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER animal_event_given_away_mod_time BEFORE UPDATE ON animal_event_given_away
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
-

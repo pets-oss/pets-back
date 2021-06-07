@@ -1,5 +1,4 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import { snakeCase } from 'lodash';
 import jwt from 'express-jwt';
@@ -24,17 +23,17 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         try {
             const results = await pgClient.query({
                 text: 'SELECT true AS ok',
-            })
+            });
             isDatabaseActive = results.rows[0]?.ok;
         } catch (error) {
             // eslint-disable-next-line no-console
-            console.log(error)
+            console.log(error);
         }
 
         try {
             isCloudinaryClientActive = await cloudinaryClient.isOk();
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
 
         res.send({
@@ -82,7 +81,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         uploads: false,
         schema,
         fieldResolver: snakeCaseFieldResolver,
-        context: ({req}: {req: any}) => ({
+        context: ({ req }: { req: any }) => ({
             pgClient,
             cloudinaryClient,
             userId: extractUserId(req)

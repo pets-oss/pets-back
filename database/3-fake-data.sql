@@ -60,12 +60,63 @@ INSERT INTO animal_microchip
 (4, '29387', '5', '2020-04-14', '3', DEFAULT),
 (3, '2893402', '6', '2020-03-01', '4', DEFAULT);
 
-INSERT INTO events 
+INSERT INTO events
 (animal_id, group_enum, type, date_time, author, comments) VALUES
 (1, 'Medical', 'Medication', '2020-05-21', '278y2378ryb', 'Tick medications'),
 (2, 'Medical', 'Medication', '2020-05-22', 'aiubfaw4io09', 'Tick medications'),
 (3, 'Medical', 'Medication', '2020-05-21', 'dhjbwau74a6', 'Tick medications'),
-(4, 'Medical', 'Medication', '2020-05-21', 'afhu9w4f78', 'Tick medications');
+(4, 'Medical', 'Medication', '2020-05-21', 'afhu9w4f78', 'Tick medications'),
+(4, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine'),
+(5, 'General', 'LocationChange', '2018-05-25', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-05-30', '278y2378ryb', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-14', '0932hfdsa', 'Pakeistas laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-15', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-16', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-17', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-18', 'afhu9w4f78', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-19', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-20', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-21', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-23', 'aiubfaw4io09', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-22', '278y2378ryb', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-24', '0932hfdsa', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-25', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-26', 'afhu9w4f78', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-27', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-28', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-29', 'aiubfaw4io09', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-30', '278y2378ryb', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-07-31', '0932hfdsa', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-08-01', 'afhu9w4f78', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-08-02', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-08-03', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
+(5, 'General', 'LocationChange', '2018-08-04', 'afhu9w4f78', 'Pasikeitė laikymo vietos adresas.');
+
+INSERT INTO event_location_change_details
+(event_id, street, house_no, municipality_id) VALUES
+(5, 'Vytauto g.', '1', 1),
+(6, 'Vytauto g.', '12', 1),
+(7, 'Vytauto g.', '13', 1),
+(8, 'Vytauto g.', '2', 1),
+(9, 'Vytauto g.', '3', 1),
+(11, 'Vytauto g.', '14', 1),
+(12, 'Vytauto g.', '4', 1),
+(13, 'Vytauto g.', '1c', 1),
+(14, 'Vytauto g.', '9', 1),
+(15, 'Vytauto g.', '1b', 1),
+(16, 'Vytauto g.', '1', 1),
+(17, 'Vytauto g.', '5', 1),
+(18, 'Vytauto g.', '1', 1),
+(19, 'Vytauto g.', '1', 1),
+(20, 'Vytauto g.', '1a', 1),
+(21, 'Vytauto g.', '1', 1),
+(22, 'Vytauto g.', '16', 1),
+(23, 'Vytauto g.', '32', 1),
+(24, 'Vytauto g.', '1', 1),
+(25, 'Vytauto g.', '15', 1),
+(26, 'Vytauto g.', '2', 1),
+(27, 'Vytauto g.', '1', 1),
+(28, 'Vytauto g.', '1a', 1);
 
 INSERT INTO animal_event_general
 (animal_id, type, expenses, date_time, comments, author) VALUES
