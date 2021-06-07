@@ -62,10 +62,10 @@ INSERT INTO animal_microchip
 
 INSERT INTO events 
 (animal_id, group_enum, type, date_time, author, comments) VALUES
-(1, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine'),
-(2, 'Medical', 'Surgery', '2020-05-22', 'aiubfaw4io09', 'Fast recovery after surgey'),
+(1, 'Medical', 'Medication', '2020-05-21', '278y2378ryb', 'Tick medications'),
+(2, 'Medical', 'Medication', '2020-05-22', 'aiubfaw4io09', 'Tick medications'),
 (3, 'Medical', 'Medication', '2020-05-21', 'dhjbwau74a6', 'Tick medications'),
-(4, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine');
+(4, 'Medical', 'Medication', '2020-05-21', 'afhu9w4f78', 'Tick medications');
 
 INSERT INTO animal_event_general
 (animal_id, type, expenses, date_time, comments, author) VALUES
@@ -164,7 +164,7 @@ INSERT INTO animal_cage (animal_id, cage_id) VALUES
 (4, 6);
 
 INSERT INTO medication_event_details (event_id, treatment, expenses) VALUES
-(1, 'Some pills from Prophylaxis', 20.00),
-(2, 'Some pills for recovery from surgey', 45.00),
+(1, 'Some pills from Tick', 15.00),
+(2, 'Some pills from Tick', 15.00),
 (3, 'Some pills from Tick', 15.00),
-(4, 'Some pills from Prophylaxis', 20.00);
+(4, 'Some pills from Tick', 15.00);
