@@ -2,10 +2,10 @@ import { QueryConfig } from 'pg';
 import { insert } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
-const table = 'animal_event_found';
+const table = 'event_rescue';
 const returningFields = 'id, street, house_no, municipality_id, date_time AS date, animal_id, comments, author';
 
-export const getAnimalFoundEventsQuery = (): QueryConfig => {
+export const getRescueEventsQuery = (): QueryConfig => {
     const text = `
         SELECT id,
                street,
@@ -15,14 +15,14 @@ export const getAnimalFoundEventsQuery = (): QueryConfig => {
                animal_id,
                comments,
                author
-        FROM animal_event_found;`;
+        FROM event_rescue;`;
 
     return {
         text
     };
 };
 
-interface CreateAnimalFoundEventInput {
+interface CreateRescueEventInput {
     street: String
     houseNo: String
     municipalityId: number
@@ -32,12 +32,12 @@ interface CreateAnimalFoundEventInput {
     author: String
 }
 
-function dateToDateTime(input: CreateAnimalFoundEventInput) {
+function dateToDateTime(input: CreateRescueEventInput) {
     const { date, ...otherFields } = input;
     return { dateTime: date, ...otherFields };
 }
 
-export const createAnimalFoundEventQuery =
-    (input: CreateAnimalFoundEventInput): QueryConfig =>
+export const createRescueEventQuery =
+    (input: CreateRescueEventInput): QueryConfig =>
         insert(table, snakeCaseKeys(dateToDateTime(input)))
             .returning(returningFields).toParams();

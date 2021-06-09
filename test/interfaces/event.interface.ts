@@ -6,8 +6,8 @@ enum EventGroup {
 }
 
 enum EventType {
-    GivenAway = 'GivenAway',
-    Found = 'Found',
+    HandOver = 'HandOver',
+    Rescue = 'Rescue',
     CheckIn = 'CheckIn',
     CheckOut = 'CheckOut',
     Died = 'Died',

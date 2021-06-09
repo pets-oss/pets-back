@@ -1,8 +1,8 @@
 import { IResolvers } from 'graphql-tools';
 import {
-    getFoundEventsQuery,
+    getRescueEventsQuery,
     getGeneralEventsQuery,
-    getGivenAwayEventsQuery,
+    getHandOverEventsQuery,
 } from '../../sql-queries/event';
 import { getAuthor } from './author';
 
@@ -23,7 +23,7 @@ function appendEventsDetails(events: any[]) {
     }));
 }
 
-function appendFoundEventsDetails(events: any[]) {
+function appendRescueEventsDetails(events: any[]) {
     return events.map((event: any) => ({
         id: event.id,
         animal_id: event.animal_id,
@@ -42,7 +42,7 @@ function appendFoundEventsDetails(events: any[]) {
     }));
 }
 
-function appendGivenAwayEventsDetails(events: any[]) {
+function appendHandOverEventsDetails(events: any[]) {
     return events.map((event: any) => ({
         id: event.id,
         animal_id: event.animal_id,
@@ -95,6 +95,7 @@ function getMicrochippingEvents() {
         details: {
             microchip: {
                 microchip_id: 1,
+                animal_id: 2,
                 chip_company_code: 2,
                 install_date: '2021-05-22',
                 install_place_id: 2,
@@ -112,12 +113,12 @@ const resolvers: IResolvers = {
 
             if (!groups || groups.includes('General')) {
                 const generalEvents = await pgClient.query(getGeneralEventsQuery(animalId));
-                const foundEvents = await pgClient.query(getFoundEventsQuery(animalId));
-                const givenAwayEvents = await pgClient.query(getGivenAwayEventsQuery(animalId));
+                const rescueEvents = await pgClient.query(getRescueEventsQuery(animalId));
+                const handOverEvents = await pgClient.query(getHandOverEventsQuery(animalId));
 
                 events.push(...appendEventsDetails(generalEvents.rows))
-                events.push(...appendFoundEventsDetails(foundEvents.rows))
-                events.push(...appendGivenAwayEventsDetails(givenAwayEvents.rows))
+                events.push(...appendRescueEventsDetails(rescueEvents.rows))
+                events.push(...appendHandOverEventsDetails(handOverEvents.rows))
                 events.push(...getMicrochippingEvents());
             }
 

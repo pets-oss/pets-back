@@ -1,5 +1,5 @@
-"Represents given away animal event"
-type GivenAwayEvent {
+"Represents HandOver event"
+type HandOverEvent {
     "Event id"
     id: Int!
     "Former owner id"
@@ -15,13 +15,13 @@ type GivenAwayEvent {
 }
 
 extend type Mutation {
-    "Created animal event given away"
-    createGivenAwayEvent(input: CreateGivenAwayEventInput!): GivenAwayEvent
-    "Updated animal event given away"
-    updateGivenAwayEvent(input: UpdateGivenAwayEventInput!): GivenAwayEvent
+    "Create HandOver event"
+    createHandOverEvent(input: CreateHandOverEventInput!): HandOverEvent
+    "Update HandOver event"
+    updateHandOverEvent(input: UpdateHandOverEventInput!): HandOverEvent
 }
 
-input CreateGivenAwayEventInput {
+input CreateHandOverEventInput {
     "Former owner id"
     formerOwnerId: Int!
     "Event date in YYYY-MM-DD format"
@@ -34,7 +34,7 @@ input CreateGivenAwayEventInput {
     author: String!
 }
 
-input UpdateGivenAwayEventInput {
+input UpdateHandOverEventInput {
     "Event id"
     id: Int!
     "Former owner id"

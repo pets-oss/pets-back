@@ -1,6 +1,6 @@
 import Author from './author.interface';
 
-export default interface GivenAwayEvent {
+export default interface EventHandOver {
     id: number;
     formerOwnerId: number;
     date: string | null;

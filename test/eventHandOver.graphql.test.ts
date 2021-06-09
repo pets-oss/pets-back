@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import validate from './validators/givenAwayEvent.interface.validator';
+import validate from './validators/eventHandOver.interface.validator';
 import { authorFields } from './authorFields';
 
 require('dotenv').config({ path: './test/.env' });
@@ -8,7 +8,7 @@ require('dotenv').config({ path: './test/.env' });
 const url = process.env.TEST_URL || 'http://localhost:8081';
 const request = supertest(url);
 
-const givenAwayEventFields = `
+const eventHandOverFields = `
     {
         id,
         formerOwnerId,
@@ -31,19 +31,19 @@ const expectedResult = {
     }
 };
 
-describe('GraphQL animal given away event integration tests', () => {
-    it('Creates animal given away event with all fields', (done) => {
+describe('GraphQL hand over event integration tests', () => {
+    it('Creates hand over event with all fields', (done) => {
         let req = request
             .post('/graphql')
             .send({
                 query: `mutation {
-                        createGivenAwayEvent (input: {
+                        createHandOverEvent (input: {
                             formerOwnerId: 3,
                             reason: "Leaving country",
                             date: "2021-03-19",
                             animalId: 4,
                             author: "dhjbwau74a6"
-                        }) ${givenAwayEventFields}
+                        }) ${eventHandOverFields}
                     }`
             })
             .expect(200);
@@ -52,26 +52,26 @@ describe('GraphQL animal given away event integration tests', () => {
         }
         req.end((err, res) => {
             if (err) return done(err);
-            const { body: { data: { createGivenAwayEvent } } } = res;
-            validate(createGivenAwayEvent);
-            expect(createGivenAwayEvent).to.deep.include(expectedResult);
+            const { body: { data: { createHandOverEvent } } } = res;
+            validate(createHandOverEvent);
+            expect(createHandOverEvent).to.deep.include(expectedResult);
             return done();
         });
     });
 
-    it('Updates givenAwayEvent with all fields', (done) => {
+    it('Updates givenHandOver with all fields', (done) => {
         let req = request
             .post('/graphql')
             .send({
                 query: `mutation {
-                        updateGivenAwayEvent (input: {
+                        updateHandOverEvent (input: {
                             id: 1,
                             formerOwnerId: 3,
                             reason: "Leaving country",
                             date: "2021-03-19",
                             animalId: 4,
                             author: "dhjbwau74a6"
-                        }) ${givenAwayEventFields}
+                        }) ${eventHandOverFields}
                     }`,
             })
             .expect(200);
@@ -80,9 +80,9 @@ describe('GraphQL animal given away event integration tests', () => {
         }
         req.end((err, res) => {
             if (err) return done(err);
-            const { body: { data: { updateGivenAwayEvent } } } = res;
-            validate(updateGivenAwayEvent);
-            expect(updateGivenAwayEvent).to.deep.include({
+            const { body: { data: { updateHandOverEvent } } } = res;
+            validate(updateHandOverEvent);
+            expect(updateHandOverEvent).to.deep.include({
                 id: 1,
                 ...expectedResult,
             });

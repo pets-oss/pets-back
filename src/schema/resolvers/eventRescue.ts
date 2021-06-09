@@ -2,26 +2,26 @@ import { IResolvers } from 'graphql-tools';
 import { Validator } from 'node-input-validator';
 import { ValidationError } from 'apollo-server-express';
 import {
-    createAnimalFoundEventQuery,
-    getAnimalFoundEventsQuery,
-} from '../../sql-queries/animalEventFound';
+    createRescueEventQuery,
+    getRescueEventsQuery,
+} from '../../sql-queries/eventRescue';
 import { getAuthor } from './author';
 
 const resolvers: IResolvers = {
-    FoundEvent: {
+    RescueEvent: {
         author: getAuthor
     },
     Query: {
-        foundEvents: async (_, __, { pgClient }) => {
+        rescueEvents: async (_, __, { pgClient }) => {
             const dbResponse = await pgClient.query(
-                getAnimalFoundEventsQuery()
+                getRescueEventsQuery()
             );
             return dbResponse.rows;
         },
     },
     Mutation: {
-        createFoundEvent: async (_, { input }, { pgClient }) => {
-            const createFoundEventInputValidator = new Validator(input, {
+        createRescueEvent: async (_, { input }, { pgClient }) => {
+            const createRescueEventInputValidator = new Validator(input, {
                 street: 'maxLength:255',
                 houseNo: 'maxLength:8',
                 municipalityId: 'integer|min:1',
@@ -30,16 +30,16 @@ const resolvers: IResolvers = {
                 author: 'maxLength:255',
             });
             // eslint-disable-next-line max-len
-            const isCreateFoundEventInputValid = await createFoundEventInputValidator.check();
+            const isCreateRescueEventInputValid = await createRescueEventInputValidator.check();
 
-            if (!isCreateFoundEventInputValid) {
+            if (!isCreateRescueEventInputValid) {
                 throw new ValidationError(
-                    JSON.stringify(createFoundEventInputValidator.errors)
+                    JSON.stringify(createRescueEventInputValidator.errors)
                 );
             }
 
             const dbResponse = await pgClient.query(
-                createAnimalFoundEventQuery(input)
+                createRescueEventQuery(input)
             );
             return dbResponse.rows[0];
         },

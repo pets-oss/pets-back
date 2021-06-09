@@ -1,8 +1,8 @@
 extend type Query {
-    foundEvents: [FoundEvent]
+    rescueEvents: [RescueEvent]
 }
 
-type FoundEvent {
+type RescueEvent {
     id: Int!
     street: String!
     houseNo: String
@@ -13,7 +13,7 @@ type FoundEvent {
     comments: String
 }
 
-input FoundEventInput {
+input RescueEventInput {
     street: String!
     houseNo: String
     municipalityId: Int!
@@ -24,5 +24,5 @@ input FoundEventInput {
 }
 
 extend type Mutation {
-    createFoundEvent(input: FoundEventInput!): FoundEvent
+    createRescueEvent(input: RescueEventInput!): RescueEvent
 }

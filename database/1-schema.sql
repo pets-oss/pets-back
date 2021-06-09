@@ -244,6 +244,8 @@ CREATE TABLE animal_owner (
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
+-- ANIMAL GALLERY
+
 CREATE TABLE animal_gallery (
     id SERIAL PRIMARY KEY,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
@@ -265,13 +267,13 @@ CREATE TABLE animal_cage (
     cage_id INTEGER REFERENCES organization_cage(id) NOT NULL
 );
 
--- EVENTS
+-- EVENT
 
 CREATE TYPE event_group AS ENUM ('General', 'Medical');
 
 CREATE TYPE event_type AS ENUM (
-    'GivenAway',
-    'Found',
+    'HandOver',
+    'Rescue',
     'CheckIn',
     'CheckOut',
     'Died',
@@ -309,7 +311,7 @@ CREATE TABLE animal_event_medical_record (
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE animal_event_found (
+CREATE TABLE event_rescue (
     id SERIAL PRIMARY KEY,
     street VARCHAR(255) NOT NULL,
     house_no VARCHAR(8),
@@ -317,12 +319,12 @@ CREATE TABLE animal_event_found (
     date_time TIMESTAMP,
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    comments TEXT,
     author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    comments TEXT
 );
 
-CREATE TABLE animal_event_given_away (
+CREATE TABLE event_hand_over (
     id SERIAL PRIMARY KEY,
     former_owner_id INTEGER REFERENCES animal_owner(id) NOT NULL,
     reason TEXT,
@@ -334,37 +336,65 @@ CREATE TABLE animal_event_given_away (
     comments TEXT
 );
 
-CREATE TABLE events (
+CREATE TABLE microchipping_event_details (
     id SERIAL PRIMARY KEY,
-    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    group_enum event_group,
-    type event_type,
-    date_time TIMESTAMP,
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    microchip_id VARCHAR(255) REFERENCES animal_microchip(microchip_id) ON DELETE CASCADE NOT NULL,
     comments TEXT
 );
 
-CREATE TABLE medication_event_details (
+CREATE TABLE event_location_change (
     id SERIAL PRIMARY KEY,
-    event_id INTEGER REFERENCES events(id) ON DELETE CASCADE NOT NULL,
-    treatment VARCHAR(255),
-    expenses NUMERIC
-  );
-
-CREATE TABLE event_location_change_details (
-    id SERIAL PRIMARY KEY,
-    event_id INTEGER REFERENCES events(id) ON DELETE CASCADE NOT NULL,
     street VARCHAR(255) NOT NULL,
     house_no VARCHAR(8),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    date_time TIMESTAMP,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    comments TEXT
 );
 
-CREATE TABLE microchipping_event_details (
-    event_id INTEGER PRIMARY KEY REFERENCES events(id) ON DELETE CASCADE NOT NULL,
-    microchip_id VARCHAR(255) REFERENCES animal_microchip(microchip_id) ON DELETE CASCADE NOT NULL
+CREATE TABLE event_medication (
+    id SERIAL PRIMARY KEY,
+    treatment VARCHAR(255) NOT NULL,
+    expenses NUMERIC,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    date_time TIMESTAMP,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    comments TEXT
+  );
+
+CREATE TYPE death_type AS ENUM (
+    'Ilness',
+    'Euthanasia',
+    'Accident',
+    'Senility'
+);
+
+CREATE TABLE event_death (
+    id SERIAL PRIMARY KEY,
+    death_type death_type NOT NULL,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    date_time TIMESTAMP NOT NULL,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    comments TEXT
+);
+
+CREATE TABLE event_surgery (
+    id SERIAL PRIMARY KEY,
+    result VARCHAR(255) NOT NULL,
+    expenses NUMERIC,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    date_time TIMESTAMP NOT NULL,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    comments TEXT
 );
 
 -- DATE UPDATES
@@ -398,9 +428,6 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_details_mod_time BEFORE UPDATE ON animal_details
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER events_mod_time BEFORE UPDATE ON events
-FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
-
 CREATE TRIGGER animal_owner_mod_time BEFORE UPDATE ON animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
@@ -410,8 +437,20 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_found_mod_time BEFORE UPDATE ON animal_event_found
+CREATE TRIGGER event_rescue_mod_time BEFORE UPDATE ON event_rescue
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_given_away_mod_time BEFORE UPDATE ON animal_event_given_away
+CREATE TRIGGER event_hand_over_mod_time BEFORE UPDATE ON event_hand_over
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER event_location_change_mod_time BEFORE UPDATE ON event_location_change
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER event_medication_mod_time BEFORE UPDATE ON event_medication
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER event_death_mod_time BEFORE UPDATE ON event_death
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER event_surgery_mod_time BEFORE UPDATE ON event_surgery
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);

@@ -15,8 +15,8 @@ enum EventGroup {
 }
 
 enum EventType {
-    GivenAway,
-    Found,
+    HandOver,
+    Rescue,
     CheckIn,
     CheckOut,
     Died,
@@ -112,14 +112,14 @@ type CheckOut implements Event {
     details: CheckOutDetails!
 }
 
-type FoundDetails implements EventDetails {
+type RescueDetails implements EventDetails {
     street: String
     houseNo: String
     municipalityId: Int!
     comments: String
 }
 
-type Found implements Event {
+type Rescue implements Event {
     id: Int!
     animalId: Int!
     group: EventGroup!
@@ -127,16 +127,16 @@ type Found implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
-    details: FoundDetails!
+    details: RescueDetails!
 }
 
-type GivenAwayDetails implements EventDetails{
+type HandOverDetails implements EventDetails {
     formerOwner: AnimalOwner!
     reason: String
     comments: String
 }
 
-type GivenAway implements Event {
+type HandOver implements Event {
     id: Int!
     animalId: Int!
     group: EventGroup!
@@ -144,7 +144,7 @@ type GivenAway implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
-    details: GivenAwayDetails!
+    details: HandOverDetails!
 }
 
 type LocationChangeDetails implements EventDetails {

@@ -16,14 +16,14 @@ import userResolvers from './resolvers/user';
 import eventResolvers from './resolvers/event';
 import uploadResolver from './resolvers/upload';
 import chipCompanyResolvers from './resolvers/chipCompany';
-import organizationTask from './resolvers/organizationTask';
-import municipalityResolver from './resolvers/municipality';
+import organizationTaskResolvers from './resolvers/organizationTask';
+import municipalityResolvers from './resolvers/municipality';
 import animalOwnerResolvers from './resolvers/animalOwner';
-import dateResolver from './resolvers/date';
-import chipInstallPlaceTranslationResolver
+import dateResolvers from './resolvers/date';
+import chipInstallPlaceTranslationResolvers
     from './resolvers/chipInstallPlaceTranslation';
-import animalFoundEventResolver from './resolvers/animalEventFoundResolver';
-import givenAwayEventResolvers from './resolvers/givenAwayEvent';
+import rescueEventResolvers from './resolvers/eventRescue';
+import handOverEventResolvers from './resolvers/eventHandOver';
 import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
 import customScalarsResolvers from './resolvers/scalars';
 
@@ -48,13 +48,13 @@ const schemaWithResolvers = addResolversToSchema({
         eventResolvers,
         uploadResolver,
         chipCompanyResolvers,
-        organizationTask,
-        municipalityResolver,
+        organizationTaskResolvers,
+        municipalityResolvers,
         animalOwnerResolvers,
-        dateResolver,
-        chipInstallPlaceTranslationResolver,
-        animalFoundEventResolver,
-        givenAwayEventResolvers,
+        dateResolvers,
+        chipInstallPlaceTranslationResolvers,
+        rescueEventResolvers,
+        handOverEventResolvers,
         favoriteAnimalResolvers,
     ),
     inheritResolversFromInterfaces: true,
