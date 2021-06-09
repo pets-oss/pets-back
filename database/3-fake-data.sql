@@ -62,9 +62,10 @@ INSERT INTO animal_microchip
 
 INSERT INTO events
 (animal_id, group_enum, type, date_time, author, comments) VALUES
-(1, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine'),
-(2, 'Medical', 'Surgery', '2020-05-22', 'aiubfaw4io09', 'Fast recovery after surgey'),
+(1, 'Medical', 'Medication', '2020-05-21', '278y2378ryb', 'Tick medications'),
+(2, 'Medical', 'Medication', '2020-05-22', 'aiubfaw4io09', 'Tick medications'),
 (3, 'Medical', 'Medication', '2020-05-21', 'dhjbwau74a6', 'Tick medications'),
+(4, 'Medical', 'Medication', '2020-05-21', 'afhu9w4f78', 'Tick medications'),
 (4, 'Medical', 'Prophylaxis', '2020-05-21', '278y2378ryb', 'Yearly vaccine'),
 (5, 'General', 'LocationChange', '2018-05-25', 'dhjbwau74a6', 'Pasikeitė laikymo vietos adresas.'),
 (5, 'General', 'LocationChange', '2018-05-30', '278y2378ryb', 'Pasikeitė laikymo vietos adresas.'),
@@ -220,3 +221,9 @@ INSERT INTO microchipping_event_details
 (5, '001010101'),
 (4, '29387'),
 (3, '2893402');
+
+INSERT INTO medication_event_details (event_id, treatment, expenses) VALUES
+(1, 'Some pills from Tick', 15.00),
+(2, 'Some pills from Tick', 15.00),
+(3, 'Some pills from Tick', 15.00),
+(4, 'Some pills from Tick', 15.00);
