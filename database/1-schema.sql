@@ -212,7 +212,7 @@ CREATE TYPE chip_status AS ENUM ('Implanted', 'Removed');
 
 CREATE TABLE animal_microchip (
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    microchip_id VARCHAR(255) NOT NULL,
+    microchip_id VARCHAR(255) NOT NULL UNIQUE,
     chip_company_code chip_company_code NOT NULL,
     install_date DATE,
     install_place_id install_place_id NOT NULL,
@@ -360,6 +360,11 @@ CREATE TABLE event_location_change_details (
     house_no VARCHAR(8),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+CREATE TABLE microchipping_event_details (
+    event_id INTEGER PRIMARY KEY REFERENCES events(id) ON DELETE CASCADE NOT NULL,
+    microchip_id VARCHAR(255) REFERENCES animal_microchip(microchip_id) ON DELETE CASCADE NOT NULL
 );
 
 -- DATE UPDATES
