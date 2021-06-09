@@ -346,6 +346,13 @@ CREATE TABLE events (
     comments TEXT
 );
 
+CREATE TABLE medication_event_details (
+    id SERIAL PRIMARY KEY,
+    event_id INTEGER REFERENCES events(id) ON DELETE CASCADE NOT NULL,
+    treatment VARCHAR(255),
+    expenses NUMERIC
+  );
+
 CREATE TABLE event_location_change_details (
     id SERIAL PRIMARY KEY,
     event_id INTEGER REFERENCES events(id) ON DELETE CASCADE NOT NULL,
