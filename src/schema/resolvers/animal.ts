@@ -24,6 +24,7 @@ import {
     updateAnimalRegistrationQuery,
 } from '../../sql-queries/animalRegistration';
 import { getStatusTranslationQuery } from '../../sql-queries/status';
+import { getFavoriteAnimalQuery } from '../../sql-queries/favoriteAnimal';
 
 const defaultLanguage: string = 'lt';
 
@@ -326,6 +327,25 @@ const resolvers: IResolvers = {
             );
 
             return dbResponse.rows[0].status;
+        },
+        isFavorite: async ({ id }, __, { pgClient, userId }) => {
+            if (!userId) {
+                throw new ValidationError(
+                    'Could not determine if animal is favorite due to undefined user id'
+                );
+            }
+            
+            const dbResponse = await pgClient.query(
+                getFavoriteAnimalQuery({
+                    userId,
+                    animalId: id
+                })
+            );
+			
+            if (dbResponse.rows[0]) {
+                return true;
+            }
+            return false;
         },
     },
 };
