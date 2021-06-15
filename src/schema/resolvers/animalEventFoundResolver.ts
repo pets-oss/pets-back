@@ -20,14 +20,13 @@ const resolvers: IResolvers = {
         },
     },
     Mutation: {
-        createFoundEvent: async (_, { input }, { pgClient }) => {
+        createFoundEvent: async (_, { input }, { pgClient, userId }) => {
             const createFoundEventInputValidator = new Validator(input, {
                 street: 'maxLength:255',
                 houseNo: 'maxLength:8',
                 municipalityId: 'integer|min:1',
                 animalId: 'integer|min:1',
-                date: 'date|dateBeforeToday:0,days',
-                author: 'maxLength:255',
+                date: 'date|dateBeforeToday:0,days'
             });
             // eslint-disable-next-line max-len
             const isCreateFoundEventInputValid = await createFoundEventInputValidator.check();
@@ -37,9 +36,8 @@ const resolvers: IResolvers = {
                     JSON.stringify(createFoundEventInputValidator.errors)
                 );
             }
-
             const dbResponse = await pgClient.query(
-                createAnimalFoundEventQuery(input)
+                createAnimalFoundEventQuery({...input, author: userId})
             );
             return dbResponse.rows[0];
         },

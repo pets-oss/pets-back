@@ -15,7 +15,6 @@ export default function createAnimal(
                       mutation {
                       createAnimal(input: {
                           name: "Lokis",
-                          organization: 2,
                           registration: {
                               registrationNo: "${registrationNo}",
                               registrationDate: "${date}",

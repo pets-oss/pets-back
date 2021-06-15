@@ -22,7 +22,6 @@ let animalId: String;
 describe('animalRegistration Graphql mutations tests', () => {
     const registrationNo = `2021PandemicC19X${uuidv4()}`;
     const date = '2021-01-01';
-    const dateIntString = new Date(date).getTime().toString();
 
     before((done) =>
         createAnimal(done, request, registrationNo, date, (id: String) => {
@@ -35,7 +34,7 @@ describe('animalRegistration Graphql mutations tests', () => {
 
         const answer = {
             registrationNo,
-            registrationDate: dateIntString,
+            registrationDate: date,
             status: 'Aktyvus',
         };
 

@@ -10,20 +10,20 @@ const resolvers: IResolvers = {
         author: getAuthor
     },
     Mutation: {
-        createGivenAwayEvent: async (_, { input }, { pgClient }) => {
+        createGivenAwayEvent: async (_, { input }, { pgClient, userId }) => {
             const dbResponse = await pgClient.query(
-                createGivenAwayEventQuery(input)
+                createGivenAwayEventQuery({...input, author: userId})
             );
             return dbResponse.rows[0];
         },
-        updateGivenAwayEvent: async (_, { input }, { pgClient }) => {
+        updateGivenAwayEvent: async (_, { input }, { pgClient, userId }) => {
             if (Object.keys(input).length < 2) {
                 throw new Error(
                     'You have to provide at least one data field when updating an entity'
                 );
             }
             const dbResponse = await pgClient.query(
-                updateGivenAwayEventQuery(input)
+                updateGivenAwayEventQuery({...input, author: userId})
             );
 
             return dbResponse.rows[0];

@@ -14,12 +14,14 @@ type FoundEvent {
 }
 
 input FoundEventInput {
+    "Max 255 characters"
     street: String!
+    "Max 8 characters"
     houseNo: String
+    "Any id from municipalities query"
     municipalityId: Int!
     date: Date
     animalId: Int!
-    author: String!
     comments: String
 }
 

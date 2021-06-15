@@ -40,7 +40,7 @@ input AnimalDetailsInput {
     "Animal color (any value from 'colors' query)"
     colorId: Int
     "Animal date of birth (year)"
-    birthDate: String
+    birthDate: Date
     "Animal weight (kg)"
     weight: Int
     "Animal allergy"
