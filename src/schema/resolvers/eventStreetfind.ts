@@ -40,7 +40,6 @@ const resolvers: IResolvers = {
             }
 
             const dbResponse = await pgClient.query(
-                createStreetfindEventQuery(input)
                 createStreetfindEventQuery({...input, author: userId})
             );
             return dbResponse.rows[0];

@@ -10,7 +10,6 @@ const resolvers: IResolvers = {
         author: getAuthor
     },
     Mutation: {
-        createGiveawayEvent: async (_, { input }, { pgClient }) => {
         createGiveawayEvent: async (_, { input }, { pgClient, userId }) => {
             const dbResponse = await pgClient.query(
                 createGiveawayEventQuery({...input, author: userId})
