@@ -22,7 +22,7 @@ ORDER BY st.translation,
 
 
 -- https://github.com/pets-oss/pets-back/issues/144
--- Return statistics of sheltered animals of organization; inluding year_month, species, circumstance(found or given away), number of animals of circumstance activity
+-- Return statistics of sheltered animals of organization; inluding year_month, species, circumstance(streetfind or Giveaway), number of animals of circumstance activity
 WITH const AS (
     SELECT 'lt' AS lang
 ),
@@ -31,34 +31,34 @@ SELECT
 	to_char(aef.date_time, 'yyyymm') AS "year_month",
 	b.species,
 	a.organization,
-	'found' AS "circumstance",
+	'streetfind' AS "circumstance",
 	count(aef.animal_id) AS "cnt"
-FROM animal_event_found aef
-JOIN animal_details ad 
+FROM event_streetfind aef
+JOIN animal_details ad
     ON ad.animal_id = aef.animal_id
-JOIN animal a 
+JOIN animal a
     ON a.id = ad.animal_id
-JOIN breed b 
+JOIN breed b
     ON b.id = ad.breed_id
 GROUP BY to_char(aef.date_time, 'yyyymm'),
-     b.species, 
+     b.species,
      a.organization
 UNION
 SELECT
 	to_char(aega.date_time, 'yyyymm') AS "year_month",
 	b.species,
 	a.organization,
-	'given away' AS "circumstance",
+	'giveaway' AS "circumstance",
 	count(aega.animal_id) AS "cnt"
-FROM animal_event_given_away aega
-JOIN animal_details ad 
+FROM event_giveaway aega
+JOIN animal_details ad
     ON ad.animal_id = aega.animal_id
-JOIN animal a 
+JOIN animal a
     ON a.id = ad.animal_id
-JOIN breed b 
+JOIN breed b
     ON b.id = ad.breed_id
-GROUP BY to_char(aega.date_time, 'yyyymm'), 
-    b.species, 
+GROUP BY to_char(aega.date_time, 'yyyymm'),
+    b.species,
     a.organization
 )
 SELECT
@@ -68,8 +68,8 @@ SELECT
 	o.Id AS "organizationI_id",
 	rs.cnt
 FROM cte_stats rs
-JOIN (SELECT * FROM species_translation WHERE language = (SELECT lang FROM const)) AS st 
+JOIN (SELECT * FROM species_translation WHERE language = (SELECT lang FROM const)) AS st
     ON rs.species = st.species
-JOIN organization o 
+JOIN organization o
     ON o.id = rs.organization
 ORDER BY rs.year_month

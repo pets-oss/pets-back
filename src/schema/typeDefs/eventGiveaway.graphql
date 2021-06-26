@@ -1,7 +1,11 @@
-"Represents given away animal event"
-type GivenAwayEvent {
+"Represents Giveaway event"
+type GiveawayEvent {
     "Event id"
     id: Int!
+    "Registration date"
+    registrationDate: Date
+    "Registration no"
+    registrationNo: String
     "Former owner id"
     formerOwnerId: Int!
     "Event date"
@@ -15,13 +19,17 @@ type GivenAwayEvent {
 }
 
 extend type Mutation {
-    "Created animal event given away"
-    createGivenAwayEvent(input: CreateGivenAwayEventInput!): GivenAwayEvent
-    "Updated animal event given away"
-    updateGivenAwayEvent(input: UpdateGivenAwayEventInput!): GivenAwayEvent
+    "Create Giveaway event"
+    createGiveawayEvent(input: CreateGiveawayEventInput!): GiveawayEvent
+    "Update Giveaway event"
+    updateGiveawayEvent(input: UpdateGiveawayEventInput!): GiveawayEvent
 }
 
-input CreateGivenAwayEventInput {
+input CreateGiveawayEventInput {
+    "Registration date"
+    registrationDate: Date
+    "Registration no"
+    registrationNo: String
     "Former owner id"
     formerOwnerId: Int!
     "Event date in YYYY-MM-DD format"
@@ -32,7 +40,11 @@ input CreateGivenAwayEventInput {
     reason: String
 }
 
-input UpdateGivenAwayEventInput {
+input UpdateGiveawayEventInput {
+    "Registration date"
+    registrationDate: Date
+    "Registration no"
+    registrationNo: String
     "Event id"
     id: Int!
     "Former owner id"

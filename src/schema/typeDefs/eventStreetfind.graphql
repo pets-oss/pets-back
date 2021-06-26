@@ -1,8 +1,8 @@
 extend type Query {
-    foundEvents: [FoundEvent]
+    streetfindEvents: [StreetfindEvent]
 }
 
-type FoundEvent {
+type StreetfindEvent {
     id: Int!
     street: String!
     houseNo: String
@@ -13,7 +13,7 @@ type FoundEvent {
     comments: String
 }
 
-input FoundEventInput {
+input StreetfindEventInput {
     "Max 255 characters"
     street: String!
     "Max 8 characters"
@@ -26,5 +26,5 @@ input FoundEventInput {
 }
 
 extend type Mutation {
-    createFoundEvent(input: FoundEventInput!): FoundEvent
+    createStreetfindEvent(input: StreetfindEventInput!): StreetfindEvent
 }

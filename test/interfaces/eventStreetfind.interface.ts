@@ -1,7 +1,9 @@
 import Author from './author.interface';
 
-export default interface AnimalEventFound {
+export default interface EventStreetfind {
     id: number;
+    registrationDate: string;
+    registrationNo: string;
     street: string;
     houseNo: string | null;
     municipalityId: number;

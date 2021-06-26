@@ -26,10 +26,10 @@ export const getMedicalEventsQuery = (animalId: number | null): QueryConfig => {
     }
 }
 
-export const getFoundEventsQuery = (animalId: number | null): QueryConfig => {
+export const getStreetfindEventsQuery = (animalId: number | null): QueryConfig => {
     const text = `
-        SELECT *, 'General' AS group, 'Found' AS type
-        FROM animal_event_found
+        SELECT *, 'Registration' AS group, 'Streetfind' AS type
+        FROM event_streetfind
         WHERE ($1::int IS NULL OR animal_id = $1)
     `;
 
@@ -39,12 +39,12 @@ export const getFoundEventsQuery = (animalId: number | null): QueryConfig => {
     }
 }
 
-export const getGivenAwayEventsQuery = (animalId: number | null): QueryConfig => {
+export const getGiveawayEventsQuery = (animalId: number | null): QueryConfig => {
     const text = `
-        SELECT *, 'General' AS group, 'GivenAway' AS type
-        FROM animal_event_given_away
-        LEFT JOIN animal_owner ON animal_owner.id = animal_event_given_away.former_owner_id
-        WHERE ($1::int IS NULL OR animal_event_given_away.animal_id = $1)
+        SELECT *, 'Registration' AS group, 'Giveaway' AS type
+        FROM event_giveaway
+        LEFT JOIN animal_owner ON animal_owner.id = event_giveaway.former_owner_id
+        WHERE ($1::int IS NULL OR event_giveaway.animal_id = $1)
     `;
 
     return {
@@ -52,4 +52,3 @@ export const getGivenAwayEventsQuery = (animalId: number | null): QueryConfig =>
         values: [ animalId ]
     }
 }
-
