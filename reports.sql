@@ -22,7 +22,7 @@ ORDER BY st.translation,
 
 
 -- https://github.com/pets-oss/pets-back/issues/144
--- Return statistics of sheltered animals of organization; inluding year_month, species, circumstance(rescue or handover), number of animals of circumstance activity
+-- Return statistics of sheltered animals of organization; inluding year_month, species, circumstance(streetfind or Giveaway), number of animals of circumstance activity
 WITH const AS (
     SELECT 'lt' AS lang
 ),
@@ -31,9 +31,9 @@ SELECT
 	to_char(aef.date_time, 'yyyymm') AS "year_month",
 	b.species,
 	a.organization,
-	'rescue' AS "circumstance",
+	'streetfind' AS "circumstance",
 	count(aef.animal_id) AS "cnt"
-FROM event_rescue aef
+FROM event_streetfind aef
 JOIN animal_details ad
     ON ad.animal_id = aef.animal_id
 JOIN animal a
@@ -48,9 +48,9 @@ SELECT
 	to_char(aega.date_time, 'yyyymm') AS "year_month",
 	b.species,
 	a.organization,
-	'handover' AS "circumstance",
+	'giveaway' AS "circumstance",
 	count(aega.animal_id) AS "cnt"
-FROM event_hand_over aega
+FROM event_giveaway aega
 JOIN animal_details ad
     ON ad.animal_id = aega.animal_id
 JOIN animal a

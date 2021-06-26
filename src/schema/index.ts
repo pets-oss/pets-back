@@ -23,7 +23,7 @@ import dateResolvers from './resolvers/date';
 import chipInstallPlaceTranslationResolvers
     from './resolvers/chipInstallPlaceTranslation';
 import streetfindEventResolvers from './resolvers/eventStreetfind';
-import handOverEventResolvers from './resolvers/eventHandOver';
+import giveawayEventResolvers from './resolvers/eventGiveaway';
 import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
 import customScalarsResolvers from './resolvers/scalars';
 
@@ -54,7 +54,7 @@ const schemaWithResolvers = addResolversToSchema({
         dateResolvers,
         chipInstallPlaceTranslationResolvers,
         streetfindEventResolvers,
-        handOverEventResolvers,
+        giveawayEventResolvers,
         favoriteAnimalResolvers,
     ),
     inheritResolversFromInterfaces: true,

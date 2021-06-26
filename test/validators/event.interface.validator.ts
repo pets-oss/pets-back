@@ -28,7 +28,7 @@ export const EventSchema = {
         "Died",
         "Streetfind",
         "GenderElimination",
-        "HandOver",
+        "Giveaway",
         "Inspection",
         "LocationChange",
         "Medication",

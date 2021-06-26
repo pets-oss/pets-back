@@ -2,7 +2,7 @@ import { IResolvers } from 'graphql-tools';
 import {
     getStreetfindEventsQuery,
     getGeneralEventsQuery,
-    getHandOverEventsQuery,
+    getGiveawayEventsQuery,
 } from '../../sql-queries/event';
 import { getAuthor } from './author';
 
@@ -42,7 +42,7 @@ function appendStreetfindEventsDetails(events: any[]) {
     }));
 }
 
-function appendHandOverEventsDetails(events: any[]) {
+function appendGiveawayEventsDetails(events: any[]) {
     return events.map((event: any) => ({
         id: event.id,
         animal_id: event.animal_id,
@@ -114,11 +114,11 @@ const resolvers: IResolvers = {
             if (!groups || groups.includes('General')) {
                 const generalEvents = await pgClient.query(getGeneralEventsQuery(animalId));
                 const streetfindEvents = await pgClient.query(getStreetfindEventsQuery(animalId));
-                const handOverEvents = await pgClient.query(getHandOverEventsQuery(animalId));
+                const giveawayEvents = await pgClient.query(getGiveawayEventsQuery(animalId));
 
                 events.push(...appendEventsDetails(generalEvents.rows))
                 events.push(...appendStreetfindEventsDetails(streetfindEvents.rows))
-                events.push(...appendHandOverEventsDetails(handOverEvents.rows))
+                events.push(...appendGiveawayEventsDetails(giveawayEvents.rows))
                 events.push(...getMicrochippingEvents());
             }
 

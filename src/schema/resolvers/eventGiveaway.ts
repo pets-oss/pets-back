@@ -1,29 +1,29 @@
 import { IResolvers } from 'graphql-tools';
 import {
-    createHandOverEventQuery,
-    updateHandOverEventQuery,
-} from '../../sql-queries/eventHandOver';
+    createGiveawayEventQuery,
+    updateGiveawayEventQuery,
+} from '../../sql-queries/eventGiveaway';
 import { getAuthor } from './author';
 
 const resolvers: IResolvers = {
-    HandOverEvent: {
+    GiveawayEvent: {
         author: getAuthor
     },
     Mutation: {
-        createHandOverEvent: async (_, { input }, { pgClient }) => {
+        createGiveawayEvent: async (_, { input }, { pgClient }) => {
             const dbResponse = await pgClient.query(
-                createHandOverEventQuery(input)
+                createGiveawayEventQuery(input)
             );
             return dbResponse.rows[0];
         },
-        updateHandOverEvent: async (_, { input }, { pgClient }) => {
+        updateGiveawayEvent: async (_, { input }, { pgClient }) => {
             if (Object.keys(input).length < 2) {
                 throw new Error(
                     'You have to provide at least one data field when updating an entity'
                 );
             }
             const dbResponse = await pgClient.query(
-                updateHandOverEventQuery(input)
+                updateGiveawayEventQuery(input)
             );
 
             return dbResponse.rows[0];

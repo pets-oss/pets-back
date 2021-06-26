@@ -147,11 +147,11 @@ INSERT INTO event_streetfind
 ('2021-01-01', '123CovidXXYZ', 'Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL, 'aiubfaw4io09'),
 ('2021-01-01', '124CovidXYYZ', 'Maironio g.', '3', 15, '2018-08-04', 5, NULL, 'dhjbwau74a6');
 
-INSERT INTO event_hand_over
-(former_owner_id, reason, animal_id, date_time, author) VALUES
-(1, 'Have to go abroad', 1, '2021-01-07', '0932hfdsa'),
-(2, 'Išvyksta į užsienį', 2, '2021-01-01', 'afhu9w4f78'),
-(3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', 3, '2021-01-07', 'dhjbwau74a6');
+INSERT INTO event_giveaway
+(registration_date, registration_no, former_owner_id, reason, date_time, animal_id, author) VALUES
+('2021-01-02', 'ABDCovidXXYZ', 1, 'Have to go abroad', '2021-01-07', 1, '0932hfdsa'),
+('2021-01-02', '123Covid123', 2, 'Išvyksta į užsienį', '2021-01-01', 2, 'afhu9w4f78'),
+('2021-01-03', '222222', 3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', '2021-01-07', 3, 'dhjbwau74a6');
 
 INSERT INTO event_location_change (street, house_no, municipality_id, animal_id, date_time, comments, author) VALUES
 ('Vytauto g.', '12', 1, 5, '2018-07-14', 'Pasikeitė laikymo vietos adresas.', '0932hfdsa'),

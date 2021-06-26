@@ -272,7 +272,7 @@ CREATE TABLE animal_cage (
 CREATE TYPE event_group AS ENUM ('General', 'Medical');
 
 CREATE TYPE event_type AS ENUM (
-    'HandOver',
+    'Giveaway',
     'Streetfind',
     'CheckIn',
     'CheckOut',
@@ -326,14 +326,16 @@ CREATE TABLE event_streetfind (
     comments TEXT
 );
 
-CREATE TABLE event_hand_over (
+CREATE TABLE event_giveaway (
     id SERIAL PRIMARY KEY,
+    registration_date DATE,
+    registration_no VARCHAR(255) NOT NULL UNIQUE,
     former_owner_id INTEGER REFERENCES animal_owner(id) NOT NULL,
     reason TEXT,
-    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     date_time TIMESTAMP,
-    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     comments TEXT
 );
@@ -442,7 +444,7 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER event_streetfind_mod_time BEFORE UPDATE ON event_streetfind
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER event_hand_over_mod_time BEFORE UPDATE ON event_hand_over
+CREATE TRIGGER event_giveaway_mod_time BEFORE UPDATE ON event_giveaway
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER event_location_change_mod_time BEFORE UPDATE ON event_location_change

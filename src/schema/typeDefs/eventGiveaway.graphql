@@ -1,7 +1,11 @@
-"Represents HandOver event"
-type HandOverEvent {
+"Represents Giveaway event"
+type GiveawayEvent {
     "Event id"
     id: Int!
+    "Registration date"
+    registrationDate: Date
+    "Registration no"
+    registrationNo: String
     "Former owner id"
     formerOwnerId: Int!
     "Event date"
@@ -15,13 +19,17 @@ type HandOverEvent {
 }
 
 extend type Mutation {
-    "Create HandOver event"
-    createHandOverEvent(input: CreateHandOverEventInput!): HandOverEvent
-    "Update HandOver event"
-    updateHandOverEvent(input: UpdateHandOverEventInput!): HandOverEvent
+    "Create Giveaway event"
+    createGiveawayEvent(input: CreateGiveawayEventInput!): GiveawayEvent
+    "Update Giveaway event"
+    updateGiveawayEvent(input: UpdateGiveawayEventInput!): GiveawayEvent
 }
 
-input CreateHandOverEventInput {
+input CreateGiveawayEventInput {
+    "Registration date"
+    registrationDate: Date
+    "Registration no"
+    registrationNo: String
     "Former owner id"
     formerOwnerId: Int!
     "Event date in YYYY-MM-DD format"
@@ -34,7 +42,11 @@ input CreateHandOverEventInput {
     author: String!
 }
 
-input UpdateHandOverEventInput {
+input UpdateGiveawayEventInput {
+    "Registration date"
+    registrationDate: Date
+    "Registration no"
+    registrationNo: String
     "Event id"
     id: Int!
     "Former owner id"

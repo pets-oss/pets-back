@@ -39,12 +39,12 @@ export const getStreetfindEventsQuery = (animalId: number | null): QueryConfig =
     }
 }
 
-export const getHandOverEventsQuery = (animalId: number | null): QueryConfig => {
+export const getGiveawayEventsQuery = (animalId: number | null): QueryConfig => {
     const text = `
-        SELECT *, 'General' AS group, 'HandOver' AS type
-        FROM event_hand_over
-        LEFT JOIN animal_owner ON animal_owner.id = event_hand_over.former_owner_id
-        WHERE ($1::int IS NULL OR event_hand_over.animal_id = $1)
+        SELECT *, 'Registration' AS group, 'Giveaway' AS type
+        FROM event_giveaway
+        LEFT JOIN animal_owner ON animal_owner.id = event_giveaway.former_owner_id
+        WHERE ($1::int IS NULL OR event_giveaway.animal_id = $1)
     `;
 
     return {

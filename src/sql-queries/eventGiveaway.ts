@@ -2,15 +2,17 @@ import { QueryConfig } from 'pg';
 import { insert, update } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
-const table = 'event_hand_over';
-const returnFields = 'id, former_owner_id, date_time as date, animal_id, reason, author';
+const table = 'event_giveaway';
+const returnFields = 'id, registration_date, registration_no, former_owner_id, date_time as date, animal_id, reason, author';
 const dateToDateTime =
-    (input: CreateHandOverEventInput | UpdateHandOverEventInput) => {
+    (input: CreateGiveawayEventInput | UpdateGiveawayEventInput) => {
         const { date, ...inputWithoutDate } = input;
         return { ...inputWithoutDate, dateTime: date };
     };
 
-interface CreateHandOverEventInput {
+interface CreateGiveawayEventInput {
+    registrationDate: string
+    registrationNo: string
     formerOwnerId: number
     date: string
     animalId: number
@@ -18,8 +20,10 @@ interface CreateHandOverEventInput {
     author: string
 }
 
-interface UpdateHandOverEventInput {
+interface UpdateGiveawayEventInput {
     id: number
+    registrationDate: string
+    registrationNo: string
     formerOwnerId: number
     date: string
     animalId: number
@@ -27,14 +31,14 @@ interface UpdateHandOverEventInput {
     author: string
 }
 
-export const createHandOverEventQuery = (
-    input: CreateHandOverEventInput
+export const createGiveawayEventQuery = (
+    input: CreateGiveawayEventInput
 ): QueryConfig => insert(table, snakeCaseKeys(dateToDateTime(input)))
     .returning(returnFields)
     .toParams();
 
-export const updateHandOverEventQuery = (
-    input: UpdateHandOverEventInput
+export const updateGiveawayEventQuery = (
+    input: UpdateGiveawayEventInput
 ): QueryConfig => update(table, snakeCaseKeys(dateToDateTime(input)))
     .where({ id: input.id })
     .returning(returnFields)
