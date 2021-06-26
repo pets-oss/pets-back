@@ -16,7 +16,7 @@ enum EventGroup {
 
 enum EventType {
     HandOver,
-    Rescue,
+    Streetfind,
     CheckIn,
     CheckOut,
     Died,
@@ -112,14 +112,16 @@ type CheckOut implements Event {
     details: CheckOutDetails!
 }
 
-type RescueDetails implements EventDetails {
+type StreetfindDetails implements EventDetails {
+    registrationDate: String!
+    registrationNo: String!
     street: String
     houseNo: String
     municipalityId: Int!
     comments: String
 }
 
-type Rescue implements Event {
+type Streetfind implements Event {
     id: Int!
     animalId: Int!
     group: EventGroup!
@@ -127,7 +129,7 @@ type Rescue implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
-    details: RescueDetails!
+    details: StreetfindDetails!
 }
 
 type HandOverDetails implements EventDetails {

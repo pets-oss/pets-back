@@ -26,10 +26,10 @@ export const getMedicalEventsQuery = (animalId: number | null): QueryConfig => {
     }
 }
 
-export const getRescueEventsQuery = (animalId: number | null): QueryConfig => {
+export const getStreetfindEventsQuery = (animalId: number | null): QueryConfig => {
     const text = `
-        SELECT *, 'General' AS group, 'Rescue' AS type
-        FROM event_rescue
+        SELECT *, 'Registration' AS group, 'Streetfind' AS type
+        FROM event_streetfind
         WHERE ($1::int IS NULL OR animal_id = $1)
     `;
 

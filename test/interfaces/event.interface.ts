@@ -7,7 +7,7 @@ enum EventGroup {
 
 enum EventType {
     HandOver = 'HandOver',
-    Rescue = 'Rescue',
+    Streetfind = 'Streetfind',
     CheckIn = 'CheckIn',
     CheckOut = 'CheckOut',
     Died = 'Died',

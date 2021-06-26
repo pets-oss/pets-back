@@ -22,7 +22,7 @@ import animalOwnerResolvers from './resolvers/animalOwner';
 import dateResolvers from './resolvers/date';
 import chipInstallPlaceTranslationResolvers
     from './resolvers/chipInstallPlaceTranslation';
-import rescueEventResolvers from './resolvers/eventRescue';
+import streetfindEventResolvers from './resolvers/eventStreetfind';
 import handOverEventResolvers from './resolvers/eventHandOver';
 import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
 import customScalarsResolvers from './resolvers/scalars';
@@ -53,7 +53,7 @@ const schemaWithResolvers = addResolversToSchema({
         animalOwnerResolvers,
         dateResolvers,
         chipInstallPlaceTranslationResolvers,
-        rescueEventResolvers,
+        streetfindEventResolvers,
         handOverEventResolvers,
         favoriteAnimalResolvers,
     ),

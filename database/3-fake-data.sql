@@ -142,10 +142,10 @@ INSERT INTO microchipping_event_details
 ('29387'),
 ('2893402');
 
-INSERT INTO event_rescue
-(street, house_no, municipality_id, date_time, animal_id, comments, author) VALUES
-('Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL, 'aiubfaw4io09'),
-('Maironio g.', '3', 15, '2018-08-04', 5, NULL, 'dhjbwau74a6');
+INSERT INTO event_streetfind
+(registration_date, registration_no, street, house_no, municipality_id, date_time, animal_id, comments, author) VALUES
+('2021-01-01', '123CovidXXYZ', 'Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL, 'aiubfaw4io09'),
+('2021-01-01', '124CovidXYYZ', 'Maironio g.', '3', 15, '2018-08-04', 5, NULL, 'dhjbwau74a6');
 
 INSERT INTO event_hand_over
 (former_owner_id, reason, animal_id, date_time, author) VALUES

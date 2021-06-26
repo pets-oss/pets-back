@@ -273,7 +273,7 @@ CREATE TYPE event_group AS ENUM ('General', 'Medical');
 
 CREATE TYPE event_type AS ENUM (
     'HandOver',
-    'Rescue',
+    'Streetfind',
     'CheckIn',
     'CheckOut',
     'Died',
@@ -311,8 +311,10 @@ CREATE TABLE animal_event_medical_record (
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE event_rescue (
+CREATE TABLE event_streetfind (
     id SERIAL PRIMARY KEY,
+    registration_date DATE,
+    registration_no VARCHAR(255) NOT NULL UNIQUE,
     street VARCHAR(255) NOT NULL,
     house_no VARCHAR(8),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
@@ -437,7 +439,7 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER event_rescue_mod_time BEFORE UPDATE ON event_rescue
+CREATE TRIGGER event_streetfind_mod_time BEFORE UPDATE ON event_streetfind
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER event_hand_over_mod_time BEFORE UPDATE ON event_hand_over

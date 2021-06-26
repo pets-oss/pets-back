@@ -2,26 +2,28 @@ import { IResolvers } from 'graphql-tools';
 import { Validator } from 'node-input-validator';
 import { ValidationError } from 'apollo-server-express';
 import {
-    createRescueEventQuery,
-    getRescueEventsQuery,
-} from '../../sql-queries/eventRescue';
+    createStreetfindEventQuery,
+    getStreetfindEventsQuery,
+} from '../../sql-queries/eventStreetfind';
 import { getAuthor } from './author';
 
 const resolvers: IResolvers = {
-    RescueEvent: {
+    StreetfindEvent: {
         author: getAuthor
     },
     Query: {
-        rescueEvents: async (_, __, { pgClient }) => {
+        streetfindEvents: async (_, __, { pgClient }) => {
             const dbResponse = await pgClient.query(
-                getRescueEventsQuery()
+                getStreetfindEventsQuery()
             );
             return dbResponse.rows;
         },
     },
     Mutation: {
-        createRescueEvent: async (_, { input }, { pgClient }) => {
-            const createRescueEventInputValidator = new Validator(input, {
+        createStreetfindEvent: async (_, { input }, { pgClient }) => {
+            const createStreetfindEventInputValidator = new Validator(input, {
+                registrationDate: 'date|dateBeforeToday:0,days',
+                registrationNo: 'maxLength:255',
                 street: 'maxLength:255',
                 houseNo: 'maxLength:8',
                 municipalityId: 'integer|min:1',
@@ -30,16 +32,16 @@ const resolvers: IResolvers = {
                 author: 'maxLength:255',
             });
             // eslint-disable-next-line max-len
-            const isCreateRescueEventInputValid = await createRescueEventInputValidator.check();
+            const isCreateStreetfindEventInputValid = await createStreetfindEventInputValidator.check();
 
-            if (!isCreateRescueEventInputValid) {
+            if (!isCreateStreetfindEventInputValid) {
                 throw new ValidationError(
-                    JSON.stringify(createRescueEventInputValidator.errors)
+                    JSON.stringify(createStreetfindEventInputValidator.errors)
                 );
             }
 
             const dbResponse = await pgClient.query(
-                createRescueEventQuery(input)
+                createStreetfindEventQuery(input)
             );
             return dbResponse.rows[0];
         },
