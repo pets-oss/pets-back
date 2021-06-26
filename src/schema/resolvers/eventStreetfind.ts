@@ -20,7 +20,7 @@ const resolvers: IResolvers = {
         },
     },
     Mutation: {
-        createStreetfindEvent: async (_, { input }, { pgClient }) => {
+        createStreetfindEvent: async (_, { input }, { pgClient, userId }) => {
             const createStreetfindEventInputValidator = new Validator(input, {
                 registrationDate: 'date|dateBeforeToday:0,days',
                 registrationNo: 'maxLength:255',
@@ -28,8 +28,7 @@ const resolvers: IResolvers = {
                 houseNo: 'maxLength:8',
                 municipalityId: 'integer|min:1',
                 animalId: 'integer|min:1',
-                date: 'date|dateBeforeToday:0,days',
-                author: 'maxLength:255',
+                date: 'date|dateBeforeToday:0,days'
             });
             // eslint-disable-next-line max-len
             const isCreateStreetfindEventInputValid = await createStreetfindEventInputValidator.check();
@@ -42,6 +41,7 @@ const resolvers: IResolvers = {
 
             const dbResponse = await pgClient.query(
                 createStreetfindEventQuery(input)
+                createStreetfindEventQuery({...input, author: userId})
             );
             return dbResponse.rows[0];
         },

@@ -156,7 +156,9 @@ const resolvers: IResolvers = {
 
             const { image, ...inputData } = input;
 
-            let data = { ...inputData };
+            // this is harcoded until we have a way to resolve current user's organization
+            const organization = 1;
+            let data = { ...inputData,  organization};
             if (process.env.CLOUDINARY_DISABLED !== 'true') {
                 const imageUrl = await cloudinaryClient.uploadImage(image);
                 if (imageUrl) {

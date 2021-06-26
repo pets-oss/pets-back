@@ -22,38 +22,26 @@ type Subscription {
     organizationCreated: Organization
 }
 
-"Represents an organization."
 type Organization {
-    "Organization id, for example 2"
     id: Int!
-    "Organization name"
-    name: String
-    "Country"
+    name: Name
     country: String
-    "City"
     city: String
-    "Comments"
     streetAddress: String
-    "Phone"
-    phone: String
-    "Modification time"
+    phone: Phone
     modTime: String!
-    "Delete time"
     deleteTime: String
 }
 
 extend type Mutation {
-    "Created organization"
     createOrganization(input: CreateOrganisationInput!): Organization
-    "Updated organization"
     updateOrganization(input: UpdateOrganizationInput!): Organization
-    "Deleted organization"
     deleteOrganization(id: Int!): Organization
 }
 
 input CreateOrganisationInput {
     "Organization name (255 characters max)"
-    name: String!
+    name: Name!
     "Country (128 characters max)"
     country: String
     "City (128 characters max)"
@@ -61,20 +49,17 @@ input CreateOrganisationInput {
     "Street address (255 characters max)"
     streetAddress: String
     "Phone (64 characters max)"
-    phone: String
+    phone: Phone
 }
 
 input UpdateOrganizationInput {
-    "Organization id, for example 2"
     id: Int!
-    "Organization name (255 characters max)"
-    name: String
+    name: Name
     "Country (128 characters max)"
     country: String
     "City (128 characters max)"
     city: String
     "Street address (255 characters max)"
     streetAddress: String
-    "Phone (64 characters max)"
-    phone: String
+    phone: Phone
 }

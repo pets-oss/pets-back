@@ -38,8 +38,6 @@ input CreateGiveawayEventInput {
     animalId: Int!
     "Event reason"
     reason: String
-    "Author"
-    author: String!
 }
 
 input UpdateGiveawayEventInput {
@@ -57,6 +55,4 @@ input UpdateGiveawayEventInput {
     animalId: Int
     "Event reason"
     reason: String
-    "Author"
-    author: String!
 }

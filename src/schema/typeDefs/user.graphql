@@ -20,36 +20,24 @@ extend type Query {
 
 "Represents an user."
 type User {
-    "User id, for example 2"
     id: String!
-    "User username"
     username: String!
-    "User name"
-    name: String
-    "User surname"
-    surname: String
-    "User email"
+    name: Name
+    surname: Surname
     email: String
-    "User roles"
     roles: [Role]
-    "Modification time"
     modTime: String
 }
 
 "Represents an user role."
 type Role {
-    "Organization id"
     organizationId: Int!
-    "User role in organization"
     roleType: String
 }
 
 extend type Mutation {
-    "Created user"
     createUser(input: UserInput!): User
-    "Updated user"
     updateUser(input: UserInput!): User
-    "Deleted user"
     deleteUser(id: String!): User
 }
 
@@ -58,10 +46,8 @@ input UserInput {
     id: String!
     "User username (128 characters max)"
     username: String
-    "User name (255 characters max)"
-    name: String
-    "User surname (255 characters max)"
-    surname: String
+    name: Name
+    surname: Surname
     "User email (255 characters max)"
     email: String
 }

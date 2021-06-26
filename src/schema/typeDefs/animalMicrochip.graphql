@@ -41,11 +41,11 @@ input CreateAnimalMicrochipInput {
 }
 
 input UpdateAnimalMicrochipInput {
-    "Chip company code (255 characters max)"
+    "Chip company code (255 characters max, any id from query chipCompanies)"
     chipCompanyCode: Int
     "Install date"
-    installDate: String
-    "Install place"
+    installDate: Date
+    "Install place (any id from query chipInstallPlaces)"
     installPlaceId: Int
     "Microchip status ('Implanted' or 'Removed')"
     status: MicrochipStatus

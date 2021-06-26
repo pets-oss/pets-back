@@ -12,7 +12,7 @@ type AnimalRegistration {
     "Registration number"
     registrationNo: String!
     "Registration date"
-    registrationDate: String
+    registrationDate: Date
     """
     Registration status ('Active' or 'Inactive') translation
     Examples: status(language: "en") or just status - will return default language ("lt") translation
@@ -23,8 +23,7 @@ type AnimalRegistration {
 input AnimalRegistrationInput {
     "Registration number (255 characters max)"
     registrationNo: String!
-    "Registration date (UTC timestamp)"
-    registrationDate: String
+    registrationDate: Date
     "Registration status ('Active' or 'Inactive')"
     status: RegistrationStatus
 }

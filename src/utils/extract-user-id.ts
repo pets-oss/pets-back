@@ -1,6 +1,9 @@
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 
 const extractUserId = (req: any) => {
+    if (process.env.AUTH_DISABLED === 'true') {
+        return 'userIdForTesting';
+    }
     const authorization: string | undefined = req?.headers?.authorization;
     if (!authorization) {
         return undefined;

@@ -229,14 +229,12 @@ describe('animal mutations tests', () => {
     const registrationNumberCreate = `2021PandemicC19X${uuidv4()}`;
     const registrationNumberUpdate = `2021PandemicC19X${uuidv4()}`;
     const date = '2021-01-01';
-    const dateIntString = new Date(date).getTime().toString();
     let animalId = -1;
 
     it('Create animal', (done) => {
         const mutation = 'createAnimal';
         const create = `{
                   name: "Lokis",
-                  organization: 2,
                   registration: {
                       registrationNo: "${registrationNumberCreate}",
                       registrationDate: "${date}",
@@ -244,11 +242,11 @@ describe('animal mutations tests', () => {
                   }
           }`;
         const answer = {
-            organization: 2,
+            organization: 1,
             name: 'Lokis',
             registration: {
                 registrationNo: registrationNumberCreate,
-                registrationDate: dateIntString,
+                registrationDate: date,
                 status: 'Aktyvus',
             },
         };
@@ -284,7 +282,6 @@ describe('animal mutations tests', () => {
         const update = `{
                 id: 2,
                 name: "Lokis",
-                organization: 2,
                 registration: {
                     registrationNo: "${registrationNumberUpdate}",
                     registrationDate: "${date}",
@@ -297,7 +294,7 @@ describe('animal mutations tests', () => {
             name: 'Lokis',
             registration: {
                 registrationNo: registrationNumberUpdate,
-                registrationDate: dateIntString,
+                registrationDate: date,
                 status: 'Aktyvus',
             },
         };

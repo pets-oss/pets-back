@@ -21,12 +21,9 @@ extend type Query {
 type AnimalOwner {
     "Animal owner ID, e.g., 1"
     id: Int!
-    "Animal owner name"
-    name: String!
-    "Animal owner surname"
-    surname: String
-    "Animal owner phone number"
-    phone: String
+    name: Name!
+    surname: Surname
+    phone: Phone
 }
 
 extend type Mutation {
@@ -35,21 +32,15 @@ extend type Mutation {
 }
 
 input CreateAnimalOwnerInput {
-    "Animal owner name (255 characters max)"
     name: Name!
-    "Animal owner surname (255 characters max)"
-    surname: Surname!
-    "Animal owner phone number (+370XXXXXXXX)"
+    surname: Surname
     phone: Phone
 }
 
 input UpdateAnimalOwnerInput {
     "Animal owner ID, e.g., 1"
     id: Int!
-    "Animal owner name (255 characters max)"
     name: Name
-    "Animal owner surname (255 characters max)"
     surname: Surname
-    "Animal owner phone number (+370XXXXXXXX)"
     phone: Phone
 }

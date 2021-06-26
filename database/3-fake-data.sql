@@ -15,7 +15,8 @@ INSERT INTO app_user
 ('aiubfaw4io09', 'Hi', 'Hello', 'Letena', 'hi@hi.lt'),
 ('afhu9w4f78', 'Carl', 'Red', 'Gauras', 'hi@hi.lt'),
 ('278y2378ryb', 'Bob', 'Blue', 'Eyes', 'hi@hi.lt'),
-('0932hfdsa', 'Mamba', 'Green', 'Jungleen', 'hi@hello.lt');
+('0932hfdsa', 'Mamba', 'Green', 'Jungleen', 'hi@hello.lt'),
+('userIdForTesting', 'Azis', 'Ąžuolas', 'Krušna', 'hi@hello.lt');
 
 INSERT INTO app_user_roles
 (user_id, organization_id, role_type) VALUES
