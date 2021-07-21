@@ -36,27 +36,36 @@ interface DeleteAnimalInput {
     id: number;
 }
 
-export const getAnimalQuery = (id: number): QueryConfig => {
-    const text = `SELECT
-                    id,
-                    name,
-                    organization,
-                    status,
-                    image_url,
-                    comments,
-                    mod_time
-                FROM ${table}
-                WHERE id = $1;`;
+export const getAnimalQuery = (userId: string, id: number): QueryConfig => {
+    const text = `
+        SELECT
+            id,
+            name,
+            organization,
+            status,
+            image_url,
+            comments,
+            ${table}.mod_time,
+            af.animal_id IS NOT NULL AS is_favorite
+        FROM ${table}
+        LEFT JOIN (SELECT * FROM animal_favorite WHERE user_id = $2) AS af
+            ON ${table}.id = af.animal_id
+        WHERE id = $1;
+    `;
 
     const query = {
         text,
-        values: [id],
+        values: [
+            id,
+            userId
+        ],
     };
 
     return query;
 };
 
 export const getAnimalsQuery = (
+    userId: string,
     ids?: [number] | null,
     species?: [number] | null,
     gender?: [number] | null,
@@ -73,7 +82,8 @@ export const getAnimalsQuery = (
         a.status,
         a.image_url,
         a.comments,
-        a.mod_time`)
+        a.mod_time,
+        af.animal_id IS NOT NULL AS is_favorite`)
         .from(`${table} AS a`);
     query = species || gender || breed ?
         query.leftJoin('animal_details AS ad').on('a.id', 'ad.animal_id')
@@ -85,6 +95,8 @@ export const getAnimalsQuery = (
     query = species ? query.where($in('b.species', species)) : query;
     query = gender ? query.where($in('ad.gender_id', gender)) : query;
     query = breed ? query.where($in('ad.breed_id', breed)) : query;
+    query = query.leftJoin(`(${select().from('animal_favorite').where('user_id', userId)}) AS af`)
+        .on('a.id', 'af.animal_id');
     const queryParams = query.toParams();
 
     const selected = 'selected'

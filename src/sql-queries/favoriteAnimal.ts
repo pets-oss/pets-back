@@ -1,10 +1,5 @@
 import { QueryConfig } from 'pg';
 
-interface GetFavoriteAnimalInput {
-    userId: String;
-    animalId: number;
-}
-
 interface CreateFavoriteAnimalInput {
     userId: String;
     animalId: number;
@@ -14,28 +9,6 @@ interface DeleteFavoriteAnimalInput {
     userId: String;
     animalId: number;
 }
-
-export const getFavoriteAnimalQuery = (
-    input: GetFavoriteAnimalInput
-): QueryConfig => {
-    const { userId, animalId } = input;
-    const text = `
-        SELECT
-            user_id,
-            animal_id,
-            mod_time
-        FROM animal_favorite
-        WHERE user_id = $1 AND animal_id = $2;
-    `;
-
-    return {
-        text,
-        values: [
-            userId,
-            animalId
-        ],
-    };
-};
 
 export const getFavoriteAnimalsQuery = (user_id: String): QueryConfig => {
     const text = `
