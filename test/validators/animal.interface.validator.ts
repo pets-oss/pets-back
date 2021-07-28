@@ -218,6 +218,12 @@ export const AnimalSchema = {
         "string"
       ]
     },
+    "isFavorite": {
+      "type": [
+        "null",
+        "boolean"
+      ]
+    },
     "microchip": {
       "anyOf": [
         {
@@ -265,6 +271,7 @@ export const AnimalSchema = {
     "details",
     "id",
     "imageUrl",
+    "isFavorite",
     "microchip",
     "modTime",
     "name",
