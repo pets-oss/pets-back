@@ -93,6 +93,8 @@ type Animal {
     microchip: AnimalMicrochip
     "Animal details"
     details: AnimalDetails
+    "Flag to determine if the current user has marked the animal as one of her/his favorites"
+    isFavorite: Boolean
 }
 
 extend type Mutation {

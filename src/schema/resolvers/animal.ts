@@ -75,7 +75,10 @@ const resolvers: IResolvers = {
     Query: {
         animals: async (_,
             { ids, species, gender, breed, after, first, before, last },
-            { pgClient }) => {
+            { pgClient, userId }) => {
+            if (!userId) {
+                throw new ValidationError('Cannot determine favorite animals due to undefined user id');
+            }
             if ((first ?? after) != null && (last ?? before) != null) {
                 throw new ValidationError('Feature not implemented, try only with first and after or last and before');
             }
@@ -91,6 +94,7 @@ const resolvers: IResolvers = {
             const cursor = after ?? before;
 
             const dbResponse = await pgClient.query(getAnimalsQuery(
+                userId,
                 ids,
                 species,
                 gender,
@@ -124,8 +128,12 @@ const resolvers: IResolvers = {
                 edges
             };
         },
-        animal: async (_, { id }, { pgClient }) => {
-            const dbResponse = await pgClient.query(getAnimalQuery(id));
+        animal: async (_, { id }, { pgClient, userId }) => {
+            if (!userId) {
+                throw new ValidationError('Cannot determine if animal is favorite due to undefined user id');
+            }
+
+            const dbResponse = await pgClient.query(getAnimalQuery(userId, id));
             return dbResponse.rows[0];
         },
     },
@@ -211,7 +219,11 @@ const resolvers: IResolvers = {
                 throw e;
             }
         },
-        updateAnimal: async (_, { input }, { pgClient, cloudinaryClient }) => {
+        updateAnimal: async (_, { input }, { pgClient, cloudinaryClient, userId }) => {
+            if (!userId) {
+                throw new ValidationError('Cannot determine if animal is favorite due to undefined user id');
+            }
+
             const updateAnimalInputValidator = new Validator(input, {
                 name: 'maxLength:128',
                 organization: 'integer|min:1',
@@ -249,7 +261,7 @@ const resolvers: IResolvers = {
 
                 if (process.env.CLOUDINARY_DISABLED !== 'true') {
                     const oldAnimalEntry = await pgClient.query(
-                        getAnimalQuery(data.id)
+                        getAnimalQuery(userId, data.id)
                     );
                     if (oldAnimalEntry?.rows[0]?.image_url) {
                         cloudinaryClient.deleteImage(

@@ -25,6 +25,7 @@ const animalFields = `
         imageUrl
         comments
         modTime
+        isFavorite
     }
 `;
 
