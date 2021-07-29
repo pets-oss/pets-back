@@ -11,7 +11,8 @@ extend type Query {
 
 enum EventGroup {
     General,
-    Medical
+    Medical,
+    Registration
 }
 
 enum EventType {
