@@ -27,7 +27,7 @@ const resolvers: IResolvers = {
                 getFavoriteAnimalsQuery(userId)
             );
 
-            if(dbResponse.rows){
+            if (Array.isArray(dbResponse.rows) && !!dbResponse.rows.length) {
                 const animalIds = dbResponse.rows.map(
                     (animal: FavoriteAnimal) => animal.animal_id
                 );
