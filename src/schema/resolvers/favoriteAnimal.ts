@@ -32,7 +32,7 @@ const resolvers: IResolvers = {
                     (animal: FavoriteAnimal) => animal.animal_id
                 );
                 dbResponse = await pgClient.query(
-                    getAnimalsQuery(animalIds)
+                    getAnimalsQuery(userId, animalIds)
                 );
             }
 
