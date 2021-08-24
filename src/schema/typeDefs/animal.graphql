@@ -27,7 +27,7 @@ extend type Query {
         gender: [Int]
         "Animal breed ids in database"
         breed: [Int],
-        "Boolean filter for favorite animals"
+        "Boolean filter for favorite animals only"
         isFavoriteOnly: Boolean,
         "Cursor to return animals after that cursor"
         after: String,
