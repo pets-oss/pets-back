@@ -44,7 +44,14 @@ const animalConnectionFields = `
         }
     }
 `;
-describe('GraphQL animal integration tests', () => {
+
+const favoriteAnimalFields = `
+{
+    animalId
+    userId
+}`
+
+describe('GraphQL animal query tests', () => {
     it('Returns animal id=1 with all fields', (done) => {
         let req = request
             .post('/graphql')
@@ -224,9 +231,79 @@ describe('GraphQL animal integration tests', () => {
                 return done();
             });
     });
+
+    it('Returns first 2 favorite animals ', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (first: 2, isFavoriteOnly: true)
+                        ${animalConnectionFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(2);
+                for (let i = 0; i < animals.edges.length; i += 1) {
+                    expect(animals.edges[i].node.isFavorite).to.be.equal(true)
+                }
+                return done();
+            });
+    });
+
+    it('Returns favorite animals for a user without favorite animals', (done) => {
+        let req = request
+            .post('/graphql')
+            .set('fake-user', 'userIdForTestingNoFavoriteAnimals')
+            .send({
+                query: `
+                {
+                    animals (isFavoriteOnly: true)
+                        ${animalConnectionFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+
+                const {
+                    body: {
+                        data: { animals },
+                    },
+                } = res;
+                validateAnimalConnection(animals);
+                expect(animals.edges).to.be.an('array');
+                expect(animals.edges).to.have.length(0);
+                return done();
+            });
+    });
 });
 
-describe('animal mutations tests', () => {
+describe('GraphQL animal mutations tests', () => {
     const registrationNumberCreate = `2021PandemicC19X${uuidv4()}`;
     const registrationNumberUpdate = `2021PandemicC19X${uuidv4()}`;
     const date = '2021-01-01';
@@ -351,6 +428,103 @@ describe('animal mutations tests', () => {
                 expect(res.body.data[mutation]).to.deep.include(
                     expectedResponse
                 );
+                return done();
+            });
+    });
+});
+
+describe('GraphQL favoriteAnimal tests', () => {
+    it('Returns all favorite animals for user', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `{ favoriteAnimals
+                       ${animalFields}
+                  }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                const {
+                    body: {
+                        data: { favoriteAnimals },
+                    },
+                } = res;
+                expect(favoriteAnimals).to.be.an('array');
+                expect(favoriteAnimals).to.have.length.above(2)
+                return done();
+            });
+    });
+
+    it('Creates favoriteAnimal', (done) => {
+        const mutation = 'createFavoriteAnimal';
+        const createAnimalId = 4;
+        const answer = {
+            animalId: 4,
+            userId: 'userIdForTesting',
+        };
+
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                      mutation {
+                          ${mutation}(animalId: ${createAnimalId})
+                          ${favoriteAnimalFields}
+                  }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                // eslint-disable-next-line prefer-destructuring
+                expect(res.body.data[mutation]).to.deep.include(answer);
+                return done();
+            });
+    });
+
+    it('Deletes favoriteAnimal', (done) => {
+        const mutation = 'deleteFavoriteAnimal';
+        const createAnimalId = 4;
+        const answer = {
+            animalId: 4,
+            userId: 'userIdForTesting',
+        };
+
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                      mutation {
+                          ${mutation}(animalId: ${createAnimalId})
+                          ${favoriteAnimalFields}
+                  }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                // eslint-disable-next-line prefer-destructuring
+                expect(res.body.data[mutation]).to.deep.include(answer);
                 return done();
             });
     });

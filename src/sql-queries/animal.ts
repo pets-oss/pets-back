@@ -1,5 +1,5 @@
 import { QueryConfig } from 'pg';
-import { gt, in as $in, insert, lt, select, update } from 'sql-bricks-postgres';
+import { gt, in as $in, insert, lt, select, update, isNotNull } from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 import { AnimalRegistrationInput } from './animalRegistration';
 import { AnimalDetailsInput } from './animalDetails';
@@ -70,6 +70,7 @@ export const getAnimalsQuery = (
     species?: [number] | null,
     gender?: [number] | null,
     breed?: [number] | null,
+    isFavoriteOnly?: boolean,
     limit?: number | null,
     reverse?: boolean | null,
     cursor?: string | null,
@@ -95,8 +96,11 @@ export const getAnimalsQuery = (
     query = species ? query.where($in('b.species', species)) : query;
     query = gender ? query.where($in('ad.gender_id', gender)) : query;
     query = breed ? query.where($in('ad.breed_id', breed)) : query;
-    query = query.leftJoin(`(${select().from('animal_favorite').where('user_id', userId)}) AS af`)
+    query = query.leftJoin(
+        `(${select().from('animal_favorite').where('user_id', userId)}) AS af`
+    )
         .on('a.id', 'af.animal_id');
+    query = isFavoriteOnly ? query.where(isNotNull('af.animal_id')) : query;
     const queryParams = query.toParams();
 
     const selected = 'selected'

@@ -74,7 +74,7 @@ interface Animal {
 const resolvers: IResolvers = {
     Query: {
         animals: async (_,
-            { ids, species, gender, breed, after, first, before, last },
+            { ids, species, gender, breed, isFavoriteOnly, after, first, before, last },
             { pgClient, userId }) => {
             if (!userId) {
                 throw new ValidationError('Cannot determine favorite animals due to undefined user id');
@@ -99,6 +99,7 @@ const resolvers: IResolvers = {
                 species,
                 gender,
                 breed,
+                isFavoriteOnly,
                 limit != null ? limit + 1 : limit,
                 reverse,
                 cursor ? Buffer.from(cursor, 'base64').toString() : null
