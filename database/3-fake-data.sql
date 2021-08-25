@@ -16,7 +16,8 @@ INSERT INTO app_user
 ('afhu9w4f78', 'Carl', 'Red', 'Gauras', 'hi@hi.lt'),
 ('278y2378ryb', 'Bob', 'Blue', 'Eyes', 'hi@hi.lt'),
 ('0932hfdsa', 'Mamba', 'Green', 'Jungleen', 'hi@hello.lt'),
-('userIdForTesting', 'Azis', 'Ąžuolas', 'Krušna', 'hi@hello.lt');
+('userIdForTesting', 'Azis', 'Ąžuolas', 'Krušna', 'hi@hello.lt'),
+('userIdForTestingNoFavoriteAnimals', 'Tiesto', 'Testas', 'Doe', 'tiesto@testai.lt');
 
 INSERT INTO app_user_roles
 (user_id, organization_id, role_type) VALUES
@@ -82,9 +83,12 @@ INSERT INTO animal_favorite
 (user_id, animal_id) VALUES
 ('dhjbwau74a6', 1),
 ('aiubfaw4io09', 1),
-('aiubfaw4io09' ,4),
+('aiubfaw4io09', 4),
 ('afhu9w4f78', 2),
-('278y2378ryb', 3);
+('278y2378ryb', 3),
+('userIdForTesting', 1),
+('userIdForTesting', 2),
+('userIdForTesting', 3);
 
 -- ORGANIZATION TASK
 
