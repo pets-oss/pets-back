@@ -25,10 +25,8 @@ const checkUserIdIsUnique = async (pgClient: any, id: string) => {
         checkUserExistsByIdQuery(id)
     );
     if (existsResponse.rows[0].exists) {
-        console.log(`Error was thrown ${id}`);
         throw new ValidationError(`User with id ${id} already exists`);
     }
-    console.log('Error was not thrown');
 };
 
 const resolvers: IResolvers = {
