@@ -5,6 +5,7 @@ import jwt from 'express-jwt';
 import jwks from 'jwks-rsa';
 import { graphqlUploadExpress } from 'graphql-upload';
 import http from 'http';
+import { HttpQueryError } from 'apollo-server-core';
 import { version } from '../package.json';
 
 import schema from './schema';
@@ -33,6 +34,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
         try {
             isCloudinaryClientActive = await cloudinaryClient.isOk();
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.log(error);
         }
 
@@ -65,6 +67,25 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
 
     app.use(cors());
 
+    const StatusRaisingPlugin = {
+        requestDidStart() {
+            return {
+                didEncounterErrors({ errors }: any) {
+                    if (errors) {
+                        const [{ extensions, message }] = errors;
+                        switch (extensions?.code) {
+                        case 'GRAPHQL_VALIDATION_FAILED':
+                        case 'BAD_USER_INPUT':
+                            throw new HttpQueryError(400, message, true);
+                        default:
+                            break;
+                        }
+                    }
+                },
+            };
+        }
+    };
+
     if (process.env.AUTH_DISABLED !== 'true') {
         app.use('/graphql', jwtCheck);
     }
@@ -86,6 +107,7 @@ initClients().then(({ pgClient, cloudinaryClient }) => {
             cloudinaryClient,
             userId: extractUserId(req)
         }),
+        plugins: [StatusRaisingPlugin],
     });
 
     server.applyMiddleware({ app });

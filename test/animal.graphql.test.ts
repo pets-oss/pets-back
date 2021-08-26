@@ -301,6 +301,33 @@ describe('GraphQL animal query tests', () => {
                 return done();
             });
     });
+
+    it('Throws error for first -1 animal ', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+                {
+                    animals (first: -1)
+                        ${animalConnectionFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(400)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+
+                expect(res.body.data).equal(undefined);
+                expect(res.body.errors[0].message).to.equal('first can not be less than zero');
+                return done();
+            });
+    });
 });
 
 describe('GraphQL animal mutations tests', () => {
