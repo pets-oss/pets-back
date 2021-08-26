@@ -1,5 +1,12 @@
 import { QueryConfig } from 'pg';
-import { insert, select, update, deleteFrom } from 'sql-bricks-postgres';
+import {
+    deleteFrom,
+    exists,
+    insert,
+    not,
+    select,
+    update
+} from 'sql-bricks-postgres';
 import snakeCaseKeys from 'snakecase-keys';
 
 interface UserInput {
@@ -31,4 +38,16 @@ export const deleteUserQuery = (id: String): QueryConfig =>
     deleteFrom('app_user')
         .where({ id })
         .returning('id, username, name, surname, email, mod_time')
+        .toParams();
+
+export const checkUserExistsByEmailNotIdQuery = (email: string, id?: number): QueryConfig => {
+    let query = select().from('app_user').where({ email });
+
+    query = id ? query.where(not({ id })) : query;
+
+    return select(exists(query)).toParams();
+};
+
+export const checkUserExistsByIdQuery = (id: String): QueryConfig =>
+    select(exists(select().from('app_user').where({ id })))
         .toParams();

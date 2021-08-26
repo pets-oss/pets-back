@@ -34,7 +34,7 @@ CREATE TABLE app_user (
     username VARCHAR(128) NOT NULL,
     name VARCHAR(255),
     surname VARCHAR(255),
-    email VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 

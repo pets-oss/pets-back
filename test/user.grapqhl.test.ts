@@ -32,7 +32,7 @@ describe('GraphQL user integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             validate(res.body.data.user);
@@ -49,7 +49,7 @@ describe('GraphQL user integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             const { body: { data: { users } } } = res;
@@ -77,7 +77,7 @@ describe('GraphQL user integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             const { body: { data: { createUser } } } = res;
@@ -87,6 +87,58 @@ describe('GraphQL user integration tests', () => {
             expect(createUser.name).to.be.equals('TestName');
             expect(createUser.surname).to.be.equals('TestSurname');
             expect(createUser.email).to.be.equals('TestEmail');
+            return done();
+        });
+    });
+
+    it('Throws error on attempt to create user with existing email', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                        createUser(input: {
+                            id: "TestID2",
+                            username: "TestUsername1",
+                            name: "TestName",
+                            surname: "TestSurname",
+                            email: "TestEmail"
+                        }) ${userFields}
+                    }`,
+            })
+            .expect(400);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.end((err, res) => {
+            if (err) return done(err);
+            expect(res.body.data).to.be.equals(undefined);
+            expect(res.body.errors[0].message).to.match(/^User with email .+ already exists$/);
+            return done();
+        });
+    });
+
+    it('Throws error on attempt to create user with existing id', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                        createUser(input: {
+                            id: "TestID",
+                            username: "TestUsername2",
+                            name: "TestName",
+                            surname: "TestSurname",
+                            email: "TestEmailUnique"
+                        }) ${userFields}
+                    }`,
+            })
+            .expect(400);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`);
+        }
+        req.end((err, res) => {
+            if (err) return done(err);
+            expect(res.body.data).to.be.equals(undefined);
+            expect(res.body.errors[0].message).to.match(/^User with id .+ already exists$/);
             return done();
         });
     });
@@ -108,7 +160,7 @@ describe('GraphQL user integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             const { body: { data: { updateUser } } } = res;
@@ -133,7 +185,7 @@ describe('GraphQL user integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             const { body: { data: { deleteUser } } } = res;
@@ -156,7 +208,7 @@ describe('GraphQL user integration tests', () => {
             .expect(200);
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.end((err, res) => {
             if (err) return done(err);
             expect(res.body.data.user).to.be.a('null');
