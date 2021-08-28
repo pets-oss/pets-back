@@ -117,6 +117,32 @@ describe('GraphQL user integration tests', () => {
         });
     });
 
+    it('Throws error on attempt to create user with existing email', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                        createUser(input: {
+                            id: "TestID2",
+                            username: "TestUsername",
+                            name: "TestName",
+                            surname: "TestSurname",
+                            email: "TestEmail1"
+                        }) ${userFields}
+                    }`,
+            })
+            .expect(400);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.end((err, res) => {
+            if (err) return done(err);
+            expect(res.body.data).to.be.equals(undefined);
+            expect(res.body.errors[0].message).to.match(/^User with username .+ already exists$/);
+            return done();
+        });
+    });
+
     it('Throws error on attempt to create user with existing id', (done) => {
         let req = request
             .post('/graphql')

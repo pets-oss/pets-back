@@ -48,6 +48,13 @@ export const checkUserExistsByEmailNotIdQuery = (email: string, id?: number): Qu
     return select(exists(query)).toParams();
 };
 
+export const checkUserExistsByUsernameNotIdQuery = (username: string, id?: number): QueryConfig => {
+    let query = select().from('app_user').where({ username });
+    query = id ? query.where(not({ id })) : query;
+
+    return select(exists(query)).toParams();
+};
+
 export const checkUserExistsByIdQuery = (id: String): QueryConfig =>
     select(exists(select().from('app_user').where({ id })))
         .toParams();

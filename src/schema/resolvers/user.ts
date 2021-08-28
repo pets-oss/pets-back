@@ -3,6 +3,7 @@ import { ValidationError } from 'apollo-server-express';
 import {
     checkUserExistsByEmailNotIdQuery,
     checkUserExistsByIdQuery,
+    checkUserExistsByUsernameNotIdQuery,
     createUserQuery,
     deleteUserQuery,
     getUserQuery,
@@ -29,6 +30,15 @@ const checkUserIdIsUnique = async (pgClient: any, id: string) => {
     }
 };
 
+const checkUsernameIsUnique = async (pgClient: any, input: any) => {
+    const existsResponse = await pgClient.query(
+        checkUserExistsByUsernameNotIdQuery(input.username, input.id)
+    );
+    if (existsResponse.rows[0].exists) {
+        throw new ValidationError(`User with username ${input.username} already exists`);
+    }
+};
+
 const resolvers: IResolvers = {
     Query: {
         users: async (_, __, { pgClient }) => {
@@ -48,7 +58,9 @@ const resolvers: IResolvers = {
     },
     Mutation: {
         createUser: async (_, { input }, { pgClient }) => {
+
             await checkUserIdIsUnique(pgClient, input.id);
+            await checkUsernameIsUnique(pgClient, input);
             await checkUserEmailIsUnique(pgClient, input);
             const dbResponse = await pgClient.query(createUserQuery(input));
             return dbResponse.rows[0];
@@ -59,7 +71,8 @@ const resolvers: IResolvers = {
                     'You have to provide at least one data field when updating an entity'
                 );
             }
-            await checkUserEmailIsUnique(pgClient, input);
+            if (input.username) await checkUsernameIsUnique(pgClient, input);
+            if (input.email) await checkUserEmailIsUnique(pgClient, input);
             const dbResponse = await pgClient.query(updateUserQuery(input));
             return dbResponse.rows[0];
         },

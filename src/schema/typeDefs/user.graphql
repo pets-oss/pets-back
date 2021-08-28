@@ -24,7 +24,7 @@ type User {
     username: String!
     name: Name
     surname: Surname
-    email: String
+    email: String!
     roles: [Role]
     modTime: String
 }
