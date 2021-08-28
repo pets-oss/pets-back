@@ -1,5 +1,6 @@
 import { IResolvers } from 'graphql-tools';
 import { ValidationError } from 'apollo-server-express';
+import niv from 'node-input-validator';
 import {
     checkUserExistsByEmailNotIdQuery,
     checkUserExistsByIdQuery,
@@ -12,31 +13,30 @@ import {
 } from '../../sql-queries/user';
 import getUserRolesQuery from '../../sql-queries/role';
 
-const checkUserEmailIsUnique = async (pgClient: any, input: any) => {
-    const existsResponse = await pgClient.query(
-        checkUserExistsByEmailNotIdQuery(input.email, input.id)
-    );
-    if (existsResponse.rows[0].exists) {
-        throw new ValidationError(`User with email ${input.email} already exists`);
-    }
-};
+const uniqueUserFieldChecks = (pgClient: any) => async ({
+    attr,
+    value
+}: { attr: string, value: any }, validator: any): Promise<boolean> => {
 
-const checkUserIdIsUnique = async (pgClient: any, id: string) => {
-    const existsResponse = await pgClient.query(
-        checkUserExistsByIdQuery(id)
-    );
-    if (existsResponse.rows[0].exists) {
-        throw new ValidationError(`User with id ${id} already exists`);
+    let response;
+    switch (attr) {
+    case 'email':
+        response = await pgClient.query(
+            checkUserExistsByEmailNotIdQuery(value, validator.inputs.id));
+        break;
+    case 'username':
+        response = await pgClient.query(
+            checkUserExistsByUsernameNotIdQuery(value, validator.inputs.id));
+        break;
+    case 'id':
+        response = await pgClient.query(
+            checkUserExistsByIdQuery(value));
+        break;
+    default:
+        return false;
     }
-};
 
-const checkUsernameIsUnique = async (pgClient: any, input: any) => {
-    const existsResponse = await pgClient.query(
-        checkUserExistsByUsernameNotIdQuery(input.username, input.id)
-    );
-    if (existsResponse.rows[0].exists) {
-        throw new ValidationError(`User with username ${input.username} already exists`);
-    }
+    return !response.rows[0].exists;
 };
 
 const resolvers: IResolvers = {
@@ -59,20 +59,52 @@ const resolvers: IResolvers = {
     Mutation: {
         createUser: async (_, { input }, { pgClient }) => {
 
-            await checkUserIdIsUnique(pgClient, input.id);
-            await checkUsernameIsUnique(pgClient, input);
-            await checkUserEmailIsUnique(pgClient, input);
+            niv.extend('unique', uniqueUserFieldChecks(pgClient));
+
+            const userInputValidator = new niv.Validator(input, {
+                id: 'required|maxLength:255|unique',
+                username: 'required|maxLength:128|unique',
+                name: 'maxLength:255',
+                surname: 'maxLength:255',
+                email: 'required|email|maxLength:255|unique'
+            });
+
+            const isUserInputValid = await userInputValidator.check();
+
+            if (!isUserInputValid) {
+                throw new ValidationError(
+                    JSON.stringify(userInputValidator.errors)
+                );
+            }
+
             const dbResponse = await pgClient.query(createUserQuery(input));
             return dbResponse.rows[0];
         },
+
         updateUser: async (_, { input }, { pgClient }) => {
             if (Object.keys(input).length < 2) {
                 throw new ValidationError(
                     'You have to provide at least one data field when updating an entity'
                 );
             }
-            if (input.username) await checkUsernameIsUnique(pgClient, input);
-            if (input.email) await checkUserEmailIsUnique(pgClient, input);
+
+            niv.extend('unique', uniqueUserFieldChecks(pgClient));
+
+            const userInputValidator = new niv.Validator(input, {
+                id: 'required|maxLength:255',
+                username: 'sometimes|maxLength:128|unique',
+                name: 'maxLength:255',
+                surname: 'maxLength:255',
+                email: 'sometimes|email|maxLength:255|unique'
+            });
+
+            const isUserInputValid = await userInputValidator.check();
+
+            if (!isUserInputValid) {
+                throw new ValidationError(
+                    JSON.stringify(userInputValidator.errors)
+                );
+            }
             const dbResponse = await pgClient.query(updateUserQuery(input));
             return dbResponse.rows[0];
         },
