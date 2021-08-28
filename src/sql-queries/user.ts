@@ -40,7 +40,7 @@ export const deleteUserQuery = (id: String): QueryConfig =>
         .returning('id, username, name, surname, email, mod_time')
         .toParams();
 
-export const checkUserExistsByEmailNotIdQuery = (email: string, id?: number): QueryConfig => {
+export const checkUserExistsByEmailNotIdQuery = (email: string, id?: string): QueryConfig => {
     let query = select().from('app_user').where({ email });
 
     query = id ? query.where(not({ id })) : query;
@@ -48,7 +48,7 @@ export const checkUserExistsByEmailNotIdQuery = (email: string, id?: number): Qu
     return select(exists(query)).toParams();
 };
 
-export const checkUserExistsByUsernameNotIdQuery = (username: string, id?: number): QueryConfig => {
+export const checkUserExistsByUsernameNotIdQuery = (username: string, id?: string): QueryConfig => {
     let query = select().from('app_user').where({ username });
     query = id ? query.where(not({ id })) : query;
 
