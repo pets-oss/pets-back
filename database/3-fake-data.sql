@@ -188,6 +188,6 @@ INSERT INTO event_medication (treatment, expenses, animal_id, date_time, author,
 ('Some pills from Tick', 171.10, 3, '2020-05-21', 'dhjbwau74a6', 'Tick medications'),
 ('Some pills from Tick', 34.05, 4, '2020-05-21', 'afhu9w4f78', 'Tick medications');
 
-INSERT INTO event_surgery (result, expenses, animal_id, date_time, author, comments) VALUES
-('Successful', 150.00, 1, '2020-05-21', '278y2378ryb', 'Knee surgery'),
-('Successful', 345.05, 4, '2020-05-21', 'afhu9w4f78', 'Tumor surgery');
+INSERT INTO event_surgery (surgery, result, expenses, animal_id, date_time, author) VALUES
+('Knee', 'Successful', 150.00, 1, '2020-05-21', '278y2378ryb'),
+('Kidney', 'Successful', 345.05, 4, '2020-05-21', 'afhu9w4f78');

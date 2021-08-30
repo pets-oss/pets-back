@@ -39,16 +39,11 @@ interface Event {
     dateTime: String!
     createTime: String!
     author: Author!
-    details: EventDetails!
-}
-
-interface EventDetails {
     comments: String
 }
 
-type MicrochippingDetails implements EventDetails {
+type MicrochippingDetails {
     microchip: AnimalMicrochip!
-    comments: String
 }
 
 type Microchipping implements Event {
@@ -59,13 +54,13 @@ type Microchipping implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
+    comments: String
     details: MicrochippingDetails!
 }
 
-type MedicationDetails implements EventDetails {
+type MedicationDetails {
     treatment: String!
     expenses: Float
-    comments: String
 }
 
 type Medication implements Event {
@@ -76,12 +71,30 @@ type Medication implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
+    comments: String
     details: MedicationDetails!
 }
 
-type CheckInDetails implements EventDetails {
-    registrationData: AnimalRegistration!
+type SurgeryDetails {
+    surgery: String!
+    result: String!
+    expenses: Float
+}
+
+type Surgery implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: Author!
     comments: String
+    details: SurgeryDetails!
+}
+
+type CheckInDetails {
+    registrationData: AnimalRegistration!
 }
 
 type CheckIn implements Event {
@@ -91,15 +104,15 @@ type CheckIn implements Event {
     type: EventType!
     dateTime: String!
     createTime: String!
-    author: Author!,
+    comments: String
+    author: Author!
     details: CheckInDetails!
 }
 
-type CheckOutDetails implements EventDetails {
+type CheckOutDetails {
     temporary: Boolean!
     newOwner: String! "Will be used similar object as FormerAnimalOwner"
     document: Document
-    comments: String
 }
 
 type CheckOut implements Event {
@@ -110,16 +123,16 @@ type CheckOut implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
+    comments: String
     details: CheckOutDetails!
 }
 
-type StreetfindDetails implements EventDetails {
+type StreetfindDetails {
     registrationDate: String
     registrationNo: String
     street: String
     houseNo: String
     municipalityId: Int!
-    comments: String
 }
 
 type Streetfind implements Event {
@@ -128,17 +141,18 @@ type Streetfind implements Event {
     group: EventGroup!
     type: EventType!
     dateTime: String!
-    createTime: String!
     author: Author!
+    createTime: String!
+    modTime: String!
+    comments: String
     details: StreetfindDetails!
 }
 
-type GiveawayDetails implements EventDetails {
+type GiveawayDetails {
     registrationDate: String
     registrationNo: String
     formerOwner: AnimalOwner!
     reason: String
-    comments: String
 }
 
 type Giveaway implements Event {
@@ -149,12 +163,14 @@ type Giveaway implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
+    comments: String
     details: GiveawayDetails!
 }
 
-type LocationChangeDetails implements EventDetails {
-    location: String!
-    comments: String
+type LocationChangeDetails {
+    street: String
+    houseNo: String
+    municipalityId: Int!
 }
 
 type LocationChange implements Event {
@@ -165,5 +181,6 @@ type LocationChange implements Event {
     dateTime: String!
     createTime: String!
     author: Author!
+    comments: String
     details: LocationChangeDetails!
 }

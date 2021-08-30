@@ -318,10 +318,10 @@ CREATE TABLE event_streetfind (
     street VARCHAR(255) NOT NULL,
     house_no VARCHAR(8),
     municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
-    date_time TIMESTAMP,
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    date_time TIMESTAMP,
     author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     comments TEXT
 );
@@ -332,10 +332,10 @@ CREATE TABLE event_giveaway (
     registration_no VARCHAR(255) NOT NULL UNIQUE,
     former_owner_id INTEGER REFERENCES animal_owner(id) NOT NULL,
     reason TEXT,
-    date_time TIMESTAMP,
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
+    date_time TIMESTAMP,
     author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     comments TEXT
 );
@@ -391,6 +391,7 @@ CREATE TABLE event_death (
 
 CREATE TABLE event_surgery (
     id SERIAL PRIMARY KEY,
+    surgery VARCHAR(255) NOT NULL,
     result VARCHAR(255) NOT NULL,
     expenses NUMERIC,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,

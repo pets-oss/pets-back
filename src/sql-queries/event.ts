@@ -52,3 +52,54 @@ export const getGiveawayEventsQuery = (animalId: number | null): QueryConfig => 
         values: [ animalId ]
     }
 }
+
+export const getLocationChangeEvents = (animalId: number | null): QueryConfig => {
+    const table = 'event_location_change';
+    const group = 'General';
+    const type = 'LocationChange';
+
+    const text = `
+        SELECT *, '${group}' AS group, '${type}' AS type
+        FROM ${table}
+        WHERE ($1::int IS NULL OR ${table}.animal_id = $1)
+    `;
+
+    return {
+        text,
+        values: [ animalId ]
+    }
+}
+
+export const getMedicationEvents = (animalId: number | null): QueryConfig => {
+    const table = 'event_medication';
+    const group = 'Medical';
+    const type = 'Medication';
+
+    const text = `
+        SELECT *, '${group}' AS group, '${type}' AS type
+        FROM ${table}
+        WHERE ($1::int IS NULL OR ${table}.animal_id = $1)
+    `;
+
+    return {
+        text,
+        values: [ animalId ]
+    }
+}
+
+export const getSurgeryEvents = (animalId: number | null): QueryConfig => {
+    const table = 'event_surgery';
+    const group = 'Medical';
+    const type = 'Surgery';
+
+    const text = `
+        SELECT *, '${group}' AS group, '${type}' AS type
+        FROM ${table}
+        WHERE ($1::int IS NULL OR ${table}.animal_id = $1)
+    `;
+
+    return {
+        text,
+        values: [ animalId ]
+    }
+}

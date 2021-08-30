@@ -3,6 +3,9 @@ import {
     getStreetfindEventsQuery,
     getGeneralEventsQuery,
     getGiveawayEventsQuery,
+    getLocationChangeEvents,
+    getMedicationEvents,
+    getSurgeryEvents,
 } from '../../sql-queries/event';
 import { getAuthor } from './author';
 
@@ -27,17 +30,19 @@ function appendStreetfindEventsDetails(events: any[]) {
     return events.map((event: any) => ({
         id: event.id,
         animal_id: event.animal_id,
-        category: event.category,
         group: event.group,
         type: event.type,
         date_time: event.date_time,
-        create_time: event.create_time,
-        comments: event.comments,
         author: event.author,
+        create_time: event.create_time,
+        mod_time: event.mod_time,
+        comments: event.comments,
         details: {
+            registration_no: event.registration_no,
+            registration_date: event.registration_date,
             street: event.street,
             house_no: event.house_no,
-            municipality_id: event.municipality_id
+            municipality_id: event.municipality_id,
         }
     }));
 }
@@ -50,9 +55,10 @@ function appendGiveawayEventsDetails(events: any[]) {
         group: event.group,
         type: event.type,
         date_time: event.date_time,
-        create_time: event.create_time,
-        comments: event.comments,
         author: event.author,
+        create_time: event.create_time,
+        mod_time: event.mod_time,
+        comments: event.comments,
         details: {
             former_owner: {
                 id: event.former_owner_id,
@@ -66,21 +72,60 @@ function appendGiveawayEventsDetails(events: any[]) {
     }));
 }
 
-function getMedicationEvents() {
-    return [{
-        id: 50,
-        animal_id: 1,
-        group: 'Medical',
-        type: 'Medication',
-        date_time: '2021-05-23',
-        create_time: '2021-05-23',
-        author: 'aiubfaw4io09',
+function appendLocationChangeEventsDetails(events: any[]) {
+    return events.map((event: any) => ({
+        id: event.id,
+        animal_id: event.animal_id,
+        group: event.group,
+        type: event.type,
+        date_time: event.date_time,
+        author: event.author,
+        create_time: event.create_time,
+        mod_time: event.mod_time,
+        comments: event.comments,
         details: {
-            comments: 'Dog can\'t sleep, so I gave a few pills',
-            treatment: 'Some pills from insomnia',
-            expenses: 2.0
+            street: event.street,
+            house_no: event.house_no,
+            municipality_id: event.municipality_id,
         }
-    }];
+    }));
+}
+
+function appendMedicationEventsDetails(events: any[]) {
+    return events.map((event: any) => ({
+        id: event.id,
+        animal_id: event.animal_id,
+        group: event.group,
+        type: event.type,
+        date_time: event.date_time,
+        author: event.author,
+        create_time: event.create_time,
+        mod_time: event.mod_time,
+        comments: event.comments,
+        details: {
+            treatment: event.treatment,
+            expenses: event.expenses,
+        }
+    }));
+}
+
+function appendSurgeryEventsDetails(events: any[]) {
+    return events.map((event: any) => ({
+        id: event.id,
+        animal_id: event.animal_id,
+        group: event.group,
+        type: event.type,
+        date_time: event.date_time,
+        author: event.author,
+        create_time: event.create_time,
+        mod_time: event.mod_time,
+        comments: event.comments,
+        details: {
+            surgery: event.surgery,
+            result: event.result,
+            expenses: event.expenses,
+        }
+    }));
 }
 
 function getMicrochippingEvents() {
@@ -113,17 +158,29 @@ const resolvers: IResolvers = {
 
             if (!groups || groups.includes('General')) {
                 const generalEvents = await pgClient.query(getGeneralEventsQuery(animalId));
-                const streetfindEvents = await pgClient.query(getStreetfindEventsQuery(animalId));
-                const giveawayEvents = await pgClient.query(getGiveawayEventsQuery(animalId));
-
                 events.push(...appendEventsDetails(generalEvents.rows))
-                events.push(...appendStreetfindEventsDetails(streetfindEvents.rows))
-                events.push(...appendGiveawayEventsDetails(giveawayEvents.rows))
+
+                const locationChangeEvents =
+                    await pgClient.query(getLocationChangeEvents(animalId));
+                events.push(...appendLocationChangeEventsDetails(locationChangeEvents.rows))
+
                 events.push(...getMicrochippingEvents());
             }
 
+            if (!groups || groups.includes('Registration')) {
+                const streetfindEvents = await pgClient.query(getStreetfindEventsQuery(animalId));
+                const giveawayEvents = await pgClient.query(getGiveawayEventsQuery(animalId));
+
+                events.push(...appendStreetfindEventsDetails(streetfindEvents.rows))
+                events.push(...appendGiveawayEventsDetails(giveawayEvents.rows))
+            }
+
             if (!groups || groups.includes('Medical')) {
-                events.push(...getMedicationEvents());
+                const medicationEvents = await pgClient.query(getMedicationEvents(animalId));
+                const surgeryEvents = await pgClient.query(getSurgeryEvents(animalId));
+
+                events.push(...appendMedicationEventsDetails(medicationEvents.rows));
+                events.push(...appendSurgeryEventsDetails(surgeryEvents.rows));
             }
 
             return events;
