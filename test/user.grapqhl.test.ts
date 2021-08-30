@@ -70,7 +70,7 @@ describe('GraphQL user integration tests', () => {
                             username: "TestUsername",
                             name: "TestName",
                             surname: "TestSurname",
-                            email: "TestEmail"
+                            email: "TestEmail@test.com"
                         }) ${userFields}
                     }`,
             })
@@ -86,7 +86,7 @@ describe('GraphQL user integration tests', () => {
             expect(createUser.username).to.be.equals('TestUsername');
             expect(createUser.name).to.be.equals('TestName');
             expect(createUser.surname).to.be.equals('TestSurname');
-            expect(createUser.email).to.be.equals('TestEmail');
+            expect(createUser.email).to.be.equals('TestEmail@test.com');
             return done();
         });
     });
@@ -101,7 +101,7 @@ describe('GraphQL user integration tests', () => {
                             username: "TestUsername1",
                             name: "TestName",
                             surname: "TestSurname",
-                            email: "TestEmail"
+                            email: "TestEmail@test.com"
                         }) ${userFields}
                     }`,
             })
@@ -112,12 +112,12 @@ describe('GraphQL user integration tests', () => {
         req.end((err, res) => {
             if (err) return done(err);
             expect(res.body.data).to.be.equals(undefined);
-            expect(res.body.errors[0].message).to.match(/^User with email .+ already exists$/);
+            expect(res.body.errors[0].message).to.include('The email has already been taken');
             return done();
         });
     });
 
-    it('Throws error on attempt to create user with existing email', (done) => {
+    it('Throws error on attempt to create user with existing username', (done) => {
         let req = request
             .post('/graphql')
             .send({
@@ -127,7 +127,7 @@ describe('GraphQL user integration tests', () => {
                             username: "TestUsername",
                             name: "TestName",
                             surname: "TestSurname",
-                            email: "TestEmail1"
+                            email: "TestEmail1@test.com"
                         }) ${userFields}
                     }`,
             })
@@ -138,7 +138,7 @@ describe('GraphQL user integration tests', () => {
         req.end((err, res) => {
             if (err) return done(err);
             expect(res.body.data).to.be.equals(undefined);
-            expect(res.body.errors[0].message).to.match(/^User with username .+ already exists$/);
+            expect(res.body.errors[0].message).to.include('The username has already been taken');
             return done();
         });
     });
@@ -153,7 +153,7 @@ describe('GraphQL user integration tests', () => {
                             username: "TestUsername2",
                             name: "TestName",
                             surname: "TestSurname",
-                            email: "TestEmailUnique"
+                            email: "TestEmailUnique@test.com"
                         }) ${userFields}
                     }`,
             })
@@ -164,7 +164,7 @@ describe('GraphQL user integration tests', () => {
         req.end((err, res) => {
             if (err) return done(err);
             expect(res.body.data).to.be.equals(undefined);
-            expect(res.body.errors[0].message).to.match(/^User with id .+ already exists$/);
+            expect(res.body.errors[0].message).to.include('The id has already been taken');
             return done();
         });
     });
@@ -179,7 +179,7 @@ describe('GraphQL user integration tests', () => {
                             username: "UpdatedTestUsername",
                             name: "UpdatedTestName",
                             surname: "UpdatedTestSurname",
-                            email: "UpdatedTestEmail"
+                            email: "UpdatedTestEmail@test.com"
                         }) ${userFields}
                     }`,
             })
@@ -195,7 +195,7 @@ describe('GraphQL user integration tests', () => {
             expect(updateUser.username).to.be.equals('UpdatedTestUsername');
             expect(updateUser.name).to.be.equals('UpdatedTestName');
             expect(updateUser.surname).to.be.equals('UpdatedTestSurname');
-            expect(updateUser.email).to.be.equals('UpdatedTestEmail');
+            expect(updateUser.email).to.be.equals('UpdatedTestEmail@test.com');
             return done();
         });
     });
@@ -220,7 +220,7 @@ describe('GraphQL user integration tests', () => {
             expect(deleteUser.username).to.be.equals('UpdatedTestUsername');
             expect(deleteUser.name).to.be.equals('UpdatedTestName');
             expect(deleteUser.surname).to.be.equals('UpdatedTestSurname');
-            expect(deleteUser.email).to.be.equals('UpdatedTestEmail');
+            expect(deleteUser.email).to.be.equals('UpdatedTestEmail@test.com');
             return done();
         });
     });
