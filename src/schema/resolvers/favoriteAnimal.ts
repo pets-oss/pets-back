@@ -4,6 +4,7 @@ import { getAnimalsQuery } from '../../sql-queries/animal';
 import {
     createFavoriteAnimalQuery,
     deleteFavoriteAnimalQuery,
+    getFavoriteAnimalByIdQuery,
     getFavoriteAnimalsQuery,
 } from '../../sql-queries/favoriteAnimal';
 
@@ -46,6 +47,18 @@ const resolvers: IResolvers = {
                     'Animal could not be added to the list of favorite animals due to undefined user id'
                 );
             }
+
+            const dbResponseGetAnimal = await pgClient.query(
+                getFavoriteAnimalByIdQuery({
+                    userId,
+                    animalId
+                })
+            );
+            if (dbResponseGetAnimal.rows[0]) {
+                return dbResponseGetAnimal.rows[0];
+            }
+
+
 
             const dbResponse = await pgClient.query(
                 createFavoriteAnimalQuery({

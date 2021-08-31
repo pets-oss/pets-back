@@ -10,13 +10,13 @@ interface DeleteFavoriteAnimalInput {
     animalId: number;
 }
 
+const returning = 'user_id, animal_id, mod_time';
+const animalFavoriteTable = 'animal_favorite';
+
 export const getFavoriteAnimalsQuery = (user_id: String): QueryConfig => {
     const text = `
-        SELECT
-            user_id,
-            animal_id,
-            mod_time
-        FROM animal_favorite
+        SELECT ${returning}
+        FROM ${animalFavoriteTable}
         WHERE user_id = $1;
     `;
 
@@ -26,12 +26,29 @@ export const getFavoriteAnimalsQuery = (user_id: String): QueryConfig => {
     };
 };
 
+export const getFavoriteAnimalByIdQuery = ({
+    userId,
+    animalId
+}: CreateFavoriteAnimalInput): QueryConfig => {
+    const text = `
+        SELECT ${returning}
+        FROM ${animalFavoriteTable}
+        WHERE user_id = $1
+            AND animal_id = $2;
+    `;
+
+    return {
+        text,
+        values: [userId, animalId],
+    };
+};
+
 export const createFavoriteAnimalQuery = (
     input: CreateFavoriteAnimalInput
 ): QueryConfig => {
     const { userId, animalId } = input;
     const text = `
-        INSERT INTO animal_favorite (
+        INSERT INTO ${animalFavoriteTable} (
             user_id,
             animal_id
         )
@@ -39,10 +56,7 @@ export const createFavoriteAnimalQuery = (
             $1,
             $2
         )
-        RETURNING
-            user_id,
-            animal_id,
-            mod_time;
+        RETURNING ${returning};
     `;
 
     return {
