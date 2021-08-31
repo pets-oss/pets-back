@@ -1,3 +1,4 @@
 scalar Name
 scalar Surname
 scalar Phone
+scalar Email

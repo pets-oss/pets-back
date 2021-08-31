@@ -1,10 +1,16 @@
 import { IResolvers } from 'graphql-tools';
-import { nameScalar, surnameScalar, phoneScalar} from '../scalars/scalars';
+import {
+    emailScalar,
+    nameScalar,
+    phoneScalar,
+    surnameScalar
+} from '../scalars/scalars';
 
 const resolvers: IResolvers = {
     Name: nameScalar,
     Surname: surnameScalar,
     Phone: phoneScalar,
+    Email: emailScalar,
 };
 
 export default resolvers;

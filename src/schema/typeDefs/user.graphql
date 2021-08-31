@@ -48,6 +48,6 @@ input UserInput {
     username: String
     name: Name
     surname: Surname
-    "User email (255 characters max)"
-    email: String
+    "User valid email (255 characters max)"
+    email: Email
 }
