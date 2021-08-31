@@ -39,6 +39,16 @@ const uniqueUserFieldChecks = (pgClient: any) => async ({
     return !response.rows[0].exists;
 };
 
+const idExistsCheck = (pgClient: any) => async ({
+    value
+}: { value: string }): Promise<boolean> => {
+
+    const response = await pgClient.query(
+        checkUserExistsByIdQuery(value));
+
+    return response.rows[0].exists;
+};
+
 const resolvers: IResolvers = {
     Query: {
         users: async (_, __, { pgClient }) => {
@@ -89,9 +99,11 @@ const resolvers: IResolvers = {
             }
 
             niv.extend('unique', uniqueUserFieldChecks(pgClient));
+            niv.extend('exists', idExistsCheck(pgClient));
+            niv.addCustomMessages({'id.exists': 'User with given id does not exists'});
 
             const userInputValidator = new niv.Validator(input, {
-                id: 'required|maxLength:255',
+                id: 'required|maxLength:255|exists',
                 username: 'sometimes|maxLength:128|unique',
                 name: 'maxLength:255',
                 surname: 'maxLength:255',

@@ -200,6 +200,32 @@ describe('GraphQL user integration tests', () => {
         });
     });
 
+    it('Trows error on attempt to update user with non existing id', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `mutation {
+                        updateUser(input: {
+                            id: "TestIDNonExisting",
+                            username: "UpdatedTestUsername",
+                            name: "UpdatedTestName",
+                            surname: "UpdatedTestSurname",
+                            email: "UpdatedTestEmail@test.com"
+                        }) ${userFields}
+                    }`,
+            })
+            .expect(400);
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.end((err, res) => {
+            if (err) return done(err);
+            expect(res.body.data).to.be.equals(undefined);
+            expect(res.body.errors[0].message).to.include('User with given id does not exists');
+            return done();
+        });
+    });
+
     it('Deletes user', (done) => {
         let req = request
             .post('/graphql')
