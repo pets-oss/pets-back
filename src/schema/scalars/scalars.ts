@@ -15,3 +15,8 @@ export const phoneScalar = getStringScalar({
     pattern: new RegExp(`^\\+(${getPhoneCodes()})\\d{8,10}$`)
 });
 
+export const emailScalar = getStringScalar({
+    name: 'Email',
+    max: 255,
+    pattern: new RegExp(/\b[\w.-]+@[\w.-]+.\w{2,4}\b/),
+});
