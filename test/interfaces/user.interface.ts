@@ -5,7 +5,7 @@ export default interface User {
     username: string;
     name: string | null;
     surname: string | null;
-    email: string | null;
+    email: string;
     roles: [Role];
     modTime: string | null;
 }

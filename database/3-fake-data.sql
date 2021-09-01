@@ -13,9 +13,9 @@ INSERT INTO app_user
 (id, username, name, surname, email) VALUES
 ('dhjbwau74a6', 'Svx', 'Sveikas', 'Ūsas', 'green@mamba.lt'),
 ('aiubfaw4io09', 'Hi', 'Hello', 'Letena', 'hi@hi.lt'),
-('afhu9w4f78', 'Carl', 'Red', 'Gauras', 'hi@hi.lt'),
-('278y2378ryb', 'Bob', 'Blue', 'Eyes', 'hi@hi.lt'),
-('0932hfdsa', 'Mamba', 'Green', 'Jungleen', 'hi@hello.lt'),
+('afhu9w4f78', 'Carl', 'Red', 'Gauras', 'carl@hi.lt'),
+('278y2378ryb', 'Bob', 'Blue', 'Eyes', 'bob@hi.lt'),
+('0932hfdsa', 'Mamba', 'Green', 'Jungleen', 'mamba@hello.lt'),
 ('userIdForTesting', 'Azis', 'Ąžuolas', 'Krušna', 'hi@hello.lt'),
 ('userIdForTestingNoFavoriteAnimals', 'Tiesto', 'Testas', 'Doe', 'tiesto@testai.lt');
 
