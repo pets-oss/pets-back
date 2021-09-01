@@ -18,7 +18,7 @@ async function getBearerToken() {
         console.log(response.data.access_token);
     } catch (e) {
         // eslint-disable-next-line no-console
-        console.log(e.message);
+        console.log(e?.message || 'Unexpected error in getBearerToken');
     }
     return null;
 }
