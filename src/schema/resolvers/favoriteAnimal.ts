@@ -54,11 +54,10 @@ const resolvers: IResolvers = {
                     animalId
                 })
             );
+
             if (dbResponseGetAnimal.rows[0]) {
                 return dbResponseGetAnimal.rows[0];
             }
-
-
 
             const dbResponse = await pgClient.query(
                 createFavoriteAnimalQuery({
