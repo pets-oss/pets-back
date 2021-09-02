@@ -16,9 +16,9 @@ async function getBearerToken() {
         const response = await axios.post(argv.url, data);
         // eslint-disable-next-line no-console
         console.log(response.data.access_token);
-    } catch (e) {
+    } catch (e: any | unknown) {
         // eslint-disable-next-line no-console
-        console.log(e.message);
+        console.log(e?.message || 'Unexpected error in getBearerToken');
     }
     return null;
 }
