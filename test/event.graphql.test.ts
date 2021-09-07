@@ -17,11 +17,41 @@ const eventFields = `
         dateTime,
         createTime
         author ${authorFields}
+        comments
+        ...on Surgery {
+            details {
+                surgery
+                result
+                expenses
+            }
+        }
+        ...on Medication {
+            details {
+              treatment
+              expenses
+            }
+          }
+        ...on Streetfind {
+            details {
+                registrationDate
+                registrationNo
+                street
+                houseNo
+                municipalityId
+            }
+        }
+        ...on LocationChange {
+            details {
+                street
+                houseNo
+                municipalityId
+            }
+        }
     }
 `;
 
 describe('GraphQL event integration tests', () => {
-    it('Return list of events with generic information', (done) => {
+    it('Return list of events for all animals', (done) => {
         let req = request
             .post('/graphql')
             .send({
@@ -46,7 +76,7 @@ describe('GraphQL event integration tests', () => {
                 } = res;
                 expect(events).to.be.an('array');
                 validate(events[0]);
-                expect(events).to.have.length.above(4);
+                expect(events).to.have.length.above(1);
                 return done();
             });
     });

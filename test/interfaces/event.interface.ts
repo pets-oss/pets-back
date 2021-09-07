@@ -29,4 +29,5 @@ export default interface Event {
     dateTime: string | null,
     createTime: string | null,
     author: Author | null,
+    details: any | null,
 }
