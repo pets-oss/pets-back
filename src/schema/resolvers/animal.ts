@@ -183,12 +183,16 @@ const resolvers: IResolvers = {
                 const {
                     rows: [{ id: animalId }],
                 } = createAnimalResult;
-                const createRegistrationResult = await pgClient.query(
-                    createAnimalRegistrationQuery({
-                        ...data.registration,
-                        animalId,
-                    })
-                );
+
+                let createRegistrationResult = null;
+                if (data.registration) {
+                    createRegistrationResult = await pgClient.query(
+                        createAnimalRegistrationQuery({
+                            ...data.registration,
+                            animalId,
+                        })
+                    );
+                }
 
                 let createDetailsResult;
                 if (data.details) {
