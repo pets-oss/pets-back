@@ -153,34 +153,45 @@ function getMicrochippingEvents() {
 
 const resolvers: IResolvers = {
     Query: {
-        events: async (_, { animalId, groups }, { pgClient }) => {
+        events: async (_, { animalId, groups, types }, { pgClient }) => {
             const events = [];
 
             if (!groups || groups.includes('General')) {
                 const generalEvents = await pgClient.query(getGeneralEventsQuery(animalId));
                 events.push(...appendEventsDetails(generalEvents.rows))
 
-                const locationChangeEvents =
+                if (!types || types.includes('LocationChange')) {
+                    const locationChangeEvents =
                     await pgClient.query(getLocationChangeEvents(animalId));
-                events.push(...appendLocationChangeEventsDetails(locationChangeEvents.rows))
+                    events.push(...appendLocationChangeEventsDetails(locationChangeEvents.rows))
+                }
 
                 events.push(...getMicrochippingEvents());
             }
 
             if (!groups || groups.includes('Registration')) {
-                const streetfindEvents = await pgClient.query(getStreetfindEventsQuery(animalId));
-                const giveawayEvents = await pgClient.query(getGiveawayEventsQuery(animalId));
+                if (!types || types.includes('Streetfind')) {
+                    const streetfindEvents =
+                    await pgClient.query(getStreetfindEventsQuery(animalId));
+                    events.push(...appendStreetfindEventsDetails(streetfindEvents.rows));
+                }
 
-                events.push(...appendStreetfindEventsDetails(streetfindEvents.rows))
-                events.push(...appendGiveawayEventsDetails(giveawayEvents.rows))
+                if (!types || types.includes('Giveaway')) {
+                    const giveawayEvents = await pgClient.query(getGiveawayEventsQuery(animalId));
+                    events.push(...appendGiveawayEventsDetails(giveawayEvents.rows));
+                }
             }
 
             if (!groups || groups.includes('Medical')) {
-                const medicationEvents = await pgClient.query(getMedicationEvents(animalId));
-                const surgeryEvents = await pgClient.query(getSurgeryEvents(animalId));
+                if (!types || types.includes('Medication')) {
+                    const medicationEvents = await pgClient.query(getMedicationEvents(animalId));
+                    events.push(...appendMedicationEventsDetails(medicationEvents.rows));
+                }
 
-                events.push(...appendMedicationEventsDetails(medicationEvents.rows));
-                events.push(...appendSurgeryEventsDetails(surgeryEvents.rows));
+                if (!types || types.includes('Surgery')) {
+                    const surgeryEvents = await pgClient.query(getSurgeryEvents(animalId));
+                    events.push(...appendSurgeryEventsDetails(surgeryEvents.rows));
+                }
             }
 
             return events;

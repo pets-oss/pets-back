@@ -6,13 +6,21 @@ extend type Query {
     events
     events(animalId: 1)
     """
-    events("Animal ID" animalId: Int, "Event groups" groups: [EventGroup]): [Event]
+    events("Animal ID" animalId: Int, "Event groups" groups: [EventGroup], types: [EventGroup]): [Event]
 }
 
 enum EventGroup {
+    Streetfind,
+    Giveaway,
+    LocationChange,
+    Medication,
+    Surgery,
+}
+
+enum EventType {
     General,
     Medical,
-    Registration
+    Registration,
 }
 
 enum EventType {
@@ -129,7 +137,7 @@ type CheckOut implements Event {
 
 type StreetfindDetails {
     registrationDate: String
-    registrationNo: String
+    registrationNo: String!
     street: String
     houseNo: String
     municipalityId: Int!
@@ -150,7 +158,7 @@ type Streetfind implements Event {
 
 type GiveawayDetails {
     registrationDate: String
-    registrationNo: String
+    registrationNo: String!
     formerOwner: AnimalOwner!
     reason: String
 }

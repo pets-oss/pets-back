@@ -2,7 +2,8 @@ import Author from './author.interface';
 
 enum EventGroup {
     General = 'General',
-    Medical = 'Medical'
+    Medical = 'Medical',
+    Registration = 'Registration',
 }
 
 enum EventType {
@@ -18,10 +19,10 @@ enum EventType {
     Prophylaxis = 'Prophylaxis',
     Surgery = 'Surgery',
     GenderElimination = 'GenderElimination',
-    Inspection = 'Inspection'
+    Inspection = 'Inspection',
 }
 
-export default interface Event {
+interface Event {
     id: number,
     animalId: number,
     group: EventGroup,
@@ -31,3 +32,30 @@ export default interface Event {
     author: Author | null,
     details: any | null,
 }
+
+interface AnimalOwner {
+    id: number,
+    name: string,
+    surname: string,
+    phone: string,
+}
+
+interface EventGiveawayDetails {
+    registrationDate: string | null,
+    registrationNo: string,
+    formerOwner: AnimalOwner | null,
+    reason: string | null,
+}
+
+interface EventGiveaway extends Event {
+    id: number,
+    animalId: number,
+    group: EventGroup,
+    type: EventType,
+    dateTime: string | null,
+    createTime: string | null,
+    author: Author | null,
+    details: EventGiveawayDetails,
+}
+
+export { EventGiveaway, Event }
