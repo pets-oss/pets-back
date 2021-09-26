@@ -12,7 +12,7 @@ extend type Query {
 "Represents a breed."
 type Species {
     "Species id"
-    id: String!
+    id: Int!
     "Species name"
     value: String!
 }

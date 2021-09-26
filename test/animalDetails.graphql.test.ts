@@ -69,7 +69,7 @@ describe('animalDetails Graphql mutations tests', () => {
                 value: 'Akitos'
             },
             species: {
-                id: '1',
+                id: 1,
                 value: 'Šuo',
             },
             gender: {
