@@ -3,8 +3,8 @@ import { QueryConfig } from 'pg';
 export const getGendersQuery = (language: string): QueryConfig => {
     const text = `
         SELECT
-            gender as id,
-            translation as value
+            gender AS id,
+            translation AS value
         FROM gender_translation
         WHERE language = $1;
     `;

@@ -12,7 +12,7 @@ extend type Query {
 "Represents a gender."
 type Gender {
     "Gender id"
-    id: String!
+    id: Int!
     "Gender name"
     value: String!
 }
