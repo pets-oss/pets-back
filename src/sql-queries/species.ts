@@ -3,8 +3,8 @@ import { QueryConfig } from 'pg';
 export const getSpeciesQuery = (language: string): QueryConfig => {
     const text = `
         SELECT
-            species as id,
-            translation as value
+            species AS id,
+            translation AS value
         FROM species_translation
         WHERE language = $1;
     `;
