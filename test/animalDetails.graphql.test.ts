@@ -69,11 +69,11 @@ describe('animalDetails Graphql mutations tests', () => {
                 value: 'Akitos'
             },
             species: {
-                id: '1',
+                id: 1,
                 value: 'Šuo',
             },
             gender: {
-                id: '2',
+                id: 2,
                 value: 'Patinas',
             },
             color: {
@@ -97,7 +97,7 @@ describe('animalDetails Graphql mutations tests', () => {
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
