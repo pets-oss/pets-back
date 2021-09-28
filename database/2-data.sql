@@ -908,7 +908,7 @@ INSERT INTO breed_translation
 (375, 'lt', 'Manksų katės'),
 (352, 'lt', 'Meino meškėnai'),
 (435, 'lt', 'Mekongo bobteilai'),
--- This doc https://www.vic.lt/gpsas-apskaita/gar-klasifikatoriai/ has "Mišrūnės" for mixed breed dogs. Changing it to "Mišrūnės katės" to make it clearer
+-- This doc https://www.vic.lt/gpsas-apskaita/gar-klasifikatoriai/ has "Mišrūnės" for mixed breed cats. Changing it to "Mišrūnės katės" to make it clearer
 (416, 'lt', 'Mišrūnės katės'),
 (440, 'lt', 'Napoleono (Minueto) ilgaplaukės'),
 (439, 'lt', 'Napoleono (Minueto) trumpaplaukės'),
