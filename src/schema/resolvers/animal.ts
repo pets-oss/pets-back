@@ -289,17 +289,21 @@ const resolvers: IResolvers = {
                     data,
                     pgClient
                 );
-                const updateMicrochipResult = await getUpdateMicrochipResult(
-                    data,
-                    pgClient
-                );
+
+                let updateMicrochipResult = null;
+                if (data.microchip) {
+                    updateMicrochipResult = await getUpdateMicrochipResult(
+                        data,
+                        pgClient
+                    );
+                }
 
                 await pgClient.query('COMMIT');
                 return {
                     ...updateAnimalResult.rows[0],
                     registration: updateRegistrationResult.rows[0],
                     details: updateDetailsResult.rows[0],
-                    microchip: updateMicrochipResult.rows[0],
+                    microchip: updateMicrochipResult?.rows[0],
                 };
             } catch (e) {
                 await pgClient.query('ROLLBACK');
