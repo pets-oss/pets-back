@@ -215,7 +215,7 @@ const resolvers: IResolvers = {
 
                 return {
                     ...createAnimalResult.rows[0],
-                    registration: createRegistrationResult.rows[0],
+                    registration: createRegistrationResult?.rows[0],
                     details: createDetailsResult?.rows[0],
                     microchip: createMicrochipResult?.rows[0],
                 };
