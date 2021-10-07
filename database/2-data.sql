@@ -453,8 +453,8 @@ INSERT INTO breed
 (437, '2', 'MUC'),
 (375, '2', 'MAN'),
 (352, '2', 'MCO'),
-(435, '2', ' MB'),
-(416, '2', ' MK'),
+(435, '2', 'MB'),
+(416, '2', 'MK'),
 (440, '2', 'MNL'),
 (439, '2', 'MNT'),
 (353, '2', 'NEM'),
@@ -493,7 +493,25 @@ INSERT INTO breed
 (358, '2', 'TUA'),
 (359, '2', 'TUV'),
 (418, '2', 'UL'),
-(370, '2', 'GRX');
+(370, '2', 'GRX'),
+-- Faking (adding 999 in the front of the id) mixed breeds of other animals
+(9993, '3', 'MŠEŠ'),
+(9994, '4', 'MT'),
+(9998, '8', 'MŠIN'),
+(99910, '10', 'MP'),
+(99911, '11', 'MJ'),
+(99913, '13', 'MR'),
+(99914, '14', 'MV'),
+-- Faking (adding 888 in the front of the id) unspecified breeds of animals
+(8881, '1', 'UŠ'),
+(8882, '2', 'UK'),
+(8883, '3', 'UŠEŠ'),
+(8884, '4', 'UT'),
+(8888, '8', 'UŠIN'),
+(88810, '10', 'UP'),
+(88811, '11', 'UJ'),
+(88813, '13', 'UR'),
+(88814, '14', 'UV');
 
 INSERT INTO breed_translation
 (breed, language, translation) VALUES
@@ -702,7 +720,8 @@ INSERT INTO breed_translation
 (339, 'lt', 'Meksikiečių plikieji (miniatiūriniai)'),
 (340, 'lt', 'Meksikiečių plikieji (standartiniai)'),
 (341, 'lt', 'Meksikiečių plikieji (vidutinieji)'),
-(345, 'lt', 'Mišrūnai'),
+-- This doc https://www.vic.lt/gpsas-apskaita/gar-klasifikatoriai/ has "Mišrūnai" for mixed breed dogs. Changing it to "Mišrūnai šunys" to make it clearer
+(345, 'lt', 'Mišrūnai šunys'),
 (272, 'lt', 'Mitelšnauceriai'),
 (221, 'lt', 'Miunsterio mažieji paukštšuniai'),
 (218, 'lt', 'Mopsai'),
@@ -889,7 +908,8 @@ INSERT INTO breed_translation
 (375, 'lt', 'Manksų katės'),
 (352, 'lt', 'Meino meškėnai'),
 (435, 'lt', 'Mekongo bobteilai'),
-(416, 'lt', 'Mišrūnės'),
+-- This doc https://www.vic.lt/gpsas-apskaita/gar-klasifikatoriai/ has "Mišrūnės" for mixed breed cats. Changing it to "Mišrūnės katės" to make it clearer
+(416, 'lt', 'Mišrūnės katės'),
 (440, 'lt', 'Napoleono (Minueto) ilgaplaukės'),
 (439, 'lt', 'Napoleono (Minueto) trumpaplaukės'),
 (353, 'lt', 'Nevos maskaradinės'),
@@ -928,7 +948,25 @@ INSERT INTO breed_translation
 (358, 'lt', 'Turkų angoros katės'),
 (359, 'lt', 'Turkų vanai'),
 (418, 'lt', 'Ukrainos levkojai'),
-(370, 'lt', 'Vokiečių reksai');
+(370, 'lt', 'Vokiečių reksai'),
+-- Faking (adding 999 in the front of the id) mixed breeds of other animals
+(9993, 'lt', 'Mišrūnai šeškai'),
+(9994, 'lt', 'Mišrūnai triušiai'),
+(9998, 'lt', 'Mišrūnės šinšilos'),
+(99910, 'lt', 'Mišrūnai paukščiai'),
+(99911, 'lt', 'Mišrūnės jūrų kiaulytės'),
+(99913, 'lt', 'Mišrūnai ropliai'),
+(99914, 'lt', 'Mišrūnai vėžliai'),
+-- Faking (adding 888 in the front of the id) unspecified breeds of animals
+(8881, 'lt', 'Neįvardintas šuo'),
+(8882, 'lt', 'Neįvardinta katė'),
+(8883, 'lt', 'Neįvardintas šeškas'),
+(8884, 'lt', 'Neįvardintas triušis'),
+(8888, 'lt', 'Neįvardinta šinšila'),
+(88810, 'lt', 'Neįvardintas Paukštis'),
+(88811, 'lt', 'Neįvardinta jūrų kiaulytė'),
+(88813, 'lt', 'Neįvardintas roplys'),
+(88814, 'lt', 'Neįvardintas vėžlys');
 
 -- GENDER
 
