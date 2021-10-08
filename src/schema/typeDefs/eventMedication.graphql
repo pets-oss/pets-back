@@ -1,0 +1,48 @@
+"Represents Medication event"
+type MedicationEvent {
+    "Event id"
+    id: Int!
+    "Animal id"
+    animalId: Int!
+    "Event date"
+    dateTime: Date!
+    author: Author!
+    treatment: String!
+    expenses: Float
+    comments: String
+}
+
+extend type Mutation {
+    "Create Medication event"
+    createMedicationEvent(input: CreateMedicationEventInput!): MedicationEvent
+    "Update Medication event"
+    updateMedicationEvent(input: UpdateMedicationEventInput!): MedicationEvent
+}
+
+input CreateMedicationEventInput {
+    "Animal id, e.g. 2"
+    animalId: Int!
+    "Medication date in YYYY-MM-DD format"
+    dateTime: Date
+    "Event comments"
+    comments: String
+    "Treatment"
+    treatment: String!
+    "Event expenses"
+    expenses: Float
+}
+
+input UpdateMedicationEventInput {
+    "Event id"
+    id: Int!
+    "Animal id, e.g. 2"
+    animalId: Int
+    "Medication date in YYYY-MM-DD format"
+    dateTime: Date
+    "Event comments"
+    comments: String
+    "Treatment"
+    treatment: String
+    "Event expenses"
+    expenses: Float
+}
