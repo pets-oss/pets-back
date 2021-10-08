@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import validate from './validators/translation.interface.validator';
-import { translationFields } from './translationFields';
+import validate from './validators/color.interface.validator';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -14,12 +13,12 @@ describe('GraphQL color_translation integration tests', () => {
             .post('/graphql')
             .send({
                 query: `{ colors(language: "lt")
-                    ${translationFields}
+                    { id, value, speciesId, speciesName}
                 }`,
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
