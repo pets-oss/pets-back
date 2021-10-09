@@ -13,7 +13,7 @@ describe('GraphQL color_translation integration tests', () => {
             .post('/graphql')
             .send({
                 query: `{ colors(language: "lt")
-                    { id, value, speciesId, speciesName}
+                    { id, value, speciesId, speciesName }
                 }`,
             });
         if (process.env.BEARER_TOKEN) {
