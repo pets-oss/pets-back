@@ -15,4 +15,8 @@ type Color {
     id: Int!
     "Color name"
     value: String!
+    "Species Id"
+    speciesId: Int
+    "Species Name"
+    speciesName: String
 }

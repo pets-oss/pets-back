@@ -1,18 +1,18 @@
 import { QueryConfig } from 'pg';
+import { select } from 'sql-bricks-postgres';
 
 export const getColorsQuery = (language: string): QueryConfig => {
-    const text = `
-        SELECT
-            color as id,
-            translation as value
-        FROM color_translation
-        WHERE language = $1;
-    `;
+    const query = select(`c.code as id,
+    ct.translation as value,
+    c.species as species_id,
+    st.translation as species_name`)
+        .from('color as c')
+        .leftJoin(`(${select().from('color_translation').where('language', language)}) AS ct`)
+        .on('c.code', 'ct.color')
+        .leftJoin(`(${select().from('species_translation').where('language', language)}) AS st`)
+        .on('c.species', 'st.species')
 
-    return {
-        text,
-        values: [language],
-    };
+    return query.toParams();
 };
 
 export const getColorQuery = (
