@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import validate from './validators/translation.interface.validator';
-import { translationFields } from './translationFields';
+import validate from './validators/color.interface.validator';
 
 require('dotenv').config({ path: './test/.env' });
 
@@ -14,18 +13,40 @@ describe('GraphQL color_translation integration tests', () => {
             .post('/graphql')
             .send({
                 query: `{ colors(language: "lt")
-                    ${translationFields}
+                    { id, value, speciesId, speciesName }
                 }`,
             });
         if (process.env.BEARER_TOKEN) {
             req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        } 
+        }
         req.expect(200)
             .end((err, res) => {
                 if (err) return done(err);
                 const { body: { data: { colors } } } = res;
                 expect(colors).to.be.an('array');
                 validate(colors[0]);
+                return done();
+            });
+    });
+
+    it('Returns colors translation in "lt" filtered by speciesId 11 with all fields', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `{ colors(language: "lt", speciesId: 11)
+                    { id, value, speciesId, speciesName }
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body: { data: { colors } } } = res;
+                expect(colors).to.be.an('array');
+                validate(colors[0]);
+                expect(colors[0].speciesId).to.equal(11);
                 return done();
             });
     });
