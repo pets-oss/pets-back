@@ -29,7 +29,7 @@ describe('GraphQL color_translation integration tests', () => {
             });
     });
 
-    it('Returns colors translation in "lt" with all fields', (done) => {
+    it('Returns colors translation in "lt" filtered by speciesId 11 with all fields', (done) => {
         let req = request
             .post('/graphql')
             .send({
