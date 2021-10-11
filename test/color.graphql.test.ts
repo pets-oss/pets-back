@@ -28,4 +28,26 @@ describe('GraphQL color_translation integration tests', () => {
                 return done();
             });
     });
+
+    it('Returns colors translation in "lt" filtered by speciesId 11 with all fields', (done) => {
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `{ colors(language: "lt", speciesId: 11)
+                    { id, value, speciesId, speciesName }
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) return done(err);
+                const { body: { data: { colors } } } = res;
+                expect(colors).to.be.an('array');
+                validate(colors[0]);
+                expect(colors[0].speciesId).to.equal(11);
+                return done();
+            });
+    });
 });

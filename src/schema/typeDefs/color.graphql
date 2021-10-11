@@ -6,7 +6,7 @@ extend type Query {
 
     colors(language: "lt")
     """
-    colors("language code" language: String!): [Color]
+    colors("language code" language: String!, "species id" speciesId: Int): [Color]
 }
 
 "Represents a color."
