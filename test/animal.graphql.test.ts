@@ -428,6 +428,40 @@ describe('GraphQL animal mutations tests', () => {
             });
     });
 
+    it('Update animal details to given species unidentified breed', (done) => {
+        const mutation = 'updateAnimal';
+        const update = `{
+                id: 2,
+                details: {
+                    speciesId: 1
+                }
+        }`;
+        const answer = {'details.breed.id': 8881 };
+
+        let req = request
+            .post('/graphql')
+            .send({
+                query: `
+            mutation {
+                ${mutation}(input: ${update})
+                    ${animalFields}
+                }`,
+            });
+        if (process.env.BEARER_TOKEN) {
+            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
+        }
+        req.expect(200)
+            .end((err, res) => {
+                if (err) {
+                    // eslint-disable-next-line no-console
+                    console.log(res.body);
+                    return done(err);
+                }
+                expect(res.body.data[mutation]).to.deep.nested.include(answer);
+                return done();
+            });
+    });
+
     it('Delete animal', (done) => {
         const mutation = 'deleteAnimal';
         const deleteInput = `{ id: ${animalId} }`;

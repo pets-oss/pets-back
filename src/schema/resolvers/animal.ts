@@ -27,23 +27,30 @@ import { getStatusTranslationQuery } from '../../sql-queries/status';
 
 const defaultLanguage: string = 'lt';
 
+function getUnspecifiedBreedID(speciesId: number): number {
+    return Number(`888${speciesId}`);
+}
+
 async function getUpdateDetailsResult(input: any, pgClient: any) {
     const getAnimalDetailsResponse = await pgClient.query(
         getAnimalDetailsQuery(input.id)
     );
+    const { speciesId, breedId, ...details } = input.details || {};
+
+    const data = {
+        ...details,
+        animalId: input.id,
+        ...(breedId || speciesId)
+        && { breedId: breedId || getUnspecifiedBreedID(speciesId) }
+    };
+
     if (getAnimalDetailsResponse.rows.length) {
         return pgClient.query(
-            updateAnimalDetailsQuery({
-                ...input.details,
-                animalId: input.id,
-            })
+            updateAnimalDetailsQuery(data)
         );
     }
     return pgClient.query(
-        createAnimalDetailsQuery({
-            ...input.details,
-            animalId: input.id,
-        })
+        createAnimalDetailsQuery(data)
     );
 }
 
@@ -144,6 +151,7 @@ const resolvers: IResolvers = {
                 name: 'maxLength:128',
                 organization: 'integer|min:1',
                 'registration.registrationDate': 'date|dateBeforeToday:0,days',
+                'details.speciesId': 'integer|min:1',
                 'details.breedId': 'integer|min:1',
                 'details.genderId': 'integer|min:1',
                 'details.colorId': 'integer|min:1',
@@ -196,8 +204,14 @@ const resolvers: IResolvers = {
 
                 let createDetailsResult;
                 if (data.details) {
+                    const { speciesId, breedId, ...details } = data.details;
                     createDetailsResult = await pgClient.query(
-                        createAnimalDetailsQuery({ ...data.details, animalId })
+                        createAnimalDetailsQuery({
+                            ...details,
+                            animalId,
+                            ...(breedId || speciesId) &&
+                            { breedId: breedId || getUnspecifiedBreedID(speciesId) }
+                        })
                     );
                 }
 
@@ -233,6 +247,7 @@ const resolvers: IResolvers = {
                 name: 'maxLength:128',
                 organization: 'integer|min:1',
                 'registration.registrationDate': 'date|dateBeforeToday:0,days',
+                'details.speciesId': 'integer|min:1',
                 'details.breedId': 'integer|min:1',
                 'details.genderId': 'integer|min:1',
                 'details.colorId': 'integer|min:1',
