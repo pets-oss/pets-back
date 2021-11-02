@@ -35,6 +35,8 @@ type AnimalDetails {
 input AnimalDetailsInput {
     "Animal breed id (any value from 'breeds' query)"
     breedId: Int
+    "Species breed id (any value from 'species' query)"
+    speciesId: Int
     "Animal gender (any value from 'genders' query)"
     genderId: Int
     "Animal color (any value from 'colors' query)"
