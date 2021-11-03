@@ -1,24 +1,22 @@
 import { QueryConfig } from 'pg';
+import { select } from 'sql-bricks-postgres';
 
 export const getBreedsQuery = (
-    species: string,
+    species: string | null | undefined,
     language: string
 ): QueryConfig => {
-    const text = `
-        SELECT
-            id,
-            abbreviation,
-            translation as value
-        FROM breed b
-        LEFT JOIN (SELECT * FROM breed_translation WHERE language = $2) bt
-            ON bt.breed = b.id
-        WHERE species = $1;
-    `;
 
-    return {
-        text,
-        values: [ species, language ]
-    };
+    let query = select(`
+        id,
+        abbreviation,
+         translation as value`)
+        .from('breed b')
+        .leftJoin(`(${select().from('breed_translation').where('language', language)}) AS bt`)
+        .on('b.id', 'bt.breed');
+
+    query = species ? query.where({species}) : query;
+
+    return query.toParams();
 };
 
 export const getBreedQuery = (

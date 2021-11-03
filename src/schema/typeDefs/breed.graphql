@@ -8,7 +8,7 @@ extend type Query {
     """
     breeds(
         "breed species"
-        species: String!
+        species: String
         "language code"
         language: String!
     ): [Breed]
