@@ -6,15 +6,21 @@ export const getBreedsQuery = (
     language: string
 ): QueryConfig => {
 
-    let query = select(`
-        id,
-        abbreviation,
-         translation as value`)
-        .from('breed b')
-        .leftJoin(`(${select().from('breed_translation').where('language', language)}) AS bt`)
-        .on('b.id', 'bt.breed');
+    let filteredBreedsQuery = select().from('breed');
+    filteredBreedsQuery = species ? filteredBreedsQuery.where({ species })
+        : filteredBreedsQuery;
 
-    query = species ? query.where({species}) : query;
+    const query = select(`
+        b.id,
+        b.abbreviation,
+        bt.translation as value,
+        b.species as species_id,
+        st.translation as species_value`)
+        .from(`(${filteredBreedsQuery}) as b`)
+        .leftJoin(`(${select().from('breed_translation').where({ language })}) AS bt`)
+        .on('b.id', 'bt.breed')
+        .leftJoin(`(${select().from('species_translation').where({ language })}) AS st`)
+        .on('b.species', 'st.species');
 
     return query.toParams();
 };
@@ -36,6 +42,6 @@ export const getBreedQuery = (
 
     return {
         text,
-        values: [ breed_id, language, defaultLanguage ]
-    }
+        values: [breed_id, language, defaultLanguage]
+    };
 };

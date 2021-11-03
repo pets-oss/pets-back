@@ -22,4 +22,8 @@ type Breed {
     abbreviation: String!
     "Breed name"
     value: String!
+    "Species id, on breeds query only"
+    speciesId: Int
+    "Species name, on breeds query only"
+    speciesValue: String
 }

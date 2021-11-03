@@ -12,6 +12,8 @@ const breedFields = `
         id
         abbreviation
         value
+        speciesId
+        speciesValue
     }
 `;
 
