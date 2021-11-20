@@ -93,15 +93,14 @@ export const getAnimalsQuery = (
         query.leftJoin('breed AS b').on('ad.breed_id', 'b.id')
         : query;
     query = ids ? query.where($in('a.id', ids)) : query;
-    query = species ? query.where($in('b.species', species)) : query;
-    query = gender ? query.where($in('ad.gender_id', gender)) : query;
-    query = breed ? query.where($in('ad.breed_id', breed)) : query;
+    query = species ? query.where($in('b.species', species.map(String))) : query;
+    query = gender ? query.where($in('ad.gender_id', gender.map(String))) : query;
+    query = breed ? query.where($in('ad.breed_id', breed.map(String))) : query;
     query = query.leftJoin(
         `(${select().from('animal_favorite').where('user_id', userId)}) AS af`
     )
         .on('a.id', 'af.animal_id');
     query = isFavoriteOnly ? query.where(isNotNull('af.animal_id')) : query;
-    const queryParams = query.toParams();
 
     const selected = 'selected'
     let pagination = select().from(`${selected} AS s`);
@@ -109,13 +108,11 @@ export const getAnimalsQuery = (
     pagination = reverse ? pagination.orderBy('s.id DESC') : pagination.orderBy('s.id');
     pagination = limit != null ? pagination.limit(limit) : pagination;
     pagination = pagination.crossJoin('total_count');
-    const paginationParams = pagination.toParams();
 
     return {
-        text: `WITH ${selected} AS (${queryParams.text}),
+        text: `WITH ${selected} AS (${query.toString()}),
             total_count AS (SELECT COUNT(*) AS total_count FROM ${selected})
-            ${paginationParams.text}`,
-        values: [...queryParams.values, ...paginationParams.values]
+            ${pagination.toString()}`,
     };
 };
 
