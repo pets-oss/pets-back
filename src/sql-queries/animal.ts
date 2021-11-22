@@ -95,7 +95,7 @@ export const getAnimalsQuery = (
     query = ids ? query.where($in('a.id', ids)) : query;
     query = species ? query.where($in('b.species', species.map(String))) : query;
     query = gender ? query.where($in('ad.gender_id', gender.map(String))) : query;
-    query = breed ? query.where($in('ad.breed_id', breed.map(String))) : query;
+    query = breed ? query.where($in('ad.breed_id', breed)) : query;
     query = query.leftJoin(
         `(${select().from('animal_favorite').where('user_id', userId)}) AS af`
     )
