@@ -453,6 +453,8 @@ describe('GraphQL animal mutations tests', () => {
                     console.log(res.body);
                     return done(err);
                 }
+                // eslint-disable-next-line prefer-destructuring
+                animalId = res.body.data[mutation].id;
                 expect(res.body.data[mutation]).to.deep.nested.include(answer);
                 return done();
             });
@@ -461,7 +463,7 @@ describe('GraphQL animal mutations tests', () => {
     it('Update animal details to given species unidentified breed', (done) => {
         const mutation = 'updateAnimal';
         const update = `{
-                id: 2,
+                id: ${animalId},
                 details: {
                     speciesId: 1
                 }
