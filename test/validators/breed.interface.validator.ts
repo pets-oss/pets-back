@@ -20,18 +20,6 @@ export const BreedSchema = {
     "id": {
       "type": "number"
     },
-    "speciesId": {
-      "type": [
-        "null",
-        "number"
-      ]
-    },
-    "speciesValue": {
-      "type": [
-        "null",
-        "string"
-      ]
-    },
     "value": {
       "type": "string"
     }

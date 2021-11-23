@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import supertest from 'supertest';
-import validate from './validators/breed.interface.validator';
+import validate from './validators/breedWithSpecies.interface.validator';
 
 require('dotenv').config({ path: './test/.env' });
 
