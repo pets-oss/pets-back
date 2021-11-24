@@ -8,10 +8,10 @@ extend type Query {
     """
     breeds(
         "breed species"
-        species: String!
+        species: String
         "language code"
         language: String!
-    ): [Breed]
+    ): [BreedWithSpecies]
 }
 
 "Represents a breed."
@@ -22,4 +22,18 @@ type Breed {
     abbreviation: String!
     "Breed name"
     value: String!
+}
+
+"Represents a breed with species."
+type BreedWithSpecies {
+    "Breed id"
+    id: Int!
+    "Breed abbreviation"
+    abbreviation: String!
+    "Breed name"
+    value: String!
+    "Species id"
+    speciesId: Int!
+    "Species name"
+    speciesValue: String!
 }

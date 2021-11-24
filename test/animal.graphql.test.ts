@@ -9,7 +9,6 @@ import validateAnimalConnection
 import requests from './utils/requests';
 
 
-
 const animalFields = `
     {
         id
