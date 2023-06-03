@@ -26,6 +26,7 @@ import streetfindEventResolvers from './resolvers/eventStreetfind';
 import giveawayEventResolvers from './resolvers/eventGiveaway';
 import favoriteAnimalResolvers from './resolvers/favoriteAnimal';
 import customScalarsResolvers from './resolvers/scalars';
+import medicationEventResolvers from './resolvers/eventMedication';
 
 const schema = loadSchemaSync('src/schema/typeDefs/*.graphql', {
     loaders: [new GraphQLFileLoader()],
@@ -56,6 +57,7 @@ const schemaWithResolvers = addResolversToSchema({
         streetfindEventResolvers,
         giveawayEventResolvers,
         favoriteAnimalResolvers,
+        medicationEventResolvers,
     ),
     inheritResolversFromInterfaces: true,
 });
