@@ -1,0 +1,5 @@
+type Location {
+    street: String
+    houseNo: String
+    municipalityId: Int!
+}

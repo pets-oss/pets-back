@@ -1,31 +1,5 @@
 import { QueryConfig } from 'pg';
 
-export const getGeneralEventsQuery = (animalId: number | null): QueryConfig => {
-    const text = `
-        SELECT *, 'General' AS group
-        FROM animal_event_general
-        WHERE ($1::int IS NULL OR animal_id = $1)
-    `;
-
-    return {
-        text,
-        values: [ animalId ]
-    }
-}
-
-export const getMedicalEventsQuery = (animalId: number | null): QueryConfig => {
-    const text = `
-        SELECT *, 'Medical' AS group
-        FROM animal_event_medical_record
-        WHERE ($1::int IS NULL OR animal_id = $1)
-    `;
-
-    return {
-        text,
-        values: [ animalId ]
-    }
-}
-
 export const getStreetfindEventsQuery = (animalId: number | null): QueryConfig => {
     const text = `
         SELECT *, 'Registration' AS group, 'Streetfind' AS type
@@ -36,8 +10,8 @@ export const getStreetfindEventsQuery = (animalId: number | null): QueryConfig =
     return {
         text,
         values: [ animalId ]
-    }
-}
+    };
+};
 
 export const getGiveawayEventsQuery = (animalId: number | null): QueryConfig => {
     const text = `
@@ -50,25 +24,8 @@ export const getGiveawayEventsQuery = (animalId: number | null): QueryConfig => 
     return {
         text,
         values: [ animalId ]
-    }
-}
-
-export const getLocationChangeEvents = (animalId: number | null): QueryConfig => {
-    const table = 'event_location_change';
-    const group = 'General';
-    const type = 'LocationChange';
-
-    const text = `
-        SELECT *, '${group}' AS group, '${type}' AS type
-        FROM ${table}
-        WHERE ($1::int IS NULL OR ${table}.animal_id = $1)
-    `;
-
-    return {
-        text,
-        values: [ animalId ]
-    }
-}
+    };
+};
 
 export const getMedicationEvents = (animalId: number | null): QueryConfig => {
     const table = 'event_medication';
@@ -84,8 +41,8 @@ export const getMedicationEvents = (animalId: number | null): QueryConfig => {
     return {
         text,
         values: [ animalId ]
-    }
-}
+    };
+};
 
 export const getSurgeryEvents = (animalId: number | null): QueryConfig => {
     const table = 'event_surgery';
@@ -101,5 +58,64 @@ export const getSurgeryEvents = (animalId: number | null): QueryConfig => {
     return {
         text,
         values: [ animalId ]
-    }
-}
+    };
+};
+
+export const getDeathEvents = (animalId: number | null): QueryConfig => {
+    const table = 'event_death';
+    const group = 'Medical';
+    const type = 'Death';
+
+    const text = `
+        SELECT *, '${group}' AS group, '${type}' AS type
+        FROM ${table}
+        WHERE ($1::int IS NULL OR ${table}.animal_id = $1)
+    `;
+
+    return {
+        text,
+        values: [ animalId ]
+    };
+};
+
+export const getEventTypeTranslationQuery =
+(
+    eventType: string,
+    language: string,
+    defaultLanguage: string
+): QueryConfig => {
+    const text = `
+        SELECT
+            event_type AS id,
+            translation AS value
+        FROM event_type_translation
+        WHERE event_type = $1 AND language IN ($2, $3)
+        LIMIT 1;
+    `;
+
+    return {
+        text,
+        values: [ eventType, language, defaultLanguage ]
+    };
+};
+
+export const getEventGroupTranslationQuery =
+(
+    eventGroup: string,
+    language: string,
+    defaultLanguage: string
+): QueryConfig => {
+    const text = `
+        SELECT
+            event_group AS id,
+            translation AS value
+        FROM event_group_translation
+        WHERE event_group = $1 AND language IN ($2, $3)
+        LIMIT 1;
+    `;
+
+    return {
+        text,
+        values: [ eventGroup, language, defaultLanguage ]
+    };
+};

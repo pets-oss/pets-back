@@ -6,41 +6,18 @@ extend type Query {
 
     animalOwners
     """
-    animalOwners: [AnimalOwner]
+    animalOwners: [Person]
     """
-    Get a animal owner with a specific ID.
+    Get a animal owner by a specific ID.
 
     Examples:
 
     animalOwner(id: 1)
     """
-    animalOwner(id: Int!): AnimalOwner
-}
-
-"Represents a animal owner."
-type AnimalOwner {
-    "Animal owner ID, e.g., 1"
-    id: Int!
-    name: Name!
-    surname: Surname
-    phone: Phone
+    animalOwner(id: Int!): Person
 }
 
 extend type Mutation {
-    createAnimalOwner(input: CreateAnimalOwnerInput!): AnimalOwner
-    updateAnimalOwner(input: UpdateAnimalOwnerInput!): AnimalOwner
-}
-
-input CreateAnimalOwnerInput {
-    name: Name!
-    surname: Surname
-    phone: Phone
-}
-
-input UpdateAnimalOwnerInput {
-    "Animal owner ID, e.g., 1"
-    id: Int!
-    name: Name
-    surname: Surname
-    phone: Phone
+    createAnimalOwner(input: CreatePersonInput!): Person
+    updateAnimalOwner(input: UpdatePersonInput!): Person
 }

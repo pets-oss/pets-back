@@ -60,13 +60,6 @@ const eventFields = `
                 municipalityId
             }
         }
-        ...on LocationChange {
-            details {
-                street
-                houseNo
-                municipalityId
-            }
-        }
         ${eventGiveawayDetailFields}
     }
 `;

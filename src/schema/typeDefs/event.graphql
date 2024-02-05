@@ -6,37 +6,39 @@ extend type Query {
     events
     events(animalId: 1)
     """
-    events("Animal ID" animalId: Int, "Event groups" groups: [EventGroup], types: [EventGroup]): [Event]
+    events("Animal ID" animalId: Int, "Event groups" groups: [EventGroupEnum], types: [EventTypeEnum]): [Event]
 }
 
-enum EventGroup {
-    Streetfind,
-    Giveaway,
-    LocationChange,
-    Medication,
-    Surgery,
-}
-
-enum EventType {
+enum EventGroupEnum {
     General,
     Medical,
     Registration,
 }
 
-enum EventType {
+type EventGroup {
+    id: EventGroupEnum
+    value: String
+}
+
+enum EventTypeEnum {
     Giveaway,
     Streetfind,
-    CheckIn,
-    CheckOut,
-    Died,
+    Rescue,
+    Birth,
+    Adoption,
     TemporaryCare,
     Microchipping,
-    LocationChange,
     Medication,
     Prophylaxis,
+    Death,
     Surgery,
-    GenderElimination,
+    Neutering,
     Inspection
+}
+
+type EventType {
+    id: EventTypeEnum
+    value: String
 }
 
 interface Event {
@@ -50,8 +52,16 @@ interface Event {
     comments: String
 }
 
-type MicrochippingDetails {
-    microchip: AnimalMicrochip!
+enum MicrocipStatus {
+    Implanted
+    Removed
+}
+
+type MichrochipInfo {
+    microchipId: Int!
+    chipCompanyCode: Int!
+    installPlaceId: Int!
+    status: MicrocipStatus!
 }
 
 type Microchipping implements Event {
@@ -63,15 +73,10 @@ type Microchipping implements Event {
     createTime: String!
     author: Author!
     comments: String
-    details: MicrochippingDetails!
+    microchip: MichrochipInfo!
 }
 
-type MedicationDetails {
-    treatment: String!
-    expenses: Float
-}
-
-type Medication implements Event {
+type Adoption implements Event {
     id: Int!
     animalId: Int!
     group: EventGroup!
@@ -80,16 +85,10 @@ type Medication implements Event {
     createTime: String!
     author: Author!
     comments: String
-    details: MedicationDetails!
+    newOwner: Person!
 }
 
-type SurgeryDetails {
-    surgery: String!
-    result: String!
-    expenses: Float
-}
-
-type Surgery implements Event {
+type TemporaryCare implements Event {
     id: Int!
     animalId: Int!
     group: EventGroup!
@@ -98,49 +97,8 @@ type Surgery implements Event {
     createTime: String!
     author: Author!
     comments: String
-    details: SurgeryDetails!
-}
-
-type CheckInDetails {
-    registrationData: AnimalRegistration!
-}
-
-type CheckIn implements Event {
-    id: Int!
-    animalId: Int!
-    group: EventGroup!
-    type: EventType!
-    dateTime: String!
-    createTime: String!
-    comments: String
-    author: Author!
-    details: CheckInDetails!
-}
-
-type CheckOutDetails {
-    temporary: Boolean!
-    newOwner: String! "Will be used similar object as FormerAnimalOwner"
+    temporaryOwner: Person!
     document: Document
-}
-
-type CheckOut implements Event {
-    id: Int!
-    animalId: Int!
-    group: EventGroup!
-    type: EventType!
-    dateTime: String!
-    createTime: String!
-    author: Author!
-    comments: String
-    details: CheckOutDetails!
-}
-
-type StreetfindDetails {
-    registrationDate: String
-    registrationNo: String!
-    street: String
-    houseNo: String
-    municipalityId: Int!
 }
 
 type Streetfind implements Event {
@@ -153,14 +111,9 @@ type Streetfind implements Event {
     createTime: String!
     modTime: String!
     comments: String
-    details: StreetfindDetails!
-}
-
-type GiveawayDetails {
-    registrationDate: String
     registrationNo: String!
-    formerOwner: AnimalOwner!
-    reason: String
+    witness: Person
+    location: Location!
 }
 
 type Giveaway implements Event {
@@ -172,16 +125,12 @@ type Giveaway implements Event {
     createTime: String!
     author: Author!
     comments: String
-    details: GiveawayDetails!
+    registrationNo: String!
+    formerOwner: Person!
+    reason: String
 }
 
-type LocationChangeDetails {
-    street: String
-    houseNo: String
-    municipalityId: Int!
-}
-
-type LocationChange implements Event {
+type Rescue implements Event {
     id: Int!
     animalId: Int!
     group: EventGroup!
@@ -190,5 +139,67 @@ type LocationChange implements Event {
     createTime: String!
     author: Author!
     comments: String
-    details: LocationChangeDetails!
+    registrationNo: String!
+    witness: Person
+    location: Location!
+}
+
+type Birth implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: Author!
+    comments: String
+    registrationNo: String!
+    motherId: Int
+    fatherId: Int
+}
+
+type Medication implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: Author!
+    comments: String
+    treatment: String!
+    expenses: Float
+}
+
+type Surgery implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: Author!
+    comments: String
+    surgery: String!
+    result: String!
+    expenses: Float
+}
+
+enum DeathType {
+    Ilness
+    Euthanasia
+    Accident
+    Senility
+}
+
+type Death implements Event {
+    id: Int!
+    animalId: Int!
+    group: EventGroup!
+    type: EventType!
+    dateTime: String!
+    createTime: String!
+    author: Author!
+    comments: String
+    deathType: DeathType!
 }

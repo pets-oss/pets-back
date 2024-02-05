@@ -267,49 +267,49 @@ CREATE TABLE animal_cage (
     cage_id INTEGER REFERENCES organization_cage(id) NOT NULL
 );
 
--- EVENT
-
-CREATE TYPE event_group AS ENUM ('General', 'Medical');
+-- EVENT TYPE
 
 CREATE TYPE event_type AS ENUM (
     'Giveaway',
     'Streetfind',
-    'CheckIn',
-    'CheckOut',
-    'Died',
+    'Rescue',
+    'Birth',
+    'Adoption',
     'TemporaryCare',
-    'Microchipped',
-    'LocationChange',
+    'Microchipping',
     'Medication',
-    'Prophylaxis',
+    'Death',
     'Surgery',
-    'GenderElimination',
+    'Neutering',
+    'Prophylaxis',
     'Inspection'
 );
 
-CREATE TABLE animal_event_general (
-    id SERIAL PRIMARY KEY,
-    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    type event_type,
-    expenses NUMERIC,
-    date_time TIMESTAMP,
-    comments TEXT,
-    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+CREATE TABLE event_type_translation (
+    event_type event_type NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(255) NOT NULL,
+    PRIMARY KEY (event_type, language)
+);
+COMMENT ON COLUMN event_type_translation.language is 'Language code based on BCP 47';
+
+-- EVENT GROUP
+
+CREATE TYPE event_group AS ENUM (
+    'General',
+    'Medical',
+    'Registration'
 );
 
-CREATE TABLE animal_event_medical_record (
-    id SERIAL PRIMARY KEY,
-    animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
-    type event_type,
-    expenses NUMERIC,
-    date_time TIMESTAMP,
-    comments TEXT,
-    author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
-    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+CREATE TABLE event_group_translation (
+    event_group event_group NOT NULL,
+    language VARCHAR(4) NOT NULL,
+    translation VARCHAR(255) NOT NULL,
+    PRIMARY KEY (event_group, language)
 );
+COMMENT ON COLUMN event_group_translation.language is 'Language code based on BCP 47';
+
+-- EVENT
 
 CREATE TABLE event_streetfind (
     id SERIAL PRIMARY KEY,
@@ -340,17 +340,18 @@ CREATE TABLE event_giveaway (
     comments TEXT
 );
 
-CREATE TABLE microchipping_event_details (
+CREATE TABLE microchip (
     id SERIAL PRIMARY KEY,
-    microchip_id VARCHAR(255) REFERENCES animal_microchip(microchip_id) ON DELETE CASCADE NOT NULL,
-    comments TEXT
+    microchip_serial VARCHAR(255) NOT NULL UNIQUE,
+    chip_company_code chip_company_code NOT NULL,
+    install_place_id install_place_id NOT NULL,
+    status chip_status DEFAULT 'Implanted',
+    mod_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
-CREATE TABLE event_location_change (
+CREATE TABLE event_microchipping (
     id SERIAL PRIMARY KEY,
-    street VARCHAR(255) NOT NULL,
-    house_no VARCHAR(8),
-    municipality_id INTEGER REFERENCES municipality(id) NOT NULL,
+    microchip_id INT REFERENCES microchip(id) ON DELETE CASCADE NOT NULL,
     animal_id INTEGER REFERENCES animal(id) ON DELETE CASCADE NOT NULL,
     date_time TIMESTAMP,
     author VARCHAR(255) REFERENCES app_user(id) NOT NULL,
@@ -436,19 +437,16 @@ FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 CREATE TRIGGER animal_owner_mod_time BEFORE UPDATE ON animal_owner
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER animal_event_general_mod_time BEFORE UPDATE ON animal_event_general
-FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
-
-CREATE TRIGGER animal_event_medical_record_mod_time BEFORE UPDATE ON animal_event_medical_record
-FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
-
 CREATE TRIGGER event_streetfind_mod_time BEFORE UPDATE ON event_streetfind
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER event_giveaway_mod_time BEFORE UPDATE ON event_giveaway
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
-CREATE TRIGGER event_location_change_mod_time BEFORE UPDATE ON event_location_change
+CREATE TRIGGER microchip_change_mod_time BEFORE UPDATE ON microchip
+FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
+
+CREATE TRIGGER event_microchipping_change_mod_time BEFORE UPDATE ON event_microchipping
 FOR EACH ROW EXECUTE PROCEDURE moddatetime (mod_time);
 
 CREATE TRIGGER event_medication_mod_time BEFORE UPDATE ON event_medication

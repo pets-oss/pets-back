@@ -1,0 +1,22 @@
+type Person {
+    id: Int!
+    name: Name!
+    surname: Surname
+    phone: Phone
+    email: String
+}
+
+input CreatePersonInput {
+    name: Name!
+    surname: Surname
+    phone: Phone
+    email: String
+}
+
+input UpdatePersonInput {
+    id: Int!
+    name: Name
+    surname: Surname
+    phone: Phone
+    email: String
+}

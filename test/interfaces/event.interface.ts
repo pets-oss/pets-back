@@ -9,16 +9,16 @@ enum EventGroup {
 enum EventType {
     Giveaway = 'Giveaway',
     Streetfind = 'Streetfind',
-    CheckIn = 'CheckIn',
-    CheckOut = 'CheckOut',
-    Died = 'Died',
+    Rescue = 'Rescue',
+    Birth = 'Birth',
+    Adoption = 'Adoption',
+    Death = 'Death',
     TemporaryCare = 'TemporaryCare',
     Microchipping = 'Microchipping',
-    LocationChange = 'LocationChange',
     Medication = 'Medication',
     Prophylaxis = 'Prophylaxis',
     Surgery = 'Surgery',
-    GenderElimination = 'GenderElimination',
+    Neutering = 'Neutering',
     Inspection = 'Inspection',
 }
 

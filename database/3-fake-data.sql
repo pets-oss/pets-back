@@ -62,21 +62,6 @@ INSERT INTO animal_microchip
 (4, '29387', '5', '2020-04-14', '3', DEFAULT),
 (3, '2893402', '6', '2020-03-01', '4', DEFAULT);
 
-INSERT INTO animal_event_general
-(animal_id, type, expenses, date_time, comments, author) VALUES
-(2, 'CheckIn', 109.03, '2020-07-01', 'Registration!', 'dhjbwau74a6'),
-(1, 'CheckIn', 32.85, '2020-07-01', 'Registration!', 'aiubfaw4io09'),
-(3, 'CheckIn', 22.35, '2020-07-03', 'Registration!', 'afhu9w4f78'),
-(4, 'CheckIn', 19.03, '2019-07-03', 'Registration!', '278y2378ryb'),
-(5, 'CheckIn', 75.44, '2017-07-03', 'Registration!', '0932hfdsa'),
-(5, 'CheckOut', 2.00, '2018-05-25', 'Pasikeitė laikytojas.', 'dhjbwau74a6'),
-(5, 'CheckOut', 2.00, '2018-05-30', 'Pasikeitė savininkas.', 'aiubfaw4io09'),
-(5, 'CheckOut', 2.00, '2018-06-04', 'Pasikeitė savininkas.', 'dhjbwau74a6');
-
-INSERT INTO animal_event_medical_record
-(animal_id, type, expenses, date_time, comments, author) VALUES
-(4, 'Prophylaxis', 26.74, '2020-05-21', 'Yearly vaccine', '278y2378ryb');
-
 -- ANIMAL FAVORITE
 
 INSERT INTO animal_favorite
@@ -139,14 +124,6 @@ INSERT INTO animal_cage (animal_id, cage_id) VALUES
 
 -- EVENT
 
-INSERT INTO microchipping_event_details
-(microchip_id) VALUES
-('123'),
-('666666'),
-('001010101'),
-('29387'),
-('2893402');
-
 INSERT INTO event_streetfind
 (registration_date, registration_no, street, house_no, municipality_id, date_time, animal_id, comments, author) VALUES
 ('2021-01-01', '123CovidXXYZ', 'Vilniaus g.', NULL, 15, '2019-07-03', 4, NULL, 'aiubfaw4io09'),
@@ -158,30 +135,6 @@ INSERT INTO event_giveaway
 ('2021-01-02', '123Covid123', 2, 'Išvyksta į užsienį', '2021-01-01', 2, 'afhu9w4f78'),
 ('2021-01-03', '222222', 3, 'Įsikėlė į butą, kuriame draudžia plaukuotus augintinius', '2021-01-07', 3, 'dhjbwau74a6');
 
-INSERT INTO event_location_change (street, house_no, municipality_id, animal_id, date_time, comments, author) VALUES
-('Vytauto g.', '12', 1, 5, '2018-07-14', 'Pasikeitė laikymo vietos adresas.', '0932hfdsa'),
-('Vytauto g.', '13', 1, 2, '2018-07-15', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '2', 1, 5, '2018-07-16', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vokiečių g.', '3', 1, 5, '2018-07-17', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '14', 1, 5, '2018-07-18', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78'),
-('Vytauto g.', '4', 1, 5, '2018-07-19', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '1c', 1, 5, '2018-07-20', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '9', 1, 5, '2018-07-21', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '1b', 1, 5, '2018-07-23', 'Pasikeitė laikymo vietos adresas.', 'aiubfaw4io09'),
-('Vytauto g.', '1', 1, 1, '2018-07-22', 'Pasikeitė laikymo vietos adresas.', '278y2378ryb'),
-('Vytauto g.', '5', 1, 5, '2018-07-24', 'Pasikeitė laikymo vietos adresas.', '0932hfdsa'),
-('Prancūzų g.', '1', 1, 5, '2018-07-25', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '1', 1, 5, '2018-07-26', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78'),
-('Sapiegos g.', '1a', 1, 5, '2018-07-27', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '1', 1, 5, '2018-07-28', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '16', 1, 5, '2018-07-29', 'Pasikeitė laikymo vietos adresas.', 'aiubfaw4io09'),
-('Vytauto g.', '32', 1, 5, '2018-07-30', 'Pasikeitė laikymo vietos adresas.', '278y2378ryb'),
-('Vytauto g.', '1', 1, 5, '2018-07-31', 'Pasikeitė laikymo vietos adresas.', '0932hfdsa'),
-('Vytauto g.', '15', 1, 5, '2018-08-01', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78'),
-('Vytauto g.', '2', 1, 4, '2018-08-02', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '1', 1, 5, '2018-08-03', 'Pasikeitė laikymo vietos adresas.', 'dhjbwau74a6'),
-('Vytauto g.', '1a', 1, 5, '2018-08-04', 'Pasikeitė laikymo vietos adresas.', 'afhu9w4f78');
-
 INSERT INTO event_medication (treatment, expenses, animal_id, date_time, author, comments) VALUES
 ('Some pills from Tick', 15.00, 1, '2020-05-21', '278y2378ryb', 'Tick medications'),
 ('Some pills from Tick', 7.89, 2, '2020-05-22', 'aiubfaw4io09', 'Tick medications'),
@@ -191,3 +144,29 @@ INSERT INTO event_medication (treatment, expenses, animal_id, date_time, author,
 INSERT INTO event_surgery (surgery, result, expenses, animal_id, date_time, author) VALUES
 ('Knee', 'Successful', 150.00, 1, '2020-05-21', '278y2378ryb'),
 ('Kidney', 'Successful', 345.05, 4, '2020-05-21', 'afhu9w4f78');
+
+-- EVENT TYPE
+
+INSERT INTO event_type_translation
+(event_type, language, translation) VALUES
+('Giveaway', 'lt', 'Atidavimas'),
+('Streetfind', 'lt', 'Radimas gatvėje'),
+('Rescue', 'lt', 'Išgelbėjimas'),
+('Birth', 'lt', 'Gimimas'),
+('Adoption', 'lt', 'Priglaudimas'),
+('Death', 'lt', 'Mirtis'),
+('TemporaryCare', 'lt', 'Laikina globa'),
+('Microchipping', 'lt', 'Čipavimas'),
+('Medication', 'lt', 'Medikamentai'),
+('Prophylaxis', 'lt', 'Profilaktika'),
+('Surgery', 'lt', 'Operacija'),
+('Neutering', 'lt', 'Sterilizacija'),
+('Inspection', 'lt', 'Patikra');
+
+-- EVENT GROUP
+
+INSERT INTO event_group_translation
+(event_group, language, translation) VALUES
+('General', 'lt', 'Bendri'),
+('Medical', 'lt', 'Medicininiai'),
+('Registration', 'lt', 'Registracijos');
