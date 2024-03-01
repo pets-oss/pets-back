@@ -1,12 +1,9 @@
 import { expect } from 'chai';
-import supertest from 'supertest';
+
 import validate from './validators/event.interface.validator';
 import { authorFields } from './authorFields';
 
-require('dotenv').config({ path: './test/.env' });
-
-const url = process.env.TEST_URL || 'http://localhost:8081';
-const request = supertest(url);
+import requests from './utils/requests';
 
 const eventCommonFields = `
     id,
@@ -71,18 +68,12 @@ const eventGiveawayFields = `
 
 describe('GraphQL event integration tests', () => {
     it('Return list of events for all animals', (done) => {
-        let req = request
-            .post('/graphql')
-            .send({
-                query: `{ events
+        const req = requests(`{ events
                   ${eventFields}
-              }`,
-            });
-        if (process.env.BEARER_TOKEN) {
-            req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-        }
+        }`);
+
         req.expect(200)
-            .end((err, res) => {
+            .end((err: any, res: { body: any; }) => {
                 if (err) {
                     // eslint-disable-next-line no-console
                     console.log(res.body);
@@ -102,18 +93,12 @@ describe('GraphQL event integration tests', () => {
 });
 
 it('Return list of Giveaway events for all animals', (done) => {
-    let req = request
-        .post('/graphql')
-        .send({
-            query: `{ events(types: ['Giveaway'])
+    const req = requests(`{ events(types: ['Giveaway'])
               ${eventGiveawayFields}
-          }`,
-        });
-    if (process.env.BEARER_TOKEN) {
-        req = req.set('authorization', `Bearer ${process.env.BEARER_TOKEN}`)
-    }
+    }`);
+
     req.expect(200)
-        .end((err, res) => {
+        .end((err: any, res: { body: any; }) => {
             if (err) {
                 // eslint-disable-next-line no-console
                 console.log(res.body);
